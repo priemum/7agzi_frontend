@@ -1,0 +1,477 @@
+import React, {useEffect, useState} from "react";
+import styled from "styled-components";
+import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+import {isAuthenticated} from "../../auth";
+
+import {
+	getBraintreeClientToken,
+	// eslint-disable-next-line
+	processPayment,
+	processPaymentAndThenStore,
+	processPayment_Subscription,
+} from "../../apiCore";
+import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
+import PlatformShareComp from "./PlatformShareComp";
+import BeProComp from "./BeProComp";
+import SMSPayAsYouGo from "./SMSPayAsYouGo";
+import {updateOwnerProfile} from "../apiOwner";
+import {updateUser} from "../../customer/apiUser";
+
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "#0f377e",
+			fontWeight: "bold",
+			borderRadius: "5px",
+			fontSize: "1.1rem",
+			textAlign: "center",
+			padding: "10px",
+			color: "white",
+			transition: "var(--mainTransition)",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			backgroundColor: "white",
+			padding: "10px",
+			borderRadius: "5px",
+			fontSize: "1.1rem",
+			fontWeight: "bold",
+			textAlign: "center",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			color: "black",
+		};
+	}
+};
+
+const BillingMain = () => {
+	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	const [collapsed, setCollapsed] = useState(false);
+	const [clickedMenu, setClickedMenu] = useState("PlatformShare");
+	const [updateCardClicked, setUpdateCardClicked] = useState(false);
+
+	const [data, setData] = useState({
+		loading: false,
+		success: false,
+		clientToken: null,
+		error: "",
+		instance: {},
+	});
+
+	const {user, token} = isAuthenticated();
+
+	const getToken = (userId, token) => {
+		setData({...data, loading: true});
+		getBraintreeClientToken(userId, token).then((data) => {
+			if (data.error) {
+				setData({...data, error: data.error});
+			} else {
+				setData({...data, clientToken: data.clientToken});
+				setData({...data, loading: false});
+			}
+		});
+	};
+
+	useEffect(() => {
+		getToken(user._id, token);
+		// eslint-disable-next-line
+	}, [clickedMenu, updateCardClicked]);
+
+	const buy = () => {
+		console.log("clicked");
+		let nonce;
+
+		// eslint-disable-next-line
+		let getNonce = data.instance
+			.requestPaymentMethod()
+			.then((data) => {
+				nonce = data.nonce;
+
+				const paymentData = {
+					paymentMethodNonce: nonce,
+					amount: 10,
+					email: user.email,
+					customerId: user._id,
+					planId: "One Time Payment",
+				};
+
+				processPaymentAndThenStore(user._id, token, paymentData)
+					.then((response) => {
+						if (
+							response.transaction &&
+							response.transaction.creditCard &&
+							response.transaction.creditCard.token
+						) {
+							// empty cart
+							// create order
+							// console.log(response, "responsefromPayment");
+							// eslint-disable-next-line
+
+							toast.success(
+								"You have successfully subscribed to our platform share"
+							);
+
+							updateOwnerProfile(user._id, token, {
+								name: user.name,
+								email: user.email,
+								phone: user.phone,
+								platFormShare: true,
+								subscribed: user.subscribed,
+								smsPayAsYouGo: user.smsPayAsYouGo,
+								storeName: user.storeName,
+								paymentTo: "platFormShare",
+								platFormShareToken: response.transaction.creditCard.token,
+								subscriptionToken: user.subscribedToken,
+								subscriptionId: user.subscriptionId,
+								smsPayAsYouGoToken: user.smsPayAsYouGoToken,
+							}).then((data2) => {
+								if (data2.error) {
+									// console.log(data.error);
+									alert(data2.error);
+								} else {
+									updateUser(data2, () => {
+										console.log(data2, "dataUpdated");
+									});
+								}
+							});
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 4000);
+						} else {
+							toast.error(
+								"Not Paid, Maybe insufficient credit, Please try another card"
+							);
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 2000);
+						}
+					})
+					.catch((error) => {
+						setData({loading: false});
+					});
+			})
+			.catch((error) => {
+				// console.log("dropin error: ", error);
+				setData({...data, error: error.message});
+			});
+	};
+
+	const buy_subscribe = () => {
+		console.log("clicked");
+		let nonce;
+
+		// eslint-disable-next-line
+		let getNonce = data.instance
+			.requestPaymentMethod()
+			.then((data) => {
+				nonce = data.nonce;
+
+				const paymentData = {
+					paymentMethodNonce: nonce,
+					amount: 15,
+					email: user.email,
+					customerId: user._id,
+					planId: "monthly_plan",
+				};
+
+				processPayment_Subscription(user._id, token, paymentData)
+					.then((response) => {
+						if (
+							response.subscription &&
+							response.subscription.paymentMethodToken
+						) {
+							// empty cart
+							// create order
+							// console.log(response, "responsefromPayment");
+							// eslint-disable-next-line
+
+							toast.success(
+								"CONGRATULATIONS! You now subscribed to our PRO platform"
+							);
+
+							console.log(response.subscription, "response.subscription");
+
+							updateOwnerProfile(user._id, token, {
+								name: user.name,
+								email: user.email,
+								phone: user.phone,
+								platFormShare: user.platFormShare,
+								platFormShareToken: user.platFormShareToken,
+								subscribed: true,
+								subscriptionToken: response.subscription.paymentMethodToken,
+								subscriptionId: response.subscription.id,
+								smsPayAsYouGo: user.smsPayAsYouGo,
+								smsPayAsYouGoToken: user.smsPayAsYouGoToken,
+								storeName: user.storeName,
+								paymentTo: "subscribed",
+							}).then((data2) => {
+								if (data2.error) {
+									// console.log(data.error);
+									alert(data2.error);
+								} else {
+									console.log(data2);
+									updateUser(data2, () => {
+										console.log(data2, "dataUpdated");
+									});
+								}
+							});
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 4000);
+						} else {
+							toast.error(
+								"Not Paid, Maybe insufficient credit, Please try another card"
+							);
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 2000);
+						}
+					})
+					.catch((error) => {
+						setData({loading: false});
+					});
+			})
+			.catch((error) => {
+				// console.log("dropin error: ", error);
+				setData({...data, error: error.message});
+			});
+	};
+
+	const buy_SMSAsYouGo = () => {
+		console.log("clicked");
+		let nonce;
+
+		// eslint-disable-next-line
+		let getNonce = data.instance
+			.requestPaymentMethod()
+			.then((data) => {
+				nonce = data.nonce;
+
+				const paymentData = {
+					paymentMethodNonce: nonce,
+					amount: 2,
+					email: user.email,
+					customerId: user._id,
+					planId: "One Time Payment",
+				};
+
+				processPaymentAndThenStore(user._id, token, paymentData)
+					.then((response) => {
+						if (
+							response.transaction &&
+							response.transaction.creditCard &&
+							response.transaction.creditCard.token
+						) {
+							// empty cart
+							// create order
+							// console.log(response, "responsefromPayment");
+							// eslint-disable-next-line
+
+							toast.success(
+								"You have successfully subscribed to our Whats App PAY AS YOU GO plan"
+							);
+
+							updateOwnerProfile(user._id, token, {
+								name: user.name,
+								email: user.email,
+								phone: user.phone,
+								platFormShare: user.platFormShare,
+								subscribed: user.subscribed,
+								smsPayAsYouGo: true,
+								storeName: user.storeName,
+								paymentTo: "smsPayAsYouGo",
+								platFormShareToken: user.platFormShareToken,
+								subscriptionToken: user.subscriptionToken,
+								subscriptionId: user.subscriptionId,
+								smsPayAsYouGoToken: response.transaction.creditCard.token,
+							}).then((data2) => {
+								if (data2.error) {
+									// console.log(data.error);
+									alert(data2.error);
+								} else {
+									updateUser(data2, () => {
+										console.log(data2, "dataUpdated");
+									});
+								}
+							});
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 4000);
+						} else {
+							toast.error(
+								"Not Paid, Maybe insufficient credit, Please try another card"
+							);
+
+							setTimeout(function () {
+								window.location.reload(false);
+							}, 2000);
+						}
+					})
+					.catch((error) => {
+						setData({loading: false});
+					});
+			})
+			.catch((error) => {
+				// console.log("dropin error: ", error);
+				setData({...data, error: error.message});
+			});
+	};
+
+	useEffect(() => {
+		if (window.location.search.includes("platform-share")) {
+			setClickedMenu("PlatformShare");
+		} else if (window.location.search.includes("be-pro")) {
+			setClickedMenu("BePro");
+		} else if (window.location.search.includes("sms-pay")) {
+			setClickedMenu("SMS => PAY AS YOU GO");
+		} else {
+			setClickedMenu("PlatformShare");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<BillingMainWrapper>
+			<div className='grid-container'>
+				<div>
+					<AdminNavbar
+						fromPage='BillingMain'
+						AdminMenuStatus={AdminMenuStatus}
+						setAdminMenuStatus={setAdminMenuStatus}
+						collapsed={collapsed}
+						setCollapsed={setCollapsed}
+					/>
+				</div>
+
+				<div>
+					<div className='container'>
+						<div className='row mx-auto'>
+							<div
+								style={isActive(clickedMenu, "PlatformShare")}
+								className='col-md-3 menuItems'
+								onClick={() => setClickedMenu("PlatformShare")}
+							>
+								<Link
+									style={isActive(clickedMenu, "PlatformShare")}
+									to='/store/admin/billing-account?platform-share'
+								>
+									<i className='fa-sharp fa-solid fa-house'></i> Platform Share
+								</Link>
+							</div>
+							<div
+								style={isActive(clickedMenu, "BePro")}
+								className='col-md-3 menuItems'
+								onClick={() => setClickedMenu("BePro")}
+							>
+								<Link
+									style={isActive(clickedMenu, "BePro")}
+									to='/store/admin/billing-account?be-pro'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> BE PRO
+								</Link>
+							</div>
+
+							<div
+								style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
+								className='col-md-3 menuItems'
+								onClick={() => setClickedMenu("SMS => PAY AS YOU GO")}
+							>
+								<Link
+									style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
+									to='/store/admin/billing-account?sms-pay'
+								>
+									<i className='fa-solid fa-pen mr-1'></i> SMS PAY AS YOU GO
+								</Link>
+							</div>
+						</div>
+					</div>
+					{clickedMenu === "PlatformShare" ? (
+						<PlatformShareComp
+							setData={setData}
+							data={data}
+							buy={buy}
+							user={user}
+							token={token}
+							updateCardClicked={updateCardClicked}
+							setUpdateCardClicked={setUpdateCardClicked}
+						/>
+					) : null}
+					{clickedMenu === "BePro" ? (
+						<BeProComp
+							setData={setData}
+							data={data}
+							buy_subscribe={buy_subscribe}
+							user={user}
+							token={token}
+							updateCardClicked={updateCardClicked}
+							setUpdateCardClicked={setUpdateCardClicked}
+						/>
+					) : null}
+					{clickedMenu === "SMS => PAY AS YOU GO" ? (
+						<SMSPayAsYouGo
+							setData={setData}
+							data={data}
+							buy_SMSAsYouGo={buy_SMSAsYouGo}
+							user={user}
+							token={token}
+							updateCardClicked={updateCardClicked}
+							setUpdateCardClicked={setUpdateCardClicked}
+						/>
+					) : null}
+				</div>
+			</div>
+		</BillingMainWrapper>
+	);
+};
+
+export default BillingMain;
+
+const BillingMainWrapper = styled.div`
+	min-height: 1000px;
+	.grid-container {
+		display: grid;
+		grid-template-columns: 16% 84%;
+	}
+
+	.container {
+		margin-top: 50px;
+		margin-bottom: 20px;
+		margin-left: 320px;
+	}
+
+	.platformShare {
+		margin-left: 330px;
+	}
+
+	h3 {
+		font-weight: bolder;
+		text-align: center;
+		color: goldenrod;
+	}
+
+	h5 {
+		font-size: 1.1rem;
+		font-weight: bolder;
+		text-align: center;
+		margin: 0px !important;
+		color: grey;
+	}
+
+	@media (max-width: 1200px) {
+		.platformShare {
+			margin-left: 20px;
+		}
+
+		.container {
+			margin-left: 20px;
+		}
+	}
+`;

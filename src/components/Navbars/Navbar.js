@@ -1,0 +1,289 @@
+/** @format */
+
+import React from "react";
+import {Link, withRouter} from "react-router-dom";
+import {isAuthenticated} from "../../auth";
+import styled from "styled-components";
+
+const isActive = (history, path) => {
+	if (history.location.pathname === path) {
+		return {
+			color: "white !important",
+			background: "#0c0000",
+			fontWeight: "bold",
+			// textDecoration: "underline",
+		};
+	} else {
+		return {color: "#ffffff", fontWeight: "bold"};
+	}
+};
+
+const isActive2 = (history, path) => {
+	if (history.location.pathname === path) {
+		return {
+			color: "white !important",
+			background: "#0056b6",
+			fontWeight: "bold",
+			// textDecoration: "underline",
+		};
+	} else {
+		return {color: "#ffffff", fontWeight: "bold"};
+	}
+};
+
+const Navbar = ({history, language}) => {
+	return (
+		<Nav
+			className=' navbar  navbar-expand-sm'
+			style={{backgroundColor: "	#113e90"}}
+		>
+			<div
+				className='collapse navbar-collapse '
+				dir={language === "Arabic" ? "rtl" : "ltr"}
+			>
+				<ul
+					className='navbar-nav mx-auto navbar-expand '
+					style={{backgroundColor: "	#113e90"}}
+				>
+					<li className='nav-item'>
+						<Link
+							className='nav-link'
+							style={isActive(history, "/")}
+							to='/'
+							onClick={() => {
+								window.scrollTo({top: 0, behavior: "smooth"});
+							}}
+						>
+							{language === "Arabic" ? (
+								<span
+									style={{
+										fontFamily: "Droid Arabic Kufi",
+										letterSpacing: "0px",
+									}}
+								>
+									الصفحة الرئيسية
+								</span>
+							) : (
+								"Home"
+							)}
+						</Link>
+					</li>
+					<li className='nav-item'>
+						<Link
+							className='nav-link'
+							style={isActive(history, "/schedule")}
+							to='/schedule'
+							onClick={() => {
+								window.scrollTo({top: 0, behavior: "smooth"});
+							}}
+						>
+							{language === "Arabic" ? (
+								<span
+									style={{
+										fontFamily: "Droid Arabic Kufi",
+										letterSpacing: "0px",
+									}}
+								>
+									احجز
+								</span>
+							) : (
+								"Schedule"
+							)}
+						</Link>
+					</li>
+					<li className='nav-item'>
+						<Link
+							className='nav-link'
+							style={isActive(history, "/contact")}
+							to='/contact'
+							onClick={() => {
+								window.scrollTo({top: 0, behavior: "smooth"});
+							}}
+						>
+							{language === "Arabic" ? (
+								<span
+									style={{
+										fontFamily: "Droid Arabic Kufi",
+										letterSpacing: "0px",
+									}}
+								>
+									اتصل بنا
+								</span>
+							) : (
+								"Contact Us"
+							)}
+						</Link>
+					</li>
+					<li className='nav-item'>
+						<Link
+							className='nav-link'
+							style={isActive(history, "/about")}
+							to='/about'
+							onClick={() => {
+								window.scrollTo({top: 0, behavior: "smooth"});
+							}}
+						>
+							{language === "Arabic" ? (
+								<span
+									style={{
+										fontFamily: "Droid Arabic Kufi",
+										letterSpacing: "0px",
+									}}
+								>
+									من نحن
+								</span>
+							) : (
+								"About Us"
+							)}
+						</Link>
+					</li>
+
+					{isAuthenticated() && isAuthenticated().user.role === 0 && (
+						<li className='nav-item ml-5'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/dashboard")}
+								to='/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								My Dasboard/Account
+							</Link>
+						</li>
+					)}
+
+					{/* {isAuthenticated() && isAuthenticated().user.role === 1 && (
+						<li className='nav-item'>
+							<Link
+								className='nav-link'
+								style={isActive(history, "/dashboard")}
+								to='/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								Owner Regular Account
+							</Link>
+						</li>
+					)} */}
+					{isAuthenticated() && isAuthenticated().user.role === 1000 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/store/admin/dashboard")}
+								to='/store/admin/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 90, behavior: "smooth"});
+								}}
+							>
+								Owner Dashboard
+							</Link>
+						</li>
+					)}
+
+					{isAuthenticated() && isAuthenticated().user.role === 10000 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/boss/admin/dashboard")}
+								to='/boss/admin/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								Platform Admin
+							</Link>
+						</li>
+					)}
+
+					{isAuthenticated() && isAuthenticated().user.role === 1 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/admin/dashboard")}
+								to='/admin/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 90, behavior: "smooth"});
+								}}
+							>
+								Admin Dashboard
+							</Link>
+						</li>
+					)}
+
+					{/* {isAuthenticated() && isAuthenticated().user.role === 2 && (
+						<li className='nav-item'>
+							<Link
+								className='nav-link'
+								style={isActive(history, "/dashboard")}
+								to='/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								Stylist Regular Account
+							</Link>
+						</li>
+					)} */}
+					{isAuthenticated() && isAuthenticated().user.role === 2 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/stylist/dashboard")}
+								to='/stylist/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								Stylist Dashboard
+							</Link>
+						</li>
+					)}
+				</ul>
+			</div>
+		</Nav>
+	);
+};
+
+export default withRouter(Navbar);
+
+const Nav = styled.nav`
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	padding: 1px;
+
+	li a {
+		font-size: 0.95rem;
+	}
+	.nav-link {
+		color: white !important;
+	}
+	li {
+		margin: 0px 12px 0px 0px;
+	}
+
+	li a:hover {
+		background: #727272;
+		color: var(--mainWhite) !important;
+		outline-color: var(--darkGrey);
+		transition: var(--mainTransition);
+	}
+
+	@media (max-width: 900px) {
+		li a {
+			color: black !important;
+			font-size: 0.7rem;
+			margin: 0px;
+		}
+		li {
+			margin: 0px 0px 0px 0px;
+		}
+	}
+
+	@media (max-width: 680px) {
+		display: none;
+	}
+`;

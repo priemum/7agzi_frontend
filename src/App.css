@@ -1,38 +1,331 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans&display=swap");
+/* @import "~react-image-gallery/styles/css/image-gallery.css"; */
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+	background-color: #f5f8fa !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+:root {
+	--primaryColor: #5fb7ea;
+	--primaryRGBA: rgba(0, 0, 0, 0.3);
+	--mainGrey: #fafafa;
+	--darkGrey: #5f5e5e;
+	--mainWhite: #fff;
+	--mainBlack: #222;
+	--mainTransition: all 0.3s ease-in-out;
+	--mainSpacing: 0.3rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.DarkbackgroundForSidebar {
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 100%;
+	top: 50px;
+	left: 0;
+	position: fixed;
+	z-index: 100;
+	padding: 1000px;
 }
 
-.App-link {
-  color: #61dafb;
+.DarkbackgroundForSidebar2 {
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 100%;
+	top: 60px;
+	left: 0;
+	position: fixed;
+	z-index: 100;
+	padding: 1000px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::placeholder {
+	font-style: italic;
+	font-size: 0.75rem;
+	font-weight: bold;
+	color: #d3d3d3 !important;
+}
+
+.continueShoppingEmpty {
+	font-weight: bold;
+	font-size: 1.2rem;
+	border: 1px solid white;
+	color: white;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+	background-color: #848471;
+	border-radius: 20px;
+	padding: 5px;
+	transition: var(--mainTransition);
+	text-decoration: none;
+	width: 30%;
+	text-align: center;
+}
+
+.continueShoppingEmpty:hover {
+	padding: 12px;
+	transition: var(--mainTransition);
+	background-color: #ffcdcd;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+}
+@media (max-width: 800px) {
+	.applyScheduleUpdateUser {
+		font-size: 15px;
+		width: 70%;
+	}
+}
+
+@media (max-width: 800px) {
+	.continueShoppingEmpty {
+		font-weight: bold;
+		font-size: 1.1rem;
+		border: 1px solid white;
+		color: white;
+		box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+		background-color: #350000;
+		border-radius: 20px;
+		padding: 5px;
+		transition: var(--mainTransition);
+		text-decoration: none;
+		width: 94%;
+		text-align: center;
+	}
+
+	.continueShoppingEmpty:hover {
+		padding: 8px;
+		transition: var(--mainTransition);
+		background-color: #ffcdcd;
+		color: black;
+		text-decoration: none;
+	}
+}
+
+.detailsAboutAppointment {
+	font-weight: bold;
+	font-size: 0.95rem;
+	/* text-shadow: 1px 1px 4px; */
+	color: #7a0909;
+}
+
+.backToAdminDashboard {
+	font-weight: bold;
+	font-size: 0.9rem;
+	border: 1px solid white;
+	color: white;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+	background-color: #030561;
+	border-radius: 20px;
+	padding: 5px;
+	transition: var(--mainTransition);
+	text-decoration: none;
+	width: 30%;
+	text-align: center;
+}
+
+.backToAdminDashboard:hover {
+	padding: 8px;
+	transition: var(--mainTransition);
+	background-color: #ffcdcd;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+}
+
+@media (max-width: 800px) {
+	input {
+		font-size: 0.8rem !important;
+	}
+	.ant-picker-date-panel {
+		font-size: 10px !important;
+	}
+}
+
+/*Home Page Styling*/
+
+.firstAvailableApp {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: white;
+	letter-spacing: 3px;
+}
+
+.firstAvailableApp2 {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: black;
+	letter-spacing: 3px;
+}
+
+.horizLine {
+	border-bottom: 2px lightblue solid;
+	margin-top: 4px;
+	margin-bottom: 50px;
+}
+
+.chooseDateServiceFirstAvail {
+	font-size: 0.9rem;
+	font-weight: bold;
+	letter-spacing: 2px;
+	color: rgb(156, 156, 156);
+}
+
+.inputFieldsFirstAvail {
+	padding-top: 9px;
+	padding-bottom: 9px;
+	border: #cfcfcf solid 1px;
+	border-radius: 4px !important;
+	width: 50%;
+	font-size: 0.8rem;
+	/* box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.2); */
+	margin-bottom: 15px;
+}
+
+.pleaseSelectAServFirstAvail {
+	font-size: 1rem;
+	font-weight: bold;
+	color: white;
+	letter-spacing: 2px;
+}
+
+.noAppointFirstAvail {
+	font-size: 1.1rem;
+	color: wheat;
+	font-weight: bold;
+}
+
+.listOfServiceDescription {
+	text-align: left;
+	text-transform: capitalize;
+	list-style: none;
+	/* border: 1px red solid; */
+	font-size: 13px;
+	margin-left: 130px;
+	color: wheat;
+}
+
+.disclaimer {
+	font-size: 11px;
+	color: wheat;
+}
+
+@media (max-width: 1100px) {
+	.firstAvailableApp {
+		font-size: 0.85rem;
+		letter-spacing: 2px;
+	}
+
+	.firstAvailableApp2 {
+		font-size: 0.85rem;
+		letter-spacing: 2px;
+	}
+	.chooseDateServiceFirstAvail {
+		font-size: 0.75rem;
+	}
+
+	.inputFieldsFirstAvail {
+		padding-top: 7px;
+		padding-bottom: 7px;
+		border-radius: 4px !important;
+		width: 50%;
+		font-size: 12px;
+		box-shadow: 1px 1px 1px 1px rgb(0, 0, 0, 0.2);
+		margin-bottom: 15px;
+	}
+	.pleaseSelectAServFirstAvail {
+		font-size: 0.85rem;
+		letter-spacing: 1px;
+	}
+	.noAppointFirstAvail {
+		font-size: 1rem;
+		letter-spacing: 1px;
+	}
+	.listOfServiceDescription {
+		text-align: left;
+		text-transform: capitalize;
+		list-style: none;
+		/* border: 1px red solid; */
+		font-size: 12px;
+		margin-left: 180px;
+	}
+}
+
+/* End Home Page Styling*/
+
+/*Animation*/
+
+.AnimationCustom {
+	animation: fadeIn ease 3s;
+	-webkit-animation: fadeIn ease 3s;
+	-moz-animation: fadeIn ease 3s;
+	-o-animation: fadeIn ease 3s;
+	-ms-animation: fadeIn ease 3s;
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.DarkbackgroundForSidebar {
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 100%;
+	top: 50px;
+	left: 0;
+	position: fixed;
+	z-index: 100;
+	padding: 1000px;
+}
+
+.DarkbackgroundForSidebar2 {
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 100%;
+	top: 60px;
+	left: 0;
+	position: fixed;
+	z-index: 100;
+	padding: 1000px;
 }

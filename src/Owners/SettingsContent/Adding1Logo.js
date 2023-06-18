@@ -1,0 +1,238 @@
+import React from "react";
+import styled from "styled-components";
+import {isAuthenticated} from "../../auth";
+import {cloudinaryUpload1} from "../apiOwner";
+import axios from "axios";
+import Resizer from "react-image-file-resizer";
+import ImageCard from "./ImageCard";
+import {Link} from "react-router-dom";
+import ImageCard2 from "./ImageCard2";
+
+const Adding1Logo = ({
+	addStoreLogo,
+	setAddStoreLogo,
+	addStoreName,
+	setAddStoreName,
+	setClickedMenu,
+	allServices,
+	storeThumbnail,
+	setStoreThumbnail,
+	alreadySetLoyaltyPointsManagement,
+}) => {
+	// destructure user and token from localstorage
+	const {user, token} = isAuthenticated();
+
+	const fileUploadAndResizeLogo = (e) => {
+		// console.log(e.target.files);
+		let files = e.target.files;
+		console.log(files);
+		let allUploadedFiles = addStoreLogo;
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 300 * 1024) {
+					// file size is in bytes
+					alert("File size should be less than 300kb");
+					continue; // skip this file
+				}
+				Resizer.imageFileResizer(
+					files[i],
+					666,
+					315,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryUpload1(user._id, token, {image: uri})
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setAddStoreLogo({...addStoreLogo, images: allUploadedFiles});
+							})
+							.catch((err) => {
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
+			}
+		}
+	};
+
+	const handleImageRemove = (public_id) => {
+		// console.log("remove image", public_id);
+		axios
+			.post(
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
+				{public_id},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+			.then((res) => {
+				setAddStoreLogo([]);
+			})
+			.catch((err) => {
+				console.log(err);
+				setTimeout(function () {
+					window.location.reload(false);
+				}, 1000);
+			});
+	};
+
+	const fileUploadAndResizeStoreThumbnail = (e) => {
+		// console.log(e.target.files);
+		let files = e.target.files;
+		console.log(files);
+		let allUploadedFiles = storeThumbnail;
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 500 * 1024) {
+					// file size is in bytes
+					alert("File size should be less than 500kb");
+					continue; // skip this file
+				}
+				Resizer.imageFileResizer(
+					files[i],
+					800,
+					954,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryUpload1(user._id, token, {image: uri})
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setStoreThumbnail({
+									...storeThumbnail,
+									images: allUploadedFiles,
+								});
+							})
+							.catch((err) => {
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
+			}
+		}
+	};
+
+	const handleImageRemove2 = (public_id) => {
+		// console.log("remove image", public_id);
+		axios
+			.post(
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
+				{public_id},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+			.then((res) => {
+				setStoreThumbnail([]);
+			})
+			.catch((err) => {
+				console.log(err);
+				setTimeout(function () {
+					window.location.reload(false);
+				}, 1000);
+			});
+	};
+
+	return (
+		<Adding1LogoWrapper>
+			<div className='row col-8'>
+				<div className='col-md-6'>
+					<ImageCard
+						addThumbnail={addStoreLogo}
+						handleImageRemove={handleImageRemove}
+						setAddThumbnail={setAddStoreLogo}
+						fileUploadAndResizeThumbNail={fileUploadAndResizeLogo}
+					/>
+				</div>
+				<div className='col-md-6 pt-5'>
+					<label>Store Name</label>
+					<input
+						className='form-control'
+						type='text'
+						placeholder='Fill In Your Store Name'
+						value={addStoreName}
+						onChange={(e) => {
+							setAddStoreName(e.target.value);
+						}}
+					/>
+				</div>
+				<div className='col-md-6 mt-3 mx-auto'>
+					<ImageCard2
+						addThumbnail={storeThumbnail}
+						handleImageRemove={handleImageRemove2}
+						setAddThumbnail={setStoreThumbnail}
+						fileUploadAndResizeThumbNail={fileUploadAndResizeStoreThumbnail}
+					/>
+				</div>
+			</div>
+
+			{addStoreName &&
+			addStoreLogo &&
+			addStoreLogo.images &&
+			addStoreLogo.images.length > 0 ? (
+				<div>
+					<div
+						className='btn btn-primary mt-4 text-center w-25'
+						onClick={() => setClickedMenu("WorkingDays")}
+					>
+						Add Your Working Hours
+					</div>
+				</div>
+			) : null}
+
+			{alreadySetLoyaltyPointsManagement &&
+			allServices &&
+			allServices.length === 0 &&
+			alreadySetLoyaltyPointsManagement &&
+			alreadySetLoyaltyPointsManagement.addStoreName ? (
+				<div className='mt-3 mb-5'>
+					<span>
+						<Link
+							to='/store/admin/services'
+							onClick={() => {
+								window.scrollTo({top: 0, behavior: "smooth"});
+							}}
+							className='btn btn-danger text-center btn-block w-25 float-left'
+						>
+							Add Services (Next Step)
+						</Link>
+					</span>
+				</div>
+			) : null}
+		</Adding1LogoWrapper>
+	);
+};
+
+export default Adding1Logo;
+
+const Adding1LogoWrapper = styled.div`
+	overflow: hidden;
+	margin-left: 230px;
+	margin-top: 50px;
+
+	.row {
+		background-color: white;
+		min-height: 500px;
+		padding: 10px;
+	}
+
+	label {
+		font-weight: bolder;
+		font-size: 1.1rem;
+	}
+
+	div > .btn {
+		margin-left: 350px;
+		cursor: pointer;
+	}
+`;
