@@ -22,7 +22,7 @@ const MainHeroComp = ({language}) => {
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
 				position: "relative",
-				height: "720px",
+				height: "840px",
 				width: "100%",
 				objectFit: "cover",
 				backgroundPosition: `center ${offsetY * 0.5}px`,
@@ -94,6 +94,12 @@ const MainHeroComp = ({language}) => {
 								<strong>Enjoy our 40 day FREE TRIAL!</strong>
 							</h3>
 						)}
+						<h3 className='scheduleNowButton'>
+							{" "}
+							<Link className='btn' to='/schedule'>
+								SCHEDULE NOW!
+							</Link>{" "}
+						</h3>
 					</div>
 				</Animated>
 			</div>
@@ -156,6 +162,26 @@ const MainHeroCompWrapper = styled.div`
 		left: 30%;
 	}
 
+	.content > .scheduleNowButton {
+		position: absolute;
+		margin-top: 500px;
+		color: white;
+		font-weight: bolder;
+		padding: 5px;
+		font-size: 1rem;
+		top: 20%;
+		left: 50%;
+		background-color: #363636;
+		border-radius: 5px;
+		color: white;
+	}
+
+	.content > .scheduleNowButton > .btn {
+		font-size: 2rem;
+		font-weight: bolder;
+		color: white;
+	}
+
 	@media (max-width: 1300px) {
 		.content > h1 {
 			margin-top: 100px;
@@ -166,7 +192,7 @@ const MainHeroCompWrapper = styled.div`
 		}
 
 		.content > h2 {
-			margin-top: 200px;
+			margin-top: 230px;
 			font-size: 1.1rem;
 			top: 0%;
 			left: 0%;
@@ -175,7 +201,7 @@ const MainHeroCompWrapper = styled.div`
 
 		.content > h3 {
 			position: absolute;
-			margin-top: 410px;
+			margin-top: 470px;
 			color: white;
 			font-weight: bolder;
 			font-size: 0.9rem;
@@ -187,13 +213,27 @@ const MainHeroCompWrapper = styled.div`
 
 		.content > .btn {
 			position: absolute;
-			margin-top: 360px;
+			margin-top: 420px;
 			color: white;
 			font-weight: bolder;
 			font-size: 1rem;
 			top: 0%;
 			left: 10%;
 			transform: translate(-0%, -0%);
+		}
+
+		.content > .scheduleNowButton {
+			position: absolute;
+			margin-top: 580px;
+			color: white;
+			font-weight: bolder;
+			padding: 5px;
+			font-size: 1rem;
+			top: 20%;
+			left: 5%;
+			background-color: #363636;
+			border-radius: 5px;
+			color: white;
 		}
 	}
 `;

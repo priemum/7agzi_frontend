@@ -1144,7 +1144,7 @@ const UpdateSingleAppointmentUser = ({SingleAppointment, getChosenStore}) => {
 														textAlign: "center",
 														textShadow: "2px 2px 4px",
 														fontStyle: "italic",
-														letterSpacing: "4px",
+														// letterSpacing: "4px",
 													}}
 												>
 													Update Your Last Appointment:

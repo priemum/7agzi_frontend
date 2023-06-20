@@ -136,7 +136,7 @@ const FormStep2 = ({
 											fontWeight: "bold",
 										}}
 									>
-										${chosenServicePrice.servicePriceDiscount}
+										EGP {chosenServicePrice.servicePriceDiscount}
 									</span>
 								</React.Fragment>
 							)}
@@ -163,7 +163,7 @@ const FormStep2 = ({
 												fontWeight: "bold",
 											}}
 										>
-											${Number(onlineServices) * 1}
+											EGP {Number(onlineServices) * 1}
 										</span>
 									</React.Fragment>
 								)}
@@ -190,7 +190,7 @@ const FormStep2 = ({
 											fontWeight: "bold",
 										}}
 									>
-										$
+										EGP{" "}
 										{Number(
 											Number(chosenTips / 100).toFixed(2) *
 												Number(chosenServicePrice.servicePriceDiscount / 1)
@@ -218,7 +218,7 @@ const FormStep2 = ({
 											fontWeight: "bold",
 										}}
 									>
-										${Number(chosenTipOtherAmount) * 1}
+										EGP {Number(chosenTipOtherAmount) * 1}
 									</span>
 								</React.Fragment>
 							)}
@@ -303,7 +303,7 @@ const FormStep2 = ({
 								TipsAmountFinal !== "Select a Tip" &&
 								chosenTips !== "Select a Tip" ? (
 									<option className='items text-muted'>
-										${TipsAmountFinal}
+										EGP {TipsAmountFinal}
 									</option>
 								) : (
 									<option className='items text-muted'>Select a Tip</option>
@@ -335,7 +335,7 @@ const FormStep2 = ({
 												textShadow: "1px 2px 4px",
 											}}
 										>
-											Please select desired $ amount
+											Please select desired EGP amount
 										</label>
 										<input
 											type='number'

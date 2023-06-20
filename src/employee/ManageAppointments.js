@@ -282,7 +282,7 @@ const ManageAppointments = () => {
 							textAlign: "center",
 							boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)",
 							fontWeight: "bold",
-							letterSpacing: "2px",
+							// letterSpacing: "2px",
 							borderRadius: "20px",
 						}}
 					>

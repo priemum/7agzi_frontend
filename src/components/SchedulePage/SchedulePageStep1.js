@@ -1,11 +1,11 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import ReactGA from "react-ga";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "antd/dist/antd.css";
-import { Steps, Button, message, DatePicker, Modal } from "antd";
-import { isAuthenticated, getSingleUser } from "../../auth/index";
+import {Steps, Button, message, DatePicker, Modal} from "antd";
+import {isAuthenticated, getSingleUser} from "../../auth/index";
 import styled from "styled-components";
 import moment from "moment";
 import Resizer from "react-image-file-resizer";
@@ -16,12 +16,12 @@ import {
 	createScheduledAppointment,
 	listScheduledOrders,
 } from "../apiCore";
-import { allLoyaltyPointsAndStoreStatus } from "../../admin/apiAdmin";
-import { toast } from "react-toastify";
+import {allLoyaltyPointsAndStoreStatus} from "../../admin/apiAdmin";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import SignupModal from "./SignupModal";
 import SigninModal from "./SigninModal";
-const { Step } = Steps;
+const {Step} = Steps;
 const allDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 const SchedulePageStep1 = () => {
@@ -53,7 +53,7 @@ const SchedulePageStep1 = () => {
 
 	const user = isAuthenticated() && isAuthenticated().user;
 	const token = isAuthenticated() && isAuthenticated().token;
-	const { email } = user;
+	const {email} = user;
 	const email_phone_Check = () => {
 		if (
 			user &&
@@ -116,7 +116,7 @@ const SchedulePageStep1 = () => {
 		1 -
 		Number(
 			alreadySetLoyaltyPointsManagement &&
-				alreadySetLoyaltyPointsManagement.discountPercentage,
+				alreadySetLoyaltyPointsManagement.discountPercentage
 		) /
 			100
 	).toFixed(2);
@@ -127,7 +127,7 @@ const SchedulePageStep1 = () => {
 
 	useEffect(() => {
 		const pickedDateFirstAvailable = JSON.parse(
-			localStorage.getItem("chosenDateFromFirstAvailable"),
+			localStorage.getItem("chosenDateFromFirstAvailable")
 		);
 		if (pickedDateFirstAvailable) {
 			setChosenDate(new Date(pickedDateFirstAvailable).toLocaleDateString());
@@ -174,7 +174,7 @@ const SchedulePageStep1 = () => {
 						data &&
 							data.workingHours &&
 							data.workingHours.filter((i) => i >= timeNow) &&
-							data.workingHours.filter((i) => i >= timeNow).sort(),
+							data.workingHours.filter((i) => i >= timeNow).sort()
 					);
 				} else {
 					setScheduledHours(data && data.workingHours.sort());
@@ -211,7 +211,7 @@ const SchedulePageStep1 = () => {
 			} else {
 				setAllServices(
 					data.filter((i) => i.activeService === true) &&
-						data.filter((i) => i.activeService === true).map((ii) => ii),
+						data.filter((i) => i.activeService === true).map((ii) => ii)
 				);
 			}
 		});
@@ -221,7 +221,7 @@ const SchedulePageStep1 = () => {
 		chosenService &&
 		AllServices &&
 		AllServices.map((service) => service.serviceName.toLowerCase()).indexOf(
-			chosenService.toLowerCase(),
+			chosenService.toLowerCase()
 		);
 	const chosenServicePrice =
 		chosenService && AllServices && indexOfService && indexOfService === 0
@@ -240,7 +240,7 @@ const SchedulePageStep1 = () => {
 		AllServices.filter(
 			(i) =>
 				pickedEmployee.services &&
-				pickedEmployee.services.indexOf(i.serviceName.toLowerCase()) >= 0,
+				pickedEmployee.services.indexOf(i.serviceName.toLowerCase()) >= 0
 		);
 	var ServiceTime_Duration =
 		AllServices &&
@@ -270,8 +270,8 @@ const SchedulePageStep1 = () => {
 						(i) =>
 							new Date(i.scheduledDate).setHours(0, 0, 0, 0) ===
 								new Date(chosenDate).setHours(0, 0, 0, 0) &&
-							i.status !== "Cancelled",
-					),
+							i.status !== "Cancelled"
+					)
 				);
 				setLoading(false);
 			}
@@ -321,7 +321,7 @@ const SchedulePageStep1 = () => {
 		// eslint-disable-next-line
 		var timeModified = new Date("1970-01-01" + " " + timing + ":00");
 		timeModified = timeModified.setMinutes(
-			timeModified.getMinutes() - lastPeriods * 15,
+			timeModified.getMinutes() - lastPeriods * 15
 		);
 		// timeModified = new Date(
 		// 	timeModified.setMinutes(timeModified.getMinutes() - periods * 15),
@@ -340,12 +340,12 @@ const SchedulePageStep1 = () => {
 			helper = new Date(
 				finalAlreadyScheduledTimes[
 					finalAlreadyScheduledTimes.length - 1
-				].scheduledTime,
+				].scheduledTime
 			);
 			timeModified = helper.setMinutes(helper.getMinutes() + 15);
 		}
 		return finalAlreadyScheduledTimes.map((addedTimes) =>
-			new Date(addedTimes.scheduledTime).toLocaleTimeString(),
+			new Date(addedTimes.scheduledTime).toLocaleTimeString()
 		);
 	};
 
@@ -359,24 +359,23 @@ const SchedulePageStep1 = () => {
 				i.scheduledTime,
 				ServiceTime_Duration && ServiceTime_Duration.serviceTime
 					? ServiceTime_Duration.serviceTime / 15 - 1
-					: 0,
-			),
+					: 0
+			)
 		);
 
 	var timesInBetweenAlreadyChosenTimesV2 = [].concat.apply(
 		[],
-		timesInBetweenAlreadyChosenTimes,
+		timesInBetweenAlreadyChosenTimes
 	);
 
 	var allAlreadyScheduledHoursWithDuplicates =
 		timesInBetweenAlreadyChosenTimesV2.concat(
-			alreadyScheduledTimesInchosenDate() &&
-				alreadyScheduledTimesInchosenDate(),
+			alreadyScheduledTimesInchosenDate() && alreadyScheduledTimesInchosenDate()
 		) &&
 		timesInBetweenAlreadyChosenTimesV2
 			.concat(
 				alreadyScheduledTimesInchosenDate() &&
-					alreadyScheduledTimesInchosenDate(),
+					alreadyScheduledTimesInchosenDate()
 			)
 			.map(
 				(i) =>
@@ -384,7 +383,7 @@ const SchedulePageStep1 = () => {
 					checkLength(new Date("1970-01-01" + " " + i).getHours()).toString() +
 					":" +
 					// eslint-disable-next-line
-					checkLength(new Date("1970-01-01" + " " + i).getMinutes()).toString(),
+					checkLength(new Date("1970-01-01" + " " + i).getMinutes()).toString()
 			);
 	var allAlreadyScheduledHoursFinal = [];
 	allAlreadyScheduledHoursWithDuplicates.map((time) => {
@@ -427,8 +426,8 @@ const SchedulePageStep1 = () => {
 			var helper = new Date(timeModified);
 			var finalOutputDateTimeFormat = new Date(
 				(timeModified = helper.setMinutes(
-					helper.getMinutes() + serviceDuration2,
-				)),
+					helper.getMinutes() + serviceDuration2
+				))
 			);
 			// eslint-disable-next-line
 			var finalOutputTimeFormat =
@@ -467,7 +466,7 @@ const SchedulePageStep1 = () => {
 		isAuthenticated();
 		const chosenStylistId = JSON.parse(localStorage.getItem("barber"));
 		const pickedServiceFirstAvailable = JSON.parse(
-			localStorage.getItem("pickedServiceFirstAvailable"),
+			localStorage.getItem("pickedServiceFirstAvailable")
 		);
 
 		loadPickedEmployee(chosenStylistId, pickedServiceFirstAvailable);
@@ -490,8 +489,8 @@ const SchedulePageStep1 = () => {
 			setTipsAmountFinal(
 				Number(chosenTips / 100) *
 					Number(
-						chosenServicePrice && chosenServicePrice.servicePriceDiscount / 1,
-					),
+						chosenServicePrice && chosenServicePrice.servicePriceDiscount / 1
+					)
 			);
 		} else if (
 			chosenTips !== "Select a Tip" &&
@@ -551,17 +550,17 @@ const SchedulePageStep1 = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryCommentUpload(user._id, token, { image: uri })
+						cloudinaryCommentUpload(user._id, token, {image: uri})
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setScheduleAppointmentPhoto({ images: allUploadedFiles });
+								setScheduleAppointmentPhoto({images: allUploadedFiles});
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
 							});
 					},
-					"base64",
+					"base64"
 				);
 			}
 		}
@@ -572,7 +571,8 @@ const SchedulePageStep1 = () => {
 			<React.Fragment>
 				<label
 					className='btn btn-info btn-raised mb-3'
-					style={{ cursor: "pointer", fontSize: "0.80rem" }}>
+					style={{cursor: "pointer", fontSize: "0.80rem"}}
+				>
 					Please add a haircut photo
 					<input
 						type='file'
@@ -611,7 +611,8 @@ const SchedulePageStep1 = () => {
 								background: "black",
 								fontSize: "20px",
 							}}
-							aria-label='Close'>
+							aria-label='Close'
+						>
 							<span aria-hidden='true'>&times;</span>
 						</button>
 					</React.Fragment>
@@ -634,7 +635,7 @@ const SchedulePageStep1 = () => {
 			content: (
 				<div>
 					<div className='float-left ml-5'>
-						<span style={{ fontSize: "1.1rem", color: "black" }}>
+						<span style={{fontSize: "1.1rem", color: "black"}}>
 							{" "}
 							<strong> Stylist Name:</strong>{" "}
 						</span>{" "}
@@ -643,7 +644,8 @@ const SchedulePageStep1 = () => {
 								color: "#00407f",
 								fontSize: "1.1rem",
 								fontWeight: "bold",
-							}}>
+							}}
+						>
 							{pickedEmployee.employeeName}
 						</span>
 					</div>
@@ -656,18 +658,20 @@ const SchedulePageStep1 = () => {
 							fontSize: "1.05rem",
 							color: "#660000",
 							textShadow: "1px 2px 4px",
-						}}>
+						}}
+					>
 						Select an Appointment Date
 						<br />
-						{availableHoursModified() && availableHoursModified().length < 1 && (
-							<React.Fragment>
-								<span style={{ fontSize: "0.75rem", color: "black" }}>
-									{" "}
-									Please note that {pickedEmployee.employeeName} is fully booked
-									for the chosen date.
-								</span>{" "}
-							</React.Fragment>
-						)}
+						{availableHoursModified() &&
+							availableHoursModified().length < 1 && (
+								<React.Fragment>
+									<span style={{fontSize: "0.75rem", color: "black"}}>
+										{" "}
+										Please note that {pickedEmployee.employeeName} is fully
+										booked for the chosen date.
+									</span>{" "}
+								</React.Fragment>
+							)}
 						<React.Fragment>
 							{pickedEmployee &&
 							pickedEmployee.workingDays &&
@@ -675,7 +679,7 @@ const SchedulePageStep1 = () => {
 							availableHoursModified() &&
 							availableHoursModified().length >= 1 ? (
 								<React.Fragment>
-									<span style={{ fontSize: "0.75rem", color: "black" }}>
+									<span style={{fontSize: "0.75rem", color: "black"}}>
 										{" "}
 										Please note that {pickedEmployee.employeeName} is off on the
 										selected date, Please choose another date.
@@ -700,9 +704,9 @@ const SchedulePageStep1 = () => {
 								? moment(
 										new Date(
 											JSON.parse(
-												localStorage.getItem("chosenDateFromFirstAvailable"),
-											),
-										),
+												localStorage.getItem("chosenDateFromFirstAvailable")
+											)
+										)
 								  )
 								: moment()
 						}
@@ -724,7 +728,8 @@ const SchedulePageStep1 = () => {
 								fontSize: "1.05rem",
 								color: "#660000",
 								textShadow: "1px 2px 4px",
-							}}>
+							}}
+						>
 							Select a Service
 						</label>
 						<br />
@@ -742,7 +747,8 @@ const SchedulePageStep1 = () => {
 								textTransform: "capitalize",
 								fontSize: "0.9rem",
 								boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
-							}}>
+							}}
+						>
 							{chosenService && chosenService !== "Select a Service" ? (
 								<option className='items text-muted inputFields'>
 									{chosenService}
@@ -759,7 +765,8 @@ const SchedulePageStep1 = () => {
 									<option
 										key={i}
 										value={s.serviceName}
-										className='items inputFields'>
+										className='items inputFields'
+									>
 										{s.serviceName}
 									</option>
 								))}
@@ -779,7 +786,8 @@ const SchedulePageStep1 = () => {
 									fontSize: "1.05rem",
 									color: "#660000",
 									textShadow: "1px 2px 4px",
-								}}>
+								}}
+							>
 								Select an Appointment Time
 							</label>
 							<br />
@@ -796,7 +804,8 @@ const SchedulePageStep1 = () => {
 									width: "50%",
 									fontSize: "0.9rem",
 									boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
-								}}>
+								}}
+							>
 								{chosenTime && chosenTime !== "Select Time" ? (
 									<option className='items text-muted'>{chosenTime}</option>
 								) : (
@@ -818,7 +827,8 @@ const SchedulePageStep1 = () => {
 											fontSize: "0.9rem",
 											color: "black",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										Your Appointment is scheduled from {appointmentRange()} (
 										{ServiceTime_Duration.serviceTime} mins)
 									</span>{" "}
@@ -833,7 +843,8 @@ const SchedulePageStep1 = () => {
 									fontSize: "1.05rem",
 									color: "#660000",
 									textShadow: "1px 2px 4px",
-								}}>
+								}}
+							>
 								Select an Appointment Time
 							</label>
 							<br />
@@ -851,7 +862,8 @@ const SchedulePageStep1 = () => {
 									width: "50%",
 									fontSize: "0.9rem",
 									boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
-								}}>
+								}}
+							>
 								<option className='items text-muted'>
 									Please select a date and a service first
 								</option>
@@ -866,11 +878,12 @@ const SchedulePageStep1 = () => {
 			content: (
 				<React.Fragment>
 					<div className='row'>
-						<div className=' col-md-4 m-2' style={{ textAlign: "left" }}>
+						<div className=' col-md-4 m-2' style={{textAlign: "left"}}>
 							<div className='mb-2 '>
 								<span
-									style={{ fontSize: "1.1rem", color: "black" }}
-									className='dataPointsReview2'>
+									style={{fontSize: "1.1rem", color: "black"}}
+									className='dataPointsReview2'
+								>
 									{" "}
 									<strong> Stylist Name:</strong>{" "}
 								</span>{" "}
@@ -880,7 +893,8 @@ const SchedulePageStep1 = () => {
 										color: "#00407f",
 										fontSize: "1.1rem",
 										fontWeight: "bold",
-									}}>
+									}}
+								>
 									{pickedEmployee.employeeName}
 								</span>
 							</div>
@@ -888,8 +902,9 @@ const SchedulePageStep1 = () => {
 							{chosenDate && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1.1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1.1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong> Appointment Scheduled On Date:</strong>{" "}
 									</span>{" "}
@@ -899,7 +914,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1.1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										{new Date(chosenDate).toLocaleDateString()}
 									</span>
 								</div>
@@ -908,8 +924,9 @@ const SchedulePageStep1 = () => {
 							{chosenTime && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1.1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1.1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong> Appointment Scheduled:</strong>{" "}
 									</span>{" "}
@@ -919,7 +936,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1.1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										From {appointmentRange()} (
 										{ServiceTime_Duration.serviceTime} mins)
 									</span>
@@ -929,8 +947,9 @@ const SchedulePageStep1 = () => {
 							{chosenService && chosenService !== "Select a Service" && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1.1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1.1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong>Scheduled Service:</strong>{" "}
 									</span>{" "}
@@ -940,7 +959,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1.1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										{chosenService}
 									</span>
 								</div>
@@ -949,8 +969,9 @@ const SchedulePageStep1 = () => {
 							{chosenServicePrice && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1.1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1.1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong>Scheduled Service Price:</strong>{" "}
 									</span>{" "}
@@ -960,8 +981,9 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1.1rem",
 											fontWeight: "bold",
-										}}>
-										${chosenServicePrice.servicePriceDiscount}
+										}}
+									>
+										{chosenServicePrice.servicePriceDiscount} EGP
 									</span>
 								</div>
 							)}
@@ -973,8 +995,9 @@ const SchedulePageStep1 = () => {
 								chosenService !== "Select a Service" && (
 									<div className='mb-2 '>
 										<span
-											style={{ fontSize: "1.1rem", color: "black" }}
-											className='dataPointsReview'>
+											style={{fontSize: "1.1rem", color: "black"}}
+											className='dataPointsReview'
+										>
 											{" "}
 											<strong>Added Tip:</strong>{" "}
 										</span>{" "}
@@ -984,12 +1007,13 @@ const SchedulePageStep1 = () => {
 												color: "#00407f",
 												fontSize: "1.1rem",
 												fontWeight: "bold",
-											}}>
-											$
+											}}
+										>
 											{Number(
 												Number(chosenTips / 100).toFixed(2) *
-													Number(chosenServicePrice.servicePriceDiscount / 1),
-											).toFixed(2)}
+													Number(chosenServicePrice.servicePriceDiscount / 1)
+											).toFixed(2)}{" "}
+											EGP
 										</span>
 									</div>
 								)}
@@ -999,8 +1023,9 @@ const SchedulePageStep1 = () => {
 								chosenTips === "Other amount" && (
 									<div className='mb-2 '>
 										<span
-											style={{ fontSize: "1.1rem", color: "black" }}
-											className='dataPointsReview'>
+											style={{fontSize: "1.1rem", color: "black"}}
+											className='dataPointsReview'
+										>
 											{" "}
 											<strong>Added Tip:</strong>{" "}
 										</span>{" "}
@@ -1010,7 +1035,8 @@ const SchedulePageStep1 = () => {
 												color: "#00407f",
 												fontSize: "1.1rem",
 												fontWeight: "bold",
-											}}>
+											}}
+										>
 											${Number(chosenTipOtherAmount) * 1}
 										</span>
 									</div>
@@ -1023,7 +1049,8 @@ const SchedulePageStep1 = () => {
 									fontSize: "1.05rem",
 									color: "#660000",
 									textShadow: "1px 2px 4px",
-								}}>
+								}}
+							>
 								***Optional... Tips
 							</label>
 							<br />
@@ -1041,7 +1068,8 @@ const SchedulePageStep1 = () => {
 									width: "50%",
 									fontSize: "0.9rem",
 									boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
-								}}>
+								}}
+							>
 								{TipsAmountFinal &&
 								TipsAmountFinal !== "Select a Tip" &&
 								chosenTips !== "Select a Tip" ? (
@@ -1076,14 +1104,15 @@ const SchedulePageStep1 = () => {
 												fontSize: "0.8rem",
 												color: "#660000",
 												textShadow: "1px 2px 4px",
-											}}>
+											}}
+										>
 											Please select desired $ amount
 										</label>
 										<input
 											type='number'
 											onChange={handleChosenTipOtherAmount}
 											value={chosenTipOtherAmount}
-											style={{ borderRadius: "10px", textAlign: "center" }}
+											style={{borderRadius: "10px", textAlign: "center"}}
 										/>
 									</div>
 								)}
@@ -1104,7 +1133,8 @@ const SchedulePageStep1 = () => {
 								fontSize: "1.3rem",
 								color: "#660000",
 								// textShadow: "1px 2px 4px",
-							}}>
+							}}
+						>
 							Please review your booking info before scheduling
 						</span>
 						<React.Fragment>
@@ -1118,7 +1148,8 @@ const SchedulePageStep1 = () => {
 										fontStyle: "italic",
 										fontWeight: "bold",
 										color: "green",
-									}}>
+									}}
+								>
 									{!applyPoints && (
 										<span>
 											Congrats, you now have {updatedUser.activePoints} points,
@@ -1137,7 +1168,8 @@ const SchedulePageStep1 = () => {
 										fontStyle: "italic",
 										fontWeight: "bold",
 										color: "grey",
-									}}>
+									}}
+								>
 									You currently have {updatedUser.activePoints} active points,
 									you will need{" "}
 									{NumberOfPointsForAwarding - updatedUser.activePoints} more
@@ -1156,7 +1188,8 @@ const SchedulePageStep1 = () => {
 									{!applyPoints && (
 										<button
 											onClick={() => setApplyPoints(true)}
-											className='btn btn-success  m-3 card-btn-1 mx-auto'>
+											className='btn btn-success  m-3 card-btn-1 mx-auto'
+										>
 											Apply{" "}
 											{alreadySetLoyaltyPointsManagement &&
 												alreadySetLoyaltyPointsManagement.discountPercentage}
@@ -1171,7 +1204,8 @@ const SchedulePageStep1 = () => {
 												fontStyle: "italic",
 												fontWeight: "bold",
 												color: "green",
-											}}>
+											}}
+										>
 											Thank you for applying your loyalty points, you got{" "}
 											{alreadySetLoyaltyPointsManagement &&
 												alreadySetLoyaltyPointsManagement.discountPercentage}
@@ -1186,8 +1220,9 @@ const SchedulePageStep1 = () => {
 						<div className=' col-md-5 my-auto'>
 							<div className='mb-2 '>
 								<span
-									style={{ fontSize: "1.1rem", color: "black" }}
-									className='dataPointsReview2'>
+									style={{fontSize: "1.1rem", color: "black"}}
+									className='dataPointsReview2'
+								>
 									{" "}
 									<strong> Stylist Name:</strong>{" "}
 								</span>{" "}
@@ -1198,15 +1233,17 @@ const SchedulePageStep1 = () => {
 										fontSize: "1.1rem",
 										fontWeight: "bold",
 										marginBottom: "20px",
-									}}>
+									}}
+								>
 									{pickedEmployee.employeeName}
 								</span>
 							</div>
 							{chosenDate && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong> Appointment Scheduled On Date:</strong>{" "}
 									</span>{" "}
@@ -1216,7 +1253,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										{new Date(chosenDate).toLocaleDateString()}
 									</span>
 								</div>
@@ -1225,8 +1263,9 @@ const SchedulePageStep1 = () => {
 							{chosenTime && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong> Appointment Scheduled:</strong>{" "}
 									</span>{" "}
@@ -1236,7 +1275,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										From {appointmentRange()} (
 										{ServiceTime_Duration.serviceTime} mins)
 									</span>
@@ -1246,8 +1286,9 @@ const SchedulePageStep1 = () => {
 							{chosenService && chosenService !== "Select a Service" && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong>Scheduled Service:</strong>{" "}
 									</span>{" "}
@@ -1257,7 +1298,8 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										{chosenService}
 									</span>
 								</div>
@@ -1266,8 +1308,9 @@ const SchedulePageStep1 = () => {
 							{chosenServicePrice && (
 								<div className='mb-2 '>
 									<span
-										style={{ fontSize: "1rem", color: "black" }}
-										className='dataPointsReview'>
+										style={{fontSize: "1rem", color: "black"}}
+										className='dataPointsReview'
+									>
 										{" "}
 										<strong>Scheduled Service Price:</strong>{" "}
 									</span>{" "}
@@ -1277,8 +1320,9 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1rem",
 											fontWeight: "bold",
-										}}>
-										${chosenServicePrice.servicePriceDiscount}
+										}}
+									>
+										{chosenServicePrice.servicePriceDiscount} EGP
 									</span>
 								</div>
 							)}
@@ -1289,8 +1333,9 @@ const SchedulePageStep1 = () => {
 								chosenTime && (
 									<div className='mb-2 '>
 										<span
-											style={{ fontSize: "1rem", color: "black" }}
-											className='dataPointsReview'>
+											style={{fontSize: "1rem", color: "black"}}
+											className='dataPointsReview'
+										>
 											{" "}
 											<strong>Online Services:</strong>{" "}
 										</span>{" "}
@@ -1300,7 +1345,8 @@ const SchedulePageStep1 = () => {
 												color: "#00407f",
 												fontSize: "1rem",
 												fontWeight: "bold",
-											}}>
+											}}
+										>
 											${Number(onlineServices) * 1}
 										</span>
 									</div>
@@ -1313,8 +1359,9 @@ const SchedulePageStep1 = () => {
 								chosenService !== "Select a Service" && (
 									<div className='mb-2 '>
 										<span
-											style={{ fontSize: "1rem", color: "black" }}
-											className='dataPointsReview'>
+											style={{fontSize: "1rem", color: "black"}}
+											className='dataPointsReview'
+										>
 											{" "}
 											<strong>Added Tip:</strong>{" "}
 										</span>{" "}
@@ -1324,12 +1371,13 @@ const SchedulePageStep1 = () => {
 												color: "#00407f",
 												fontSize: "1rem",
 												fontWeight: "bold",
-											}}>
-											$
+											}}
+										>
 											{Number(
 												Number(chosenTips / 100).toFixed(2) *
-													Number(chosenServicePrice.servicePriceDiscount / 1),
-											).toFixed(2)}
+													Number(chosenServicePrice.servicePriceDiscount / 1)
+											).toFixed(2)}{" "}
+											EGP
 										</span>
 									</div>
 								)}
@@ -1339,8 +1387,9 @@ const SchedulePageStep1 = () => {
 								chosenTips === "Other amount" && (
 									<div className='mb-2 '>
 										<span
-											style={{ fontSize: "1rem", color: "black" }}
-											className='dataPointsReview'>
+											style={{fontSize: "1rem", color: "black"}}
+											className='dataPointsReview'
+										>
 											{" "}
 											<strong>Added Tip:</strong>{" "}
 										</span>{" "}
@@ -1350,7 +1399,8 @@ const SchedulePageStep1 = () => {
 												color: "#00407f",
 												fontSize: "1rem",
 												fontWeight: "bold",
-											}}>
+											}}
+										>
 											${Number(chosenTipOtherAmount) * 1}
 										</span>
 									</div>
@@ -1362,7 +1412,7 @@ const SchedulePageStep1 = () => {
 								chosenDate &&
 								chosenTime && (
 									<div className='my-2'>
-										<span style={{ fontSize: "1.2rem", color: "black" }}>
+										<span style={{fontSize: "1.2rem", color: "black"}}>
 											{" "}
 											<strong>Total:</strong>{" "}
 										</span>{" "}
@@ -1372,26 +1422,27 @@ const SchedulePageStep1 = () => {
 													color: "#00407f",
 													fontSize: "1.2rem",
 													fontWeight: "bold",
-												}}>
+												}}
+											>
 												<s
 													style={{
 														color: "red",
 														marginRight: "20px",
 														fontSize: "1.1rem",
-													}}>
-													$
+													}}
+												>
 													{Number(TipsAmountFinal) +
 														Number(chosenServicePrice.servicePriceDiscount) +
-														Number(onlineServices)}
-													{"     "}
+														Number(onlineServices)}{" "}
+													EGP
 												</s>
-												$
 												{(
 													(Number(TipsAmountFinal) +
 														Number(chosenServicePrice.servicePriceDiscount) +
 														Number(onlineServices)) *
 													discountedAmountFromLoyaltyPoints
-												).toFixed(2)}
+												).toFixed(2)}{" "}
+												EGP
 											</span>
 										)}
 										{!applyPoints && (
@@ -1400,13 +1451,14 @@ const SchedulePageStep1 = () => {
 													color: "#00407f",
 													fontSize: "1.2rem",
 													fontWeight: "bold",
-												}}>
-												$
+												}}
+											>
 												{(
 													Number(TipsAmountFinal) +
 													Number(chosenServicePrice.servicePriceDiscount) +
 													Number(onlineServices)
-												).toFixed(2)}
+												).toFixed(2)}{" "}
+												EGP
 											</span>
 										)}
 									</div>
@@ -1415,7 +1467,7 @@ const SchedulePageStep1 = () => {
 						<div className='col-md-5 mx-auto'>
 							{email_phone_Check() === "Phone" && (
 								<div className=''>
-									<span style={{ fontSize: "1rem", color: "black" }}>
+									<span style={{fontSize: "1rem", color: "black"}}>
 										{" "}
 										<strong>Your phone is:</strong>{" "}
 									</span>{" "}
@@ -1424,16 +1476,18 @@ const SchedulePageStep1 = () => {
 											color: "#00407f",
 											fontSize: "1rem",
 											fontWeight: "bold",
-										}}>
+										}}
+									>
 										{email}
 									</span>
-									<div style={{ color: "grey", fontSize: "12px" }}>
+									<div style={{color: "grey", fontSize: "12px"}}>
 										Would you like to change your phone?{" "}
 										<Link
 											onClick={() => {
 												setAddingNewPhone(true);
 												setPhone("");
-											}}>
+											}}
+										>
 											"Click here"
 										</Link>
 									</div>
@@ -1446,7 +1500,8 @@ const SchedulePageStep1 = () => {
 									fontWeight: "bold",
 									fontSize: "1rem",
 									color: "#00407f",
-								}}>
+								}}
+							>
 								*Optional: Write a comment or upload a haircut photo.
 							</label>
 							<div className='mb-1'>{FileUploadComments()}</div>
@@ -1467,7 +1522,8 @@ const SchedulePageStep1 = () => {
 											fontWeight: "bold",
 											fontSize: "1rem",
 											color: "#00407f",
-										}}>
+										}}
+									>
 										Phone
 									</label>
 
@@ -1547,31 +1603,31 @@ const SchedulePageStep1 = () => {
 		return (
 			chosenTime &&
 			new Date(helper + " " + chosenTime).setMinutes(
-				new Date(helper + " " + chosenTime).getMinutes() + serviceTimeDuration,
+				new Date(helper + " " + chosenTime).getMinutes() + serviceTimeDuration
 			)
 		);
 	};
 
 	console.log(
 		ScheduleEndsAt() && new Date(ScheduleEndsAt()).toTimeString(),
-		"scheduledEndsAt",
+		"scheduledEndsAt"
 	);
 
 	const clickSubmitSchedule_NoPayment = () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
+		window.scrollTo({top: 0, behavior: "smooth"});
 		if (
 			pickedEmployee &&
 			pickedEmployee.workingDays[0] &&
 			pickedEmployee.workingDays.indexOf(chosenDateName) < 0
 		) {
 			return toast.error(
-				`${pickedEmployee.employeeName} is off today, Please chose another date`,
+				`${pickedEmployee.employeeName} is off today, Please chose another date`
 			);
 		}
 		// console.log("scheduleSubmitted");
 		if (alreadyScheduledTimesInchosenDate().indexOf(chosenTime) >= 0) {
 			return toast.error(
-				"This time was scheduled few moments ago, please choose another time",
+				"This time was scheduled few moments ago, please choose another time"
 			);
 		}
 
@@ -1651,10 +1707,10 @@ const SchedulePageStep1 = () => {
 				// console.log(response);
 				console.log("schedule booked");
 
-				window.scrollTo({ top: 0, behavior: "smooth" });
+				window.scrollTo({top: 0, behavior: "smooth"});
 				localStorage.removeItem("barber");
 				// window.location.reload(false);
-			},
+			}
 		);
 		return setTimeout(function () {
 			window.location.href = `/appointment-successfully-scheduled/YourAppointmentWasSuccesfullyScheduled/${userId}`;
@@ -1669,9 +1725,10 @@ const SchedulePageStep1 = () => {
 					fontSize: "2rem",
 					textAlign: "center",
 					fontWeight: "bold",
-					letterSpacing: "2px",
+					// letterSpacing: "2px",
 					color: "#000034",
-				}}>
+				}}
+			>
 				Thank you for choosing Barber Shop And Beauty
 			</div>
 
@@ -1682,7 +1739,8 @@ const SchedulePageStep1 = () => {
 					textAlign: "center",
 					fontWeight: "bold",
 					color: "#670000",
-				}}>
+				}}
+			>
 				Schedule your appointment and never wait in line!
 			</div>
 
@@ -1708,8 +1766,9 @@ const SchedulePageStep1 = () => {
 								}}
 								onClick={() => {
 									next();
-									window.scrollTo({ top: 150, behavior: "smooth" });
-								}}>
+									window.scrollTo({top: 150, behavior: "smooth"});
+								}}
+							>
 								Next
 							</Button>
 						) : (
@@ -1729,7 +1788,8 @@ const SchedulePageStep1 = () => {
 										}}
 										onClick={() => {
 											setModalVisible2(!modalVisible2);
-										}}>
+										}}
+									>
 										Please Login
 									</Button>
 									<Modal
@@ -1741,7 +1801,8 @@ const SchedulePageStep1 = () => {
 													margin: "10px",
 													padding: "5px",
 													fontWeight: "bold",
-												}}>
+												}}
+											>
 												{`Please Login`}
 											</div>
 										}
@@ -1750,9 +1811,10 @@ const SchedulePageStep1 = () => {
 											setModalVisible2(false);
 											toast.success(`Thank you for signing in with....`);
 										}}
-										okButtonProps={{ style: { display: "none" } }}
-										cancelButtonProps={{ style: { display: "none" } }}
-										onCancel={() => setModalVisible2(false)}>
+										okButtonProps={{style: {display: "none"}}}
+										cancelButtonProps={{style: {display: "none"}}}
+										onCancel={() => setModalVisible2(false)}
+									>
 										<div>
 											<SigninModal />
 										</div>
@@ -1773,7 +1835,8 @@ const SchedulePageStep1 = () => {
 										}}
 										onClick={() => {
 											setModalVisible(!modalVisible);
-										}}>
+										}}
+									>
 										Please Register
 									</Button>
 									<Modal
@@ -1785,7 +1848,8 @@ const SchedulePageStep1 = () => {
 													margin: "10px",
 													padding: "5px",
 													fontWeight: "bold",
-												}}>
+												}}
+											>
 												{`Please Signup to be able to Schedule an Appointment 
 												`}
 											</div>
@@ -1795,9 +1859,10 @@ const SchedulePageStep1 = () => {
 											setModalVisible(false);
 											toast.success(`Thank you for signing up with....`);
 										}}
-										okButtonProps={{ style: { display: "none" } }}
-										cancelButtonProps={{ style: { display: "none" } }}
-										onCancel={() => setModalVisible(false)}>
+										okButtonProps={{style: {display: "none"}}}
+										cancelButtonProps={{style: {display: "none"}}}
+										onCancel={() => setModalVisible(false)}
+									>
 										<div>
 											<SignupModal />
 										</div>
@@ -1818,7 +1883,8 @@ const SchedulePageStep1 = () => {
 							fontWeight: "bold",
 							fontSize: "1.1rem",
 						}}
-						onClick={() => prev()}>
+						onClick={() => prev()}
+					>
 						Previous
 					</Button>
 				)}
@@ -1833,9 +1899,10 @@ const SchedulePageStep1 = () => {
 							fontSize: "1.1rem",
 						}}
 						onClick={() => {
-							window.scrollTo({ top: 300, behavior: "smooth" });
+							window.scrollTo({top: 300, behavior: "smooth"});
 							next();
-						}}>
+						}}
+					>
 						Next
 					</Button>
 				)}
@@ -1853,9 +1920,10 @@ const SchedulePageStep1 = () => {
 						onClick={() => {
 							message.success("Processing complete!");
 							console.log("Success");
-							window.scrollTo({ top: 0, behavior: "smooth" });
+							window.scrollTo({top: 0, behavior: "smooth"});
 							setCurrent(0);
-						}}>
+						}}
+					>
 						Phone is Required
 					</Button>
 				)}
@@ -1878,14 +1946,15 @@ const SchedulePageStep1 = () => {
 									alreadyScheduledTimesInchosenDate().indexOf(chosenTime) >= 0
 								) {
 									return toast.error(
-										"This time was scheduled few moments ago, please choose another time",
+										"This time was scheduled few moments ago, please choose another time"
 									);
 								} else {
 									return "Appoitnment was successfully scheduled!";
 								}
 							});
-							window.scrollTo({ top: 0, behavior: "smooth" });
-						}}>
+							window.scrollTo({top: 0, behavior: "smooth"});
+						}}
+					>
 						Schedule Now
 					</Button>
 				)}
@@ -1893,8 +1962,9 @@ const SchedulePageStep1 = () => {
 				<Link
 					to='/schedule'
 					onClick={() => {
-						window.scrollTo({ top: 0, behavior: "smooth" });
-					}}>
+						window.scrollTo({top: 0, behavior: "smooth"});
+					}}
+				>
 					<div className='continueShoppingEmpty  my-5'>
 						Change Selected Barber...
 					</div>

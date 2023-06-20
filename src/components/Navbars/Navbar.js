@@ -35,7 +35,7 @@ const Navbar = ({history, language}) => {
 	return (
 		<Nav
 			className=' navbar  navbar-expand-sm'
-			style={{backgroundColor: "	#113e90"}}
+			style={{backgroundColor: "black"}}
 		>
 			<div
 				className='collapse navbar-collapse '
@@ -43,7 +43,7 @@ const Navbar = ({history, language}) => {
 			>
 				<ul
 					className='navbar-nav mx-auto navbar-expand '
-					style={{backgroundColor: "	#113e90"}}
+					style={{backgroundColor: "black"}}
 				>
 					<li className='nav-item'>
 						<Link
@@ -193,6 +193,21 @@ const Navbar = ({history, language}) => {
 								}}
 							>
 								Platform Admin
+							</Link>
+						</li>
+					)}
+
+					{isAuthenticated() && isAuthenticated().user.role === 2000 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/agent/dashboard")}
+								to='/agent/dashboard'
+								onClick={() => {
+									window.scrollTo({top: 0, behavior: "smooth"});
+								}}
+							>
+								Platform <strong>AGENT</strong>
 							</Link>
 						</li>
 					)}

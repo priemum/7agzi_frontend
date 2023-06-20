@@ -1239,7 +1239,7 @@ const StylistSingleSchedulePage = (props) => {
 									</td>
 									<td>{s.service}</td>
 									<td>{s.commentsByStylist}</td>
-									<td>${s.servicePrice}</td>
+									<td>{s.servicePrice} EGP</td>
 									<td>{s.applyPoints.toString()}</td>
 								</tr>
 							))}
@@ -1462,7 +1462,7 @@ const StylistSingleSchedulePage = (props) => {
 											<li className='list-group-item'>
 												Service Price:
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.servicePrice}
+													{singleAppointment.servicePrice} EGP
 												</span>
 											</li>
 										</div>
@@ -1470,7 +1470,7 @@ const StylistSingleSchedulePage = (props) => {
 											<li className='list-group-item'>
 												Paid Tip: {"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.paidTip.toFixed(2)}
+													{singleAppointment.paidTip.toFixed(2)} EGP
 												</span>
 											</li>
 										</div>
@@ -1478,7 +1478,7 @@ const StylistSingleSchedulePage = (props) => {
 											<li className='list-group-item'>
 												Online Service Fee:{"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.onlineServicesFees}
+													{singleAppointment.onlineServicesFees} EGP
 												</span>
 											</li>
 										</div>
@@ -1486,7 +1486,7 @@ const StylistSingleSchedulePage = (props) => {
 											<li className='list-group-item'>
 												Paid Amount:{"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.amount}
+													{singleAppointment.amount} EGP
 												</span>
 											</li>
 										</div>
@@ -1494,13 +1494,13 @@ const StylistSingleSchedulePage = (props) => {
 											<li className='list-group-item'>
 												Discounted Amount:{"  "}
 												<span className='detailsAboutAppointment'>
-													$
 													{singleAppointment.discountedAmount &&
 													singleAppointment.discountedAmount !== 0
 														? singleAppointment.discountedAmount.toFixed(2) +
 														  "    " +
 														  `(${singleAppointment.discountedPercentage}%)`
-														: 0}
+														: 0}{" "}
+													EGP
 												</span>
 											</li>
 										</div>
@@ -1550,7 +1550,7 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-6 mt-3'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold", letterSpacing: "7px"}}
+												style={{fontWeight: "bold", letterSpacing: "2px"}}
 											>
 												Attached Image:{"  "}
 												<img
@@ -1567,12 +1567,12 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-4 my-auto mx-auto'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold", letterSpacing: "7px"}}
+												style={{fontWeight: "bold", letterSpacing: "2px"}}
 											>
 												Customer's Comment:
 												<br />
 												<br />
-												<span style={{letterSpacing: "2px"}}>
+												<span>
 													{" "}
 													{singleAppointment &&
 													singleAppointment.appointmentComment
@@ -1584,12 +1584,12 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-8 my-5 mx-auto'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold", letterSpacing: "7px"}}
+												style={{fontWeight: "bold"}}
 											>
 												Stylist Comment:
 												<br />
 												<br />
-												<span style={{letterSpacing: "2px"}}>
+												<span style={{letterSpacing: "0px"}}>
 													{" "}
 													{singleAppointment &&
 													singleAppointment.commentsByStylist
@@ -1631,7 +1631,7 @@ const StylistSingleSchedulePage = (props) => {
 										textAlign: "center",
 										textShadow: "2px 2px 4px",
 										fontStyle: "italic",
-										letterSpacing: "4px",
+										// letterSpacing: "4px",
 									}}
 								>
 									Update Appointment:
@@ -1672,7 +1672,7 @@ const StylistSingleSchedulePage = (props) => {
 											textAlign: "center",
 											fontStyle: "normal",
 											textShadow: "0px 0px 0px",
-											letterSpacing: "1px",
+											// letterSpacing: "1px",
 										}}
 									>
 										Send Notification SMS for your updates to the customer

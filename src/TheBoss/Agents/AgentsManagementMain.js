@@ -138,7 +138,7 @@ const AgentsManagementMain = () => {
 				</div>
 
 				<div className='mt-5'>
-					<div className='container'>
+					<div className='container' style={{marginLeft: "200px"}}>
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddAgent")}
@@ -215,7 +215,7 @@ const AgentsManagementMainWrapper = styled.div`
 	.container {
 		margin-top: 5px;
 		margin-bottom: 20px;
-		margin-left: 350px;
+		margin-left: 50px;
 	}
 
 	@media (max-width: 1000px) {

@@ -176,3 +176,22 @@ export const updateSharePaidStatus = (userId, token, idsToUpdate) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const updateAgentByBoss = (userId, agentId, token, user) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/agent/update/${agentId}/${userId}`,
+		{
+			method: "PUT",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(user),
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

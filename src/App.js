@@ -21,6 +21,7 @@ import SuccessfulSchedule from "./pages/SchedulePage/SuccessfulSchedule";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleStorePage from "./pages/SingleStorePage";
+import AgentsSignupForm from "./pages/AgentsSignupForm";
 
 //Owner Route
 import OwnerRoute from "./auth/OwnerRoute";
@@ -67,6 +68,10 @@ import PendingApprovalMain from "./TheBoss/PendingApproval/PendingApprovalMain";
 import StorePreviewPage from "./TheBoss/PendingApproval/StorePreviewPage";
 import AgentsManagementMain from "./TheBoss/Agents/AgentsManagementMain";
 import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
+
+//Platform Agents routes
+import AgentsRoute from "./auth/AgentsRoute";
+import AgentDashboard from "./PlatformAgent/AgentDashboard";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -181,6 +186,11 @@ function App() {
 						exact
 						component={SuccessfulSchedule}
 					/>
+					<Route
+						path='/agents-signup-form'
+						exact
+						component={() => <AgentsSignupForm language={language} />}
+					/>
 
 					{/* Owner Routes */}
 					<OwnerRoute
@@ -284,6 +294,13 @@ function App() {
 						exact
 						component={SingleAppointmentPageStore}
 					/>
+					{/* Platform Agents Routes */}
+					<AgentsRoute
+						path='/agent/dashboard'
+						exact
+						component={AgentDashboard}
+					/>
+					{/*End Of Platform Agents Routes */}
 
 					{/* Platform Admin Routes */}
 					<BossRoute
@@ -350,6 +367,7 @@ function App() {
 						exact
 						component={StoreBillingMain}
 					/>
+					{/* End OfPlatform Admin Routes */}
 				</Switch>
 			</React.Fragment>
 			<FooterComp />

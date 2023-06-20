@@ -367,9 +367,9 @@ const UpdateService = () => {
 									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-2'
 									style={{fontSize: "0.75rem"}}
 								>
-									<strong>${s.servicePrice}</strong>,
+									<strong>{s.servicePrice} EGP</strong>,
 									<strong style={{color: "green"}}>
-										${s.servicePriceDiscount}
+										{s.servicePriceDiscount} EGP
 									</strong>
 								</li>
 								{!s.activeService && (

@@ -47,7 +47,7 @@ const Section2 = ({sortedArray}) => {
 			},
 
 			title: {
-				text: "Day Over Day Not Cancelled Reservations ($)",
+				text: "Day Over Day Not Cancelled Reservations (EGP)",
 				align: "left",
 				margin: 10,
 				offsetX: 0,

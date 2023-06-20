@@ -31,11 +31,11 @@ const Section3 = ({sortedArrayCancelled, sortedArray}) => {
 								data.map((item, index) => (
 									<tr key={index}>
 										<td>{item.scheduleStartsAtModified}</td>
-										<td>$ {item.amount}</td>
-										<td>$ {item.onlineServicesFees}</td>
-										<td>$ {item.paidTip}</td>
+										<td> {item.amount} EGP</td>
+										<td> {item.onlineServicesFees} EGP</td>
+										<td> {item.paidTip} EGP</td>
 										<td>{item.reservationsCount}</td>
-										<td>$ {item.servicePrice}</td>
+										<td> {item.servicePrice} EGP</td>
 									</tr>
 								))}
 						</tbody>

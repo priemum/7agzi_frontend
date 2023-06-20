@@ -86,6 +86,8 @@ const SigninForm = ({history}) => {
 					return <Redirect to='/stylist/dashboard' />;
 				} else if (user && user.role === 10000) {
 					return <Redirect to='/boss/admin/dashboard' />;
+				} else if (user && user.role === 2000) {
+					return <Redirect to='/agent/dashboard' />;
 				} else {
 					return <Redirect to='/dashboard' />;
 				}
@@ -109,7 +111,7 @@ const SigninForm = ({history}) => {
 
 						<form onSubmit={clickSubmit}>
 							<div className='form-group' style={{marginTop: "25px"}}>
-								<label style={{fontWeight: "bold"}}>Phone</label>
+								<label style={{fontWeight: "bold"}}>Phone/ Email</label>
 								<input
 									type='text'
 									name='email'

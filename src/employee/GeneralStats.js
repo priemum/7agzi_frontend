@@ -428,7 +428,7 @@ const ShopReportingExtension = () => {
 					textAlign: "center",
 					boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)",
 					fontWeight: "bold",
-					letterSpacing: "2px",
+					// letterSpacing: "2px",
 					borderRadius: "20px",
 				}}
 			>
@@ -465,12 +465,12 @@ const ShopReportingExtension = () => {
 						textAlign: "center",
 						boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)",
 						fontWeight: "bold",
-						letterSpacing: "2px",
+						// letterSpacing: "2px",
 						borderRadius: "20px",
 						fontSize: "1rem",
 					}}
 				>
-					$ Values for {reportChosenDateSchedules.length} Appointments in (
+					EGP Values for {reportChosenDateSchedules.length} Appointments in (
 					{new Date(requiredDate).toDateString()}):
 				</h5>
 
@@ -482,7 +482,7 @@ const ShopReportingExtension = () => {
 									Overall Revenue
 								</div>
 								<div className='card-body text-center'>
-									<strong>${TodaysoverAllRevenueSum()}</strong>
+									<strong>{TodaysoverAllRevenueSum()} EGP</strong>
 								</div>
 							</div>
 						</div>
@@ -492,7 +492,7 @@ const ShopReportingExtension = () => {
 									Cancelled Appoint. Revenue
 								</div>
 								<div className='card-body text-center'>
-									<strong>${cancelledAppointmentsDollarValue()}</strong>
+									<strong>{cancelledAppointmentsDollarValue()} EGP</strong>
 								</div>
 							</div>
 						</div>
@@ -502,7 +502,7 @@ const ShopReportingExtension = () => {
 									Online Services Fee
 								</div>
 								<div className='card-body text-center'>
-									<strong>${TodaystransactionFeesSum()}</strong>
+									<strong>{TodaystransactionFeesSum()} EGP</strong>
 								</div>
 							</div>
 						</div>
@@ -512,7 +512,7 @@ const ShopReportingExtension = () => {
 									Overall Paid Tips
 								</div>
 								<div className='card-body text-center'>
-									<strong>${TodaysoverAllPaidTip()}</strong>
+									<strong>{TodaysoverAllPaidTip()} EGP</strong>
 								</div>
 							</div>
 						</div>

@@ -1204,8 +1204,8 @@ const SingleAppointmentPageStore = (props) => {
 										</td>
 										<td>{s.service}</td>
 										<td>{s.commentsByStylist}</td>
-										<td>${s.serviceDetails.servicePriceDiscount}</td>
-										<td>${s.amount.toFixed(2)}</td>
+										<td>EGP {s.serviceDetails.servicePriceDiscount}</td>
+										<td>EGP {s.amount.toFixed(2)}</td>
 										<td>{s.applyPoints.toString()}</td>
 									</tr>
 								))}
@@ -1451,7 +1451,7 @@ const SingleAppointmentPageStore = (props) => {
 											<li className='list-group-item'>
 												Service Price:
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.servicePrice}
+													EGP {singleAppointment.servicePrice}
 												</span>
 											</li>
 										</div>
@@ -1459,7 +1459,7 @@ const SingleAppointmentPageStore = (props) => {
 											<li className='list-group-item'>
 												Paid Tip: {"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.paidTip.toFixed(2)}
+													EGP {singleAppointment.paidTip.toFixed(2)}
 												</span>
 											</li>
 										</div>
@@ -1467,7 +1467,7 @@ const SingleAppointmentPageStore = (props) => {
 											<li className='list-group-item'>
 												Online Service Fee:{"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.onlineServicesFees}
+													EGP {singleAppointment.onlineServicesFees}
 												</span>
 											</li>
 										</div>
@@ -1475,7 +1475,7 @@ const SingleAppointmentPageStore = (props) => {
 											<li className='list-group-item'>
 												Paid Amount:{"  "}
 												<span className='detailsAboutAppointment'>
-													${singleAppointment.amount}
+													EGP {singleAppointment.amount}
 												</span>
 											</li>
 										</div>
@@ -1483,7 +1483,7 @@ const SingleAppointmentPageStore = (props) => {
 											<li className='list-group-item'>
 												Discounted Amount:{"  "}
 												<span className='detailsAboutAppointment'>
-													$
+													EGP{" "}
 													{singleAppointment.discountedAmount &&
 													singleAppointment.discountedAmount !== 0
 														? singleAppointment.discountedAmount.toFixed(2) +

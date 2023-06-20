@@ -244,7 +244,7 @@ const FormStep3 = ({
 										fontWeight: "bold",
 									}}
 								>
-									${chosenServicePrice.servicePriceDiscount}
+									EGP {chosenServicePrice.servicePriceDiscount}
 								</span>
 							</React.Fragment>
 						)}
@@ -271,7 +271,7 @@ const FormStep3 = ({
 											fontWeight: "bold",
 										}}
 									>
-										${Number(onlineServices) * 1}
+										EGP {Number(onlineServices) * 1}
 									</span>
 								</React.Fragment>
 							)}
@@ -298,7 +298,7 @@ const FormStep3 = ({
 										fontWeight: "bold",
 									}}
 								>
-									$
+									EGP{" "}
 									{Number(
 										Number(chosenTips / 100).toFixed(2) *
 											Number(chosenServicePrice.servicePriceDiscount / 1)
@@ -326,7 +326,7 @@ const FormStep3 = ({
 										fontWeight: "bold",
 									}}
 								>
-									${Number(chosenTipOtherAmount) * 1}
+									EGP {Number(chosenTipOtherAmount) * 1}
 								</span>
 							</React.Fragment>
 						)}
@@ -357,13 +357,13 @@ const FormStep3 = ({
 													fontSize: "1.1rem",
 												}}
 											>
-												$
+												EGP{" "}
 												{Number(TipsAmountFinal) +
 													Number(chosenServicePrice.servicePriceDiscount) +
 													Number(onlineServices)}
 												{"     "}
 											</s>
-											$
+											EGP{" "}
 											{(
 												(Number(TipsAmountFinal) +
 													Number(chosenServicePrice.servicePriceDiscount) +
@@ -380,7 +380,7 @@ const FormStep3 = ({
 												fontWeight: "bold",
 											}}
 										>
-											$
+											EGP{" "}
 											{(
 												Number(TipsAmountFinal) +
 												Number(chosenServicePrice.servicePriceDiscount) +

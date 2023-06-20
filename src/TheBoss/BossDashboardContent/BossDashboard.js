@@ -6,6 +6,16 @@ import CountUp from "react-countup";
 import {isAuthenticated} from "../../auth";
 
 //DreamProject2023!
+//Plat form admin when he goes to store dashboard add a clear note.
+//Service Type drop down male female , e.tc...
+//Link to youtube video
+//Employee share with the owner when adding an employee
+//Edit Website
+//contact us add fields from and to
+//Schedule an Appointment for the user
+//Phones should be 11 digits
+//Are you sure you want to cancel this appointment for the user dashboard.
+//On changing statuses, you should confirm the message
 
 const BossDashboard = () => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);

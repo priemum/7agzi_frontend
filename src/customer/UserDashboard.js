@@ -138,7 +138,7 @@ const UserDashboard = () => {
 														Appointment Estimated Duration: {h.serviceDuration}{" "}
 														Minutes
 													</h6>
-													<h6>Amount: ${h.amount}</h6>
+													<h6>Amount: ${h.amount} EGP</h6>
 													<h6>Booked On: {moment(h.createdAt).fromNow()}</h6>
 													<h6>
 														Receipt / Invoice Number:{" "}
@@ -245,7 +245,7 @@ const UserDashboard = () => {
 					style={{
 						boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)",
 						fontWeight: "bold",
-						letterSpacing: "2px",
+						// letterSpacing: "2px",
 						borderRadius: "50px",
 						marginTop: "10px",
 					}}
@@ -319,7 +319,7 @@ const UserDashboard = () => {
 										Appointment Estimated Duration:{" "}
 										{userLastAppointment.serviceDuration} Minutes
 									</h6>
-									<h6>Amount: ${userLastAppointment.amount}</h6>
+									<h6>Amount: {userLastAppointment.amount} EGP</h6>
 									<h6>
 										Booked: {moment(userLastAppointment.createdAt).fromNow()}
 									</h6>
@@ -401,7 +401,7 @@ const UserDashboard = () => {
 			<div className='mx-auto col-md-8 my-3'>
 				<div
 					style={{
-						letterSpacing: "5px",
+						// letterSpacing: "5px",
 						fontSize: "1.4rem",
 						fontWeight: "bold",
 						textAlign: "center",

@@ -47,7 +47,7 @@ const Section1 = ({orders}) => {
 						<h5 style={{fontWeight: "bolder", color: "white"}}>
 							Total Amount (Not Cancelled)
 						</h5>
-						<span style={{color: "white"}}>$ </span>
+						<span style={{color: "white"}}>EGP </span>
 						<CountUp
 							style={{color: "white"}}
 							duration={3}
@@ -78,7 +78,7 @@ const Section1 = ({orders}) => {
 						<h5 style={{fontWeight: "bolder", color: "white"}}>
 							Total Amount (Cancelled)
 						</h5>
-						<span style={{color: "white"}}>$</span>{" "}
+						<span style={{color: "white"}}>EGP</span>{" "}
 						<CountUp
 							style={{color: "white"}}
 							duration={3}

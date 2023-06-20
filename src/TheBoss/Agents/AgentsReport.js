@@ -1,7 +1,12 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {isAuthenticated} from "../../auth";
-import {allLoyaltyPointsAndStoreStatus, gettingAllUsers} from "../apiBoss";
+import {
+	allLoyaltyPointsAndStoreStatus,
+	gettingAllUsers,
+	updateUserByBoss,
+} from "../apiBoss";
+import {toast} from "react-toastify";
 
 const AgentsReport = () => {
 	const [storeProperties, setStoreProperties] = useState([]);
@@ -66,8 +71,57 @@ const AgentsReport = () => {
 		// eslint-disable-next-line
 	}, []);
 
+	const updatingAgentStatus1 = (values) => {
+		console.log(values.agentPaid, "el send");
+		if (
+			window.confirm(
+				"Are You Sure This Agent Was Paid Initial Payment Of 1 Dollar?"
+			)
+		) {
+			updateUserByBoss(user._id, token, {
+				...values,
+				userId: values._id,
+				agentPaid: values.agentPaid ? false : true,
+			}).then((data) => {
+				if (data.error) {
+					// console.log(data.error);
+					alert(data.error);
+				} else {
+					toast.success("Agent Successfully Updated");
+					setTimeout(() => {
+						window.location.reload(false);
+					}, 1500);
+				}
+			});
+		}
+	};
+
+	const updatingAgentStatus2 = (values) => {
+		if (
+			window.confirm(
+				"Are You Sure This Agent Was Paid for a subscribed account Payment Of 1 Dollar?"
+			)
+		) {
+			updateUserByBoss(user._id, token, {
+				...values,
+				userId: values._id,
+				agentPaidPro: values.agentPaidPro ? false : true,
+			}).then((data) => {
+				if (data.error) {
+					// console.log(data.error);
+					alert(data.error);
+				} else {
+					toast.success("Agent Successfully Updated");
+					setTimeout(() => {
+						window.location.reload(false);
+					}, 1500);
+				}
+			});
+		}
+	};
+
 	return (
-		<AgentsReportWrapper className='container'>
+		<AgentsReportWrapper className=''>
 			<div
 				className='mt-5'
 				style={{
@@ -90,21 +144,23 @@ const AgentsReport = () => {
 							<th scope='col'>Phone</th>
 							<th scope='col'>Governorate</th>
 							<th scope='col'>Address</th>
+							<th scope='col'>Store Type</th>
 							<th scope='col'>Settings?</th>
 							<th scope='col'>Agent</th>
-							<th scope='col'>Agent Paid?</th>
+							<th scope='col'>Account Created</th>
+							<th scope='col'>Pro Account</th>
+							<th scope='col'>Agent Paid Initial?</th>
+							<th scope='col'>Agent Paid Pro?</th>
 						</tr>
 					</thead>
 
 					<tbody>
 						{ownerAccounts &&
 							ownerAccounts.map((o, i) => {
-								// const now = new Date();
-								// const endDate = new Date(o.createdAt);
-								// const diffTime = Math.abs(endDate - now);
-								// const diffDays = Math.ceil(
-								// 	diffTime / (1000 * 60 * 60 * 24)
-								// );
+								const now = new Date();
+								const endDate = new Date(o.createdAt);
+								const diffTime = Math.abs(endDate - now);
+								const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
 								// const remainingDays = 30 - diffDays;
 
@@ -117,6 +173,7 @@ const AgentsReport = () => {
 											{o.storeGovernorate}
 										</td>
 										<td>{o.storeAddress}</td>
+										<td style={{textTransform: "capitalize"}}>{o.storeType}</td>
 										<td
 											style={{
 												background:
@@ -143,18 +200,48 @@ const AgentsReport = () => {
 												: "YES"}
 										</td>
 										<td>{o.agent.name}</td>
+										<td>
+											{diffDays}{" "}
+											{Number(diffDays) <= 1 ? "Day Ago" : "Days Ago"}
+										</td>
+										<td>{o.subscribed ? "PRO" : "NOT PRO"}</td>
 										<td
 											style={{
-												background:
-													o.belongsTo && o.belongsTo.agentPaid
-														? "#d4f9d4"
-														: "#f9d4d4",
+												background: o.agentPaid ? "#d4f9d4" : "#f9d4d4",
 												fontWeight: "bold",
+												width: "10%",
 											}}
 										>
-											{o.belongsTo && o.belongsTo.agentPaid
-												? "Paid"
-												: "Not Paid"}
+											{o.agentPaid ? "Paid" : "Not Paid"}
+											<select
+												className='ml-1'
+												onChange={() => updatingAgentStatus1(o)}
+											>
+												<option value='Please select'>Please Select</option>
+												<option value='Please select'>
+													Agent Paid Initial
+												</option>
+												<option value='Please select'>Agent Not Paid</option>
+											</select>
+										</td>
+										<td
+											style={{
+												background: o.agentPaidPro ? "#d4f9d4" : "#f9d4d4",
+												fontWeight: "bold",
+												width: "10%",
+											}}
+										>
+											{o.agentPaidPro ? "Paid" : "Not Paid"}
+											<select
+												className='ml-1'
+												onChange={() => updatingAgentStatus2(o)}
+											>
+												<option value='Please select'>Please Select</option>
+												<option value='Please select'>Agent Paid Pro</option>
+												<option value='Please select'>
+													Agent Not Paid Pro
+												</option>
+											</select>
 										</td>
 									</tr>
 								);
@@ -218,4 +305,12 @@ const AgentsReport = () => {
 
 export default AgentsReport;
 
-const AgentsReportWrapper = styled.div``;
+const AgentsReportWrapper = styled.div`
+	margin-right: 100px;
+	margin-left: 100px;
+
+	@media (max-width: 1000px) {
+		margin-right: 5px;
+		margin-left: 5px;
+	}
+`;

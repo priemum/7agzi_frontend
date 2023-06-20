@@ -4,10 +4,12 @@ import {isAuthenticated} from "../../auth";
 import {gettingAllUsers, updateUserByBoss} from "../apiBoss";
 import SignupFormBoss from "./SignupFormBoss";
 import {toast} from "react-toastify";
+import AgentMoreDetails from "./AgentMoreDetails";
 
 const UpdateAgent = () => {
 	const [allAgents, setAllAgents] = useState("");
 	const [selectedAgent, setSelectedAgent] = useState("");
+	const [showMoreDetails, setShowMoreDetails] = useState(false);
 	const [values, setValues] = useState("");
 
 	const {user, token} = isAuthenticated();
@@ -82,18 +84,30 @@ const UpdateAgent = () => {
 							className='backtoAgent'
 							onClick={() => {
 								setSelectedAgent("");
+								setShowMoreDetails(false);
 							}}
 						>
 							Back To Agent List
 						</div>
-						<div>
-							<SignupFormBoss
-								values2={values}
-								setValues2={setValues}
-								handleSubmit={handleSubmit}
-								fromPage='Update'
-							/>
-						</div>
+						<AgentMoreDetails
+							values={values}
+							setValues={setValues}
+							setSelectedAgent={setSelectedAgent}
+							showMoreDetails={showMoreDetails}
+							setShowMoreDetails={setShowMoreDetails}
+							user={user}
+							token={token}
+						/>
+						{!showMoreDetails ? (
+							<div>
+								<SignupFormBoss
+									values2={values}
+									setValues2={setValues}
+									handleSubmit={handleSubmit}
+									fromPage='Update'
+								/>
+							</div>
+						) : null}
 					</div>
 				) : null}
 			</div>

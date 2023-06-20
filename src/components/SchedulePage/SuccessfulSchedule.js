@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const SuccessfulSchedule = () => {
 	return (
@@ -13,9 +13,10 @@ const SuccessfulSchedule = () => {
 					textAlign: "center",
 					marginTop: "30px",
 					fontWeight: "bold",
-					letterSpacing: "2px",
+					// letterSpacing: "2px",
 					color: "#000034",
-				}}>
+				}}
+			>
 				Thank you for choosing Barber Shop.
 			</div>
 			<div
@@ -25,27 +26,31 @@ const SuccessfulSchedule = () => {
 					textAlign: "center",
 					fontWeight: "bold",
 					color: "#670000",
-				}}>
+				}}
+			>
 				Your appointment was successfully scheduled.
 			</div>
 
 			<div
 				className='container mt-3 '
-				style={{ borderBottom: "3px solid black" }}>
+				style={{borderBottom: "3px solid black"}}
+			>
 				<span
 					style={{
 						fontSize: "1rem",
 						fontStyle: "italic",
 						fontWeight: "bold",
 						color: "#814100",
-					}}>
+					}}
+				>
 					Please check your dashboard for more details!
 				</span>
 				<Link
 					to='/dashboard'
 					onClick={() => {
-						window.scrollTo({ top: 0, behavior: "smooth" });
-					}}>
+						window.scrollTo({top: 0, behavior: "smooth"});
+					}}
+				>
 					<div className='continueShoppingEmpty mx-auto my-4'>
 						Check your dashboard
 					</div>
@@ -53,8 +58,9 @@ const SuccessfulSchedule = () => {
 				<Link
 					to='/schedule'
 					onClick={() => {
-						window.scrollTo({ top: 0, behavior: "smooth" });
-					}}>
+						window.scrollTo({top: 0, behavior: "smooth"});
+					}}
+				>
 					<div className='continueShoppingEmpty2 mx-auto my-4'>
 						Schedule Another Appointment
 					</div>

@@ -12,19 +12,21 @@ const CardForStoreBoss = ({store, allAppointments}) => {
 	const {user, token} = isAuthenticated();
 
 	const handleStatusChange = (e, storeId) => {
-		updateStoreStatus(
-			user._id,
-			token,
-			storeId,
-			JSON.parse(e.target.value)
-		).then((data) => {
-			if (data.error) {
-				console.log("Status update failed");
-			} else {
-				window.scrollTo({top: 0, behavior: "smooth"});
-				window.location.reload(false);
-			}
-		});
+		if (window.confirm("Are You Sure Your Want To Deactivate Store?")) {
+			updateStoreStatus(
+				user._id,
+				token,
+				storeId,
+				JSON.parse(e.target.value)
+			).then((data) => {
+				if (data.error) {
+					console.log("Status update failed");
+				} else {
+					window.scrollTo({top: 0, behavior: "smooth"});
+					window.location.reload(false);
+				}
+			});
+		}
 	};
 
 	const ShowImage = ({item}) => (

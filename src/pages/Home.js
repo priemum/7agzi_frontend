@@ -49,4 +49,6 @@ export default Home;
 const HomeWrapper = styled.div`
 	min-height: 800px;
 	overflow-x: hidden !important;
+
+	background-color: black;
 `;

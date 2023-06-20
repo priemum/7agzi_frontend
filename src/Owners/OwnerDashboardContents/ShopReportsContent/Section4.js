@@ -59,7 +59,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		dataLabels: {
 			enabled: true,
 			formatter: function (val, opts) {
-				return `$ ${aggregatedArrayStatus[opts.seriesIndex].amount} `;
+				return `EGP ${aggregatedArrayStatus[opts.seriesIndex].amount} `;
 			},
 		},
 
@@ -199,7 +199,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 						.indexOf(Number(value).toFixed(2));
 
 				return (
-					"$ " +
+					"EGP " +
 					Number(value).toLocaleString() +
 					` (${
 						aggregatedArrayEmployees &&
@@ -289,7 +289,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 								)) *
 							100
 						).toFixed(2) + "%";
-					return `$${val} (${percentage}) (${aggregatedArrayBookingSource[seriesIndex].reservationsCount} Appointments)`;
+					return `EGP ${val} (${percentage}) (${aggregatedArrayBookingSource[seriesIndex].reservationsCount} Appointments)`;
 				},
 			},
 		},
@@ -297,7 +297,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		dataLabels: {
 			enabled: true,
 			formatter: function (val, opts) {
-				return `$ ${aggregatedArrayBookingSource[opts.seriesIndex].amount} `;
+				return `EGP ${aggregatedArrayBookingSource[opts.seriesIndex].amount} `;
 			},
 		},
 

@@ -570,7 +570,7 @@ const FirstAvailableAppointmentsStore2 = ({user}) => {
 												(ss) => ss.serviceType === "package service"
 											).map((s, i) => (
 												<option key={i} value={s.serviceName} className='items'>
-													{s.serviceName} (${s.servicePrice})
+													{s.serviceName} (EGP {s.servicePrice})
 												</option>
 											))}
 									</select>
@@ -684,7 +684,7 @@ const FirstAvailableAppointmentsStore2 = ({user}) => {
 																	fontSize: "1.2rem",
 																	marginBottom: "10px",
 																	marginTop: "10px",
-																	letterSpacing: "5px",
+																	// letterSpacing: "5px",
 																	textShadow: "1px 2px 4px",
 																}}
 															>

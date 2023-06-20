@@ -33,7 +33,7 @@ const SignupForm = ({language}) => {
 		storeCountry: "",
 		storeDistrict: "",
 		agent: "",
-		roleDescription: "Owner",
+		roleDescription: "agent",
 		success: false,
 		redirectToReferrer: "",
 		loading: false,
@@ -181,7 +181,7 @@ const SignupForm = ({language}) => {
 			if (data.error) {
 				console.log("Error Getting Agents");
 			} else {
-				setAllAgents(data);
+				setAllAgents(data.filter((i) => i.activeAgent));
 			}
 		});
 	};

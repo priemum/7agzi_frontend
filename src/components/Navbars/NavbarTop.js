@@ -181,7 +181,7 @@ const Navbar1 = ({
 							</li>
 						)}
 
-						{isAuthenticated() && isAuthenticated().user.role === 1 && (
+						{isAuthenticated() && isAuthenticated().user.role === 1000 && (
 							<React.Fragment>
 								<li
 									className='nav-item ml-5 mt-3'
@@ -191,7 +191,7 @@ const Navbar1 = ({
 								>
 									<Link
 										className='nav-link '
-										to='/admin/dashboard'
+										to='/store/admin/dashboard'
 										onClick={() => {
 											setClickMenu(false);
 											setClick(false);
@@ -237,6 +237,28 @@ const Navbar1 = ({
 										}}
 									>
 										Store Scheduler
+									</Link>
+								</li>
+							</React.Fragment>
+						)}
+
+						{isAuthenticated() && isAuthenticated().user.role === 2000 && (
+							<React.Fragment>
+								<li
+									className='nav-item ml-5 mt-3'
+									onClick={() => {
+										window.scrollTo({top: 0, behavior: "smooth"});
+									}}
+								>
+									<Link
+										className='nav-link'
+										to='/agent/dashboard'
+										onClick={() => {
+											setClickMenu(false);
+											setClick(false);
+										}}
+									>
+										Platform <strong>AGENT</strong>
 									</Link>
 								</li>
 							</React.Fragment>
@@ -360,19 +382,19 @@ const Navbar1 = ({
 	return (
 		<Nav
 			className=' navbar  navbar-expand-sm nav-center py-1'
-			style={{backgroundColor: "#f0f5fd"}}
+			style={{backgroundColor: "#363636"}}
 		>
 			{click ? (
 				<i
 					className='far fa-window-close nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{color: "black"}}
+					style={{color: "white"}}
 				></i>
 			) : (
 				<i
 					className='fa fa-bars nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{color: "black"}}
+					style={{color: "white"}}
 				></i>
 			)}
 			{sideBar()}
@@ -398,11 +420,12 @@ const Navbar1 = ({
 							>
 								{" "}
 								<img className='flags' src={EgyptianFlag} alt='Arabic' />
-								<span>Arabic</span>
+								<span style={{color: "white"}}>Arabic</span>
 							</span>
 						) : (
 							<span
 								className=' '
+								style={{color: "white"}}
 								onClick={() => {
 									setLanguage("English");
 								}}
@@ -607,10 +630,11 @@ const Navbar1 = ({
 								>
 									{" "}
 									<img className='flags' src={EgyptianFlag} alt='Arabic' />
-									<span>Arabic</span>
+									<span style={{color: "white"}}>Arabic</span>
 								</span>
 							) : (
 								<span
+									style={{color: "white"}}
 									className=' '
 									onClick={() => {
 										setLanguage("English");

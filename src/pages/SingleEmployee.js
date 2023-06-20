@@ -549,7 +549,7 @@ const SingleEmployee = (props) => {
 									className=''
 									to='#'
 									onClick={() =>
-										window.open(`tel:+1${contact && contact.phone}`)
+										window.open(`tel:+2${contact && contact.phone}`)
 									}
 								>
 									{contact && contact.phone}
