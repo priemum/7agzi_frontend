@@ -28,6 +28,7 @@ const ImageCard = ({
 						<div className='col-12'>
 							{addThumbnail &&
 								addThumbnail.map((image, i) => {
+									console.log(image.url, "uploaded Image");
 									return (
 										<div className='m-3 col-6 ' key={i}>
 											<button
@@ -46,31 +47,34 @@ const ImageCard = ({
 												<span aria-hidden='true'>&times;</span>
 											</button>
 											<img
-												src={image && image.url ? image.url : ""}
+												src={image.url ? image.url : ""}
 												alt='Img Not Found'
 												style={{
 													width: "130px",
 													height: "130px",
 													boxShadow: "1px 1px 1px 1px rgba(0,0,0,0.2)",
 												}}
+												key={image.public_id}
 											/>
 										</div>
 									);
 								})}
 						</div>
-						<label
-							className=''
-							style={{cursor: "pointer", fontSize: "0.95rem"}}
-						>
-							<img src={imageImage} alt='imageUpload' />
-							<input
-								type='file'
-								hidden
-								accept='images/*'
-								onChange={fileUploadAndResizeThumbNail}
-								required
-							/>
-						</label>
+						{!addThumbnail.idImage ? (
+							<label
+								className=''
+								style={{cursor: "pointer", fontSize: "0.95rem"}}
+							>
+								<img src={imageImage} alt='imageUpload' />
+								<input
+									type='file'
+									hidden
+									accept='images/*'
+									onChange={fileUploadAndResizeThumbNail}
+									required
+								/>
+							</label>
+						) : null}
 					</div>
 					<div className='text-muted fs-7'>
 						Width: 800px, Height: 954px; <br />
