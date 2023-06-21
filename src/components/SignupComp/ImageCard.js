@@ -28,7 +28,6 @@ const ImageCard = ({
 						<div className='col-12'>
 							{addThumbnail &&
 								addThumbnail.map((image, i) => {
-									console.log(image.url, "uploaded Image");
 									return (
 										<div className='m-3 col-6 ' key={i}>
 											<button
