@@ -21,6 +21,7 @@ const FirstAvailableAppointments = ({
 	chosenService,
 	handleChosenCustomerType,
 	fromLocalStore,
+	language,
 }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
@@ -390,19 +391,38 @@ const FirstAvailableAppointments = ({
 		onlineStoreName.daysStoreClosed.indexOf(chosenDateName) > -1;
 
 	return (
-		<FirstAvailableAppointmentsWrapper>
+		<FirstAvailableAppointmentsWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+		>
 			<div className='contentWrapper'>
 				<div className='mt-3 firstAvailableApp text-center'>
-					Check First Available Appointment on{" "}
-					{new Date(chosenDate).toDateString()}
+					{language === "Arabic" ? (
+						<span>
+							{" "}
+							تحقق من أول موعد متاح:{" "}
+							{new Date(chosenDate).toLocaleDateString("ar-EG")}{" "}
+						</span>
+					) : (
+						<span>
+							Check First Available Appointment on:{" "}
+							{new Date(chosenDate).toDateString()}{" "}
+						</span>
+					)}
 				</div>{" "}
 				<div className='horizLine col-6 col-lg-2 col-md-3  mx-auto'></div>
 				<div className='text-center mt-3'>
 					<div className='row'>
 						<div className='col-md-6'>
-							<label className='mr-4 chooseDateServiceFirstAvail'>
-								Choose a Date
-							</label>
+							{language === "Arabic" ? (
+								<label className='ml-4 chooseDateServiceFirstAvailArabic'>
+									اختر تاريخ
+								</label>
+							) : (
+								<label className='mr-4 chooseDateServiceFirstAvail'>
+									Choose a Date
+								</label>
+							)}
+
 							<DatePicker
 								className='inputFieldsFirstAvail'
 								onChange={(date) =>
@@ -415,9 +435,16 @@ const FirstAvailableAppointments = ({
 								placeholder='Please pick the desired schedule date'
 							/>
 							<br />
-							<label className='mr-5 mt-3 chooseDateServiceFirstAvail'>
-								Service For
-							</label>
+							{language === "Arabic" ? (
+								<label className='ml-4 mt-3 chooseDateServiceFirstAvailArabic'>
+									خدمة لـ
+								</label>
+							) : (
+								<label className='mr-5 mt-3 chooseDateServiceFirstAvail'>
+									Service For
+								</label>
+							)}
+
 							<select
 								onChange={handleChosenCustomerType}
 								placeholder='Please Select'
@@ -430,7 +457,11 @@ const FirstAvailableAppointments = ({
 										{chosenCustomerType}
 									</option>
 								) : (
-									<option className='items text-muted'>Please Select</option>
+									<option className='items text-muted'>
+										{language === "Arabic"
+											? "الرجاء الاختيار"
+											: "Please Select"}
+									</option>
 								)}
 								{HistOrders &&
 									allCustomerType &&
@@ -444,9 +475,16 @@ const FirstAvailableAppointments = ({
 
 							{chosenCustomerType ? (
 								<Fragment>
-									<label className='mr-2 chooseDateServiceFirstAvail'>
-										Select a Service
-									</label>
+									{language === "Arabic" ? (
+										<label className='ml-2 chooseDateServiceFirstAvailArabic'>
+											اختر خدمة
+										</label>
+									) : (
+										<label className='mr-2 chooseDateServiceFirstAvail'>
+											Select a Service
+										</label>
+									)}
+
 									<select
 										onChange={handleChosenService}
 										placeholder='Select a Service'
@@ -499,9 +537,15 @@ const FirstAvailableAppointments = ({
 										onlineStoreName.daysStoreClosed.length > 0 &&
 										storeClosed_NotClosed === true ? (
 											<div className='my-3 noAppointFirstAvail'>
-												Hair Salon is closed on the selected date{" "}
-												{new Date(chosenDate).toDateString()}. <br /> Please
-												check another date.
+												{language === "Arabic"
+													? `صالون الشعر مغلق في التاريخ المحدد ${new Date(
+															chosenDate
+													  ).toLocaleDateString(
+															"ar-EG"
+													  )}. <br /> الرجاء التحقق من تاريخ آخر.`
+													: `Hair Salon is closed on the selected date ${new Date(
+															chosenDate
+													  ).toDateString()}. <br /> Please check another date.`}
 											</div>
 										) : (
 											<Fragment>
@@ -514,9 +558,15 @@ const FirstAvailableAppointments = ({
 													).toLocaleDateString()
 												) > -1 ? (
 													<div className='my-3 noAppointFirstAvail'>
-														No Appointments available on{" "}
-														{new Date(chosenDate).toDateString()}. <br /> Please
-														check another date.
+														{language === "Arabic"
+															? `لا توجد مواعيد متاحة في ${new Date(
+																	chosenDate
+															  ).toLocaleDateString(
+																	"ar-EG"
+															  )}. <br /> الرجاء التحقق من تاريخ آخر.`
+															: `No Appointments available on ${new Date(
+																	chosenDate
+															  ).toDateString()}. <br /> Please check another date.`}
 													</div>
 												) : (
 													<React.Fragment>
@@ -531,88 +581,173 @@ const FirstAvailableAppointments = ({
 															</div>
 														) : (
 															<div style={{color: "white"}}>
-																The First Available Appointment is with{" "}
-																<strong
-																	style={{
-																		color: "wheat",
-																		fontWeight: "bolder",
-																	}}
-																>
-																	{finalStep_FirstAvailableEmployee &&
-																		finalStep_FirstAvailableEmployee[0] &&
-																		finalStep_FirstAvailableEmployee[0]
-																			.employeeName}{" "}
-																</strong>
-																<br />
-																at{" "}
-																<strong style={{color: "wheat"}}>
-																	{finalStep_FirstAvailableEmployee &&
-																		finalStep_FirstAvailableEmployee[0] &&
-																		finalStep_FirstAvailableEmployee[0]
-																			.availableHoursFinal &&
-																		finalStep_FirstAvailableEmployee[0]
-																			.availableHoursFinal[0]}{" "}
-																</strong>
-																on{" "}
-																<strong style={{color: "wheat"}}>
-																	{new Date(chosenDate).toDateString()}
-																</strong>
-																<div
-																	style={{
-																		fontSize: "15px",
-																		fontWeight: "bold",
-																	}}
-																>
-																	Check{" "}
-																	<Link
-																		style={{
-																			color: "wheat",
-																			textDecoration: "underline",
-																		}}
-																		to={`/employee/${employeeNameModified}/${employeeId}${employeeId}${employeeId}`}
-																	>
-																		{finalStep_FirstAvailableEmployee &&
-																			finalStep_FirstAvailableEmployee[0] &&
-																			finalStep_FirstAvailableEmployee[0]
-																				.employeeName}
-																		's
-																	</Link>{" "}
-																	Profile.
-																</div>
-																<div
-																	onClick={AddEmployee}
-																	style={{
-																		fontWeight: "bold",
-																		fontSize: "1.2rem",
-																		marginBottom: "10px",
-																		marginTop: "10px",
-																		// letterSpacing: "5px",
-																		textShadow: "1px 2px 4px",
-																	}}
-																>
-																	<Link
-																		className='btn btn-info'
-																		to='/schedule-an-appointment'
-																		onClick={() => {
-																			localStorage.setItem(
-																				"pickedServiceFirstAvailable",
-																				JSON.stringify(pickedService())
-																			);
-																			localStorage.setItem(
-																				"CustomerType",
-																				JSON.stringify(chosenCustomerType)
-																			);
-
-																			localStorage.setItem(
-																				"chosenDateFromFirstAvailable",
-																				JSON.stringify(chosenDate)
-																			);
-																			window.scrollTo(0, 0);
-																		}}
-																	>
-																		Schedule Now...
-																	</Link>
-																</div>
+																{language === "Arabic" ? (
+																	<div>
+																		الموعد الأول المتاح هو مع
+																		<strong
+																			style={{
+																				color: "wheat",
+																				fontWeight: "bolder",
+																			}}
+																		>
+																			{finalStep_FirstAvailableEmployee &&
+																				finalStep_FirstAvailableEmployee[0] &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.employeeName}
+																		</strong>
+																		<br />
+																		في
+																		<strong style={{color: "wheat"}}>
+																			{finalStep_FirstAvailableEmployee &&
+																				finalStep_FirstAvailableEmployee[0] &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.availableHoursFinal &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.availableHoursFinal[0]}
+																		</strong>
+																		في
+																		<strong style={{color: "wheat"}}>
+																			{new Date(chosenDate).toLocaleDateString(
+																				"ar-EG"
+																			)}
+																		</strong>
+																		<div
+																			style={{
+																				fontSize: "15px",
+																				fontWeight: "bold",
+																			}}
+																		>
+																			تحقق من
+																			<Link
+																				style={{
+																					color: "wheat",
+																					textDecoration: "underline",
+																				}}
+																				to={`/employee/${employeeNameModified}/${employeeId}${employeeId}${employeeId}`}
+																			>
+																				{finalStep_FirstAvailableEmployee &&
+																					finalStep_FirstAvailableEmployee[0] &&
+																					finalStep_FirstAvailableEmployee[0]
+																						.employeeName}
+																			</Link>
+																			ملف الشخصي.
+																		</div>
+																		<div
+																			onClick={AddEmployee}
+																			style={{
+																				fontWeight: "bold",
+																				fontSize: "1.2rem",
+																				marginBottom: "10px",
+																				marginTop: "10px",
+																				textShadow: "1px 2px 4px",
+																			}}
+																		>
+																			<Link
+																				className='btn btn-info'
+																				to='/schedule-an-appointment'
+																				onClick={() => {
+																					localStorage.setItem(
+																						"pickedServiceFirstAvailable",
+																						JSON.stringify(pickedService())
+																					);
+																					localStorage.setItem(
+																						"CustomerType",
+																						JSON.stringify(chosenCustomerType)
+																					);
+																					localStorage.setItem(
+																						"chosenDateFromFirstAvailable",
+																						JSON.stringify(chosenDate)
+																					);
+																					window.scrollTo(0, 0);
+																				}}
+																			>
+																				جدول الآن...
+																			</Link>
+																		</div>
+																	</div>
+																) : (
+																	<div>
+																		The First Available Appointment is with
+																		<strong
+																			style={{
+																				color: "wheat",
+																				fontWeight: "bolder",
+																			}}
+																		>
+																			{finalStep_FirstAvailableEmployee &&
+																				finalStep_FirstAvailableEmployee[0] &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.employeeName}
+																		</strong>
+																		<br />
+																		at
+																		<strong style={{color: "wheat"}}>
+																			{finalStep_FirstAvailableEmployee &&
+																				finalStep_FirstAvailableEmployee[0] &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.availableHoursFinal &&
+																				finalStep_FirstAvailableEmployee[0]
+																					.availableHoursFinal[0]}
+																		</strong>
+																		on
+																		<strong style={{color: "wheat"}}>
+																			{new Date(chosenDate).toDateString()}
+																		</strong>
+																		<div
+																			style={{
+																				fontSize: "15px",
+																				fontWeight: "bold",
+																			}}
+																		>
+																			Check
+																			<Link
+																				style={{
+																					color: "wheat",
+																					textDecoration: "underline",
+																				}}
+																				to={`/employee/${employeeNameModified}/${employeeId}${employeeId}${employeeId}`}
+																			>
+																				{finalStep_FirstAvailableEmployee &&
+																					finalStep_FirstAvailableEmployee[0] &&
+																					finalStep_FirstAvailableEmployee[0]
+																						.employeeName}
+																			</Link>
+																			's Profile.
+																		</div>
+																		<div
+																			onClick={AddEmployee}
+																			style={{
+																				fontWeight: "bold",
+																				fontSize: "1.2rem",
+																				marginBottom: "10px",
+																				marginTop: "10px",
+																				textShadow: "1px 2px 4px",
+																			}}
+																		>
+																			<Link
+																				className='btn btn-info'
+																				to='/schedule-an-appointment'
+																				onClick={() => {
+																					localStorage.setItem(
+																						"pickedServiceFirstAvailable",
+																						JSON.stringify(pickedService())
+																					);
+																					localStorage.setItem(
+																						"CustomerType",
+																						JSON.stringify(chosenCustomerType)
+																					);
+																					localStorage.setItem(
+																						"chosenDateFromFirstAvailable",
+																						JSON.stringify(chosenDate)
+																					);
+																					window.scrollTo(0, 0);
+																				}}
+																			>
+																				Schedule Now...
+																			</Link>
+																		</div>
+																	</div>
+																)}
 															</div>
 														)}
 													</React.Fragment>
@@ -622,17 +757,29 @@ const FirstAvailableAppointments = ({
 									</React.Fragment>
 								) : (
 									<React.Fragment>
-										<div className='pleaseSelectAServFirstAvail'>
-											Please Select A Service To Check The First Available
-											Appointment
-											<div className='my-3 disclaimer'>
-												If you have the need to schedule for more than one
-												person, please schedule a separate appointment for each.
-												You may be able to schedule the appointments with
-												different stylists all at once to finish your styling
-												needs with less time!
+										{language === "Arabic" ? (
+											<div className='pleaseSelectAServFirstAvailArabic'>
+												الرجاء اختيار خدمة للتحقق من أول موعد متاح
+												<div className='my-3 disclaimerArabic'>
+													إذا كان لديك الحاجة لجدولة أكثر من شخص، يرجى جدولة
+													موعد منفصل لكل منهم. قد تتمكن من جدولة المواعيد مع
+													مصففين مختلفين في آن واحد لإنهاء احتياجاتك في وقت أقل!
+												</div>
 											</div>
-										</div>
+										) : (
+											<div className='pleaseSelectAServFirstAvail'>
+												Please Select A Service To Check The First Available
+												Appointment
+												<div className='my-3 disclaimer'>
+													If you have the need to schedule for more than one
+													person, please schedule a separate appointment for
+													each. You may be able to schedule the appointments
+													with different stylists all at once to finish your
+													styling needs with less time!
+												</div>
+											</div>
+										)}
+
 										{chosenCustomerType ? (
 											<div className='my-2' style={{textAlign: "left"}}>
 												<AddedServices
@@ -669,7 +816,9 @@ const FirstAvailableAppointments = ({
 export default FirstAvailableAppointments;
 
 const FirstAvailableAppointmentsWrapper = styled.div`
-	background: #061838;
+	/* background-color: rgba(22, 25, 56, 0.85);
+	 */
+	background-color: rgba(0, 0, 0, 0.85);
 	padding: 30px;
 	border-radius: 20px 100px;
 

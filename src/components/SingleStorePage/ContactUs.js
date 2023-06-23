@@ -56,7 +56,11 @@ const ContactUs = ({contact}) => {
 		"Your form was successfully submitted. Our support team will contact you!";
 
 	return (
-		<ContactUsWrapper dir='ltr'>
+		<ContactUsWrapper>
+			<div className='col-md-5 mx-auto mb-5'>
+				<br />
+				<div className='horizLine'></div>
+			</div>
 			<div>
 				<div className='row mt-5 ml-3'>
 					<div className='col-md-4 my-3'>
@@ -109,7 +113,7 @@ const ContactUs = ({contact}) => {
 							/>
 						</div>
 					</div>
-					<Fragment left>
+					<Fragment>
 						<div
 							className='col-md-7 my-3 mx-auto'
 							style={
@@ -118,7 +122,7 @@ const ContactUs = ({contact}) => {
 								}
 							}
 						>
-							<Fragment duration={5000}>
+							<Fragment>
 								<h2 style={{color: "var(--mainBlue)"}} className='text-center'>
 									Contact Us
 								</h2>
@@ -229,6 +233,11 @@ export default ContactUs;
 
 const ContactUsWrapper = styled.div`
 	overflow: hidden;
+	color: white;
+	.horizLine {
+		border-bottom: wheat solid 5px;
+	}
+
 	.labelStyle {
 		text-align: center !important;
 	}

@@ -127,21 +127,22 @@ const CardForEmployeesList = ({employee, storeProperties, contact}) => {
 				<div className='card-body  '>
 					{shouldRedirect(redirect)}
 					<div className='card-img-top center img'>
-						{employee && employee.ratings && employee.ratings.length > 0 ? (
-							<div className='mb-3'>{showAverageRating2(employee)}</div>
-						) : (
-							<div
-								className='mb-2'
-								style={{
-									fontSize: "0.75rem",
-									fontStyle: "italic",
-									fontWeight: "bold",
-									color: "black",
-								}}
-							>
-								No Ratings
-							</div>
-						)}
+						{
+							employee && employee.ratings && employee.ratings.length > 0 ? (
+								<div className='mb-3'>{showAverageRating2(employee)}</div>
+							) : null
+							// <div
+							// 	className='mb-2'
+							// 	style={{
+							// 		fontSize: "0.75rem",
+							// 		fontStyle: "italic",
+							// 		fontWeight: "bold",
+							// 		color: "black",
+							// 	}}
+							// >
+							// 	No Ratings
+							// </div>
+						}
 						<Link
 							to={`/employee/${employeeNameModified}/${employee._id}${employee._id}${employee._id}`}
 							onClick={SettingViews}
@@ -155,6 +156,8 @@ const CardForEmployeesList = ({employee, storeProperties, contact}) => {
 							fontSize: "18px",
 							fontWeight: "bold",
 							textAlign: "center",
+							color: "black",
+							textTransform: "capitalize",
 						}}
 					>
 						{employee.employeeName}
@@ -176,7 +179,13 @@ const CardForEmployeesList = ({employee, storeProperties, contact}) => {
 						</span> */}
 						{/* <br /> */}
 						{employee.workingDays.indexOf(chosenDateName) === -1 ? (
-							<span style={{fontSize: "0.7rem", color: "red"}}>
+							<span
+								style={{
+									fontSize: "0.7rem",
+									color: "red",
+									textTransform: "capitalize",
+								}}
+							>
 								Note: {employee.employeeName} is off today
 							</span>
 						) : null}

@@ -151,14 +151,14 @@ body {
 	font-size: 1.2rem;
 	font-weight: bold;
 	color: white;
-	letter-spacing: 3px;
+	/* letter-spacing: 3px; */
 }
 
 .firstAvailableApp2 {
 	font-size: 1.2rem;
 	font-weight: bold;
 	color: black;
-	letter-spacing: 3px;
+	/* letter-spacing: 3px; */
 }
 
 .horizLine {
@@ -170,7 +170,14 @@ body {
 .chooseDateServiceFirstAvail {
 	font-size: 0.9rem;
 	font-weight: bold;
-	letter-spacing: 2px;
+	/* letter-spacing: 2px; */
+	color: rgb(156, 156, 156);
+}
+
+.chooseDateServiceFirstAvailArabic {
+	font-size: 1.1rem;
+	font-weight: bold;
+	/* letter-spacing: 2px; */
 	color: rgb(156, 156, 156);
 }
 
@@ -189,7 +196,13 @@ body {
 	font-size: 1rem;
 	font-weight: bold;
 	color: white;
-	letter-spacing: 2px;
+	/* letter-spacing: 2px; */
+}
+
+.pleaseSelectAServFirstAvailArabic {
+	font-size: 1.4rem;
+	font-weight: bold;
+	color: white;
 }
 
 .noAppointFirstAvail {
@@ -213,18 +226,27 @@ body {
 	color: wheat;
 }
 
+.disclaimerArabic {
+	font-size: 15px;
+	color: wheat;
+}
+
 @media (max-width: 1100px) {
 	.firstAvailableApp {
 		font-size: 0.85rem;
-		letter-spacing: 2px;
+		/* letter-spacing: 2px; */
 	}
 
 	.firstAvailableApp2 {
 		font-size: 0.85rem;
-		letter-spacing: 2px;
+		/* letter-spacing: 2px; */
 	}
 	.chooseDateServiceFirstAvail {
 		font-size: 0.75rem;
+	}
+
+	.chooseDateServiceFirstAvailArabic {
+		font-size: 1.1rem;
 	}
 
 	.inputFieldsFirstAvail {
@@ -238,11 +260,16 @@ body {
 	}
 	.pleaseSelectAServFirstAvail {
 		font-size: 0.85rem;
-		letter-spacing: 1px;
+		/* letter-spacing: 1px; */
 	}
+
+	.pleaseSelectAServFirstAvailArabic {
+		font-size: 1.2rem;
+	}
+
 	.noAppointFirstAvail {
 		font-size: 1rem;
-		letter-spacing: 1px;
+		/* letter-spacing: 1px; */
 	}
 	.listOfServiceDescription {
 		text-align: left;

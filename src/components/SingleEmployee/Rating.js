@@ -74,3 +74,19 @@ export const showAverageRating2 = (e) => {
 		);
 	}
 };
+
+export const showAverageRatingForEntireStore = (e) => {
+	return (
+		<div className='mb-2'>
+			<span>
+				<StarRating
+					starDimension='15px'
+					starSpacing='2px'
+					starRatedColor='red'
+					rating={4}
+					editing={false}
+				/>{" "}
+			</span>
+		</div>
+	);
+};

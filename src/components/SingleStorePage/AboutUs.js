@@ -54,21 +54,22 @@ const AboutUs = ({aboutus}) => {
 export default AboutUs;
 
 const AboutPageWrapper = styled.section`
-	background: #f8f9fa;
+	background-color: black;
 	padding-bottom: 200px;
 	padding-top: 50px;
 	overflow: hidden;
+	color: white;
 
 	.title {
 		font-weight: bolder;
-		color: var(--mainBlue);
+		color: white;
 	}
 
 	.about-title {
 		font-size: 40px;
 		font-weight: 600;
 		margin-top: 8%;
-		color: var(--orangePrimary);
+		color: wheat;
 		margin-left: 55px;
 	}
 
@@ -76,6 +77,7 @@ const AboutPageWrapper = styled.section`
 		margin: 0px 0px;
 		list-style: none;
 		padding: 0px !important;
+		color: white;
 	}
 
 	ul {
@@ -84,6 +86,7 @@ const AboutPageWrapper = styled.section`
 
 	.about-us ul {
 		margin-left: 20px;
+		color: white;
 	}
 
 	.imgdiv {
@@ -92,7 +95,7 @@ const AboutPageWrapper = styled.section`
 	}
 
 	.horizLine {
-		border-bottom: var(--orangePrimary) solid 5px;
+		border-bottom: wheat solid 5px;
 	}
 
 	@media (max-width: 1000px) {
@@ -104,7 +107,7 @@ const AboutPageWrapper = styled.section`
 			font-size: 40px;
 			font-weight: 600;
 			margin-top: 0%;
-			color: var(--orangePrimary);
+			color: white;
 			margin-left: 0px;
 		}
 

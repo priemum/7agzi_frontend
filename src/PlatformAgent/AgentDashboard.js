@@ -123,7 +123,7 @@ const AgentDashboard = () => {
 					</h1>
 					<h2>
 						Your Profile Is <strong>Under Review</strong>, This Process Usually
-						Takes Up To 4 Business Days.
+						Takes 24 to 48 hours.
 					</h2>
 					<h2>
 						Once Your Profile Is Reviewed, Our HR Manager Will Reach Out To You

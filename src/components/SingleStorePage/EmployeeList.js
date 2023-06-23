@@ -108,5 +108,9 @@ const ScheduleStyling = styled.div`
 	@media (max-width: 900px) {
 		margin-left: 15px;
 		margin-right: 15px;
+
+		.continueShoppingEmpty {
+			display: none;
+		}
 	}
 `;

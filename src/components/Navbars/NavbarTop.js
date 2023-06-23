@@ -400,7 +400,7 @@ const Navbar1 = ({
 			{sideBar()}
 			<div className='logo-type'>
 				<Link
-					to='/'
+					to='#'
 					onClick={() => {
 						window.scrollTo({top: 0, behavior: "smooth"});
 					}}
@@ -451,7 +451,7 @@ const Navbar1 = ({
 									window.scrollTo({top: 0, behavior: "smooth"});
 								}}
 								style={{
-									color: "black",
+									color: "white",
 									textDecoration: "underline",
 									fontWeight: "bold",
 									marginRight: "20px",
@@ -471,7 +471,7 @@ const Navbar1 = ({
 									window.scrollTo({top: 0, behavior: "smooth"});
 								}}
 								style={{
-									color: "black",
+									color: "white",
 									textDecoration: "underline",
 									fontWeight: "bold",
 									marginRight: "20px",
@@ -492,7 +492,7 @@ const Navbar1 = ({
 									window.scrollTo({top: 0, behavior: "smooth"});
 								}}
 								style={{
-									color: "black",
+									color: "white",
 									textDecoration: "underline",
 									fontWeight: "bold",
 									marginRight: "20px",
@@ -512,7 +512,7 @@ const Navbar1 = ({
 									window.scrollTo({top: 0, behavior: "smooth"});
 								}}
 								style={{
-									color: "black",
+									color: "white",
 									textDecoration: "underline",
 									fontWeight: "bold",
 									marginRight: "20px",
@@ -533,7 +533,7 @@ const Navbar1 = ({
 										window.scrollTo({top: 0, behavior: "smooth"});
 									}}
 									style={{
-										color: "black",
+										color: "white",
 										textDecoration: "underline",
 										fontWeight: "bold",
 										marginRight: "10px",
@@ -563,7 +563,7 @@ const Navbar1 = ({
 										window.scrollTo({top: 0, behavior: "smooth"});
 									}}
 									style={{
-										color: "black",
+										color: "white",
 										textDecoration: "underline",
 										fontWeight: "bold",
 										marginRight: "50px",
@@ -725,7 +725,7 @@ const Nav = styled.nav`
 		}
 		.cart-items {
 			background: var(--mainGrey);
-			color: black;
+			color: white;
 			font-weight: bold;
 			font-size: 0.7rem;
 			position: absolute;

@@ -164,11 +164,15 @@ function App() {
 					/>
 					<Route path='/about' exact component={About} />
 					<Route path='/contact' exact component={Contact} />
+
 					<Route
 						path='/schedule/:storeName/:phone'
 						exact
-						component={SingleStorePage}
+						component={() => (
+							<SingleStorePage language={language} setLanguage={setLanguage} />
+						)}
 					/>
+
 					<Route
 						path='/employee/:employeeName/:employeeId'
 						exact

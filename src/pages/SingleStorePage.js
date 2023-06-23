@@ -14,11 +14,40 @@ import ContactUs from "../components/SingleStorePage/ContactUs";
 import AboutUs from "../components/SingleStorePage/AboutUs";
 import {useParams} from "react-router-dom";
 import {allLoyaltyPointsAndStoreStatusByPhoneAndStore} from "../TheBoss/apiBoss";
+import AddedServices from "../components/SingleStorePage/AddedServices";
+import Gallary from "../components/SingleStorePage/Gallary";
 
-const SingleStorePage = (props) => {
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "grey",
+			fontWeight: "bolder",
+			padding: "10px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "25px",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			fontWeight: "bolder",
+			padding: "10px",
+			border: "lightgrey 0.1px solid",
+			textAlign: "center",
+			borderRadius: "25px",
+			cursor: "pointer",
+		};
+	}
+};
+
+const SingleStorePage = ({props, language}) => {
 	let {storeName} = useParams();
 	let {phone} = useParams();
 
+	const [clickedMenu, setClickedMenu] = useState("SERVICES");
 	const [storeChosen, setStoreChosen] = useState("");
 	// eslint-disable-next-line
 	const [aboutus, setAboutUs] = useState({});
@@ -28,8 +57,10 @@ const SingleStorePage = (props) => {
 	const [hero2, setHero2] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
 	const [AllServices, setAllServices] = useState([]);
+	const [AllServices2, setAllServices2] = useState([]);
 	const [allCustomerType, setAllCustomerType] = useState([]);
 	const [chosenCustomerType, setChosenCustomerType] = useState("");
+	const [chosenCustomerType2, setChosenCustomerType2] = useState("");
 	const [chosenDate, setChosenDate] = useState("");
 	const [chosenService, setChosenService] = useState("");
 	const [loading, setLoading] = useState(true);
@@ -59,6 +90,19 @@ const SingleStorePage = (props) => {
 		gettingChosenStore();
 		// eslint-disable-next-line
 	}, [phone, storeName]);
+
+	useEffect(() => {
+		if (window.location.search.includes("STYLISTS")) {
+			setClickedMenu("STYLISTS");
+		} else if (window.location.search.includes("about")) {
+			setClickedMenu("ABOUT");
+		} else if (window.location.search.includes("gallery")) {
+			setClickedMenu("GALLERY");
+		} else {
+			setClickedMenu("SERVICES");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const gettingAllAbouts = (ownerId) => {
 		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
@@ -185,6 +229,16 @@ const SingleStorePage = (props) => {
 							...new Set(data && data.map((i) => i.customerType)),
 						]);
 
+						setChosenCustomerType2(
+							[...new Set(data && data.map((i) => i.customerType))][0]
+						);
+
+						var allServices2 =
+							data.filter((i) => i.activeService === true) &&
+							data.filter((i) => i.activeService === true).map((ii) => ii);
+
+						setAllServices2([...new Set(allServices2)]);
+
 						if (chosenCustomerType) {
 							setAllServices(
 								data.filter((i) => i.activeService === true) &&
@@ -243,6 +297,7 @@ const SingleStorePage = (props) => {
 						onlineStoreName={storeChosen}
 						allEmployees={allEmployees}
 						AllServices={AllServices}
+						AllServices2={AllServices2}
 						contact={contact}
 						allCustomerType={allCustomerType}
 						setChosenCustomerType={setChosenCustomerType}
@@ -253,22 +308,125 @@ const SingleStorePage = (props) => {
 						chosenService={chosenService}
 						handleChosenCustomerType={handleChosenCustomerType}
 						fromLocalStore={storeChosen}
+						language={language}
 					/>
 
-					<div>
-						<EmployeesList
-							storeProperties={storeChosen}
-							contact={contact}
-							filteredResults={allEmployees}
-						/>
+					<div className='deskTopContent'>
+						<div>
+							<EmployeesList
+								storeProperties={storeChosen}
+								contact={contact}
+								filteredResults={allEmployees}
+							/>
+						</div>
+
+						<div>
+							<ContactUs contact={contact} />
+						</div>
+
+						<div>
+							<AboutUs aboutus={aboutus} />
+						</div>
 					</div>
 
-					<div>
-						<ContactUs contact={contact} />
-					</div>
+					<div className='phoneContent mt-2'>
+						<div className='row'>
+							<div
+								className='col-3 navLinks'
+								style={isActive(clickedMenu, "SERVICES")}
+								onClick={() => setClickedMenu("SERVICES")}
+							>
+								SERVICES
+							</div>
+							<div
+								className='col-3 navLinks'
+								style={isActive(clickedMenu, "STYLISTS")}
+								onClick={() => setClickedMenu("STYLISTS")}
+							>
+								BOOK
+							</div>
+							<div
+								className='col-3 navLinks'
+								style={isActive(clickedMenu, "ABOUT")}
+								onClick={() => setClickedMenu("ABOUT")}
+							>
+								ABOUT
+							</div>
+							<div
+								className='col-3 navLinks'
+								style={isActive(clickedMenu, "GALLERY")}
+								onClick={() => setClickedMenu("GALLERY")}
+							>
+								GALLERY
+							</div>
+						</div>
 
-					<div>
-						<AboutUs aboutus={aboutus} />
+						{clickedMenu === "SERVICES" ? (
+							<div className='my-5'>
+								<div className='mb-3'>
+									<select
+										style={{textTransform: "capitalize"}}
+										className='form-control'
+										onChange={(e) => setChosenCustomerType2(e.target.value)}
+									>
+										{chosenCustomerType2 ? (
+											<option
+												value={chosenCustomerType2}
+												style={{textTransform: "capitalize"}}
+											>
+												{chosenCustomerType2}
+											</option>
+										) : (
+											<option value='Please Select'>
+												Please Select Customer Type
+											</option>
+										)}
+
+										{allCustomerType &&
+											allCustomerType.map((customerType, i) => {
+												return (
+													<option
+														style={{textTransform: "capitalize"}}
+														key={i}
+														value={customerType}
+													>
+														{customerType}
+													</option>
+												);
+											})}
+									</select>
+								</div>
+								<AddedServices
+									ownerId={storeChosen.belongsTo._id}
+									chosenCustomerType={chosenCustomerType2}
+								/>
+							</div>
+						) : null}
+
+						{clickedMenu === "STYLISTS" ? (
+							<div className='my-5'>
+								<EmployeesList
+									storeProperties={storeChosen}
+									contact={contact}
+									filteredResults={allEmployees}
+								/>
+							</div>
+						) : null}
+
+						{clickedMenu === "ABOUT" ? (
+							<div className='my-5'>
+								<AboutUs aboutus={aboutus} />
+								<div className='mb-5'>
+									<ContactUs contact={contact} />
+								</div>
+							</div>
+						) : null}
+
+						{clickedMenu === "GALLERY" ? (
+							<div className='my-5'>
+								<Gallary filteredResults={allEmployees} />
+							</div>
+						) : null}
 					</div>
 				</React.Fragment>
 			)}
@@ -280,4 +438,29 @@ export default SingleStorePage;
 
 const SingleStorePageWrapper = styled.div`
 	min-height: 900px;
+	background-color: black;
+
+	.phoneContent {
+		display: none;
+	}
+
+	@media (max-width: 800px) {
+		.deskTopContent {
+			display: none;
+		}
+		.phoneContent {
+			display: block;
+			color: white;
+			padding: 20px;
+		}
+
+		.navLinks {
+			font-weight: bolder;
+			padding: 10px;
+			border: lightgrey 0.1px solid;
+			text-align: center;
+			border-radius: 25px;
+			cursor: pointer;
+		}
+	}
 `;
