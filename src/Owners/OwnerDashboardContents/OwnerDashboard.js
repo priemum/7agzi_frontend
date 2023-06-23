@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import MyCalendar from "./MyCalendar";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import EmployeeAppointments from "./EmployeeAppointments";
 import TableView from "./TableView";
 import ShopReports from "./ShopReports";
 import UsersReport from "./ShopReportsContent/UsersReport";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import {
 	allLoyaltyPointsAndStoreStatus,
 	getAllUsers,
@@ -44,7 +44,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const OwnerDashboard = ({language}) => {
+const OwnerDashboard = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 	const [currentUser, setCurrentUser] = useState("");
@@ -54,7 +54,7 @@ const OwnerDashboard = ({language}) => {
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		allLoyaltyPointsAndStoreStatus(token, user._id).then((data) => {
@@ -82,7 +82,7 @@ const OwnerDashboard = ({language}) => {
 		} else {
 			setCollapsed(false);
 		}
-		window.scrollTo({top: 78, behavior: "smooth"});
+		window.scrollTo({ top: 78, behavior: "smooth" });
 	}, []);
 
 	useEffect(() => {
@@ -142,10 +142,17 @@ const OwnerDashboard = ({language}) => {
 				<div>
 					<div
 						className=''
-						style={{top: "70px", right: "2%", position: "absolute"}}
+						style={{ top: "70px", right: "2%", position: "absolute" }}
 					>
 						{currentUser && currentUser.createdAt ? (
-							<Countdown theDate={currentUser.createdAt} />
+							<Countdown
+								theDate={currentUser.createdAt}
+								hasAgent={
+									currentUser &&
+									currentUser.agent &&
+									currentUser.agent.name !== "No Agent"
+								}
+							/>
 						) : null}
 					</div>
 					<div className='container-fluid col-lg-12 mx-auto text-center'>
@@ -196,7 +203,7 @@ const OwnerDashboard = ({language}) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("ShopReports");
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -212,7 +219,7 @@ const OwnerDashboard = ({language}) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("CustomerReports");
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -229,11 +236,14 @@ const OwnerDashboard = ({language}) => {
 						<h2
 							style={{
 								fontWeight: "bolder",
-								marginLeft: "30%",
+								marginLeft: "15%",
 								fontSize: "3rem",
 							}}
 						>
-							{" "}
+							<br />
+							WELCOME OUR DEAR BUSINESS PARTNER!
+							<br />
+							<br />
 							<Link
 								style={{
 									fontWeight: "bolder",
@@ -244,7 +254,7 @@ const OwnerDashboard = ({language}) => {
 							>
 								{language === "Arabic"
 									? "أضف إعدادات المتجر"
-									: "Add Store Settings"}
+									: "IMPORTANT => Please Add Salon Settings"}
 							</Link>{" "}
 						</h2>
 					) : allEmployees && allEmployees.length === 0 ? (

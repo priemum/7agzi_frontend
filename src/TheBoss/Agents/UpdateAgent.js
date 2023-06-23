@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../../auth";
-import {gettingAllUsers, updateUserByBoss} from "../apiBoss";
+import { isAuthenticated } from "../../auth";
+import { gettingAllUsers, updateUserByBoss } from "../apiBoss";
 import SignupFormBoss from "./SignupFormBoss";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import AgentMoreDetails from "./AgentMoreDetails";
 
 const UpdateAgent = () => {
@@ -12,7 +12,7 @@ const UpdateAgent = () => {
 	const [showMoreDetails, setShowMoreDetails] = useState(false);
 	const [values, setValues] = useState("");
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllAgents = () => {
 		gettingAllUsers(token, user._id).then((data) => {
@@ -62,16 +62,28 @@ const UpdateAgent = () => {
 					<div className='row'>
 						{allAgents &&
 							allAgents.map((agent, i) => {
+								console.log(agent.activeAgent, "agent");
 								return (
 									<div
-										className='col-md-3 mx-auto agentName'
+										className='col-md-4 mx-auto agentName'
 										key={i}
 										onClick={() => {
 											setSelectedAgent(agent);
 											setValues(agent);
 										}}
 									>
-										{agent.name}
+										{i + 1}-{"  "} {agent.name}{" "}
+										<span>
+											{agent.activeAgent ? (
+												<span style={{ color: "green", fontWeight: "bolder" }}>
+													(Active Agent)
+												</span>
+											) : (
+												<span style={{ color: "red", fontWeight: "bolder" }}>
+													(Inactive)
+												</span>
+											)}
+										</span>
 									</div>
 								);
 							})}

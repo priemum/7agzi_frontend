@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 
 import {
 	getBraintreeClientToken,
@@ -10,13 +10,13 @@ import {
 	processPaymentAndThenStore,
 	processPayment_Subscription,
 } from "../../apiCore";
-import {Link} from "react-router-dom";
-import {toast} from "react-toastify";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import PlatformShareComp from "./PlatformShareComp";
 import BeProComp from "./BeProComp";
 import SMSPayAsYouGo from "./SMSPayAsYouGo";
-import {updateOwnerProfile} from "../apiOwner";
-import {updateUser} from "../../customer/apiUser";
+import { updateOwnerProfile } from "../apiOwner";
+import { updateUser } from "../../customer/apiUser";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -47,7 +47,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const BillingMain = () => {
+const BillingMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 	const [clickedMenu, setClickedMenu] = useState("PlatformShare");
@@ -61,16 +61,16 @@ const BillingMain = () => {
 		instance: {},
 	});
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const getToken = (userId, token) => {
-		setData({...data, loading: true});
+		setData({ ...data, loading: true });
 		getBraintreeClientToken(userId, token).then((data) => {
 			if (data.error) {
-				setData({...data, error: data.error});
+				setData({ ...data, error: data.error });
 			} else {
-				setData({...data, clientToken: data.clientToken});
-				setData({...data, loading: false});
+				setData({ ...data, clientToken: data.clientToken });
+				setData({ ...data, loading: false });
 			}
 		});
 	};
@@ -152,12 +152,12 @@ const BillingMain = () => {
 						}
 					})
 					.catch((error) => {
-						setData({loading: false});
+						setData({ loading: false });
 					});
 			})
 			.catch((error) => {
 				// console.log("dropin error: ", error);
-				setData({...data, error: error.message});
+				setData({ ...data, error: error.message });
 			});
 	};
 
@@ -235,12 +235,12 @@ const BillingMain = () => {
 						}
 					})
 					.catch((error) => {
-						setData({loading: false});
+						setData({ loading: false });
 					});
 			})
 			.catch((error) => {
 				// console.log("dropin error: ", error);
-				setData({...data, error: error.message});
+				setData({ ...data, error: error.message });
 			});
 	};
 
@@ -316,12 +316,12 @@ const BillingMain = () => {
 						}
 					})
 					.catch((error) => {
-						setData({loading: false});
+						setData({ loading: false });
 					});
 			})
 			.catch((error) => {
 				// console.log("dropin error: ", error);
-				setData({...data, error: error.message});
+				setData({ ...data, error: error.message });
 			});
 	};
 
@@ -402,6 +402,7 @@ const BillingMain = () => {
 							token={token}
 							updateCardClicked={updateCardClicked}
 							setUpdateCardClicked={setUpdateCardClicked}
+							language={language}
 						/>
 					) : null}
 					{clickedMenu === "BePro" ? (

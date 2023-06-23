@@ -1,19 +1,19 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
 	cairoDistricts,
 	EgyptGovernorate,
 	alexandriaDistricts,
 	cloudinaryAgentUpload,
 } from "../apiCore";
-import {ToastContainer, toast} from "react-toastify";
-import {authenticate, isAuthenticated, signin, signup} from "../auth";
+import { ToastContainer, toast } from "react-toastify";
+import { authenticate, isAuthenticated, signin, signup } from "../auth";
 import AgentsSignupFormComp from "../components/SignupComp/AgentsSignupFormComp";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 
-const AgentsSignupForm = ({language}) => {
+const AgentsSignupForm = ({ language }) => {
 	const [nextClicked, setNextClicked] = useState(0);
 	const [values, setValues] = useState({
 		name: "",
@@ -42,8 +42,10 @@ const AgentsSignupForm = ({language}) => {
 			instagramLink: null,
 			fbLink: null,
 			idImage: [],
+			personalImage: [],
 		},
 		loading: false,
+		loading2: false,
 	});
 
 	const {
@@ -67,7 +69,7 @@ const AgentsSignupForm = ({language}) => {
 		loading,
 	} = values;
 
-	const {user} = isAuthenticated();
+	const { user } = isAuthenticated();
 	const handleChange = (name) => (event) => {
 		setValues({
 			...values,
@@ -119,7 +121,11 @@ const AgentsSignupForm = ({language}) => {
 			return toast.info("Passwords don't match");
 		}
 
-		setValues({...values, error: false});
+		if (!values.agentOtherData.agentNationalIdNumber) {
+			return toast.info("ID # is required");
+		}
+
+		setValues({ ...values, error: false });
 		signup({
 			name,
 			email,
@@ -141,11 +147,11 @@ const AgentsSignupForm = ({language}) => {
 		}).then((data1) => {
 			if (data1.error) {
 				console.log(data1.error, "data1.error");
-				setValues({...values, success: false});
+				setValues({ ...values, success: false });
 			} else
-				signin({email, password}).then((data) => {
+				signin({ email, password }).then((data) => {
 					if (data.error) {
-						setValues({...values, loading: false});
+						setValues({ ...values, loading: false });
 					} else {
 						authenticate(data, () => {
 							setValues({
@@ -179,6 +185,7 @@ const AgentsSignupForm = ({language}) => {
 
 	const fileUploadAndResizeStoreThumbnail = (e) => {
 		// console.log(e.target.files);
+		setValues({ ...values, loading: true });
 		let files = e.target.files;
 		console.log(files);
 		let allUploadedFiles = values.agentOtherData.idImage;
@@ -197,7 +204,7 @@ const AgentsSignupForm = ({language}) => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryAgentUpload({image: uri})
+						cloudinaryAgentUpload({ image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -216,6 +223,7 @@ const AgentsSignupForm = ({language}) => {
 					"base64"
 				);
 			}
+			setValues({ ...values, loading: true });
 		}
 	};
 
@@ -224,7 +232,7 @@ const AgentsSignupForm = ({language}) => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/remove/agent/idupload`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${"token"}`,
@@ -237,6 +245,79 @@ const AgentsSignupForm = ({language}) => {
 					agentOtherData: {
 						...values.agentOtherData,
 						idImage: [],
+					},
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+				setTimeout(function () {
+					window.location.reload(false);
+				}, 1000);
+			});
+	};
+
+	//Personal Photo
+	const fileUploadAndResizeStoreThumbnail2 = (e) => {
+		// console.log(e.target.files);
+		setValues({ ...values, loading2: true });
+		let files = e.target.files;
+
+		let allUploadedFiles = values.agentOtherData.personalImage;
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 500 * 1024) {
+					// file size is in bytes
+					alert("File size should be less than 500kb");
+					continue; // skip this file
+				}
+				Resizer.imageFileResizer(
+					files[i],
+					800,
+					954,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryAgentUpload({ image: uri })
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setValues({
+									...values,
+									agentOtherData: {
+										...values.agentOtherData,
+										personalImage: allUploadedFiles,
+									},
+								});
+							})
+							.catch((err) => {
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
+			}
+		}
+	};
+
+	const handleImageRemovePersonal = (public_id) => {
+		// console.log("remove image", public_id);
+		axios
+			.post(
+				`${process.env.REACT_APP_API_URL}/remove/agent/idupload`,
+				{ public_id },
+				{
+					headers: {
+						Authorization: `Bearer ${"token"}`,
+					},
+				}
+			)
+			.then((res) => {
+				setValues({
+					...values,
+					agentOtherData: {
+						...values.agentOtherData,
+						personalImage: [],
 					},
 				});
 			})
@@ -271,6 +352,8 @@ const AgentsSignupForm = ({language}) => {
 			language={language}
 			handleImageRemove2={handleImageRemove2}
 			fileUploadAndResizeStoreThumbnail={fileUploadAndResizeStoreThumbnail}
+			handleImageRemovePersonal={handleImageRemovePersonal}
+			fileUploadAndResizeStoreThumbnail2={fileUploadAndResizeStoreThumbnail2}
 		/>
 	);
 

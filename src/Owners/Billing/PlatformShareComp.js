@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import DropIn from "braintree-web-drop-in-react";
 import UpdateCardPlatformShare from "./UpdateCardPlatformShare";
-import {toast} from "react-toastify";
-import {updateUserCardFn} from "../../apiCore";
+import { toast } from "react-toastify";
+import { updateUserCardFn } from "../../apiCore";
 import StoredCardInfo from "./StoredCardInfo";
 
 const PlatformShareComp = ({
@@ -14,9 +14,10 @@ const PlatformShareComp = ({
 	token,
 	setUpdateCardClicked,
 	updateCardClicked,
+	language,
 }) => {
 	const updateUserCard = async () => {
-		const {nonce} = await data.instance.requestPaymentMethod();
+		const { nonce } = await data.instance.requestPaymentMethod();
 		updateUserCardFn(user._id, token, {
 			paymentMethodNonce: nonce,
 			paymentMethodToken: user.platFormShareToken,
@@ -50,7 +51,7 @@ const PlatformShareComp = ({
 							THANK YOU!
 							<br />
 							<br />
-							<strong style={{fontSize: "1.5rem", color: "darkgreen"}}>
+							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
 								You have already submitted your card, our platform is now
 								authorized to get transactions from you.
 							</strong>
@@ -92,9 +93,9 @@ const PlatformShareComp = ({
 							onClick={() => {
 								setUpdateCardClicked(!updateCardClicked);
 								if (updateCardClicked === true) {
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								} else {
-									window.scrollTo({top: 300, behavior: "smooth"});
+									window.scrollTo({ top: 300, behavior: "smooth" });
 								}
 							}}
 							style={{
@@ -118,18 +119,39 @@ const PlatformShareComp = ({
 				</div>
 			) : (
 				<div className='col-md-6 platformShare mt-5'>
-					<div onBlur={() => setData({...data, error: ""})}>
+					<div onBlur={() => setData({ ...data, error: "" })}>
 						{data && data.clientToken ? (
 							<div className=' col-md-12'>
-								<h3>Platform Share will be 5% from every appointment</h3>
-								<h5>
-									Initial Payment Will be{" "}
-									<strong style={{color: "black", fontSize: "1.3rem"}}>
-										$10
-									</strong>{" "}
-									and then you will be re-charged every week 5% of your overall
-									fulfilled appointments
-								</h5>
+								<>
+									{language === "Arabic" ? (
+										<div dir='rtl'>
+											<h3>المنصة ستحصل على 3 جنيهات مصرية من كل موعد</h3>
+											<h5>
+												الدفع الأولي سيكون{" "}
+												<strong style={{ color: "black", fontSize: "1.3rem" }}>
+													10 دولارات
+												</strong>{" "}
+												ومن ثم سيتم إعادة الشحن كل أسبوع بمقدار 3 جنيهات مصرية
+												من إجمالي مواعيدك
+											</h5>
+										</div>
+									) : (
+										<>
+											<h3>
+												The platform's share will be 3 EGP from each appointment
+											</h3>
+											<h5>
+												The initial payment will be{" "}
+												<strong style={{ color: "black", fontSize: "1.3rem" }}>
+													$10
+												</strong>{" "}
+												and then you will be re-charged 3 EGP each week based on
+												your overall appointments
+											</h5>
+										</>
+									)}
+								</>
+
 								<DropIn
 									options={{
 										authorization: data && data.clientToken,

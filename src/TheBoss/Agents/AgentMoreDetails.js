@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {updateAgentByBoss} from "../apiBoss";
-import {toast} from "react-toastify";
+import { updateAgentByBoss } from "../apiBoss";
+import { toast } from "react-toastify";
 
 const AgentMoreDetails = ({
 	values,
@@ -72,8 +72,8 @@ const AgentMoreDetails = ({
 						values.agentOtherData.idImage &&
 						values.agentOtherData.idImage[0] &&
 						values.agentOtherData.idImage[0].url ? (
-							<div className='col-md-10 mx-auto my-2'>
-								<label style={{fontWeight: "bold", fontSize: "20px"}}>
+							<div className='col-md-6 mx-auto my-2'>
+								<label style={{ fontWeight: "bold", fontSize: "20px" }}>
 									Agent <strong>{values.name}</strong> ID Image
 								</label>
 								<br />
@@ -83,13 +83,36 @@ const AgentMoreDetails = ({
 										values.agentOtherData.idImage[0].url
 									}
 									alt='NoIdImage'
-									width='300px'
+									width='50%'
+									style={{ objectFit: "cover" }}
+								/>
+							</div>
+						) : null}
+
+						{values &&
+						values.agentOtherData &&
+						values.agentOtherData.personalImage &&
+						values.agentOtherData.personalImage[0] &&
+						values.agentOtherData.personalImage[0].url ? (
+							<div className='col-md-6 mx-auto my-2'>
+								<label style={{ fontWeight: "bold", fontSize: "20px" }}>
+									Agent <strong>{values.name}</strong> Personal Photo
+								</label>
+								<br />
+								<img
+									src={
+										values.agentOtherData &&
+										values.agentOtherData.personalImage[0].url
+									}
+									alt='NoIdImage'
+									width='50%'
+									style={{ objectFit: "cover" }}
 								/>
 							</div>
 						) : null}
 
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>Country</label>
+							<label style={{ fontWeight: "bold" }}>Country</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -110,7 +133,7 @@ const AgentMoreDetails = ({
 							/>
 						</div>
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>Governorate</label>
+							<label style={{ fontWeight: "bold" }}>Governorate</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -132,7 +155,7 @@ const AgentMoreDetails = ({
 							/>
 						</div>
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>District</label>
+							<label style={{ fontWeight: "bold" }}>District</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -153,7 +176,7 @@ const AgentMoreDetails = ({
 							/>
 						</div>
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>Address</label>
+							<label style={{ fontWeight: "bold" }}>Address</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -175,7 +198,7 @@ const AgentMoreDetails = ({
 						</div>
 
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>ID/ Passport #</label>
+							<label style={{ fontWeight: "bold" }}>ID/ Passport #</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -198,7 +221,7 @@ const AgentMoreDetails = ({
 						</div>
 
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>Phone # 2</label>
+							<label style={{ fontWeight: "bold" }}>Phone # 2</label>
 							<input
 								type='text'
 								name='storeAddress'
@@ -218,7 +241,7 @@ const AgentMoreDetails = ({
 						</div>
 
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>
+							<label style={{ fontWeight: "bold" }}>
 								Facebook Link (Optional)
 							</label>
 							<input
@@ -240,7 +263,7 @@ const AgentMoreDetails = ({
 						</div>
 
 						<div className='col-md-3 my-2'>
-							<label style={{fontWeight: "bold"}}>
+							<label style={{ fontWeight: "bold" }}>
 								Instagram Profile Link (Optional)
 							</label>
 							<input
@@ -264,14 +287,14 @@ const AgentMoreDetails = ({
 						</div>
 					</div>
 					<div className='my-2'>
-						<label style={{fontWeight: "bold"}}>
+						<label style={{ fontWeight: "bold" }}>
 							Activate Agent? (
 							{values.activeAgent ? (
-								<span style={{color: "green", fontWeight: "bolder"}}>
+								<span style={{ color: "green", fontWeight: "bolder" }}>
 									ACTIVE AGENT
 								</span>
 							) : (
-								<span style={{color: "red", fontWeight: "bolder"}}>
+								<span style={{ color: "red", fontWeight: "bolder" }}>
 									INACTIVE AGENT
 								</span>
 							)}
@@ -280,7 +303,7 @@ const AgentMoreDetails = ({
 
 						<select
 							onChange={(e) => {
-								setValues({...values, activeAgent: e.target.value});
+								setValues({ ...values, activeAgent: e.target.value });
 							}}
 						>
 							<option value='Please Select'>Please Select </option>

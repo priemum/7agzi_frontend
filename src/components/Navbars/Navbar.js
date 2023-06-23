@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
-import {isAuthenticated} from "../../auth";
+import { Link, withRouter } from "react-router-dom";
+import { isAuthenticated } from "../../auth";
 import styled from "styled-components";
 
 const isActive = (history, path) => {
@@ -14,7 +14,7 @@ const isActive = (history, path) => {
 			// textDecoration: "underline",
 		};
 	} else {
-		return {color: "#ffffff", fontWeight: "bold"};
+		return { color: "#ffffff", fontWeight: "bold" };
 	}
 };
 
@@ -27,15 +27,15 @@ const isActive2 = (history, path) => {
 			// textDecoration: "underline",
 		};
 	} else {
-		return {color: "#ffffff", fontWeight: "bold"};
+		return { color: "#ffffff", fontWeight: "bold" };
 	}
 };
 
-const Navbar = ({history, language}) => {
+const Navbar = ({ history, language }) => {
 	return (
 		<Nav
 			className=' navbar  navbar-expand-sm'
-			style={{backgroundColor: "black"}}
+			style={{ backgroundColor: "black" }}
 		>
 			<div
 				className='collapse navbar-collapse '
@@ -43,7 +43,7 @@ const Navbar = ({history, language}) => {
 			>
 				<ul
 					className='navbar-nav mx-auto navbar-expand '
-					style={{backgroundColor: "black"}}
+					style={{ backgroundColor: "black" }}
 				>
 					<li className='nav-item'>
 						<Link
@@ -51,7 +51,7 @@ const Navbar = ({history, language}) => {
 							style={isActive(history, "/")}
 							to='/'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							{language === "Arabic" ? (
@@ -74,7 +74,7 @@ const Navbar = ({history, language}) => {
 							style={isActive(history, "/schedule")}
 							to='/schedule'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							{language === "Arabic" ? (
@@ -97,7 +97,7 @@ const Navbar = ({history, language}) => {
 							style={isActive(history, "/contact")}
 							to='/contact'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							{language === "Arabic" ? (
@@ -120,7 +120,7 @@ const Navbar = ({history, language}) => {
 							style={isActive(history, "/about")}
 							to='/about'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							{language === "Arabic" ? (
@@ -145,7 +145,7 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/dashboard")}
 								to='/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								My Dasboard/Account
@@ -174,10 +174,10 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/store/admin/dashboard")}
 								to='/store/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 90, behavior: "smooth"});
+									window.scrollTo({ top: 90, behavior: "smooth" });
 								}}
 							>
-								Owner Dashboard
+								Business Partner Dashboard
 							</Link>
 						</li>
 					)}
@@ -189,7 +189,7 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/boss/admin/dashboard")}
 								to='/boss/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								Platform Admin
@@ -204,7 +204,7 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/agent/dashboard")}
 								to='/agent/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								Platform <strong>AGENT</strong>
@@ -219,7 +219,7 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/admin/dashboard")}
 								to='/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 90, behavior: "smooth"});
+									window.scrollTo({ top: 90, behavior: "smooth" });
 								}}
 							>
 								Admin Dashboard
@@ -248,7 +248,7 @@ const Navbar = ({history, language}) => {
 								style={isActive2(history, "/stylist/dashboard")}
 								to='/stylist/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								Stylist Dashboard

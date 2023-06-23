@@ -1,24 +1,24 @@
 /** @format */
 
-import React, {useState, useEffect, Fragment} from "react";
-import {isAuthenticated} from "../auth";
+import React, { useState, useEffect, Fragment } from "react";
+import { isAuthenticated } from "../auth";
 import {
 	getPreviousScheduledHoursStylist,
 	updateEmployeeStylist,
 	cloudinaryUploadStylist,
 	getServicesStylist,
 } from "./apiStylist";
-import {Redirect} from "react-router-dom";
-import {update, updateUser} from "../customer/apiUser";
+import { Redirect } from "react-router-dom";
+import { update, updateUser } from "../customer/apiUser";
 
 // eslint-disable-next-line
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 // import StylistSideBar from "./StylistSideBar";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import StylistBackground from "./StylistMenu/StylistBackground";
 import StylistSidebar from "./StylistMenu/StylistSidebar";
-import {readByPhone} from "../apiCore";
+import { readByPhone } from "../apiCore";
 import UpdateCredentials from "./ProfileContent/UpdateCredentials";
 import UpdatePhotos from "./ProfileContent/UpdatePhotos";
 import ServicesWorkingDays from "./ProfileContent/ServicesWorkingDays";
@@ -53,7 +53,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const UpdateProfile = ({match}) => {
+const UpdateProfile = ({ match }) => {
 	const [click2, setClick2] = useState(false);
 	const [clickMenu2, setClickMenu2] = useState(false);
 	const [clickedMenu, setClickedMenu] = useState("UpdateProfile");
@@ -78,13 +78,13 @@ const UpdateProfile = ({match}) => {
 	const [AllServices, setAllServices] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	const {token, user} = isAuthenticated();
-	const {name, email, password, success} = values;
+	const { token, user } = isAuthenticated();
+	const { name, email, password, success } = values;
 
 	const init = () => {
 		setLoading(true);
 
-		setValues({...values, name: user.name, email: user.email});
+		setValues({ ...values, name: user.name, email: user.email });
 
 		readByPhone(user.phone).then((data1) => {
 			if (data1.error) {
@@ -137,26 +137,28 @@ const UpdateProfile = ({match}) => {
 	}, []);
 
 	const handleChange = (name) => (e) => {
-		setValues({...values, error: false, [name]: e.target.value});
+		setValues({ ...values, error: false, [name]: e.target.value });
 	};
 
 	const clickSubmit = (e) => {
 		e.preventDefault();
-		update(match.params.userId, token, {name, email, password}).then((data) => {
-			if (data.error) {
-				// console.log(data.error);
-				alert(data.error);
-			} else {
-				updateUser(data, () => {
-					setValues({
-						...values,
-						name: data.name,
-						email: data.email,
-						success: true,
+		update(match.params.userId, token, { name, email, password }).then(
+			(data) => {
+				if (data.error) {
+					// console.log(data.error);
+					alert(data.error);
+				} else {
+					updateUser(data, () => {
+						setValues({
+							...values,
+							name: data.name,
+							email: data.email,
+							success: true,
+						});
 					});
-				});
+				}
 			}
-		});
+		);
 	};
 
 	const handleSubmitUpdate = (e) => {
@@ -211,51 +213,51 @@ const UpdateProfile = ({match}) => {
 	const handleQueryChange = (event) => {
 		if (event.target.checked && !query.includes(event.target.value)) {
 			setQuery([...query, event.target.value]);
-			setEmployeeProfile({...employeeProfile, workingDays: query});
+			setEmployeeProfile({ ...employeeProfile, workingDays: query });
 		} else if (!event.target.checked && query.includes(event.target.value)) {
 			setQuery(query.filter((q) => q !== event.target.value));
-			setEmployeeProfile({...employeeProfile, workingDays: query});
+			setEmployeeProfile({ ...employeeProfile, workingDays: query });
 		}
 
-		setEmployeeProfile({...employeeProfile, workingDays: query});
+		setEmployeeProfile({ ...employeeProfile, workingDays: query });
 	};
 
 	useEffect(() => {
-		setEmployeeProfile({...employeeProfile, workingDays: query});
+		setEmployeeProfile({ ...employeeProfile, workingDays: query });
 		// eslint-disable-next-line
 	}, [query, employeeProfile.workingDays]);
 
 	const handleQueryChange_WorkingHours = (e) => {
 		if (e.target.checked && !query2.includes(e.target.value)) {
 			setQuery2([...query2, e.target.value]);
-			setEmployeeProfile({...employeeProfile, workingHours: query2});
+			setEmployeeProfile({ ...employeeProfile, workingHours: query2 });
 		} else if (!e.target.checked && query2.includes(e.target.value)) {
 			setQuery2(query2.filter((q) => q !== e.target.value));
-			setEmployeeProfile({...employeeProfile, workingHours: query2});
+			setEmployeeProfile({ ...employeeProfile, workingHours: query2 });
 		}
 
-		setEmployeeProfile({...employeeProfile, workingHours: query2});
+		setEmployeeProfile({ ...employeeProfile, workingHours: query2 });
 	};
 
 	useEffect(() => {
-		setEmployeeProfile({...employeeProfile, workingHours: query2});
+		setEmployeeProfile({ ...employeeProfile, workingHours: query2 });
 		// eslint-disable-next-line
 	}, [query2, employeeProfile.workinghours]);
 
 	const handleQueryChange_Services = (event) => {
 		if (event.target.checked && !query3.includes(event.target.value)) {
 			setQuery3([...query3, event.target.value]);
-			setEmployeeProfile({...employeeProfile, services: query3});
+			setEmployeeProfile({ ...employeeProfile, services: query3 });
 		} else if (!event.target.checked && query3.includes(event.target.value)) {
 			setQuery3(query3.filter((q) => q !== event.target.value));
-			setEmployeeProfile({...employeeProfile, services: query3});
+			setEmployeeProfile({ ...employeeProfile, services: query3 });
 		}
 
-		setEmployeeProfile({...employeeProfile, services: query3});
+		setEmployeeProfile({ ...employeeProfile, services: query3 });
 	};
 
 	useEffect(() => {
-		setEmployeeProfile({...employeeProfile, services: query3});
+		setEmployeeProfile({ ...employeeProfile, services: query3 });
 		// eslint-disable-next-line
 	}, [query3, employeeProfile.services]);
 
@@ -270,6 +272,11 @@ const UpdateProfile = ({match}) => {
 		let allUploadedFiles = employeeProfile.workPhotos;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 500 * 1024) {
+					// file size is in bytes
+					alert("File size should be less than 500kb");
+					continue; // skip this file
+				}
 				Resizer.imageFileResizer(
 					files[i],
 					720,
@@ -278,7 +285,7 @@ const UpdateProfile = ({match}) => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUploadStylist(userId, token, {image: uri})
+						cloudinaryUploadStylist(userId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -311,7 +318,7 @@ const UpdateProfile = ({match}) => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUploadStylist(userId, token, {image: uri})
+						cloudinaryUploadStylist(userId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -336,7 +343,7 @@ const UpdateProfile = ({match}) => {
 			<React.Fragment>
 				<label
 					className='btn btn-info btn-raised'
-					style={{cursor: "pointer", fontSize: "0.80rem"}}
+					style={{ cursor: "pointer", fontSize: "0.80rem" }}
 				>
 					Upload Updated Stylist Personal Photos
 					<input
@@ -356,7 +363,7 @@ const UpdateProfile = ({match}) => {
 			<React.Fragment>
 				<label
 					className='btn btn-info btn-raised'
-					style={{cursor: "pointer", fontSize: "0.80rem"}}
+					style={{ cursor: "pointer", fontSize: "0.80rem" }}
 				>
 					Upload Updated Stylist Work Photos
 					<input
@@ -378,7 +385,7 @@ const UpdateProfile = ({match}) => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/stylist/removeimage/${userId}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -387,7 +394,7 @@ const UpdateProfile = ({match}) => {
 			)
 			.then((res) => {
 				setLoading(false);
-				const {personalPhotos} = employeeProfile;
+				const { personalPhotos } = employeeProfile;
 				let filteredImages = personalPhotos.filter((item) => {
 					return item.public_id !== public_id;
 				});
@@ -408,7 +415,7 @@ const UpdateProfile = ({match}) => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/stylist/removeimage/${userId}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -417,11 +424,11 @@ const UpdateProfile = ({match}) => {
 			)
 			.then((res) => {
 				setLoading(false);
-				const {workPhotos} = employeeProfile;
+				const { workPhotos } = employeeProfile;
 				let filteredImages = workPhotos.filter((item) => {
 					return item.public_id !== public_id;
 				});
-				setEmployeeProfile({...employeeProfile, workPhotos: filteredImages});
+				setEmployeeProfile({ ...employeeProfile, workPhotos: filteredImages });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -446,7 +453,7 @@ const UpdateProfile = ({match}) => {
 				/>
 			</div>
 
-			<div className='col-md-11 mx-auto' style={{marginBottom: "330px"}}>
+			<div className='col-md-11 mx-auto' style={{ marginBottom: "330px" }}>
 				<div className='container-fluid col-lg-10 mx-auto text-center'>
 					<div className='row text-center ml-5 my-5'>
 						<div
@@ -522,10 +529,10 @@ const UpdateProfile = ({match}) => {
 						>
 							<button
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								className='btn btn-outline-primary my-2 '
-								style={{fontSize: "1.2rem", fontWeight: "bold"}}
+								style={{ fontSize: "1.2rem", fontWeight: "bold" }}
 							>
 								UPDATE YOUR PROFILE
 							</button>

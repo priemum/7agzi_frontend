@@ -1,11 +1,11 @@
 /** @format */
 
-import React, {useState, Fragment, useEffect} from "react";
+import React, { useState, Fragment, useEffect } from "react";
 // import { Link } from "react-router-dom";
-import {createService, getServices} from "../apiOwner";
-import {ToastContainer, toast} from "react-toastify";
+import { createService, getServices } from "../apiOwner";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import styled from "styled-components";
 
 const AddService = () => {
@@ -28,7 +28,7 @@ const AddService = () => {
 	const [success, setSuccess] = useState(false);
 
 	// destructure user and token from localstorage
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const handleChange1 = (e) => {
 		setError("");
@@ -145,14 +145,15 @@ const AddService = () => {
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Customer Type</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange5}
-						value={customerType}
-						required
-						placeholder='Male, Female, Boys, Girls, etc...'
-					/>
+					<select className='form-control' onChange={handleChange5}>
+						<option value='Please Select'>Please Select</option>
+						<option value='Male'>Male</option>
+						<option value='Female'>Female</option>
+						<option value='Boys'>Boys (Client 12 Years Old or Younger)</option>
+						<option value='Girls'>
+							Girls (Client 12 Years Old or Younger)
+						</option>
+					</select>
 				</div>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Service Name</label>
@@ -237,7 +238,7 @@ const AddService = () => {
 					</div>
 					<label className='text-muted'>
 						Add set of services connected to{" "}
-						<span style={{color: "blue", fontWeight: "bold"}}>
+						<span style={{ color: "blue", fontWeight: "bold" }}>
 							"{serviceName}"
 						</span>
 					</label>
@@ -250,14 +251,14 @@ const AddService = () => {
 					/>
 					<div className='row'>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={pushToServiceDescription}
 							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
 						>
 							Add Service Description.
 						</button>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={() => {
 								setServiceDescriptionCombined([]);
 								setServiceType("Please select / Required*");

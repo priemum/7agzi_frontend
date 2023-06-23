@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../auth";
-import {readUser, storesListForAgents} from "./apiAgent";
+import { isAuthenticated } from "../auth";
+import { readUser, storesListForAgents } from "./apiAgent";
 import CountUp from "react-countup";
-import {allLoyaltyPointsAndStoreStatus} from "../TheBoss/apiBoss";
+import { allLoyaltyPointsAndStoreStatus } from "../TheBoss/apiBoss";
 
-const AgentDashboard = () => {
+const AgentDashboard = ({ language }) => {
 	//Read Single User for the agent
 	//Get all related stores for this agent
 	//Check whether related stores are paid for the agent or not
@@ -14,7 +14,7 @@ const AgentDashboard = () => {
 	const [ownerAccounts, setOwnerAccounts] = useState("");
 	const [storeProperties, setStoreProperties] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const readingCurrentUser = () => {
 		readUser(user._id, token).then((data) => {
@@ -91,10 +91,6 @@ const AgentDashboard = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	console.log(currentUser, "currentUser");
-	console.log(ownerAccounts, "ownerAccounts");
-	console.log(storeProperties, "storeProperties");
-
 	const storesWentPro =
 		ownerAccounts && ownerAccounts.filter((i) => i.subscribed === true)
 			? ownerAccounts.filter((i) => i.subscribed === true)
@@ -116,27 +112,51 @@ const AgentDashboard = () => {
 	return (
 		<AgentDashboardWrapper>
 			{currentUser && currentUser.activeAgent === false ? (
-				<div className='underReview'>
-					<h1>
-						{" "}
-						<strong> HI {currentUser && currentUser.name}</strong>
-					</h1>
-					<h2>
-						Your Profile Is <strong>Under Review</strong>, This Process Usually
-						Takes 24 to 48 hours.
-					</h2>
-					<h2>
-						Once Your Profile Is Reviewed, Our HR Manager Will Reach Out To You
-						For A Quick Interview.
-					</h2>
-					<h2 className='mt-5 text-center' style={{fontSize: "2rem"}}>
-						{" "}
-						<strong>THANK YOU FOR SHOWING INTEREST!</strong>{" "}
-					</h2>
-					<h2 className='mt-5 text-center' style={{fontSize: "2rem"}}>
-						{" "}
-						<strong style={{color: "darkgreen"}}>GOOD LUCK!</strong>{" "}
-					</h2>
+				<div
+					className='underReview'
+					dir={language === "Arabic" ? "rtl" : "ltr"}
+				>
+					{language === "Arabic" ? (
+						<>
+							<h1>
+								<strong>مرحبا {currentUser && currentUser.name}</strong>
+							</h1>
+							<h2>
+								ملفك الشخصي <strong>قيد المراجعة</strong>. عادةً ما تستغرق هذه
+								العملية من 24 إلى 48 ساعة.
+							</h2>
+							<h2>
+								بمجرد مراجعة ملفك الشخصي، سيتواصل معك مدير الموارد البشرية لدينا
+								لإجراء مقابلة سريعة.
+							</h2>
+							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
+								<strong>شكراً لاهتمامك!</strong>
+							</h2>
+							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
+								<strong style={{ color: "darkgreen" }}>حظاً سعيداً!</strong>
+							</h2>
+						</>
+					) : (
+						<>
+							<h1>
+								<strong> HI {currentUser && currentUser.name}</strong>
+							</h1>
+							<h2>
+								Your Profile Is <strong>Under Review</strong>, This Process
+								Usually Takes 24 to 48 hours.
+							</h2>
+							<h2>
+								Once Your Profile Is Reviewed, Our HR Manager Will Reach Out To
+								You For A Quick Interview.
+							</h2>
+							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
+								<strong>THANK YOU FOR SHOWING INTEREST!</strong>
+							</h2>
+							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
+								<strong style={{ color: "darkgreen" }}>GOOD LUCK!</strong>
+							</h2>
+						</>
+					)}
 				</div>
 			) : null}
 
@@ -148,13 +168,13 @@ const AgentDashboard = () => {
 					</h1>
 					<div className='row'>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#f1416c"}}>
+							<div className='card' style={{ background: "#f1416c" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Stores You Registered
 									</h5>
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={3}
 										delay={0}
 										end={ownerAccounts.length}
@@ -164,13 +184,13 @@ const AgentDashboard = () => {
 							</div>
 						</div>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#009ef7"}}>
+							<div className='card' style={{ background: "#009ef7" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Stores Went Pro
 									</h5>
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={3}
 										delay={0}
 										end={storesWentPro.length}
@@ -180,14 +200,14 @@ const AgentDashboard = () => {
 							</div>
 						</div>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#50cd89"}}>
+							<div className='card' style={{ background: "#50cd89" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Your Share ($)
 									</h5>
-									<span style={{color: "white"}}>$</span>{" "}
+									<span style={{ color: "white" }}>$</span>{" "}
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={3}
 										delay={0}
 										end={
@@ -200,14 +220,14 @@ const AgentDashboard = () => {
 							</div>
 						</div>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#185434"}}>
+							<div className='card' style={{ background: "#185434" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										You Got Paid ($)
 									</h5>
-									<span style={{color: "white"}}>$</span>{" "}
+									<span style={{ color: "white" }}>$</span>{" "}
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={3}
 										delay={0}
 										end={Number(agentPaid.length) + Number(agentPaidPro.length)}
@@ -225,12 +245,12 @@ const AgentDashboard = () => {
 							overflow: "auto",
 						}}
 					>
-						<h3 style={{fontWeight: "bolder"}}>
+						<h3 style={{ fontWeight: "bolder" }}>
 							Registered Accounts With You:
 						</h3>
 						<table
 							className='table table-bordered table-md-responsive table-hover table-striped'
-							style={{fontSize: "0.75rem"}}
+							style={{ fontSize: "0.75rem" }}
 						>
 							<thead
 							// className='thead-light'
@@ -246,13 +266,16 @@ const AgentDashboard = () => {
 									<th scope='col'>Store Type</th>
 									<th scope='col'>Account Created</th>
 									<th scope='col'>Settings?</th>
-									<th scope='col' style={{background: "black", color: "white"}}>
+									<th
+										scope='col'
+										style={{ background: "black", color: "white" }}
+									>
 										Active Store?
 									</th>
 									<th scope='col'>Agent</th>
 									<th
 										scope='col'
-										style={{background: "darkgoldenrod", color: "white"}}
+										style={{ background: "darkgoldenrod", color: "white" }}
 									>
 										Pro Account
 									</th>
@@ -285,12 +308,12 @@ const AgentDashboard = () => {
 												<td>{i + 1}</td>
 												<td>{o.name}</td>
 												<td>{o.phone}</td>
-												<td style={{textTransform: "capitalize"}}>
+												<td style={{ textTransform: "capitalize" }}>
 													{o.storeGovernorate}
 												</td>
 												<td>{o.storeAddress}</td>
 												<td>{storeIndex && storeIndex.addStoreName}</td>
-												<td style={{textTransform: "capitalize"}}>
+												<td style={{ textTransform: "capitalize" }}>
 													{o.storeType}
 												</td>
 												<td>

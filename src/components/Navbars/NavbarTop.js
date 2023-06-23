@@ -1,8 +1,8 @@
 /** @format */
 
-import React, {Fragment} from "react";
-import {Link, withRouter} from "react-router-dom";
-import {signout, isAuthenticated} from "../../auth";
+import React, { Fragment } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { signout, isAuthenticated } from "../../auth";
 import styled from "styled-components";
 import myLogo from "../../Images/InfiniteAppsLogo.png";
 import EgyptianFlag from "../../Images/Egypt.png";
@@ -30,7 +30,7 @@ const Navbar1 = ({
 						<li
 							className='mt-3'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							<Link
@@ -63,7 +63,7 @@ const Navbar1 = ({
 						</li>
 						<li
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							<Link
@@ -96,7 +96,7 @@ const Navbar1 = ({
 						</li>
 						<li
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							<Link
@@ -129,7 +129,7 @@ const Navbar1 = ({
 						</li>
 						<li
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							<Link
@@ -165,7 +165,7 @@ const Navbar1 = ({
 							<li
 								className='nav-item ml-5 mt-3'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -186,7 +186,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -197,7 +197,7 @@ const Navbar1 = ({
 											setClick(false);
 										}}
 									>
-										Owner Dashboard
+										Business Partner Dashboard
 									</Link>
 								</li>
 								{/* <li
@@ -225,7 +225,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -247,7 +247,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -269,7 +269,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -308,7 +308,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -326,7 +326,7 @@ const Navbar1 = ({
 								<li
 									className='nav-item ml-5 mt-3'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
@@ -347,7 +347,7 @@ const Navbar1 = ({
 							<li
 								className='nav-item ml-5'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								<span>
@@ -382,19 +382,19 @@ const Navbar1 = ({
 	return (
 		<Nav
 			className=' navbar  navbar-expand-sm nav-center py-1'
-			style={{backgroundColor: "#363636"}}
+			style={{ backgroundColor: "#363636" }}
 		>
 			{click ? (
 				<i
 					className='far fa-window-close nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{color: "white"}}
+					style={{ color: "white" }}
 				></i>
 			) : (
 				<i
 					className='fa fa-bars nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{color: "white"}}
+					style={{ color: "white" }}
 				></i>
 			)}
 			{sideBar()}
@@ -402,14 +402,14 @@ const Navbar1 = ({
 				<Link
 					to='#'
 					onClick={() => {
-						window.scrollTo({top: 0, behavior: "smooth"});
+						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}
 				>
 					<img src={myLogo} alt='infinite-apps.com' className='sinaiLogo' />
 
 					<span
 						className='languageFlagsPhone'
-						style={{padding: "0px", marginLeft: "120px"}}
+						style={{ padding: "0px", marginLeft: "120px" }}
 					>
 						{language === "English" ? (
 							<span
@@ -420,12 +420,12 @@ const Navbar1 = ({
 							>
 								{" "}
 								<img className='flags' src={EgyptianFlag} alt='Arabic' />
-								<span style={{color: "white"}}>Arabic</span>
+								<span style={{ color: "white" }}>Arabic</span>
 							</span>
 						) : (
 							<span
 								className=' '
-								style={{color: "white"}}
+								style={{ color: "white" }}
 								onClick={() => {
 									setLanguage("English");
 								}}
@@ -448,7 +448,7 @@ const Navbar1 = ({
 								className='nav-link'
 								to='/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								style={{
 									color: "white",
@@ -468,7 +468,7 @@ const Navbar1 = ({
 								className='nav-link'
 								to='/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								style={{
 									color: "white",
@@ -489,7 +489,7 @@ const Navbar1 = ({
 								className='nav-link'
 								to='/store/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								style={{
 									color: "white",
@@ -509,7 +509,7 @@ const Navbar1 = ({
 								className='nav-link'
 								to='/admin/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								style={{
 									color: "white",
@@ -530,7 +530,7 @@ const Navbar1 = ({
 									className='nav-link '
 									to='/signin'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 									style={{
 										color: "white",
@@ -560,7 +560,7 @@ const Navbar1 = ({
 									className='nav-link'
 									to='/signup'
 									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 									style={{
 										color: "white",
@@ -603,7 +603,7 @@ const Navbar1 = ({
 										history.push("/");
 										localStorage.removeItem("userHistoryPurchases");
 										localStorage.removeItem("order");
-										window.scrollTo({top: 0, behavior: "smooth"});
+										window.scrollTo({ top: 0, behavior: "smooth" });
 									})
 								}
 							>
@@ -620,7 +620,7 @@ const Navbar1 = ({
 							height: "30px",
 						}}
 					>
-						<span className='' style={{padding: "0px"}}>
+						<span className='' style={{ padding: "0px" }}>
 							{language === "English" ? (
 								<span
 									className=''
@@ -630,11 +630,11 @@ const Navbar1 = ({
 								>
 									{" "}
 									<img className='flags' src={EgyptianFlag} alt='Arabic' />
-									<span style={{color: "white"}}>Arabic</span>
+									<span style={{ color: "white" }}>Arabic</span>
 								</span>
 							) : (
 								<span
-									style={{color: "white"}}
+									style={{ color: "white" }}
 									className=' '
 									onClick={() => {
 										setLanguage("English");

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated, signup} from "../../auth";
+import { isAuthenticated, signup } from "../../auth";
 import {
 	cloudinaryUpload1,
 	getEmployees,
@@ -11,7 +11,7 @@ import {
 	updateUserByAdmin,
 } from "../apiOwner";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import AddEmpSection1 from "./AddEmpSection1";
 import AddEmpSection2 from "./AddEmpSection2";
@@ -79,7 +79,7 @@ const UpdateEmployee = () => {
 	const [loading, setLoading] = useState(true);
 	const [allEmployees, setAllEmployees] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const [query, setQuery] = useState([]);
 	const [query2, setQuery2] = useState([]);
@@ -105,17 +105,17 @@ const UpdateEmployee = () => {
 	const handleQueryChange = (event) => {
 		if (event.target.checked && !query.includes(event.target.value)) {
 			setQuery([...query, event.target.value]);
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		} else if (!event.target.checked && query.includes(event.target.value)) {
 			setQuery(query.filter((q) => q !== event.target.value));
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		}
 
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 		gettingAllEmployees();
 		// eslint-disable-next-line
 	}, [query, values.workingDays]);
@@ -124,34 +124,34 @@ const UpdateEmployee = () => {
 		// console.log(e.target, "event.target");
 		if (e.target.checked && !query4.includes(e.target.value)) {
 			setQuery4([...query4, e.target.value]);
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		} else if (!e.target.checked && query4.includes(e.target.value)) {
 			setQuery4(query4.filter((q) => q !== e.target.value));
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		}
 
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 		// eslint-disable-next-line
 	}, [query4, values.workingHours]);
 
 	const handleQueryChange_Services = (event) => {
 		if (event.target.checked && !query2.includes(event.target.value)) {
 			setQuery2([...query2, event.target.value]);
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		} else if (!event.target.checked && query2.includes(event.target.value)) {
 			setQuery2(query2.filter((q) => q !== event.target.value));
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		}
 
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 	};
 
 	useEffect(() => {
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 		// eslint-disable-next-line
 	}, [query2, values.services]);
 
@@ -206,7 +206,7 @@ const UpdateEmployee = () => {
 							</React.Fragment>
 						);
 					} else {
-						setValues2({...values2, error: false, misMatch: false});
+						setValues2({ ...values2, error: false, misMatch: false });
 						console.log("Ahowan 2ara yad el update");
 						updateUserByAdmin(values2._id, user._id, token, {
 							userId: values2._id,
@@ -237,7 +237,7 @@ const UpdateEmployee = () => {
 								</React.Fragment>
 							);
 						} else {
-							setValues2({...values2, error: false, misMatch: false});
+							setValues2({ ...values2, error: false, misMatch: false });
 							signup({
 								name: values.employeeName,
 								email: values.employeePhone,
@@ -271,7 +271,7 @@ const UpdateEmployee = () => {
 	const handleChange = (name) => (e) => {
 		const value = e.target.value;
 
-		setValues({...values, [name]: value});
+		setValues({ ...values, [name]: value });
 	};
 
 	const gettingAllServices = () => {
@@ -326,11 +326,11 @@ const UpdateEmployee = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setValues({...values, workPhotos: allUploadedFiles});
+								setValues({ ...values, workPhotos: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -346,7 +346,7 @@ const UpdateEmployee = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -355,11 +355,11 @@ const UpdateEmployee = () => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {workPhotos} = values.workPhotos;
+				const { workPhotos } = values.workPhotos;
 				let filteredImages = values.workPhotos.filter((item) => {
 					return item.public_id !== public_id;
 				});
-				setValues({...values, workPhotos: filteredImages});
+				setValues({ ...values, workPhotos: filteredImages });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -371,7 +371,7 @@ const UpdateEmployee = () => {
 		readByAdmin(phoneNumber, token).then((data) => {
 			if (data.error) {
 				console.log(data.error, "error");
-				setValues2({...values2, error: true});
+				setValues2({ ...values2, error: true });
 			} else {
 				setValues2(data[0]);
 			}
@@ -389,8 +389,8 @@ const UpdateEmployee = () => {
 		<UpdateEmployeeWrapper>
 			{!employeeClicked ? (
 				<h3 className='mt-5'>
-					Total of {allEmployees.length} Added Employees (Click On Stylist Name
-					To Update)
+					Total of {allEmployees.length} Added Employees{" "}
+					<strong> (Click On Stylist Name To Update)</strong>
 				</h3>
 			) : null}
 			{!employeeClicked ? (
@@ -398,7 +398,7 @@ const UpdateEmployee = () => {
 					{allEmployees &&
 						allEmployees.map((s, i) => (
 							<div
-								style={{textTransform: "capitalize", cursor: "pointer"}}
+								style={{ textTransform: "capitalize", cursor: "pointer" }}
 								key={i}
 							>
 								<div
@@ -426,14 +426,16 @@ const UpdateEmployee = () => {
 										setQuery(s.workingDays);
 										setQuery2(s.services.map((i) => i._id));
 										setQuery4(s.workingHours);
-										window.scrollTo({top: 150, behavior: "smooth"});
+										window.scrollTo({ top: 150, behavior: "smooth" });
 									}}
 								>
 									<li
 										className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center col-md-6'
-										style={{fontSize: "0.75rem"}}
+										style={{ fontSize: "0.75rem" }}
 									>
-										<strong>{s.employeeName}</strong>
+										<strong>
+											{i + 1}- {s.employeeName}
+										</strong>
 									</li>
 
 									{!s.activeEmployee && (
@@ -457,14 +459,14 @@ const UpdateEmployee = () => {
 			{employeeClicked && pickedEmployee && pickedEmployee.employeeName ? (
 				<div
 					className='mt-3 p-4'
-					style={{border: "2px #0f377e solid", borderRadius: "20px"}}
+					style={{ border: "2px #0f377e solid", borderRadius: "20px" }}
 				>
 					<h5
 						className='mt-2 mb-3'
-						style={{cursor: "pointer"}}
+						style={{ cursor: "pointer" }}
 						onClick={() => {
 							setEmployeeClicked(false);
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
 					>
 						<i className='fa-sharp fa-solid fa-arrow-left mr-2'></i>
@@ -563,7 +565,7 @@ const UpdateEmployee = () => {
 						<div className='col-md-6 mx-auto'>
 							<button
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								className='btn btn-outline-primary mt-3 btn-block'
 							>

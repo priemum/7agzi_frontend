@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import {isAuthenticated, signup} from "../../auth";
+import { isAuthenticated, signup } from "../../auth";
 import SignupFormBoss from "./SignupFormBoss";
-import {toast} from "react-toastify";
-import {Link} from "react-router-dom";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import UpdateAgent from "./UpdateAgent";
 import AgentsReport from "./AgentsReport";
 
@@ -71,7 +71,7 @@ const AgentsManagementMain = () => {
 	} = values;
 
 	// eslint-disable-next-line
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const handleSubmit = (e) => {
 		console.log(name, "name");
@@ -89,7 +89,7 @@ const AgentsManagementMain = () => {
 			return toast.info("password is required");
 		}
 
-		setValues({...values, error: false, misMatch: false});
+		setValues({ ...values, error: false, misMatch: false });
 		signup({
 			name: name,
 			email: phone,
@@ -138,7 +138,7 @@ const AgentsManagementMain = () => {
 				</div>
 
 				<div className='mt-5'>
-					<div className='container' style={{marginLeft: "200px"}}>
+					<div className='container' style={{ marginLeft: "200px" }}>
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddAgent")}
@@ -164,7 +164,7 @@ const AgentsManagementMain = () => {
 									onClick={() => setClickedMenu("UpdateAgent")}
 									to='/boss/admin/agent-management?update-agent'
 								>
-									<i className='fa-solid fa-pen mr-1'></i> Update Agent
+									<i className='fa-solid fa-pen mr-1'></i> AGENTS' LIST
 								</Link>
 							</div>
 

@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import imageImage from "../../Images/UploadImageImage.jpg";
 
-const ImageCard = ({
+const ImageCardPersonal = ({
 	handleImageRemove,
 	addThumbnail,
 	fileUploadAndResizeThumbNail,
 }) => {
 	//
 	return (
-		<ImageCardWrapper>
+		<ImageCardPersonalWrapper>
 			<div className='card card-flush  mx-auto'>
 				<div className=''>
 					<div className=' p-2'>
 						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-							Agent ID Image
+							Agent Personal Photo
 						</h5>
 					</div>
 				</div>
@@ -76,18 +76,18 @@ const ImageCard = ({
 					</div>
 					<div className='text-muted fs-7'>
 						Width: 800px, Height: 954px; <br />
-						Set the ID Image. Only *.png, *.jpg and *.jpeg image files are
+						Set the Personal Image. Only *.png, *.jpg and *.jpeg image files are
 						accepted
 					</div>
 				</div>
 			</div>
-		</ImageCardWrapper>
+		</ImageCardPersonalWrapper>
 	);
 };
 
-export default ImageCard;
+export default ImageCardPersonal;
 
-const ImageCardWrapper = styled.div`
+const ImageCardPersonalWrapper = styled.div`
 	text-align: center;
 
 	.card {

@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import ImageCard2 from "./ImageCard";
+import ImageCardPersonal from "./ImageCardPersonal";
+import { Spin } from "antd";
 
 const AgentsSignupFormComp = ({
 	values,
@@ -23,6 +25,8 @@ const AgentsSignupFormComp = ({
 	language,
 	handleImageRemove2,
 	fileUploadAndResizeStoreThumbnail,
+	handleImageRemovePersonal,
+	fileUploadAndResizeStoreThumbnail2,
 }) => {
 	const [animationDirection, setAnimationDirection] = useState("");
 
@@ -36,16 +40,14 @@ const AgentsSignupFormComp = ({
 		setAnimationDirection("slide-right");
 	};
 
-	console.log(values, "values");
-
 	return (
 		<SignupFormCompWrapper>
 			<Helmet>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
-					<title>برنامج الحجز الرسمي لفرشاة الشعر</title>
+					<title>نموذج التسجيل الرسمي للوكلاء</title>
 				) : (
-					<title>Hairbrush Official Booking Software</title>
+					<title>Agents Official Signup Form</title>
 				)}
 
 				{language === "Arabic" ? (
@@ -64,11 +66,11 @@ const AgentsSignupFormComp = ({
 					<div className='col-md-9 col-sm-12 '>
 						<div className='form-container text-center'>
 							{language === "Arabic" ? (
-								<h1 className='mb-3' style={{fontWeight: "bolder"}} dir='rtl'>
+								<h1 className='mb-3' style={{ fontWeight: "bolder" }} dir='rtl'>
 									تسجيل <span className='text-primary'>الوكلاء</span>
 								</h1>
 							) : (
-								<h1 className='mb-3' style={{fontWeight: "bolder"}}>
+								<h1 className='mb-3' style={{ fontWeight: "bolder" }}>
 									Agents/ Affiliate{" "}
 									<span className='text-primary'>Registration</span>
 								</h1>
@@ -86,7 +88,7 @@ const AgentsSignupFormComp = ({
 										}`}
 									>
 										<div className='col-md-8 mx-auto'>
-											<label htmlFor='name' style={{fontWeight: "bold"}}>
+											<label htmlFor='name' style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "الاسم الكامل" : "Full Name"}
 											</label>
 											<input
@@ -127,9 +129,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='email' style={{fontWeight: "bold"}}>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "البريد الإلكتروني"
 													: "Email Address"}
@@ -184,9 +186,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "رقم الهاتف المحمول"
 													: "Cell Phone Number"}
@@ -203,9 +205,9 @@ const AgentsSignupFormComp = ({
 										</div>
 										<div
 											className='form-group col-md-8 mx-auto my-2'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "2 رقم الهاتف المحمول"
 													: "Cell Phone Number 2"}
@@ -264,9 +266,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "بلد" : "Agent Country"}
 											</label>
 											<select
@@ -293,7 +295,7 @@ const AgentsSignupFormComp = ({
 											</select>
 											<div
 												className='mt-3'
-												style={{color: "darkred", fontWeight: "bolder"}}
+												style={{ color: "darkred", fontWeight: "bolder" }}
 											>
 												{values &&
 												values.agentOtherData &&
@@ -346,9 +348,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "المحافظة"
 													: "Agent Governorate"}
@@ -379,7 +381,7 @@ const AgentsSignupFormComp = ({
 
 											<div
 												className='mt-3'
-												style={{color: "darkred", fontWeight: "bolder"}}
+												style={{ color: "darkred", fontWeight: "bolder" }}
 											>
 												{values &&
 												values.agentOtherData &&
@@ -436,9 +438,9 @@ const AgentsSignupFormComp = ({
 										{values.agentOtherData.agentGovernorate === "Alexandria" ? (
 											<div
 												className='form-group col-md-8 mx-auto'
-												style={{marginTop: "25px"}}
+												style={{ marginTop: "25px" }}
 											>
-												<label style={{fontWeight: "bold"}}>
+												<label style={{ fontWeight: "bold" }}>
 													{language === "Arabic" ? "منطقة" : "Agent District"}
 												</label>
 												<select
@@ -469,9 +471,9 @@ const AgentsSignupFormComp = ({
 										{values.agentOtherData.agentGovernorate === "Cairo" ? (
 											<div
 												className='form-group col-md-8 mx-auto'
-												style={{marginTop: "25px"}}
+												style={{ marginTop: "25px" }}
 											>
-												<label style={{fontWeight: "bold"}}>
+												<label style={{ fontWeight: "bold" }}>
 													Agent District
 													{language === "Arabic" ? "منطقة" : "Agent District"}
 												</label>
@@ -535,9 +537,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "العنوان الدقيق"
 													: "Agent Address"}
@@ -598,25 +600,45 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-11 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<div className='col-md-6 mt-3 mx-auto'>
-												<ImageCard2
-													addThumbnail={values.agentOtherData.idImage}
-													handleImageRemove={handleImageRemove2}
-													setAddThumbnail={setValues}
-													fileUploadAndResizeThumbNail={
-														fileUploadAndResizeStoreThumbnail
-													}
-												/>
+											<div className='row'>
+												<div className='col-md-6 mt-3 mx-auto'>
+													{values.loading ? (
+														<Spin size='large' /> // Show spinner when loading
+													) : (
+														<ImageCard2
+															addThumbnail={values.agentOtherData.idImage}
+															handleImageRemove={handleImageRemove2}
+															setAddThumbnail={setValues}
+															fileUploadAndResizeThumbNail={
+																fileUploadAndResizeStoreThumbnail
+															}
+														/> // Show ImageCard2 when not loading
+													)}
+												</div>
+												<div className='col-md-6 mt-3 mx-auto'>
+													{values.loading2 ? (
+														<Spin size='large' /> // Show spinner when loading
+													) : (
+														<ImageCardPersonal
+															addThumbnail={values.agentOtherData.personalImage}
+															handleImageRemove={handleImageRemovePersonal}
+															setAddThumbnail={setValues}
+															fileUploadAndResizeThumbNail={
+																fileUploadAndResizeStoreThumbnail2
+															}
+														/> // Show ImageCard2 when not loading
+													)}
+												</div>
 											</div>
 										</div>
 
 										<div
 											className='form-group col-md-8 mx-auto mb-5'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? " رقم هوية الوكيل / جواز السفر"
 													: "Agent ID/ Passport Number"}
@@ -641,9 +663,9 @@ const AgentsSignupFormComp = ({
 
 										<div
 											className='form-group col-md-8 mx-auto mb-5'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "Instagram Profile Link (Optional)"
 													: "Instagram Profile Link (Optional)"}
@@ -668,9 +690,9 @@ const AgentsSignupFormComp = ({
 
 										<div
 											className='form-group col-md-8 mx-auto mb-5'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "Facebook Profile Link (Optional)"
 													: "Facebook Profile Link (Optional)"}
@@ -731,9 +753,9 @@ const AgentsSignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='password' style={{fontWeight: "bold"}}>
+											<label htmlFor='password' style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "كلمة المرور" : "Password"}
 											</label>
 											<input
@@ -747,9 +769,9 @@ const AgentsSignupFormComp = ({
 										</div>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "10px"}}
+											style={{ marginTop: "10px" }}
 										>
-											<label htmlFor='password2' style={{fontWeight: "bold"}}>
+											<label htmlFor='password2' style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "2 كلمة المرور"
 													: "Confirm Password"}

@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const SignupFormComp = ({
 	values,
@@ -19,6 +19,7 @@ const SignupFormComp = ({
 	storeGovernorate,
 	storeAddress,
 	password,
+	password2,
 	nextClicked,
 	setNextClicked,
 	language,
@@ -36,8 +37,6 @@ const SignupFormComp = ({
 		setAnimationDirection("slide-right");
 	};
 
-	console.log(values, "values");
-
 	return (
 		<SignupFormCompWrapper>
 			<Helmet>
@@ -45,7 +44,7 @@ const SignupFormComp = ({
 				{language === "Arabic" ? (
 					<title>برنامج الحجز الرسمي لفرشاة الشعر</title>
 				) : (
-					<title>Hairbrush Official Booking Software</title>
+					<title>Official Business Partners Signup Form</title>
 				)}
 
 				{language === "Arabic" ? (
@@ -64,12 +63,13 @@ const SignupFormComp = ({
 					<div className='col-md-9 col-sm-12 '>
 						<div className='form-container text-center'>
 							{language === "Arabic" ? (
-								<h1 className='mb-3' style={{fontWeight: "bolder"}} dir='rtl'>
+								<h1 className='mb-3' style={{ fontWeight: "bolder" }} dir='rtl'>
 									سجل <span className='text-primary'>متجرك</span>
 								</h1>
 							) : (
-								<h1 className='mb-3' style={{fontWeight: "bolder"}}>
-									Business <span className='text-primary'>Registration</span>
+								<h1 className='mb-3' style={{ fontWeight: "bolder" }}>
+									Business Partners{" "}
+									<span className='text-primary'>Registration</span>
 								</h1>
 							)}
 
@@ -85,7 +85,7 @@ const SignupFormComp = ({
 										}`}
 									>
 										<div className='col-md-8 mx-auto'>
-											<label htmlFor='name' style={{fontWeight: "bold"}}>
+											<label htmlFor='name' style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "الاسم الكامل" : "Full Name"}
 											</label>
 											<input
@@ -126,9 +126,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='email' style={{fontWeight: "bold"}}>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "البريد الإلكتروني"
 													: "Email Address"}
@@ -183,9 +183,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "رقم الهاتف المحمول"
 													: "Cell Phone Number"}
@@ -236,21 +236,27 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "نوع المتجر" : "Store Type"}
 											</label>
 											<select
 												className='form-control'
 												onChange={(e) => {
-													setValues({...values, storeType: e.target.value});
+													setValues({ ...values, storeType: e.target.value });
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
-												<option value='Hair Salon'>Hair Salon/ Coiffure</option>
-												<option value='Barber Shop'>Barber Shop</option>
-												<option value='Massage Salon'>Massage Salon</option>
+												<option value='Hair Salon'>
+													Beauty Salon/ Coiffure <strong> (WOMEN)</strong>
+												</option>
+												<option value='Barber Shop'>
+													Barber Shop <strong> (MEN)</strong>{" "}
+												</option>
+												<option value='Massage Salon'>
+													Massage Salon <strong>(BOTH)</strong>{" "}
+												</option>
 											</select>
 										</div>
 
@@ -289,9 +295,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='email' style={{fontWeight: "bold"}}>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "اسم المتجر" : "Store Name"}
 											</label>
 											<input
@@ -339,15 +345,18 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "بلد المتجر" : "Store Country"}
 											</label>
 											<select
 												className='form-control'
 												onChange={(e) => {
-													setValues({...values, storeCountry: e.target.value});
+													setValues({
+														...values,
+														storeCountry: e.target.value,
+													});
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -362,7 +371,7 @@ const SignupFormComp = ({
 											</select>
 											<div
 												className='mt-3'
-												style={{color: "darkred", fontWeight: "bolder"}}
+												style={{ color: "darkred", fontWeight: "bolder" }}
 											>
 												{values &&
 												values.storeCountry &&
@@ -414,9 +423,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "المحافظة"
 													: "Store Governorate"}
@@ -443,7 +452,7 @@ const SignupFormComp = ({
 
 											<div
 												className='mt-3'
-												style={{color: "darkred", fontWeight: "bolder"}}
+												style={{ color: "darkred", fontWeight: "bolder" }}
 											>
 												{values &&
 												values.storeGovernorate &&
@@ -497,9 +506,9 @@ const SignupFormComp = ({
 										{storeGovernorate === "Alexandria" ? (
 											<div
 												className='form-group col-md-8 mx-auto'
-												style={{marginTop: "25px"}}
+												style={{ marginTop: "25px" }}
 											>
-												<label style={{fontWeight: "bold"}}>
+												<label style={{ fontWeight: "bold" }}>
 													{language === "Arabic" ? "منطقة" : "Store District"}
 												</label>
 												<select
@@ -527,9 +536,9 @@ const SignupFormComp = ({
 										{storeGovernorate === "Cairo" ? (
 											<div
 												className='form-group col-md-8 mx-auto'
-												style={{marginTop: "25px"}}
+												style={{ marginTop: "25px" }}
 											>
-												<label style={{fontWeight: "bold"}}>
+												<label style={{ fontWeight: "bold" }}>
 													Store District
 													{language === "Arabic" ? "منطقة" : "Store District"}
 												</label>
@@ -590,9 +599,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='email' style={{fontWeight: "bold"}}>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
 													? "العنوان الدقيق"
 													: "Store Address"}
@@ -645,9 +654,34 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label style={{fontWeight: "bold"}}>
+											{language === "Arabic" ? (
+												<div
+													dir='rtl'
+													className='my-2'
+													style={{
+														color: "darkred",
+														fontWeight: "bolder",
+														fontSize: "1rem",
+													}}
+												>
+													يرجى ملاحظة أن وجود وكيل يمنحك فترة تجريبية مجانية
+													لمدة 30 يومًا بدلاً من 15 يومًا. إذا كان لديك وكيل،
+													يرجى إضافة معلوماته أدناه.
+												</div>
+											) : (
+												<div
+													className='my-2'
+													style={{ color: "darkred", fontWeight: "bolder" }}
+												>
+													Please note that having an agent entitles you to a
+													30-day free trial instead of the standard 15 days. If
+													you have an agent, please add their information below.
+												</div>
+											)}
+
+											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "وكيلك" : "Your Agent"}
 											</label>
 											<select
@@ -661,7 +695,7 @@ const SignupFormComp = ({
 														agent:
 															e.target.value === "No Agent" ||
 															e.target.value === "Please Select"
-																? {name: "No Agent"}
+																? { name: "No Agent" }
 																: allAgents[chosenIndex],
 													});
 												}}
@@ -715,9 +749,9 @@ const SignupFormComp = ({
 									>
 										<div
 											className='form-group col-md-8 mx-auto'
-											style={{marginTop: "25px"}}
+											style={{ marginTop: "25px" }}
 										>
-											<label htmlFor='password' style={{fontWeight: "bold"}}>
+											<label htmlFor='password' style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "كلمة المرور" : "Password"}
 											</label>
 											<input
@@ -730,26 +764,34 @@ const SignupFormComp = ({
 											/>
 										</div>
 
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "25px" }}
+										>
+											<label htmlFor='password2' style={{ fontWeight: "bold" }}>
+												{language === "Arabic"
+													? "تأكيد كلمة المرور"
+													: "Confirm Password"}
+											</label>
+											<br />
+
+											<input
+												type='password'
+												className='form-control'
+												name='password2'
+												value={password2}
+												onChange={handleChange("password2")}
+												required
+												placeholder='Should have at least one digit'
+											/>
+										</div>
+
 										<div className='mt-3 mx-auto text-center'>
 											<button
 												onClick={handlePreviousClick}
 												className='text-center btn btn-info w-25 mx-2'
 											>
 												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={true}
-												onClick={() => {
-													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
 											</button>
 										</div>
 									</div>

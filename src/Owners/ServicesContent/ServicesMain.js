@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
@@ -40,7 +40,7 @@ const ServicesMain = () => {
 	const [clickedMenu, setClickedMenu] = useState("AddService");
 
 	useEffect(() => {
-		window.scrollTo({top: 50, behavior: "smooth"});
+		window.scrollTo({ top: 50, behavior: "smooth" });
 		// eslint-disable-next-line
 	}, []);
 
@@ -72,7 +72,7 @@ const ServicesMain = () => {
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("UpdateServices")}
 							>
-								<i className='fa-solid fa-pen mr-1'></i> Update Services
+								<i className='fa-solid fa-pen mr-1'></i> Services' List
 							</div>
 						</div>
 					</div>

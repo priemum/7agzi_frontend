@@ -1,7 +1,7 @@
 /** @format */
 
-import React, {useEffect, useState} from "react";
-import {Redirect} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import {
 	signup,
@@ -12,18 +12,19 @@ import {
 	authenticate2,
 } from "../auth/index";
 // import Google from "../auth/Google";
-import {ToastContainer, toast} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import SignupFormComp from "../components/SignupComp/SignupFormComp";
-import {getAllAgents} from "../apiCore";
+import { getAllAgents } from "../apiCore";
 
-const SignupForm = ({language}) => {
+const SignupForm = ({ language }) => {
 	const [nextClicked, setNextClicked] = useState(0);
 	const [allAgents, setAllAgents] = useState("");
 	const [values, setValues] = useState({
 		name: "",
 		email: "",
 		password: "",
+		password2: "",
 		phone: "",
 		error: "",
 		storeType: "",
@@ -43,6 +44,7 @@ const SignupForm = ({language}) => {
 		name,
 		email,
 		password,
+		password2,
 		// eslint-disable-next-line
 		success,
 		phone,
@@ -58,7 +60,7 @@ const SignupForm = ({language}) => {
 		loading,
 	} = values;
 
-	const {user} = isAuthenticated();
+	const { user } = isAuthenticated();
 	const handleChange = (name) => (event) => {
 		setValues({
 			...values,
@@ -121,10 +123,14 @@ const SignupForm = ({language}) => {
 		}
 
 		if (!agent) {
-			return toast.info("District is Required");
+			return toast.info("Agent is Required");
 		}
 
-		setValues({...values, error: false});
+		if (password !== password2) {
+			return toast.info("Passwords Are NOT Matching");
+		}
+
+		setValues({ ...values, error: false });
 		signup({
 			name,
 			email,
@@ -144,11 +150,11 @@ const SignupForm = ({language}) => {
 		}).then((data1) => {
 			if (data1.error) {
 				console.log(data1.error, "data1.error");
-				setValues({...values, success: false});
+				setValues({ ...values, success: false });
 			} else
-				signin({email, password}).then((data) => {
+				signin({ email, password }).then((data) => {
 					if (data.error) {
-						setValues({...values, loading: false});
+						setValues({ ...values, loading: false });
 					} else {
 						authenticate(data, () => {
 							setValues({
@@ -406,6 +412,7 @@ const SignupForm = ({language}) => {
 			storeGovernorate={storeGovernorate}
 			storeAddress={storeAddress}
 			password={password}
+			password2={password2}
 			nextClicked={nextClicked}
 			setNextClicked={setNextClicked}
 			language={language}

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {Route, Switch, BrowserRouter} from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import axios from "axios";
-import {isAuthenticated} from "./auth";
+import { isAuthenticated } from "./auth";
 
 //Regular Routes
 import NavbarTop from "./components/Navbars/NavbarTop";
@@ -78,7 +78,7 @@ function App() {
 	const [clickMenu, setClickMenu] = useState(false);
 	const [language, setLanguage] = useState("English");
 
-	const {user} = isAuthenticated();
+	const { user } = isAuthenticated();
 
 	useEffect(() => {
 		setClickMenu(click);
@@ -101,8 +101,8 @@ function App() {
 					`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
 				)
 				.then((response) => {
-					const {address} = response.data;
-					const {country, state, city} = address;
+					const { address } = response.data;
+					const { country, state, city } = address;
 
 					const userLocation = {
 						country,
@@ -251,7 +251,7 @@ function App() {
 					<OwnerRoute
 						path='/store/admin/billing-account'
 						exact
-						component={BillingMain}
+						component={() => <BillingMain language={language} />}
 					/>
 
 					<PrivateRoute
@@ -302,7 +302,7 @@ function App() {
 					<AgentsRoute
 						path='/agent/dashboard'
 						exact
-						component={AgentDashboard}
+						component={() => <AgentDashboard language={language} />}
 					/>
 					{/*End Of Platform Agents Routes */}
 

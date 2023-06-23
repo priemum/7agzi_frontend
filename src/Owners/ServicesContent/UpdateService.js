@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {getServices, updateService} from "../apiOwner";
-import {isAuthenticated} from "../../auth";
-import {toast} from "react-toastify";
+import { getServices, updateService } from "../apiOwner";
+import { isAuthenticated } from "../../auth";
+import { toast } from "react-toastify";
 
 const UpdateService = () => {
 	const [allServices, setAllServices] = useState([]);
@@ -24,7 +24,7 @@ const UpdateService = () => {
 	const [activeService, setActiveService] = useState("1");
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllServices = () => {
 		getServices(token, user._id).then((data) => {
@@ -159,14 +159,19 @@ const UpdateService = () => {
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Customer Type</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange5}
-						value={customerType}
-						required
-						placeholder='Boys, Girls, Adult Female, Adult Male, etc...'
-					/>
+					<select className='form-control' onChange={handleChange5}>
+						{customerType ? (
+							<option value={customerType}>{customerType}</option>
+						) : (
+							<option value='Please Select'>Please Select</option>
+						)}
+						<option value='Male'>Male</option>
+						<option value='Female'>Female</option>
+						<option value='Boys'>Boys (Client 12 Years Old or Younger)</option>
+						<option value='Girls'>
+							Girls (Client 12 Years Old or Younger)
+						</option>
+					</select>
 				</div>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Service Name</label>
@@ -251,7 +256,7 @@ const UpdateService = () => {
 					</div>
 					<label className='text-muted'>
 						Add set of services connected to{" "}
-						<span style={{color: "blue", fontWeight: "bold"}}>
+						<span style={{ color: "blue", fontWeight: "bold" }}>
 							"{serviceName}"
 						</span>
 					</label>
@@ -264,14 +269,14 @@ const UpdateService = () => {
 					/>
 					<div className='row'>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={pushToServiceDescription}
 							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
 						>
 							Add Service Description.
 						</button>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={() => {
 								setServiceDescriptionCombined([]);
 								setServiceType("Please select / Required*");
@@ -312,7 +317,7 @@ const UpdateService = () => {
 					<select
 						onChange={handleChange10}
 						className='form-control'
-						style={{fontSize: "0.80rem"}}
+						style={{ fontSize: "0.80rem" }}
 					>
 						<option>Please select / Required*</option>
 						<option value='0'>Deactivate Service</option>
@@ -329,7 +334,11 @@ const UpdateService = () => {
 		<UpdateServiceWrapper>
 			{!serviceClicked ? (
 				<h3 className='mt-5'>
-					Total of {allServices.length} Added Services (Click To Update)
+					Total of {allServices.length} Added Services{" "}
+					<strong style={{ textTransform: "uppercase" }}>
+						{" "}
+						(Click To Update)
+					</strong>
 				</h3>
 			) : null}
 
@@ -337,7 +346,7 @@ const UpdateService = () => {
 				<ul className='list-group col-md-10 mx-auto'>
 					{allServices.map((s, i) => (
 						<div
-							style={{textTransform: "capitalize", cursor: "pointer"}}
+							style={{ textTransform: "capitalize", cursor: "pointer" }}
 							key={i}
 						>
 							<div
@@ -345,19 +354,21 @@ const UpdateService = () => {
 								onClick={() => {
 									setServiceClicked(true);
 									setChosenService(s);
-									window.scrollTo({top: 150, behavior: "smooth"});
+									window.scrollTo({ top: 150, behavior: "smooth" });
 								}}
 							>
 								<li
 									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center col-md-6'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
-									<strong>{s.serviceName}</strong>
+									<strong>
+										{i + 1}-{"  "} {s.serviceName}
+									</strong>
 									<strong>
 										{" "}
 										Service For:{" "}
 										<span
-											style={{color: "darkred", textTransform: "capitalize"}}
+											style={{ color: "darkred", textTransform: "capitalize" }}
 										>
 											{s.customerType}
 										</span>
@@ -365,10 +376,10 @@ const UpdateService = () => {
 								</li>
 								<li
 									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-2'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
 									<strong>{s.servicePrice} EGP</strong>,
-									<strong style={{color: "green"}}>
+									<strong style={{ color: "green" }}>
 										{s.servicePriceDiscount} EGP
 									</strong>
 								</li>
@@ -394,10 +405,10 @@ const UpdateService = () => {
 				<div>
 					<h5
 						className='mt-5'
-						style={{cursor: "pointer"}}
+						style={{ cursor: "pointer" }}
 						onClick={() => {
 							setServiceClicked(false);
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
 					>
 						<i className='fa-sharp fa-solid fa-arrow-left mr-2'></i>

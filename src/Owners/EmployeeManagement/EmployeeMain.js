@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -89,7 +89,7 @@ const EmployeeMain = () => {
 									onClick={() => setClickedMenu("UpdateEmployee")}
 									to='/store/admin/employees?update-employee'
 								>
-									<i className='fa-solid fa-pen mr-1'></i> Update Employee
+									<i className='fa-solid fa-pen mr-1'></i> Employees' List
 								</Link>
 							</div>
 						</div>

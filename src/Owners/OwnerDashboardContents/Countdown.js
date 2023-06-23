@@ -6,13 +6,13 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
 
-const Countdown = ({theDate}) => {
+const Countdown = ({ theDate, hasAgent }) => {
 	const now = new Date();
 	const endDate = new Date(theDate);
 	const diffTime = Math.abs(endDate - now);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-	const remainingDays = 30 - diffDays;
+	const remainingDays = hasAgent ? 30 - diffDays : 15 - diffDays;
 	const percentage = (remainingDays / 30) * 100;
 
 	return (
