@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 import FirstAvailableAppointments from "./FirstAvailableAppointments";
-import {showAverageRatingForEntireStore} from "../SingleEmployee/Rating";
+import { showAverageRatingForEntireStore } from "../SingleEmployee/Rating";
 
 const HeroComponent = ({
 	hero1,
@@ -52,7 +52,7 @@ const HeroComponent = ({
 				}}
 			>
 				<div className='col-md-11 mx-auto firstAppointWrapper'>
-					<div className='appointment-component col-md-6 float-right mt-4'>
+					<div className='appointment-component col-md-6 float-right mt-4 '>
 						<Animated
 							animationIn='bounceInLeft'
 							animationOut='zoomOut'
@@ -61,22 +61,24 @@ const HeroComponent = ({
 							animationOutDuration={1000}
 							isVisible={true}
 						>
-							<FirstAvailableAppointments
-								onlineStoreName={onlineStoreName}
-								allEmployees={allEmployees}
-								AllServices={AllServices}
-								contact={contact}
-								allCustomerType={allCustomerType}
-								chosenCustomerType={chosenCustomerType}
-								setChosenCustomerType={setChosenCustomerType}
-								chosenDate={chosenDate}
-								setChosenDate={setChosenDate}
-								setChosenService={setChosenService}
-								chosenService={chosenService}
-								handleChosenCustomerType={handleChosenCustomerType}
-								fromLocalStore={fromLocalStore}
-								language={language}
-							/>
+							<div className='firstAppointWrapperSub'>
+								<FirstAvailableAppointments
+									onlineStoreName={onlineStoreName}
+									allEmployees={allEmployees}
+									AllServices={AllServices}
+									contact={contact}
+									allCustomerType={allCustomerType}
+									chosenCustomerType={chosenCustomerType}
+									setChosenCustomerType={setChosenCustomerType}
+									chosenDate={chosenDate}
+									setChosenDate={setChosenDate}
+									setChosenService={setChosenService}
+									chosenService={chosenService}
+									handleChosenCustomerType={handleChosenCustomerType}
+									fromLocalStore={fromLocalStore}
+									language={language}
+								/>
+							</div>
 						</Animated>
 					</div>
 					<div className='appointment-component col-md-6 requiredComponentBottomLeft'>
@@ -136,6 +138,15 @@ export default HeroComponent;
 const HeroComponentWrapper = styled.div`
 	overflow: hidden;
 
+	.rowWrapper {
+		background-size: cover;
+		position: relative;
+		height: 820px;
+		width: 100%;
+		object-fit: cover;
+		border-radius: 10px;
+	}
+
 	.firstAppointWrapper {
 		position: relative; // Relative positioning is necessary for absolute child positioning
 
@@ -167,14 +178,18 @@ const HeroComponentWrapper = styled.div`
 
 			.requiredComponentBottomLeft {
 				position: absolute; // Position the required component absolutely...
-				bottom: 100px; // ...at the bottom...
+				bottom: 20px; // ...at the bottom...
 				left: 8px; // ...and to the left of the parent container.
 				width: 95%;
 			}
 		}
 
 		.rowWrapper {
-			height: 980px !important;
+			height: 450px !important;
+		}
+
+		.firstAppointWrapperSub {
+			display: none;
 		}
 	}
 `;

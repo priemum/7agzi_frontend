@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
 	getAbouts,
@@ -7,15 +7,16 @@ import {
 	getServices,
 	getEmployees,
 } from "../apiCore";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import HeroComponent from "../components/SingleStorePage/HeroComponent";
 import EmployeesList from "../components/SingleStorePage/EmployeeList";
 import ContactUs from "../components/SingleStorePage/ContactUs";
 import AboutUs from "../components/SingleStorePage/AboutUs";
-import {useParams} from "react-router-dom";
-import {allLoyaltyPointsAndStoreStatusByPhoneAndStore} from "../TheBoss/apiBoss";
+import { useParams } from "react-router-dom";
+import { allLoyaltyPointsAndStoreStatusByPhoneAndStore } from "../TheBoss/apiBoss";
 import AddedServices from "../components/SingleStorePage/AddedServices";
 import Gallary from "../components/SingleStorePage/Gallary";
+import FirstAvailableAppointments from "../components/SingleStorePage/FirstAvailableAppointments";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -43,9 +44,9 @@ const isActive = (history, path) => {
 	}
 };
 
-const SingleStorePage = ({props, language}) => {
-	let {storeName} = useParams();
-	let {phone} = useParams();
+const SingleStorePage = ({ props, language }) => {
+	let { storeName } = useParams();
+	let { phone } = useParams();
 
 	const [clickedMenu, setClickedMenu] = useState("SERVICES");
 	const [storeChosen, setStoreChosen] = useState("");
@@ -365,14 +366,14 @@ const SingleStorePage = ({props, language}) => {
 							<div className='my-5'>
 								<div className='mb-3'>
 									<select
-										style={{textTransform: "capitalize"}}
+										style={{ textTransform: "capitalize" }}
 										className='form-control'
 										onChange={(e) => setChosenCustomerType2(e.target.value)}
 									>
 										{chosenCustomerType2 ? (
 											<option
 												value={chosenCustomerType2}
-												style={{textTransform: "capitalize"}}
+												style={{ textTransform: "capitalize" }}
 											>
 												{chosenCustomerType2}
 											</option>
@@ -386,7 +387,7 @@ const SingleStorePage = ({props, language}) => {
 											allCustomerType.map((customerType, i) => {
 												return (
 													<option
-														style={{textTransform: "capitalize"}}
+														style={{ textTransform: "capitalize" }}
 														key={i}
 														value={customerType}
 													>
@@ -427,6 +428,23 @@ const SingleStorePage = ({props, language}) => {
 								<Gallary filteredResults={allEmployees} />
 							</div>
 						) : null}
+						<FirstAvailableAppointments
+							onlineStoreName={storeChosen}
+							allEmployees={allEmployees}
+							AllServices={AllServices}
+							contact={contact}
+							allCustomerType={allCustomerType}
+							chosenCustomerType={chosenCustomerType}
+							setChosenCustomerType={setChosenCustomerType}
+							chosenDate={chosenDate}
+							setChosenDate={setChosenDate}
+							setChosenService={setChosenService}
+							chosenService={chosenService}
+							handleChosenCustomerType={handleChosenCustomerType}
+							fromLocalStore={storeChosen}
+							language={language}
+							clickedMenu={clickedMenu}
+						/>
 					</div>
 				</React.Fragment>
 			)}

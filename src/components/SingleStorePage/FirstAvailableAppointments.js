@@ -1,12 +1,12 @@
 /** @format */
 
-import React, {useState, useEffect, Fragment} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import moment from "moment";
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import AddedServices from "./AddedServices";
 import styled from "styled-components";
-import {GenerallistScheduledOrders} from "../../apiCore";
+import { GenerallistScheduledOrders } from "../../apiCore";
 
 const FirstAvailableAppointments = ({
 	onlineStoreName,
@@ -22,6 +22,7 @@ const FirstAvailableAppointments = ({
 	handleChosenCustomerType,
 	fromLocalStore,
 	language,
+	clickedMenu,
 }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
@@ -86,7 +87,7 @@ const FirstAvailableAppointments = ({
 	useEffect(() => {
 		setChosenDate(new Date().toLocaleDateString());
 		// eslint-disable-next-line
-	}, []);
+	}, [clickedMenu]);
 
 	//
 	//Getting Unique Services Values
@@ -340,7 +341,7 @@ const FirstAvailableAppointments = ({
 	useEffect(() => {
 		loadOrders();
 		// eslint-disable-next-line
-	}, []);
+	}, [clickedMenu]);
 
 	const handleChosenService = (event) => {
 		setChosenService(event.target.value);
@@ -448,7 +449,7 @@ const FirstAvailableAppointments = ({
 							<select
 								onChange={handleChosenCustomerType}
 								placeholder='Please Select'
-								style={{textTransform: "capitalize"}}
+								style={{ textTransform: "capitalize" }}
 								className='inputFieldsFirstAvail ml-1'
 							>
 								{chosenCustomerType &&
@@ -488,7 +489,7 @@ const FirstAvailableAppointments = ({
 									<select
 										onChange={handleChosenService}
 										placeholder='Select a Service'
-										style={{textTransform: "capitalize"}}
+										style={{ textTransform: "capitalize" }}
 										className='inputFieldsFirstAvail'
 									>
 										{chosenService && chosenService !== "Select a Service" ? (
@@ -515,7 +516,7 @@ const FirstAvailableAppointments = ({
 									</select>
 									{chosenService && pickedService() && (
 										<ul className=' col-md-11  mx-auto AnimationCustom'>
-											<strong style={{color: "white"}}>
+											<strong style={{ color: "black" }}>
 												Service Description:
 											</strong>
 											{pickedService().serviceDescription.map((d, i) => (
@@ -580,7 +581,7 @@ const FirstAvailableAppointments = ({
 																Please check another date.
 															</div>
 														) : (
-															<div style={{color: "white"}}>
+															<div style={{ color: "black" }}>
 																{language === "Arabic" ? (
 																	<div>
 																		الموعد الأول المتاح هو مع
@@ -597,7 +598,7 @@ const FirstAvailableAppointments = ({
 																		</strong>
 																		<br />
 																		في
-																		<strong style={{color: "wheat"}}>
+																		<strong style={{ color: "wheat" }}>
 																			{finalStep_FirstAvailableEmployee &&
 																				finalStep_FirstAvailableEmployee[0] &&
 																				finalStep_FirstAvailableEmployee[0]
@@ -606,7 +607,7 @@ const FirstAvailableAppointments = ({
 																					.availableHoursFinal[0]}
 																		</strong>
 																		في
-																		<strong style={{color: "wheat"}}>
+																		<strong style={{ color: "wheat" }}>
 																			{new Date(chosenDate).toLocaleDateString(
 																				"ar-EG"
 																			)}
@@ -681,7 +682,7 @@ const FirstAvailableAppointments = ({
 																		</strong>
 																		<br />
 																		at
-																		<strong style={{color: "wheat"}}>
+																		<strong style={{ color: "wheat" }}>
 																			{finalStep_FirstAvailableEmployee &&
 																				finalStep_FirstAvailableEmployee[0] &&
 																				finalStep_FirstAvailableEmployee[0]
@@ -690,7 +691,7 @@ const FirstAvailableAppointments = ({
 																					.availableHoursFinal[0]}
 																		</strong>
 																		on
-																		<strong style={{color: "wheat"}}>
+																		<strong style={{ color: "wheat" }}>
 																			{new Date(chosenDate).toDateString()}
 																		</strong>
 																		<div
@@ -781,7 +782,7 @@ const FirstAvailableAppointments = ({
 										)}
 
 										{chosenCustomerType ? (
-											<div className='my-2' style={{textAlign: "left"}}>
+											<div className='my-2' style={{ textAlign: "left" }}>
 												<AddedServices
 													chosenCustomerType={chosenCustomerType}
 													ownerId={fromLocalStore.storeId}
@@ -796,7 +797,7 @@ const FirstAvailableAppointments = ({
 								<div>
 									Please Call{" "}
 									<Link
-										style={{textDecoration: "underline"}}
+										style={{ textDecoration: "underline" }}
 										className='ml-2 noAppointFirstAvail'
 										to='#'
 										onClick={() => window.open(`tel:+1${contact.phone}`)}

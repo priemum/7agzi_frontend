@@ -13,7 +13,7 @@ const StoreFilter = ({
 	setSelectedDistrict,
 }) => {
 	return (
-		<StoreFilterWrapper className='container mt-5'>
+		<StoreFilterWrapper className='container'>
 			<div className='row'>
 				<div className='col-md-3 mx-auto'>
 					<div className='form-group'>
@@ -22,7 +22,7 @@ const StoreFilter = ({
 							className='form-control'
 							id='country'
 							value={selectedCountry}
-							style={{textTransform: "capitalize"}}
+							style={{ textTransform: "capitalize" }}
 							onChange={(e) => setSelectedCountry(e.target.value)}
 						>
 							{availableCountries &&
@@ -41,7 +41,7 @@ const StoreFilter = ({
 						<select
 							className='form-control'
 							id='governorate'
-							style={{textTransform: "capitalize"}}
+							style={{ textTransform: "capitalize" }}
 							value={selectedGovernorate}
 							onChange={(e) => setSelectedGovernorate(e.target.value)}
 						>
@@ -62,7 +62,7 @@ const StoreFilter = ({
 						<select
 							className='form-control'
 							id='district'
-							style={{textTransform: "capitalize"}}
+							style={{ textTransform: "capitalize" }}
 							value={selectedDistrict}
 							onChange={(e) => setSelectedDistrict(e.target.value)}
 						>

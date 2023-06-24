@@ -257,6 +257,7 @@ body {
 		font-size: 12px;
 		box-shadow: 1px 1px 1px 1px rgb(0, 0, 0, 0.2);
 		margin-bottom: 15px;
+		color: black;
 	}
 	.pleaseSelectAServFirstAvail {
 		font-size: 0.85rem;

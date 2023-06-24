@@ -1,16 +1,16 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // import ReactGA from "react-ga";
 import {
 	allLoyaltyPointsAndStoreStatus,
 	getCountriesDistrictsGov,
 } from "../apiCore";
 import styled from "styled-components";
-import {isAuthenticated} from "../auth";
+import { isAuthenticated } from "../auth";
 import CardForStore from "../components/EmployeeList/CardForStore";
 import StoreFilter from "../components/StoreFilter";
-import {Spin} from "antd";
+import { Spin } from "antd";
 // import { Helmet } from "react-helmet";
 
 const StoresList = () => {
@@ -25,7 +25,7 @@ const StoresList = () => {
 	const [selectedGovernorate, setSelectedGovernorate] = useState("");
 	const [selectedDistrict, setSelectedDistrict] = useState("");
 
-	const {token} = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
@@ -130,7 +130,7 @@ const StoresList = () => {
 
 				setTimeout(() => {
 					setLoading(false);
-				}, 1500);
+				}, 1000);
 			}
 		});
 	};
@@ -199,10 +199,10 @@ const StoresList = () => {
 				{loading ? (
 					<div
 						style={{
-							marginTop: "15%",
+							paddingTop: "15%",
 							textAlign: "center",
 							fontSize: "1.9rem",
-							color: "darkslategray",
+							color: "lightcyan",
 							fontWeight: "bold",
 						}}
 					>
@@ -210,7 +210,7 @@ const StoresList = () => {
 					</div>
 				) : (
 					<React.Fragment>
-						<div>
+						<div className='pt-5'>
 							<StoreFilter
 								availableCountries={availableCountries}
 								availableGovernorates={availableGovernorates}
@@ -240,7 +240,7 @@ const StoresList = () => {
 														"chosenStore",
 														JSON.stringify(p)
 													);
-													window.scrollTo({top: 0, behavior: "smooth"});
+													window.scrollTo({ top: 0, behavior: "smooth" });
 												}}
 											>
 												<CardForStore store={p} />
@@ -262,6 +262,7 @@ export default StoresList;
 
 const StoresListWrapper = styled.div`
 	min-height: 800px;
+	background-color: black;
 
 	img {
 		width: 100%;
