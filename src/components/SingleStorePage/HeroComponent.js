@@ -178,14 +178,14 @@ const HeroComponentWrapper = styled.div`
 
 			.requiredComponentBottomLeft {
 				position: absolute; // Position the required component absolutely...
-				bottom: 20px; // ...at the bottom...
+				bottom: -10px; // ...at the bottom...
 				left: 8px; // ...and to the left of the parent container.
 				width: 95%;
 			}
 		}
 
 		.rowWrapper {
-			height: 450px !important;
+			height: 390px !important;
 		}
 
 		.firstAppointWrapperSub {

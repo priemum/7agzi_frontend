@@ -5,12 +5,14 @@ import React, { useState, useEffect } from "react";
 import {
 	allLoyaltyPointsAndStoreStatus,
 	getCountriesDistrictsGov,
+	getServicesCombined,
 } from "../apiCore";
 import styled from "styled-components";
 import { isAuthenticated } from "../auth";
-import CardForStore from "../components/EmployeeList/CardForStore";
+import CardForStore from "../components/StoresListComp/CardForStore";
 import StoreFilter from "../components/StoreFilter";
 import { Spin } from "antd";
+import StoreListPhone from "../components/StoresListComp/StoreListPhone";
 // import { Helmet } from "react-helmet";
 
 const StoresList = () => {
@@ -24,7 +26,7 @@ const StoresList = () => {
 	const [selectedCountry, setSelectedCountry] = useState("");
 	const [selectedGovernorate, setSelectedGovernorate] = useState("");
 	const [selectedDistrict, setSelectedDistrict] = useState("");
-
+	const [allServicesCombined, setAllServicesCombined] = useState([]);
 	const [latitude, setLatitude] = useState("");
 	const [longitude, setLongitude] = useState("");
 
@@ -245,8 +247,20 @@ const StoresList = () => {
 		});
 	};
 
+	const gettingListServicesCombined = () => {
+		getServicesCombined().then((data) => {
+			if (data.error) {
+				console.log("Error getting services combined");
+			} else {
+				console.log(data, "data");
+				setAllServicesCombined(data);
+			}
+		});
+	};
+
 	useEffect(() => {
 		getOnlineStoreName();
+		gettingListServicesCombined();
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("pickedPetSizeFirstAvailable");
 		localStorage.removeItem("pickedPetTypeFirstAvailable");
@@ -325,51 +339,57 @@ const StoresList = () => {
 						Loading... <Spin size='large' />
 					</div>
 				) : (
-					<React.Fragment>
-						<div className='pt-5'>
-							<StoreFilter
-								availableCountries={availableCountries}
-								availableGovernorates={availableGovernorates}
-								availableDistricts={availableDistricts}
-								selectedCountry={selectedCountry}
-								setSelectedCountry={setSelectedCountry}
-								selectedGovernorate={selectedGovernorate}
-								setSelectedGovernorate={setSelectedGovernorate}
-								selectedDistrict={selectedDistrict}
-								setSelectedDistrict={setSelectedDistrict}
-							/>
-						</div>
-						<div className='continueShoppingEmpty mx-auto my-5'>
-							The Best Barber Shops and Salons in Egypt
-						</div>
+					<div>
+						<div className='deskTopVersion'>
+							<div className='pt-5'>
+								<StoreFilter
+									availableCountries={availableCountries}
+									availableGovernorates={availableGovernorates}
+									availableDistricts={availableDistricts}
+									selectedCountry={selectedCountry}
+									setSelectedCountry={setSelectedCountry}
+									selectedGovernorate={selectedGovernorate}
+									setSelectedGovernorate={setSelectedGovernorate}
+									selectedDistrict={selectedDistrict}
+									setSelectedDistrict={setSelectedDistrict}
+								/>
+							</div>
+							<div className='continueShoppingEmpty mx-auto my-5'>
+								The Best Barber Shops and Salons in Egypt
+							</div>
 
-						<div className='container'>
-							<div className='row'>
-								{activeStoresOnly &&
-									activeStoresOnly.map((p, i) => {
-										return (
-											<div
-												key={i}
-												className='col-md-4'
-												onClick={() => {
-													localStorage.setItem(
-														"chosenStore",
-														JSON.stringify(p)
-													);
-													window.scrollTo({ top: 0, behavior: "smooth" });
-												}}
-											>
-												<CardForStore store={p} />
-											</div>
-										);
-									})}
+							<div className='container'>
+								<div className='row'>
+									{activeStoresOnly &&
+										activeStoresOnly.map((p, i) => {
+											return (
+												<div
+													key={i}
+													className='col-md-4'
+													onClick={() => {
+														localStorage.setItem(
+															"chosenStore",
+															JSON.stringify(p)
+														);
+														window.scrollTo({ top: 0, behavior: "smooth" });
+													}}
+												>
+													<CardForStore store={p} />
+												</div>
+											);
+										})}
+								</div>
 							</div>
 						</div>
-					</React.Fragment>
+						<div>
+							<StoreListPhone
+								activeStoresOnly={activeStoresOnly}
+								allServicesCombined={allServicesCombined}
+							/>
+						</div>
+					</div>
 				)}
 			</React.Fragment>
-			<br />
-			<br />
 		</StoresListWrapper>
 	);
 };
@@ -377,11 +397,21 @@ const StoresList = () => {
 export default StoresList;
 
 const StoresListWrapper = styled.div`
-	min-height: 800px;
+	min-height: 950px;
 	background-color: black;
 
 	img {
 		width: 100%;
 		min-height: 300px;
+	}
+
+	.deskTopVersion {
+		display: block;
+	}
+
+	@media (max-width: 1000px) {
+		.deskTopVersion {
+			display: none;
+		}
 	}
 `;

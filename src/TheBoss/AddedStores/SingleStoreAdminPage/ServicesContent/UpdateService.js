@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {getServices, updateService} from "../apiOwner";
-import {toast} from "react-toastify";
-import {isAuthenticated} from "../../../../auth";
+import { getServices, updateService } from "../apiOwner";
+import { isAuthenticated } from "../../../../auth";
+import { toast } from "react-toastify";
 
-const UpdateService = ({ownerId}) => {
+const UpdateService = ({ ownerId }) => {
 	const [allServices, setAllServices] = useState([]);
 	const [serviceClicked, setServiceClicked] = useState("");
 	const [chosenService, setChosenService] = useState("");
@@ -18,13 +18,14 @@ const UpdateService = ({ownerId}) => {
 	const [serviceTime, setServiceTime] = useState("");
 	const [serviceLoyaltyPoints, setServiceLoyaltyPoints] = useState("");
 	const [serviceDescription, setServiceDescription] = useState("");
+	const [catchyPhrase, setCatchyPhrase] = useState("");
 	const [serviceDescriptionCombined, setServiceDescriptionCombined] = useState(
 		[]
 	);
 	const [activeService, setActiveService] = useState("1");
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllServices = () => {
 		getServices(token, ownerId).then((data) => {
@@ -52,6 +53,7 @@ const UpdateService = ({ownerId}) => {
 			setServiceDescription(chosenService.serviceDescription);
 			setServiceDescriptionCombined(chosenService.serviceDescription);
 			setActiveService(chosenService.activeService);
+			setCatchyPhrase(chosenService.catchyPhrase);
 		}
 		// eslint-disable-next-line
 	}, [serviceClicked]);
@@ -79,6 +81,7 @@ const UpdateService = ({ownerId}) => {
 					serviceDescription: serviceDescriptionCombined,
 					serviceType: serviceType,
 					belongsTo: ownerId,
+					catchyPhrase: catchyPhrase,
 				}).then((data) => {
 					if (data.error) {
 						console.log(data.error);
@@ -102,6 +105,7 @@ const UpdateService = ({ownerId}) => {
 				serviceDescription: serviceDescriptionCombined,
 				serviceType: serviceType,
 				belongsTo: ownerId,
+				catchyPhrase: catchyPhrase,
 			}).then((data) => {
 				if (data.error) {
 					console.log(data.error);
@@ -141,6 +145,10 @@ const UpdateService = ({ownerId}) => {
 		setServicePriceDiscount(e.target.value);
 	};
 
+	const handleChange11 = (e) => {
+		setCatchyPhrase(e.target.value);
+	};
+
 	const pushToServiceDescription = (e) => {
 		e.preventDefault();
 		setServiceDescriptionCombined([
@@ -159,14 +167,19 @@ const UpdateService = ({ownerId}) => {
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Customer Type</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange5}
-						value={customerType}
-						required
-						placeholder='Boys, Girls, Adult Female, Adult Male, etc...'
-					/>
+					<select className='form-control' onChange={handleChange5}>
+						{customerType ? (
+							<option value={customerType}>{customerType}</option>
+						) : (
+							<option value='Please Select'>Please Select</option>
+						)}
+						<option value='Male'>Male</option>
+						<option value='Female'>Female</option>
+						<option value='Boys'>Boys (Client 12 Years Old or Younger)</option>
+						<option value='Girls'>
+							Girls (Client 12 Years Old or Younger)
+						</option>
+					</select>
 				</div>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Service Name</label>
@@ -199,6 +212,19 @@ const UpdateService = ({ownerId}) => {
 						onChange={handleChange9}
 						value={servicePriceDiscount}
 						placeholder='Should be digits only'
+						required
+					/>
+				</div>
+				<div className='form-group col-md-8 mx-auto'>
+					<label className='text-muted'>
+						Catchy Phrase For This Service (10 words)
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange11}
+						value={catchyPhrase}
+						placeholder='e.g. For the first, 20% off your haircut today!'
 						required
 					/>
 				</div>
@@ -251,7 +277,7 @@ const UpdateService = ({ownerId}) => {
 					</div>
 					<label className='text-muted'>
 						Add set of services connected to{" "}
-						<span style={{color: "blue", fontWeight: "bold"}}>
+						<span style={{ color: "blue", fontWeight: "bold" }}>
 							"{serviceName}"
 						</span>
 					</label>
@@ -264,14 +290,14 @@ const UpdateService = ({ownerId}) => {
 					/>
 					<div className='row'>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={pushToServiceDescription}
 							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
 						>
 							Add Service Description.
 						</button>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={() => {
 								setServiceDescriptionCombined([]);
 								setServiceType("Please select / Required*");
@@ -312,7 +338,7 @@ const UpdateService = ({ownerId}) => {
 					<select
 						onChange={handleChange10}
 						className='form-control'
-						style={{fontSize: "0.80rem"}}
+						style={{ fontSize: "0.80rem" }}
 					>
 						<option>Please select / Required*</option>
 						<option value='0'>Deactivate Service</option>
@@ -329,7 +355,11 @@ const UpdateService = ({ownerId}) => {
 		<UpdateServiceWrapper>
 			{!serviceClicked ? (
 				<h3 className='mt-5'>
-					Total of {allServices.length} Added Services (Click To Update)
+					Total of {allServices.length} Added Services{" "}
+					<strong style={{ textTransform: "uppercase" }}>
+						{" "}
+						(Click To Update)
+					</strong>
 				</h3>
 			) : null}
 
@@ -337,7 +367,7 @@ const UpdateService = ({ownerId}) => {
 				<ul className='list-group col-md-10 mx-auto'>
 					{allServices.map((s, i) => (
 						<div
-							style={{textTransform: "capitalize", cursor: "pointer"}}
+							style={{ textTransform: "capitalize", cursor: "pointer" }}
 							key={i}
 						>
 							<div
@@ -345,19 +375,21 @@ const UpdateService = ({ownerId}) => {
 								onClick={() => {
 									setServiceClicked(true);
 									setChosenService(s);
-									window.scrollTo({top: 150, behavior: "smooth"});
+									window.scrollTo({ top: 150, behavior: "smooth" });
 								}}
 							>
 								<li
 									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center col-md-6'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
-									<strong>{s.serviceName}</strong>
+									<strong>
+										{i + 1}-{"  "} {s.serviceName}
+									</strong>
 									<strong>
 										{" "}
 										Service For:{" "}
 										<span
-											style={{color: "darkred", textTransform: "capitalize"}}
+											style={{ color: "darkred", textTransform: "capitalize" }}
 										>
 											{s.customerType}
 										</span>
@@ -365,11 +397,11 @@ const UpdateService = ({ownerId}) => {
 								</li>
 								<li
 									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-2'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
-									<strong>${s.servicePrice}</strong>,
-									<strong style={{color: "green"}}>
-										${s.servicePriceDiscount}
+									<strong>{s.servicePrice} EGP</strong>,
+									<strong style={{ color: "green" }}>
+										{s.servicePriceDiscount} EGP
 									</strong>
 								</li>
 								{!s.activeService && (
@@ -394,10 +426,10 @@ const UpdateService = ({ownerId}) => {
 				<div>
 					<h5
 						className='mt-5'
-						style={{cursor: "pointer"}}
+						style={{ cursor: "pointer" }}
 						onClick={() => {
 							setServiceClicked(false);
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
 					>
 						<i className='fa-sharp fa-solid fa-arrow-left mr-2'></i>

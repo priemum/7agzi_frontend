@@ -18,6 +18,7 @@ const UpdateService = () => {
 	const [serviceTime, setServiceTime] = useState("");
 	const [serviceLoyaltyPoints, setServiceLoyaltyPoints] = useState("");
 	const [serviceDescription, setServiceDescription] = useState("");
+	const [catchyPhrase, setCatchyPhrase] = useState("");
 	const [serviceDescriptionCombined, setServiceDescriptionCombined] = useState(
 		[]
 	);
@@ -52,6 +53,7 @@ const UpdateService = () => {
 			setServiceDescription(chosenService.serviceDescription);
 			setServiceDescriptionCombined(chosenService.serviceDescription);
 			setActiveService(chosenService.activeService);
+			setCatchyPhrase(chosenService.catchyPhrase);
 		}
 		// eslint-disable-next-line
 	}, [serviceClicked]);
@@ -79,6 +81,7 @@ const UpdateService = () => {
 					serviceDescription: serviceDescriptionCombined,
 					serviceType: serviceType,
 					belongsTo: user._id,
+					catchyPhrase: catchyPhrase,
 				}).then((data) => {
 					if (data.error) {
 						console.log(data.error);
@@ -102,6 +105,7 @@ const UpdateService = () => {
 				serviceDescription: serviceDescriptionCombined,
 				serviceType: serviceType,
 				belongsTo: user._id,
+				catchyPhrase: catchyPhrase,
 			}).then((data) => {
 				if (data.error) {
 					console.log(data.error);
@@ -139,6 +143,10 @@ const UpdateService = () => {
 
 	const handleChange9 = (e) => {
 		setServicePriceDiscount(e.target.value);
+	};
+
+	const handleChange11 = (e) => {
+		setCatchyPhrase(e.target.value);
 	};
 
 	const pushToServiceDescription = (e) => {
@@ -204,6 +212,19 @@ const UpdateService = () => {
 						onChange={handleChange9}
 						value={servicePriceDiscount}
 						placeholder='Should be digits only'
+						required
+					/>
+				</div>
+				<div className='form-group col-md-8 mx-auto'>
+					<label className='text-muted'>
+						Catchy Phrase For This Service (10 words)
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange11}
+						value={catchyPhrase}
+						placeholder='e.g. For the first, 20% off your haircut today!'
 						required
 					/>
 				</div>

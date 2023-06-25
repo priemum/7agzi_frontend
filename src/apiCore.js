@@ -74,7 +74,7 @@ export const views = (employeeId) => {
 			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({employeeId}),
+		body: JSON.stringify({ employeeId }),
 	})
 		.then((response) => {
 			return response.json();
@@ -89,7 +89,7 @@ export const viewsCounter = (employeeId, counter) => {
 			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({employeeId, counter}),
+		body: JSON.stringify({ employeeId, counter }),
 	})
 		.then((response) => {
 			return response.json();
@@ -105,7 +105,7 @@ export const comment = (userId, token, employeeId, comment, commentsPhotos) => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({userId, employeeId, comment, commentsPhotos}),
+		body: JSON.stringify({ userId, employeeId, comment, commentsPhotos }),
 	})
 		.then((response) => {
 			return response.json();
@@ -121,7 +121,7 @@ export const uncomment = (userId, token, employeeId, comment) => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({userId, employeeId, comment}),
+		body: JSON.stringify({ userId, employeeId, comment }),
 	})
 		.then((response) => {
 			return response.json();
@@ -139,7 +139,7 @@ export const employeeStar = (employeeId, star, token, email, userId) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({employeeId, star, email, userId}),
+			body: JSON.stringify({ employeeId, star, email, userId }),
 		}
 	)
 		.then((response) => {
@@ -188,6 +188,21 @@ export const getServices = (token, ownerId) => {
 	}
 };
 
+export const getServicesCombined = () => {
+	return fetch(`${process.env.REACT_APP_API_URL}/services/list/combined`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const getScheduledHours = (ownerId) => {
 	return fetch(`${process.env.REACT_APP_API_URL}/alladdedhours/${ownerId}`, {
 		method: "GET",
@@ -213,7 +228,7 @@ export const createScheduledAppointment = (userId, token, createOrderData) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({order: createOrderData}),
+			body: JSON.stringify({ order: createOrderData }),
 		}
 	)
 		.then((response) => {
@@ -444,7 +459,7 @@ export const retriggerPayment = (userId, token, paymentData) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({amount: paymentData.amount}),
+			body: JSON.stringify({ amount: paymentData.amount }),
 		}
 	)
 		.then((response) => {

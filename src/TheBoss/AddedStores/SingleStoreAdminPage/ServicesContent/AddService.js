@@ -1,14 +1,14 @@
 /** @format */
 
-import React, {useState, Fragment, useEffect} from "react";
+import React, { useState, Fragment, useEffect } from "react";
 // import { Link } from "react-router-dom";
-import {createService, getServices} from "../apiOwner";
-import {ToastContainer, toast} from "react-toastify";
+import { createService, getServices } from "../apiOwner";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { isAuthenticated } from "../../../../auth";
 import styled from "styled-components";
-import {isAuthenticated} from "../../../../auth";
 
-const AddService = ({ownerId}) => {
+const AddService = ({ ownerId }) => {
 	const [serviceName, setServiceName] = useState("");
 	const [customerType, setCustomerType] = useState("");
 	const [serviceType, setServiceType] = useState("Package Service");
@@ -18,6 +18,7 @@ const AddService = ({ownerId}) => {
 	const [serviceLoyaltyPoints, setServiceLoyaltyPoints] = useState("");
 	const [allServices, setAllServices] = useState([]);
 	const [serviceDescription, setServiceDescription] = useState("");
+	const [catchyPhrase, setCatchyPhrase] = useState("");
 	const [serviceDescriptionCombined, setServiceDescriptionCombined] = useState(
 		[]
 	);
@@ -28,9 +29,8 @@ const AddService = ({ownerId}) => {
 	const [success, setSuccess] = useState(false);
 
 	// destructure user and token from localstorage
-
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const handleChange1 = (e) => {
 		setError("");
@@ -63,6 +63,11 @@ const AddService = ({ownerId}) => {
 	const handleChange9 = (e) => {
 		setError("");
 		setServicePriceDiscount(e.target.value);
+	};
+
+	const handleChange10 = (e) => {
+		setError("");
+		setCatchyPhrase(e.target.value);
 	};
 
 	const pushToServiceDescription = (e) => {
@@ -111,6 +116,10 @@ const AddService = ({ownerId}) => {
 			return toast.error("Please make sure to adjust the prices properly");
 		}
 
+		if (catchyPhrase.length >= 11) {
+			return toast.error("Catchy Phrase Should be 10 words or less.");
+		}
+
 		setError("");
 		setSuccess(false);
 		// make request to api to create service
@@ -124,6 +133,7 @@ const AddService = ({ownerId}) => {
 			serviceType,
 			serviceDescription: serviceDescriptionCombined,
 			belongsTo: ownerId,
+			catchyPhrase: catchyPhrase,
 		}).then((data) => {
 			if (data.error) {
 				setError(data.error);
@@ -135,6 +145,7 @@ const AddService = ({ownerId}) => {
 					setServicePriceDiscount("");
 					setServiceTime("");
 					setServiceLoyaltyPoints("");
+					setCatchyPhrase("");
 					setServiceDescription([]);
 					setServiceDescriptionCombined([]);
 				}, 2000);
@@ -147,14 +158,15 @@ const AddService = ({ownerId}) => {
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Customer Type</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange5}
-						value={customerType}
-						required
-						placeholder='Male, Female, Boys, Girls, etc...'
-					/>
+					<select className='form-control' onChange={handleChange5}>
+						<option value='Please Select'>Please Select</option>
+						<option value='Male'>Male</option>
+						<option value='Female'>Female</option>
+						<option value='Boys'>Boys (Client 12 Years Old or Younger)</option>
+						<option value='Girls'>
+							Girls (Client 12 Years Old or Younger)
+						</option>
+					</select>
 				</div>
 				<div className='form-group col-md-6 mx-auto'>
 					<label className='text-muted'>Service Name</label>
@@ -187,6 +199,19 @@ const AddService = ({ownerId}) => {
 						onChange={handleChange9}
 						value={servicePriceDiscount}
 						placeholder='Should be digits only'
+						required
+					/>
+				</div>
+				<div className='form-group col-md-8 mx-auto'>
+					<label className='text-muted'>
+						Catchy Phrase For This Service (10 words)
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange10}
+						value={catchyPhrase}
+						placeholder='e.g. For the first, 20% off your haircut today!'
 						required
 					/>
 				</div>
@@ -239,7 +264,7 @@ const AddService = ({ownerId}) => {
 					</div>
 					<label className='text-muted'>
 						Add set of services connected to{" "}
-						<span style={{color: "blue", fontWeight: "bold"}}>
+						<span style={{ color: "blue", fontWeight: "bold" }}>
 							"{serviceName}"
 						</span>
 					</label>
@@ -252,14 +277,14 @@ const AddService = ({ownerId}) => {
 					/>
 					<div className='row'>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={pushToServiceDescription}
 							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
 						>
 							Add Service Description.
 						</button>
 						<button
-							style={{fontSize: "12px"}}
+							style={{ fontSize: "12px" }}
 							onClick={() => {
 								setServiceDescriptionCombined([]);
 								setServiceType("Please select / Required*");

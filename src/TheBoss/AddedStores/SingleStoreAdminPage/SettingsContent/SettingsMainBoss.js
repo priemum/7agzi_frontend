@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import Adding1Logo from "./Adding1Logo";
@@ -10,9 +10,9 @@ import {
 	getServices,
 } from "../apiOwner";
 import AddingWorkingHours from "./AddingWorkingHours";
-import {useParams, useLocation} from "react-router-dom";
-import {isAuthenticated} from "../../../../auth";
-import {readUser} from "../../../apiBoss";
+import { useParams, useLocation } from "react-router-dom";
+import { isAuthenticated } from "../../../../auth";
+import { readUser } from "../../../apiBoss";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -43,7 +43,7 @@ const isActive = (history, path) => {
 };
 
 const SettingsMainBoss = () => {
-	let {ownerId} = useParams();
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {
@@ -73,6 +73,8 @@ const SettingsMainBoss = () => {
 	const [addStoreName, setAddStoreName] = useState("");
 	const [daysStoreClosed, setDaysStoreClosed] = useState("");
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
+	const [longitude, setLongitude] = useState("");
+	const [latitude, setLatitude] = useState("");
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
@@ -81,7 +83,7 @@ const SettingsMainBoss = () => {
 	const [allServices, setAllServices] = useState([]);
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingPreviousLoyaltyPointsManagement = () => {
 		allLoyaltyPointsAndStoreStatus(token, ownerId).then((data) => {
@@ -112,6 +114,8 @@ const SettingsMainBoss = () => {
 							lastAddedSettings && lastAddedSettings.daysStoreClosed,
 					});
 					setQuery(lastAddedSettings && lastAddedSettings.daysStoreClosed);
+					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
+					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
@@ -132,13 +136,13 @@ const SettingsMainBoss = () => {
 
 	useEffect(() => {
 		gettingPreviousLoyaltyPointsManagement();
-		window.scrollTo({top: 100, behavior: "smooth"});
+		window.scrollTo({ top: 100, behavior: "smooth" });
 
 		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		setDaysStoreClosed({...daysStoreClosed, daysStoreClosed: query});
+		setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
 		// eslint-disable-next-line
 	}, [query]);
 
@@ -154,6 +158,8 @@ const SettingsMainBoss = () => {
 			addStoreName: addStoreName,
 			activeOnlineBooking: activeOnlineBooking,
 			belongsTo: ownerId,
+			longitude: longitude,
+			latitude: latitude,
 			storePhone: currentOwner.phone,
 		}).then((data) => {
 			if (data.error) {
@@ -163,7 +169,7 @@ const SettingsMainBoss = () => {
 					setLoyaltyPointsAward("");
 					setDiscountPercentage("");
 					setDaysStoreClosed([]);
-					window.scrollTo({top: 0, behavior: "smooth"});
+					window.scrollTo({ top: 0, behavior: "smooth" });
 				}, 2000);
 				setTimeout(function () {
 					window.location.reload(false);
@@ -258,6 +264,10 @@ const SettingsMainBoss = () => {
 							allServices={allServices}
 							storeThumbnail={storeThumbnail}
 							setStoreThumbnail={setStoreThumbnail}
+							longitude={longitude}
+							setLongitude={setLongitude}
+							latitude={latitude}
+							setLatitude={setLatitude}
 						/>
 					) : null}
 

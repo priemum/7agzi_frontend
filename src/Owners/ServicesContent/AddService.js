@@ -18,6 +18,7 @@ const AddService = () => {
 	const [serviceLoyaltyPoints, setServiceLoyaltyPoints] = useState("");
 	const [allServices, setAllServices] = useState([]);
 	const [serviceDescription, setServiceDescription] = useState("");
+	const [catchyPhrase, setCatchyPhrase] = useState("");
 	const [serviceDescriptionCombined, setServiceDescriptionCombined] = useState(
 		[]
 	);
@@ -61,6 +62,11 @@ const AddService = () => {
 	const handleChange9 = (e) => {
 		setError("");
 		setServicePriceDiscount(e.target.value);
+	};
+
+	const handleChange10 = (e) => {
+		setError("");
+		setCatchyPhrase(e.target.value);
 	};
 
 	const pushToServiceDescription = (e) => {
@@ -109,6 +115,10 @@ const AddService = () => {
 			return toast.error("Please make sure to adjust the prices properly");
 		}
 
+		if (catchyPhrase.length >= 11) {
+			return toast.error("Catchy Phrase Should be 10 words or less.");
+		}
+
 		setError("");
 		setSuccess(false);
 		// make request to api to create service
@@ -122,6 +132,7 @@ const AddService = () => {
 			serviceType,
 			serviceDescription: serviceDescriptionCombined,
 			belongsTo: user._id,
+			catchyPhrase: catchyPhrase,
 		}).then((data) => {
 			if (data.error) {
 				setError(data.error);
@@ -133,6 +144,7 @@ const AddService = () => {
 					setServicePriceDiscount("");
 					setServiceTime("");
 					setServiceLoyaltyPoints("");
+					setCatchyPhrase("");
 					setServiceDescription([]);
 					setServiceDescriptionCombined([]);
 				}, 2000);
@@ -186,6 +198,19 @@ const AddService = () => {
 						onChange={handleChange9}
 						value={servicePriceDiscount}
 						placeholder='Should be digits only'
+						required
+					/>
+				</div>
+				<div className='form-group col-md-8 mx-auto'>
+					<label className='text-muted'>
+						Catchy Phrase For This Service (10 words)
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange10}
+						value={catchyPhrase}
+						placeholder='e.g. For the first, 20% off your haircut today!'
 						required
 					/>
 				</div>

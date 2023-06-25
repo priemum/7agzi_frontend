@@ -1,14 +1,14 @@
 /** @format */
 
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from "react-responsive-carousel";
+import { Carousel } from "react-responsive-carousel";
 
-const CardForStore = ({store}) => {
-	const ShowImage = ({item}) => (
-		<div className='product-img' style={{borderRadius: "50%"}}>
+const CardForStore = ({ store }) => {
+	const ShowImage = ({ item }) => (
+		<div className='product-img' style={{ borderRadius: "50%" }}>
 			{item && item.storeThumbnail && (
 				<Carousel
 					showArrows={false}
@@ -25,7 +25,7 @@ const CardForStore = ({store}) => {
 							alt='Developed By Infinite-Apps.com'
 							src={i.url}
 							key={i.public_id}
-							style={{height: "240px", width: "100%", objectFit: "cover"}}
+							style={{ height: "240px", width: "100%", objectFit: "cover" }}
 						/>
 					))}
 				</Carousel>
@@ -40,7 +40,7 @@ const CardForStore = ({store}) => {
 		<ProductWrapper className='my-3'>
 			<div
 				className='card '
-				style={{borderRadius: "5% 10%", backgroundColor: "#f7f7f6"}}
+				style={{ borderRadius: "5% 10%", backgroundColor: "#f7f7f6" }}
 			>
 				<div className='card-body  '>
 					<div className='card-img-top  img'>
