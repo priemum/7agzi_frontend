@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import Adding1Logo from "./Adding1Logo";
@@ -9,8 +9,9 @@ import {
 	allLoyaltyPointsAndStoreStatus,
 	getServices,
 } from "../apiOwner";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import AddingWorkingHours from "./AddingWorkingHours";
+import { toast } from "react-toastify";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -63,12 +64,15 @@ const SettingsMain = () => {
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
+	const [longitude, setLongitude] = useState("");
+	const [latitude, setLatitude] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	//Checking whether services were added or not
 	const [allServices, setAllServices] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingPreviousLoyaltyPointsManagement = () => {
 		allLoyaltyPointsAndStoreStatus(token, user._id).then((data) => {
@@ -109,6 +113,8 @@ const SettingsMain = () => {
 						images: lastAddedSettings && lastAddedSettings.storeThumbnail,
 					});
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
+					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
+					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
 					);
@@ -119,17 +125,46 @@ const SettingsMain = () => {
 
 	useEffect(() => {
 		gettingPreviousLoyaltyPointsManagement();
-		window.scrollTo({top: 100, behavior: "smooth"});
+		window.scrollTo({ top: 100, behavior: "smooth" });
 
 		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		setDaysStoreClosed({...daysStoreClosed, daysStoreClosed: query});
+		setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
 		// eslint-disable-next-line
 	}, [query]);
 
 	const clickSubmit = () => {
+		if (
+			storeThumbnail &&
+			storeThumbnail.images &&
+			storeThumbnail.images.length === 0
+		) {
+			return toast.error("Please Add Store Thumbnail");
+		}
+		if (!storeThumbnail || storeThumbnail.length === 0) {
+			return toast.error("Please Add Store Thumbnail");
+		}
+
+		if (!longitude || !latitude) {
+			return toast.error("Longitude & Latitude are required");
+		}
+
+		if (!onlineServicesFees) {
+			return toast.error(
+				"Please Add Online Services Fee which should be at least 3 EGP"
+			);
+		}
+
+		if (onlineServicesFees < 3) {
+			return toast.error("Online Services Fee which should be at least 3 EGP");
+		}
+
+		if (!addStoreName) {
+			return toast.error("Store Name Required");
+		}
+
 		LoyaltyPointsAndStoreStatus(user._id, token, {
 			loyaltyPointsAward: loyaltyPointsAward ? loyaltyPointsAward : 1000000,
 			discountPercentage: discountPercentage ? discountPercentage : 0,
@@ -139,6 +174,8 @@ const SettingsMain = () => {
 			addStoreLogo: addStoreLogo.images,
 			storeThumbnail: storeThumbnail.images,
 			addStoreName: addStoreName,
+			longitude: longitude,
+			latitude: latitude,
 			activeOnlineBooking: activeOnlineBooking,
 			storePhone: user.phone,
 			belongsTo: isAuthenticated().user._id,
@@ -150,7 +187,7 @@ const SettingsMain = () => {
 					setLoyaltyPointsAward("");
 					setDiscountPercentage("");
 					setDaysStoreClosed([]);
-					window.scrollTo({top: 0, behavior: "smooth"});
+					window.scrollTo({ top: 0, behavior: "smooth" });
 				}, 2000);
 				setTimeout(function () {
 					window.location.reload(false);
@@ -234,6 +271,12 @@ const SettingsMain = () => {
 							allServices={allServices}
 							storeThumbnail={storeThumbnail}
 							setStoreThumbnail={setStoreThumbnail}
+							latitude={latitude}
+							setLatitude={setLatitude}
+							setLongitude={setLongitude}
+							longitude={longitude}
+							loading={loading}
+							setLoading={setLoading}
 						/>
 					) : null}
 

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {cloudinaryUpload1} from "../apiOwner";
+import { isAuthenticated } from "../../../../auth";
+import { cloudinaryUpload1 } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import ImageCard from "./ImageCard";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ImageCard2 from "./ImageCard2";
-import {isAuthenticated} from "../../../../auth";
+import { Spin } from "antd";
 
 const Adding1Logo = ({
 	addStoreLogo,
@@ -18,11 +19,20 @@ const Adding1Logo = ({
 	storeThumbnail,
 	setStoreThumbnail,
 	alreadySetLoyaltyPointsManagement,
+	latitude,
+	setLatitude,
+	longitude,
+	setLongitude,
+	loading,
+	setLoading,
 }) => {
+	const [loading2, setLoading2] = useState(false);
 	// destructure user and token from localstorage
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const fileUploadAndResizeLogo = (e) => {
+		setLoading2(true);
+
 		// console.log(e.target.files);
 		let files = e.target.files;
 		console.log(files);
@@ -42,11 +52,11 @@ const Adding1Logo = ({
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setAddStoreLogo({...addStoreLogo, images: allUploadedFiles});
+								setAddStoreLogo({ ...addStoreLogo, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -55,6 +65,9 @@ const Adding1Logo = ({
 					"base64"
 				);
 			}
+			setTimeout(() => {
+				setLoading2(false);
+			}, 1500);
 		}
 	};
 
@@ -63,7 +76,7 @@ const Adding1Logo = ({
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -82,6 +95,7 @@ const Adding1Logo = ({
 	};
 
 	const fileUploadAndResizeStoreThumbnail = (e) => {
+		setLoading(true);
 		// console.log(e.target.files);
 		let files = e.target.files;
 		console.log(files);
@@ -101,7 +115,7 @@ const Adding1Logo = ({
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -117,6 +131,9 @@ const Adding1Logo = ({
 					"base64"
 				);
 			}
+			setTimeout(() => {
+				setLoading(false);
+			}, 1500);
 		}
 	};
 
@@ -125,7 +142,7 @@ const Adding1Logo = ({
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -147,15 +164,41 @@ const Adding1Logo = ({
 		<Adding1LogoWrapper>
 			<div className='row col-8'>
 				<div className='col-md-6'>
-					<ImageCard
-						addThumbnail={addStoreLogo}
-						handleImageRemove={handleImageRemove}
-						setAddThumbnail={setAddStoreLogo}
-						fileUploadAndResizeThumbNail={fileUploadAndResizeLogo}
-					/>
+					{loading2 ? (
+						<div style={{ textAlign: "center", marginTop: "10%" }}>
+							<Spin size='large' />
+						</div>
+					) : (
+						<ImageCard
+							addThumbnail={addStoreLogo}
+							handleImageRemove={handleImageRemove}
+							setAddThumbnail={setAddStoreLogo}
+							fileUploadAndResizeThumbNail={fileUploadAndResizeLogo}
+						/>
+					)}
 				</div>
-				<div className='col-md-6 pt-5'>
-					<label>Store Name</label>
+				<div className='col-md-6 mx-auto'>
+					{loading ? (
+						<div style={{ textAlign: "center", marginTop: "10%" }}>
+							<Spin size='large' />
+						</div>
+					) : (
+						<ImageCard2
+							addThumbnail={storeThumbnail}
+							handleImageRemove={handleImageRemove2}
+							setAddThumbnail={setStoreThumbnail}
+							fileUploadAndResizeThumbNail={fileUploadAndResizeStoreThumbnail}
+						/>
+					)}
+				</div>
+				<div className='col-md-10 pt-5 mx-auto'>
+					<label>
+						Store Name{" "}
+						<span style={{ color: "red", fontWeight: "bold" }}>
+							{" "}
+							<strong>*</strong>{" "}
+						</span>{" "}
+					</label>
 					<input
 						className='form-control'
 						type='text'
@@ -166,12 +209,40 @@ const Adding1Logo = ({
 						}}
 					/>
 				</div>
-				<div className='col-md-6 mt-3 mx-auto'>
-					<ImageCard2
-						addThumbnail={storeThumbnail}
-						handleImageRemove={handleImageRemove2}
-						setAddThumbnail={setStoreThumbnail}
-						fileUploadAndResizeThumbNail={fileUploadAndResizeStoreThumbnail}
+				<div className='col-md-5 py-5 mx-auto'>
+					<label>
+						Longitude{" "}
+						<span style={{ color: "red", fontWeight: "bold" }}>
+							{" "}
+							<strong>*</strong>{" "}
+						</span>{" "}
+					</label>
+					<input
+						className='form-control'
+						type='text'
+						placeholder='Fill In Your Location Longitude'
+						value={longitude}
+						onChange={(e) => {
+							setLongitude(e.target.value);
+						}}
+					/>
+				</div>
+				<div className='col-md-5 py-5 mx-auto'>
+					<label>
+						Latitude{" "}
+						<span style={{ color: "red", fontWeight: "bold" }}>
+							{" "}
+							<strong>*</strong>{" "}
+						</span>{" "}
+					</label>
+					<input
+						className='form-control'
+						type='text'
+						placeholder='Fill In Your Location Latitude'
+						value={latitude}
+						onChange={(e) => {
+							setLatitude(e.target.value);
+						}}
 					/>
 				</div>
 			</div>
@@ -179,7 +250,10 @@ const Adding1Logo = ({
 			{addStoreName &&
 			addStoreLogo &&
 			addStoreLogo.images &&
-			addStoreLogo.images.length > 0 ? (
+			addStoreLogo.images.length > 0 &&
+			storeThumbnail &&
+			storeThumbnail.images &&
+			storeThumbnail.images.length > 0 ? (
 				<div>
 					<div
 						className='btn btn-primary mt-4 text-center w-25'
@@ -200,7 +274,7 @@ const Adding1Logo = ({
 						<Link
 							to='/store/admin/services'
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 							className='btn btn-danger text-center btn-block w-25 float-left'
 						>

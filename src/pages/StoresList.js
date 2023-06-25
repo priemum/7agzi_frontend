@@ -25,7 +25,83 @@ const StoresList = () => {
 	const [selectedGovernorate, setSelectedGovernorate] = useState("");
 	const [selectedDistrict, setSelectedDistrict] = useState("");
 
+	const [latitude, setLatitude] = useState("");
+	const [longitude, setLongitude] = useState("");
+
 	const { token } = isAuthenticated();
+
+	console.log(latitude, "latitude");
+	console.log(longitude, "longitude");
+
+	const getUserCoordinates = (position) => {
+		setLatitude(position.coords.latitude);
+		setLongitude(position.coords.longitude);
+		return position;
+	};
+
+	const getLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				getUserCoordinates,
+				handleGeoLocationError
+			);
+			// setButtonClicked(true);
+			// ReactGA.event({
+			// 	category: "Client Asked For Roadside Assistance",
+			// 	action: "Client Aksed For Roadside Assistance in the English page",
+			// 	label: "The chosen Service Is" + chosenService,
+			// });
+		} else {
+			console.log("Geolocation is not supported");
+		}
+	};
+
+	const handleGeoLocationError = (error) => {
+		switch (error.code) {
+			case error.PERMISSION_DENIED:
+				alert("You have denied the request for your Geolocation.");
+				break;
+			case error.POSITION_UNAVAILABLE:
+				alert("Location information is unavailable, Please try again later.");
+				break;
+			case error.TIMEOUT:
+				alert("The request has timed out.");
+				break;
+			case error.UNKNOWN_ERROR:
+				alert("An unknown error occurred, Please try again later.");
+				break;
+			default:
+				alert("An unknown error occurred, Please try again later.");
+		}
+	};
+
+	const getAdress = () => {
+		if (latitude && longitude) {
+			fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`
+			)
+				.then((response) => response.json())
+				.then((data) => {
+					// setUserAddress(data.results[0].formatted_address);
+					// setUserAddress2(data.results[1].formatted_address);
+					// setUserAddress3(data.results[2].formatted_address);
+					// setUserAddress4(data.results[3].formatted_address);
+					// setUserAddress5(data.results[4].formatted_address);
+					// setUserAddress6(data.results[5].formatted_address);
+					console.log(data, "This is data");
+					///////////Creating Calling Order
+				})
+				.catch((error) => console.log(error, "error"));
+		} else {
+			return null;
+		}
+	};
+
+	useEffect(() => {
+		getLocation();
+		getAdress();
+		// eslint-disable-next-line
+	}, [longitude, latitude]);
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
@@ -192,6 +268,46 @@ const StoresList = () => {
 
 	const activeStoresOnly =
 		storeProperties && storeProperties.filter((i) => i.activeStore === true);
+
+	function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+		var R = 6371; // Radius of the earth in km
+		var dLat = deg2rad(lat2 - lat1); // deg2rad below
+		var dLon = deg2rad(lon2 - lon1);
+		var a =
+			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.cos(deg2rad(lat1)) *
+				Math.cos(deg2rad(lat2)) *
+				Math.sin(dLon / 2) *
+				Math.sin(dLon / 2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		var d = R * c; // Distance in km
+		return d;
+	}
+
+	function deg2rad(deg) {
+		return deg * (Math.PI / 180);
+	}
+
+	if (latitude !== undefined && longitude !== undefined) {
+		// only sort if user's location is available
+		activeStoresOnly &&
+			activeStoresOnly.sort((a, b) => {
+				let distA = getDistanceFromLatLonInKm(
+					latitude,
+					longitude,
+					a.latitude,
+					a.longitude
+				);
+				let distB = getDistanceFromLatLonInKm(
+					latitude,
+					longitude,
+					b.latitude,
+					b.longitude
+				);
+
+				return distA - distB; // this will sort in ascending order of distance
+			});
+	}
 
 	return (
 		<StoresListWrapper>
