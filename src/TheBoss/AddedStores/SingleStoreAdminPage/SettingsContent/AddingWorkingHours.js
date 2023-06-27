@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
 	AddingAppointmentWorkingHours,
 	getPreviousScheduledHours,
 } from "../apiOwner";
-import {toast} from "react-toastify";
-import {isAuthenticated} from "../../../../auth";
-import {useParams, useLocation} from "react-router-dom";
+import { toast } from "react-toastify";
+import { isAuthenticated } from "../../../../auth";
+import { useParams, useLocation } from "react-router-dom";
 
 const AllPossibleHours = [
 	"00:00",
@@ -107,8 +107,8 @@ const AllPossibleHours = [
 	"23:45",
 ];
 
-const AddingWorkingHours = ({clickSubmit2}) => {
-	let {ownerId} = useParams();
+const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {
@@ -226,7 +226,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 	const [PreviousAddedHours, setPreviousAddedHours] = useState({});
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 	let hoursCanBeScheduled = [];
 
 	hoursCanBeScheduled = AllAddedHoursCombined.AllAddedHoursCombined;
@@ -236,6 +236,14 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 			return toast.error(
 				"Please make sure to submit at least 10 active appointments' times."
 			);
+		}
+
+		if (
+			storeThumbnail &&
+			storeThumbnail.images &&
+			storeThumbnail.images.length === 0
+		) {
+			return toast.error("Please Add Store Thumbnail");
 		}
 		AddingAppointmentWorkingHours(ownerId, token, {
 			hoursCanBeScheduled,
@@ -313,7 +321,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 				<form>
 					<div
 						className='form-group mx-auto p-4'
-						style={{border: "1px black solid", borderRadius: "20px"}}
+						style={{ border: "1px black solid", borderRadius: "20px" }}
 					>
 						<h3 className='mb-4 text-center'>
 							Add Active Appointments Hours/Times
@@ -367,7 +375,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 							<button
 								className='btn btn-outline-success my-3 btn-block'
 								onClick={clickSubmit}
-								style={{fontWeight: "bold", fontSize: "1.2rem"}}
+								style={{ fontWeight: "bold", fontSize: "1.2rem" }}
 							>
 								Submit Added Settings...
 							</button>

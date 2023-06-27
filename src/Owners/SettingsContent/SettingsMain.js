@@ -106,12 +106,18 @@ const SettingsMain = () => {
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
-					setAddStoreLogo({
-						images: lastAddedSettings && lastAddedSettings.addStoreLogo,
-					});
-					setStoreThumbnail({
-						images: lastAddedSettings && lastAddedSettings.storeThumbnail,
-					});
+					setAddStoreLogo(
+						lastAddedSettings && lastAddedSettings.storeThumbnail
+							? {
+									images: lastAddedSettings.addStoreLogo,
+							  }
+							: []
+					);
+					setStoreThumbnail(
+						lastAddedSettings && lastAddedSettings.storeThumbnail
+							? { images: lastAddedSettings.storeThumbnail }
+							: []
+					);
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
 					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
 					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
@@ -141,9 +147,6 @@ const SettingsMain = () => {
 			storeThumbnail.images &&
 			storeThumbnail.images.length === 0
 		) {
-			return toast.error("Please Add Store Thumbnail");
-		}
-		if (!storeThumbnail || storeThumbnail.length === 0) {
 			return toast.error("Please Add Store Thumbnail");
 		}
 
@@ -327,6 +330,7 @@ const SettingsMain = () => {
 								alreadySetLoyaltyPointsManagement
 							}
 							clickSubmit2={clickSubmit}
+							storeThumbnail={storeThumbnail}
 						/>
 					) : null}
 				</div>

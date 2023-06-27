@@ -121,12 +121,18 @@ const SettingsMainBoss = () => {
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
-					setAddStoreLogo({
-						images: lastAddedSettings && lastAddedSettings.addStoreLogo,
-					});
-					setStoreThumbnail({
-						images: lastAddedSettings && lastAddedSettings.storeThumbnail,
-					});
+					setAddStoreLogo(
+						lastAddedSettings && lastAddedSettings.storeThumbnail
+							? {
+									images: lastAddedSettings.addStoreLogo,
+							  }
+							: []
+					);
+					setStoreThumbnail(
+						lastAddedSettings && lastAddedSettings.storeThumbnail
+							? { images: lastAddedSettings.storeThumbnail }
+							: []
+					);
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
@@ -149,8 +155,12 @@ const SettingsMainBoss = () => {
 	}, [query]);
 
 	const clickSubmit = () => {
-		if (!storeThumbnail && !storeThumbnail.images) {
-			return toast.error("Please ensure to add store thumbnail");
+		if (
+			storeThumbnail &&
+			storeThumbnail.images &&
+			storeThumbnail.images.length === 0
+		) {
+			return toast.error("Please Add Store Thumbnail");
 		}
 		LoyaltyPointsAndStoreStatus(ownerId, token, {
 			loyaltyPointsAward: loyaltyPointsAward ? loyaltyPointsAward : 1000000,

@@ -10,13 +10,12 @@ const ImageCard2 = ({
 	addThumbnail,
 	fileUploadAndResizeThumbNail,
 }) => {
-	console.log(addThumbnail, "image 2");
 	return (
 		<ImageCardWrapper>
 			<div className='card card-flush  mx-auto'>
 				<div className=''>
 					<div className=' p-2'>
-						<h5 style={{fontWeight: "bold", fontSize: "1.2rem"}}>
+						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
 							Store Thumbnail
 						</h5>
 					</div>
@@ -66,7 +65,7 @@ const ImageCard2 = ({
 						{!addThumbnail.images || addThumbnail.images.length === 0 ? (
 							<label
 								className=''
-								style={{cursor: "pointer", fontSize: "0.95rem"}}
+								style={{ cursor: "pointer", fontSize: "0.95rem" }}
 							>
 								<img src={imageImage} alt='imageUpload' />
 								<input

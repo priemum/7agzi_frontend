@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import {
 	AddingAppointmentWorkingHours,
 	getPreviousScheduledHours,
 } from "../apiOwner";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const AllPossibleHours = [
 	"00:00",
@@ -106,7 +106,7 @@ const AllPossibleHours = [
 	"23:45",
 ];
 
-const AddingWorkingHours = ({clickSubmit2}) => {
+const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
 	const [AllAddedHoursCombined, setAllAddedHoursCombined] = useState({
 		AllAddedHoursCombined: [
 			"08:00",
@@ -214,7 +214,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 	// eslint-disable-next-line
 	const [PreviousAddedHours, setPreviousAddedHours] = useState({});
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 	let hoursCanBeScheduled = [];
 
 	hoursCanBeScheduled = AllAddedHoursCombined.AllAddedHoursCombined;
@@ -225,6 +225,14 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 				"Please make sure to submit at least 10 active appointments' times."
 			);
 		}
+		if (
+			storeThumbnail &&
+			storeThumbnail.images &&
+			storeThumbnail.images.length === 0
+		) {
+			return toast.error("Please Add Store Thumbnail");
+		}
+
 		AddingAppointmentWorkingHours(user._id, token, {
 			hoursCanBeScheduled,
 			belongsTo: user._id,
@@ -299,7 +307,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 				<form>
 					<div
 						className='form-group mx-auto p-4'
-						style={{border: "1px black solid", borderRadius: "20px"}}
+						style={{ border: "1px black solid", borderRadius: "20px" }}
 					>
 						<h3 className='mb-4 text-center'>
 							Add Active Appointments Hours/Times
@@ -353,7 +361,7 @@ const AddingWorkingHours = ({clickSubmit2}) => {
 							<button
 								className='btn btn-outline-success my-3 btn-block'
 								onClick={clickSubmit}
-								style={{fontWeight: "bold", fontSize: "1.2rem"}}
+								style={{ fontWeight: "bold", fontSize: "1.2rem" }}
 							>
 								Submit Added Settings...
 							</button>

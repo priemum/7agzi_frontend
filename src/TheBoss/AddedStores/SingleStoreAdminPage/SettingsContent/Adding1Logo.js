@@ -96,7 +96,7 @@ const Adding1Logo = ({
 
 	const fileUploadAndResizeStoreThumbnail = (e) => {
 		setLoading(true);
-		// console.log(e.target.files);
+		console.log(e.target.files, "e.target.files");
 		let files = e.target.files;
 		console.log(files);
 		let allUploadedFiles = storeThumbnail;
