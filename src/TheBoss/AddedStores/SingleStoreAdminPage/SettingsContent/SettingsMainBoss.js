@@ -13,6 +13,7 @@ import AddingWorkingHours from "./AddingWorkingHours";
 import { useParams, useLocation } from "react-router-dom";
 import { isAuthenticated } from "../../../../auth";
 import { readUser } from "../../../apiBoss";
+import { toast } from "react-toastify";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -148,6 +149,9 @@ const SettingsMainBoss = () => {
 	}, [query]);
 
 	const clickSubmit = () => {
+		if (!storeThumbnail && !storeThumbnail.images) {
+			return toast.error("Please ensure to add store thumbnail");
+		}
 		LoyaltyPointsAndStoreStatus(ownerId, token, {
 			loyaltyPointsAward: loyaltyPointsAward ? loyaltyPointsAward : 1000000,
 			discountPercentage: discountPercentage ? discountPercentage : 0,
