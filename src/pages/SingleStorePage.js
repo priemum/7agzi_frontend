@@ -23,22 +23,27 @@ const isActive = (history, path) => {
 		return {
 			background: "grey",
 			fontWeight: "bolder",
-			padding: "10px",
+			padding: "5px 0px 5px 0px",
 			border: "lightgrey 1px solid",
 			textAlign: "center",
-			borderRadius: "25px",
+			borderRadius: "5px",
+			marginRight: "5px",
 			cursor: "pointer",
 			transition: "var(--mainTransition)",
+			fontSize: "11.5px",
 
 			// textDecoration: "underline",
 		};
 	} else {
 		return {
 			fontWeight: "bolder",
-			padding: "10px",
-			border: "lightgrey 0.1px solid",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
 			textAlign: "center",
-			borderRadius: "25px",
+			borderRadius: "5px",
+			marginRight: "5px",
+			marginLeft: "3px",
+			fontSize: "11.5px",
 			cursor: "pointer",
 		};
 	}
@@ -331,30 +336,37 @@ const SingleStorePage = ({ props, language }) => {
 					</div>
 
 					<div className='phoneContent mt-2'>
-						<div className='row'>
+						<div
+							className='row'
+							style={{
+								background: "#1e1e1e",
+								padding: "5px 0px",
+								paddingLeft: "20px",
+							}}
+						>
 							<div
-								className='col-3 navLinks'
+								className='col-2 navLinks'
 								style={isActive(clickedMenu, "SERVICES")}
 								onClick={() => setClickedMenu("SERVICES")}
 							>
 								SERVICES
 							</div>
 							<div
-								className='col-3 navLinks'
+								className='col-2 navLinks'
 								style={isActive(clickedMenu, "STYLISTS")}
 								onClick={() => setClickedMenu("STYLISTS")}
 							>
 								BOOK
 							</div>
 							<div
-								className='col-3 navLinks'
+								className='col-2 navLinks'
 								style={isActive(clickedMenu, "ABOUT")}
 								onClick={() => setClickedMenu("ABOUT")}
 							>
 								ABOUT
 							</div>
 							<div
-								className='col-3 navLinks'
+								className='col-2 navLinks'
 								style={isActive(clickedMenu, "GALLERY")}
 								onClick={() => setClickedMenu("GALLERY")}
 							>
@@ -366,7 +378,12 @@ const SingleStorePage = ({ props, language }) => {
 							<div className='my-5'>
 								<div className='mb-3'>
 									<select
-										style={{ textTransform: "capitalize" }}
+										style={{
+											textTransform: "capitalize",
+											backgroundColor: "#1e1e1e",
+											color: "white",
+											border: "none",
+										}}
 										className='form-control'
 										onChange={(e) => setChosenCustomerType2(e.target.value)}
 									>
@@ -428,23 +445,25 @@ const SingleStorePage = ({ props, language }) => {
 								<Gallary filteredResults={allEmployees} />
 							</div>
 						) : null}
-						<FirstAvailableAppointments
-							onlineStoreName={storeChosen}
-							allEmployees={allEmployees}
-							AllServices={AllServices}
-							contact={contact}
-							allCustomerType={allCustomerType}
-							chosenCustomerType={chosenCustomerType}
-							setChosenCustomerType={setChosenCustomerType}
-							chosenDate={chosenDate}
-							setChosenDate={setChosenDate}
-							setChosenService={setChosenService}
-							chosenService={chosenService}
-							handleChosenCustomerType={handleChosenCustomerType}
-							fromLocalStore={storeChosen}
-							language={language}
-							clickedMenu={clickedMenu}
-						/>
+						<div className='firstAvailableApp'>
+							<FirstAvailableAppointments
+								onlineStoreName={storeChosen}
+								allEmployees={allEmployees}
+								AllServices={AllServices}
+								contact={contact}
+								allCustomerType={allCustomerType}
+								chosenCustomerType={chosenCustomerType}
+								setChosenCustomerType={setChosenCustomerType}
+								chosenDate={chosenDate}
+								setChosenDate={setChosenDate}
+								setChosenService={setChosenService}
+								chosenService={chosenService}
+								handleChosenCustomerType={handleChosenCustomerType}
+								fromLocalStore={storeChosen}
+								language={language}
+								clickedMenu={clickedMenu}
+							/>
+						</div>
 					</div>
 				</React.Fragment>
 			)}
@@ -469,16 +488,21 @@ const SingleStorePageWrapper = styled.div`
 		.phoneContent {
 			display: block;
 			color: white;
-			padding: 20px;
+			padding: 5px;
+			overflow: hidden;
 		}
 
 		.navLinks {
 			font-weight: bolder;
-			padding: 10px;
+			padding: 5px;
 			border: lightgrey 0.1px solid;
 			text-align: center;
-			border-radius: 25px;
+			border-radius: 2px;
 			cursor: pointer;
+		}
+
+		.firstAvailableApp {
+			border-radius: 25px 110px;
 		}
 	}
 `;

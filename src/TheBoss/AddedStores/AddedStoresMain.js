@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import {
 	allLoyaltyPointsAndStoreStatus,
 	listScheduledOrdersForTheBoss,
@@ -19,7 +20,7 @@ const AddedStoresMain = () => {
 	const [allAppointments, setAllAppointments] = useState([]);
 
 	// eslint-disable-next-line
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
@@ -114,9 +115,12 @@ const AddedStoresMain = () => {
 															"chosenStore",
 															JSON.stringify(p)
 														);
-														window.scrollTo({top: 0, behavior: "smooth"});
+														window.scrollTo({ top: 0, behavior: "smooth" });
 													}}
 												>
+													<Link
+														to={`/boss/store/admin/dashboard/${p.belongsTo._id}`}
+													></Link>
 													<CardForStoreBoss
 														store={p}
 														allAppointments={allAppointments}

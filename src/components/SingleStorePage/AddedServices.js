@@ -1,14 +1,47 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {getServices} from "../../apiCore";
-import {Collapse} from "antd";
+import { getServices } from "../../apiCore";
+import { Collapse, Checkbox } from "antd";
 
-const {Panel} = Collapse;
+const { Panel } = Collapse;
 
-const AddedServices = ({chosenCustomerType, ownerId}) => {
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "grey",
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			fontSize: "11.5px",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			marginLeft: "3px",
+			fontSize: "11.5px",
+			cursor: "pointer",
+		};
+	}
+};
+
+const AddedServices = ({ chosenCustomerType, ownerId }) => {
 	const [AllServices, setAllServices] = useState([]);
+	const [clickedMenu, setClickedMenu] = useState("STANDARD");
+	const [checkedService, setCheckedService] = useState(null);
 
 	const getAllService = (chosenCustomerTypeFromFirstAvailable) => {
 		getServices("Token", ownerId).then((data) => {
@@ -59,23 +92,63 @@ const AddedServices = ({chosenCustomerType, ownerId}) => {
 
 	const allLists = () => {
 		return (
-			<Collapse>
+			<Collapse
+				expandIconPosition='right'
+				accordion
+				className='my-custom-collapse'
+				style={{
+					backgroundColor: "black",
+					color: "white",
+					width: "100%",
+					border: "none",
+				}}
+			>
 				{AllServices &&
 					AllServices.map((s, i) => {
 						return (
 							<Panel
 								key={i}
 								header={
-									<span>
-										{" "}
-										{s.serviceName}{" "}
-										<span className='ml-2' style={{color: "#6eaee9"}}>
-											({s.serviceTime} mins)
-										</span>
-									</span>
+									<div>
+										<div className='row'>
+											<div className='col-4'>
+												<span
+													className=''
+													style={{ color: "white", fontSize: "11px" }}
+												>
+													{s.serviceName}{" "}
+												</span>
+											</div>
+											<div className='col-3'>
+												<span
+													className=''
+													style={{ color: "white", fontSize: "11px" }}
+												>
+													{s.servicePriceDiscount} EGP
+												</span>
+											</div>
+											<div className='col-3'>
+												<span
+													className=''
+													style={{ color: "white", fontSize: "11px" }}
+												>
+													{s.serviceTime} mins
+												</span>
+											</div>
+											<div className='col-2'>
+												<Checkbox
+													checked={checkedService === s._id}
+													onChange={() => setCheckedService(s._id)}
+												/>
+											</div>
+										</div>
+									</div>
 								}
 								style={{
 									textTransform: "capitalize",
+									backgroundColor: "black",
+									color: "white",
+									border: "none",
 								}}
 							>
 								<div>
@@ -83,16 +156,17 @@ const AddedServices = ({chosenCustomerType, ownerId}) => {
 										AllServices[i] &&
 										AllServices[i].serviceDescription.map((d, ii) => {
 											return (
-												<li
+												<p
 													key={ii + 10}
 													style={{
 														textTransform: "capitalize",
-														listStyle: "outside",
+														listStyle: "none",
 														fontSize: "12px",
+														color: "white",
 													}}
 												>
 													{d}
-												</li>
+												</p>
 											);
 										})}
 								</div>
@@ -105,7 +179,22 @@ const AddedServices = ({chosenCustomerType, ownerId}) => {
 
 	return (
 		<AddedServicesStyling>
-			<h5 className='ServiceDescription'>Our Services' Description:</h5>
+			<div className='row my-3 ml-3'>
+				<div
+					className='col-3'
+					style={isActive(clickedMenu, "STANDARD")}
+					onClick={() => setClickedMenu("STANDARD")}
+				>
+					Standard
+				</div>
+				<div
+					className='col-3'
+					style={isActive(clickedMenu, "BUNDLE")}
+					onClick={() => setClickedMenu("BUNDLE")}
+				>
+					Bundle
+				</div>
+			</div>
 			{allLists()}
 		</AddedServicesStyling>
 	);
@@ -114,15 +203,9 @@ const AddedServices = ({chosenCustomerType, ownerId}) => {
 export default AddedServices;
 
 const AddedServicesStyling = styled.div`
-	[data-theme="compact"] p,
-	p {
-		margin: 0;
-	}
-
 	.ant-collapse-header {
 		font-size: 13px;
 		font-weight: bold;
-		background: white !important;
 	}
 
 	.ServiceDescription {
@@ -132,9 +215,20 @@ const AddedServicesStyling = styled.div`
 		margin-left: 5px;
 	}
 
+	.my-custom-collapse .ant-collapse-item > .ant-collapse-header {
+		background: #1e1e1e !important;
+		color: white !important;
+		border-radius: 8px;
+		margin-top: 5px !important;
+	}
+
+	.my-custom-collapse .ant-collapse-content > .ant-collapse-content-box {
+		background: #1e1e1e !important;
+		color: white !important;
+	}
+
 	@media (max-width: 1000px) {
-		width: 80%;
-		margin-left: 10%;
+		width: 100%;
 		.ant-collapse-header {
 			font-size: 12px;
 		}

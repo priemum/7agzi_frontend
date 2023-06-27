@@ -822,8 +822,13 @@ const FirstAvailableAppointmentsWrapper = styled.div`
 	background-color: rgba(0, 0, 0, 0.85);
 	padding: 30px;
 	border-radius: 20px 100px;
+	z-index: 1000;
 
 	.contentWrapper {
 		position: relative;
+	}
+
+	@media (max-width: 1000px) {
+		background-color: #4e0000;
 	}
 `;

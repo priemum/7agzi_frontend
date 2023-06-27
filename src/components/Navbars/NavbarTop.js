@@ -388,13 +388,13 @@ const Navbar1 = ({
 				<i
 					className='far fa-window-close nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{ color: "white" }}
+					style={{ color: "white", marginLeft: "10px" }}
 				></i>
 			) : (
 				<i
 					className='fa fa-bars nav-icon faaa-bars'
 					onClick={handleSidebar}
-					style={{ color: "white" }}
+					style={{ color: "white", marginLeft: "10px" }}
 				></i>
 			)}
 			{sideBar()}
@@ -419,8 +419,12 @@ const Navbar1 = ({
 								}}
 							>
 								{" "}
-								<img className='flags' src={EgyptianFlag} alt='Arabic' />
-								<span style={{ color: "white" }}>Arabic</span>
+								<img
+									className='flags'
+									src={EgyptianFlag}
+									style={{ marginRight: "5px" }}
+									alt='Arabic'
+								/>
 							</span>
 						) : (
 							<span
@@ -431,7 +435,6 @@ const Navbar1 = ({
 								}}
 							>
 								<img className='flags' src={AmericanFlag} alt='English' />{" "}
-								English
 							</span>
 						)}
 					</span>
@@ -704,7 +707,6 @@ const Nav = styled.nav`
 			display: inline-block;
 			vertical-align: middle;
 			margin-bottom: 0;
-			margin-right: 2px;
 		}
 
 		.nav-center {
@@ -732,19 +734,8 @@ const Nav = styled.nav`
 			padding: 0 5px;
 		}
 		.sinaiLogo {
-			width: 120px;
-			height: 58px;
-			object-fit: cover !important;
 		}
 		.logo-type {
-			font-size: 1rem;
-			font-family: "Snell Roundhand, cursive";
-			font-weight: bold;
-			text-align: center;
-			font-style: italic;
-			display: inline-block;
-			vertical-align: middle;
-			margin-bottom: 0;
 		}
 	}
 	font-size: 1rem;

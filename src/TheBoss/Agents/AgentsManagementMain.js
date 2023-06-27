@@ -42,7 +42,7 @@ const isActive = (history, path) => {
 const AgentsManagementMain = () => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
-	const [clickedMenu, setClickedMenu] = useState("AddAgent");
+	const [clickedMenu, setClickedMenu] = useState("AgentsReport");
 
 	const [values, setValues] = useState({
 		name: "",
@@ -120,7 +120,7 @@ const AgentsManagementMain = () => {
 		} else if (window.location.search.includes("agents-report")) {
 			setClickedMenu("AgentsReport");
 		} else {
-			setClickedMenu("AddAgent");
+			setClickedMenu("AgentsReport");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -141,17 +141,17 @@ const AgentsManagementMain = () => {
 					<div className='container' style={{ marginLeft: "200px" }}>
 						<div className='row mx-auto'>
 							<div
-								style={isActive(clickedMenu, "AddAgent")}
+								style={isActive(clickedMenu, "AgentsReport")}
 								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("AddAgent")}
+								onClick={() => setClickedMenu("AgentsReport")}
 							>
 								<Link
-									style={isActive(clickedMenu, "AddAgent")}
-									onClick={() => setClickedMenu("AddAgent")}
-									to='/boss/admin/agent-management?add-agent'
+									style={isActive(clickedMenu, "AgentsReport")}
+									onClick={() => setClickedMenu("AgentsReport")}
+									to='/boss/admin/agent-management?agents-report'
 								>
-									<i className='fa-solid fa-person-dress-burst mr-1'></i>
-									Add New Agent
+									<i className='fa-solid fa-chart-simple mr-1'></i> Agents
+									Report
 								</Link>
 							</div>
 							<div
@@ -167,19 +167,18 @@ const AgentsManagementMain = () => {
 									<i className='fa-solid fa-pen mr-1'></i> AGENTS' LIST
 								</Link>
 							</div>
-
 							<div
-								style={isActive(clickedMenu, "AgentsReport")}
+								style={isActive(clickedMenu, "AddAgent")}
 								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("AgentsReport")}
+								onClick={() => setClickedMenu("AddAgent")}
 							>
 								<Link
-									style={isActive(clickedMenu, "AgentsReport")}
-									onClick={() => setClickedMenu("AgentsReport")}
-									to='/boss/admin/agent-management?agents-report'
+									style={isActive(clickedMenu, "AddAgent")}
+									onClick={() => setClickedMenu("AddAgent")}
+									to='/boss/admin/agent-management?add-agent'
 								>
-									<i className='fa-solid fa-chart-simple mr-1'></i> Agents
-									Report
+									<i className='fa-solid fa-person-dress-burst mr-1'></i>
+									Add New Agent
 								</Link>
 							</div>
 						</div>

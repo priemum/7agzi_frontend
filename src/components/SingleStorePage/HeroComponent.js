@@ -30,6 +30,9 @@ const HeroComponent = ({
 
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
+
+	const allRatingArray = allEmployees && allEmployees.map((i) => i.ratings);
+
 	return (
 		<HeroComponentWrapper>
 			<div
@@ -91,33 +94,43 @@ const HeroComponent = ({
 							isVisible={true}
 						>
 							<div className='ml-3'>
-								{showAverageRatingForEntireStore(allEmployees)}
-							</div>
-							<div className='ml-3'>
 								<h3
 									style={{
 										fontSize: "1.3rem",
 										fontWeight: "bold",
 										color: "white",
+										textTransform: "uppercase",
+										letterSpacing: "2px",
 									}}
 								>
 									<strong>{fromLocalStore.addStoreName}</strong>
 								</h3>
+							</div>
+							<div className='ml-3'>
+								{showAverageRatingForEntireStore(
+									allRatingArray,
+									fromLocalStore
+								)}
 							</div>
 
 							<div className='ml-3'>
 								{AllServices2 &&
 									AllServices2.map((s, i) => {
 										if (i <= 4) {
+											// Check if current element is the last one in the iteration or the 5th one (since we're showing max 5 items)
+											const isLastElement =
+												i === AllServices2.length - 1 || i === 4;
+
 											return (
 												<span
 													style={{
-														color: "darkgrey",
-														textTransform: "capitalize",
+														color: "white",
+														textTransform: "uppercase",
+														fontSize: "12px",
 													}}
 													key={i}
 												>
-													{s.serviceName},{" "}
+													{s.serviceName} {isLastElement ? "" : "- "}
 												</span>
 											);
 										} else {

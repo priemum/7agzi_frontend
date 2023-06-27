@@ -78,6 +78,7 @@ const SettingsMainBoss = () => {
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	//Checking whether services were added or not
 	const [allServices, setAllServices] = useState([]);
@@ -268,6 +269,8 @@ const SettingsMainBoss = () => {
 							setLongitude={setLongitude}
 							latitude={latitude}
 							setLatitude={setLatitude}
+							loading={loading}
+							setLoading={setLoading}
 						/>
 					) : null}
 

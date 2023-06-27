@@ -30,7 +30,7 @@ export const showAverageRating = (e) => {
 						rating={result}
 						editing={false}
 					/>{" "}
-					<span style={{fontSize: "0.68rem", color: "white"}}>
+					<span style={{ fontSize: "0.68rem", color: "white" }}>
 						({e.ratings.length}) Users Rated
 					</span>
 				</span>
@@ -66,7 +66,7 @@ export const showAverageRating2 = (e) => {
 						rating={result}
 						editing={false}
 					/>{" "}
-					<span style={{fontSize: "0.68rem", color: "black"}}>
+					<span style={{ fontSize: "0.68rem", color: "black" }}>
 						({e.ratings.length}) Users Rated
 					</span>
 				</span>
@@ -75,15 +75,47 @@ export const showAverageRating2 = (e) => {
 	}
 };
 
-export const showAverageRatingForEntireStore = (e) => {
+export const showAverageRatingForEntireStore = (allRatings, store) => {
+	let totalStars = 0;
+	let totalCount = 0;
+	let averageRating = 3.5; // default value for averageRating
+
+	// Check if there are any ratings
+	if (allRatings && allRatings.length > 0) {
+		// Loop over all entities
+		for (let i = 0; i < allRatings.length; i++) {
+			let entityRatings = allRatings[i];
+
+			// Check if the entity has any ratings
+			if (entityRatings && entityRatings.length > 0) {
+				// Loop over all ratings of the entity
+				for (let j = 0; j < entityRatings.length; j++) {
+					totalStars += entityRatings[j].star;
+					totalCount++;
+				}
+			}
+		}
+
+		// Calculate the average star rating
+		if (totalCount > 0) {
+			averageRating = totalStars / totalCount;
+		}
+	}
+
 	return (
 		<div className='mb-2'>
+			<span
+				style={{ textTransform: "uppercase", fontSize: "11px" }}
+				className='mr-1'
+			>
+				{store.belongsTo.storeAddress}{" "}
+			</span>
 			<span>
 				<StarRating
 					starDimension='15px'
-					starSpacing='2px'
-					starRatedColor='red'
-					rating={4}
+					starSpacing='1px'
+					starRatedColor='#ffba3b'
+					rating={averageRating}
 					editing={false}
 				/>{" "}
 			</span>
