@@ -122,14 +122,19 @@ const SettingsMainBoss = () => {
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
 					setAddStoreLogo(
-						lastAddedSettings && lastAddedSettings.storeThumbnail
+						lastAddedSettings &&
+							lastAddedSettings.addStoreLogo &&
+							lastAddedSettings.addStoreLogo.length > 0
 							? {
 									images: lastAddedSettings.addStoreLogo,
 							  }
 							: []
 					);
+
 					setStoreThumbnail(
-						lastAddedSettings && lastAddedSettings.storeThumbnail
+						lastAddedSettings &&
+							lastAddedSettings.storeThumbnail &&
+							lastAddedSettings.storeThumbnail.length > 0
 							? { images: lastAddedSettings.storeThumbnail }
 							: []
 					);
@@ -148,6 +153,8 @@ const SettingsMainBoss = () => {
 
 		// eslint-disable-next-line
 	}, []);
+
+	console.log(storeThumbnail, "storeThu");
 
 	useEffect(() => {
 		setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
