@@ -8,16 +8,21 @@ import ImageCard from "./ImageCard";
 import { Link } from "react-router-dom";
 import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
+import ImageCard3 from "./ImageCard3";
 
 const Adding1Logo = ({
 	addStoreLogo,
 	setAddStoreLogo,
 	addStoreName,
+	addStoreNameArabic,
 	setAddStoreName,
+	setAddStoreNameArabic,
 	setClickedMenu,
 	allServices,
 	storeThumbnail,
 	setStoreThumbnail,
+	ownerIdPhoto,
+	setOwnerIdPhoto,
 	alreadySetLoyaltyPointsManagement,
 	latitude,
 	setLatitude,
@@ -27,6 +32,7 @@ const Adding1Logo = ({
 	setLoading,
 }) => {
 	const [loading2, setLoading2] = useState(false);
+	const [loading3, setLoading3] = useState(false);
 	// destructure user and token from localstorage
 	const { user, token } = isAuthenticated();
 
@@ -96,7 +102,7 @@ const Adding1Logo = ({
 
 	const fileUploadAndResizeStoreThumbnail = (e) => {
 		setLoading(true);
-		console.log(e.target.files, "e.target.files");
+		// console.log(e.target.files);
 		let files = e.target.files;
 		console.log(files);
 		let allUploadedFiles = storeThumbnail;
@@ -160,10 +166,76 @@ const Adding1Logo = ({
 			});
 	};
 
+	const fileUploadAndResizeOwnerIdPhoto = (e) => {
+		setLoading3(true);
+		// console.log(e.target.files);
+		let files = e.target.files;
+		console.log(files);
+		let allUploadedFiles = ownerIdPhoto;
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 500 * 1024) {
+					// file size is in bytes
+					alert("File size should be less than 500kb");
+					continue; // skip this file
+				}
+				Resizer.imageFileResizer(
+					files[i],
+					800,
+					954,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryUpload1(user._id, token, { image: uri })
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setOwnerIdPhoto({
+									...ownerIdPhoto,
+									images: allUploadedFiles,
+								});
+							})
+							.catch((err) => {
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
+			}
+			setTimeout(() => {
+				setLoading3(false);
+			}, 1500);
+		}
+	};
+
+	const handleImageRemove3 = (public_id) => {
+		// console.log("remove image", public_id);
+		axios
+			.post(
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
+				{ public_id },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+			.then((res) => {
+				setOwnerIdPhoto([]);
+			})
+			.catch((err) => {
+				console.log(err);
+				setTimeout(function () {
+					window.location.reload(false);
+				}, 1000);
+			});
+	};
+
 	return (
 		<Adding1LogoWrapper>
-			<div className='row col-8'>
-				<div className='col-md-6'>
+			<div className='row col-12'>
+				<div className='col-md-4'>
 					{loading2 ? (
 						<div style={{ textAlign: "center", marginTop: "10%" }}>
 							<Spin size='large' />
@@ -177,7 +249,7 @@ const Adding1Logo = ({
 						/>
 					)}
 				</div>
-				<div className='col-md-6 mx-auto'>
+				<div className='col-md-4 mx-auto'>
 					{loading ? (
 						<div style={{ textAlign: "center", marginTop: "10%" }}>
 							<Spin size='large' />
@@ -191,7 +263,21 @@ const Adding1Logo = ({
 						/>
 					)}
 				</div>
-				<div className='col-md-10 pt-5 mx-auto'>
+				<div className='col-md-4 mx-auto'>
+					{loading3 ? (
+						<div style={{ textAlign: "center", marginTop: "10%" }}>
+							<Spin size='large' />
+						</div>
+					) : (
+						<ImageCard3
+							addThumbnail={ownerIdPhoto}
+							handleImageRemove={handleImageRemove3}
+							setAddThumbnail={setOwnerIdPhoto}
+							fileUploadAndResizeThumbNail={fileUploadAndResizeOwnerIdPhoto}
+						/>
+					)}
+				</div>
+				<div className='col-md-5 pt-5 mx-auto'>
 					<label>
 						Store Name{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
@@ -206,6 +292,25 @@ const Adding1Logo = ({
 						value={addStoreName}
 						onChange={(e) => {
 							setAddStoreName(e.target.value);
+						}}
+					/>
+				</div>
+
+				<div className='col-md-5 pt-5 mx-auto'>
+					<label>
+						Store Name (Arabic){" "}
+						<span style={{ color: "red", fontWeight: "bold" }}>
+							{" "}
+							<strong>*</strong>{" "}
+						</span>{" "}
+					</label>
+					<input
+						className='form-control'
+						type='text'
+						placeholder='Fill In Your Store Name In Arabic'
+						value={addStoreNameArabic}
+						onChange={(e) => {
+							setAddStoreNameArabic(e.target.value);
 						}}
 					/>
 				</div>
@@ -291,7 +396,7 @@ export default Adding1Logo;
 
 const Adding1LogoWrapper = styled.div`
 	overflow: hidden;
-	margin-left: 230px;
+	margin-left: 130px;
 	margin-top: 50px;
 
 	.row {

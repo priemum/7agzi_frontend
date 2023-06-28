@@ -71,7 +71,9 @@ const SettingsMainBoss = () => {
 	const [onlineServicesFees, setOnlineServicesFees] = useState("");
 	const [addStoreLogo, setAddStoreLogo] = useState([]);
 	const [storeThumbnail, setStoreThumbnail] = useState([]);
+	const [ownerIdPhoto, setOwnerIdPhoto] = useState([]);
 	const [addStoreName, setAddStoreName] = useState("");
+	const [addStoreNameArabic, setAddStoreNameArabic] = useState("");
 	const [daysStoreClosed, setDaysStoreClosed] = useState("");
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
 	const [longitude, setLongitude] = useState("");
@@ -79,6 +81,8 @@ const SettingsMainBoss = () => {
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [activeWhatsAppNotification, setActiveWhatsAppNotification] =
+		useState(true);
 	const [loading, setLoading] = useState(false);
 
 	//Checking whether services were added or not
@@ -116,6 +120,9 @@ const SettingsMainBoss = () => {
 							lastAddedSettings && lastAddedSettings.daysStoreClosed,
 					});
 					setQuery(lastAddedSettings && lastAddedSettings.daysStoreClosed);
+					setActiveWhatsAppNotification(
+						lastAddedSettings && lastAddedSettings.activeWhatsAppNotification
+					);
 					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
 					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setDatesStoreClosed(
@@ -138,7 +145,18 @@ const SettingsMainBoss = () => {
 							? { images: lastAddedSettings.storeThumbnail }
 							: []
 					);
+					setOwnerIdPhoto(
+						lastAddedSettings &&
+							lastAddedSettings.ownerIdPhoto &&
+							lastAddedSettings.ownerIdPhoto.length > 0
+							? { images: lastAddedSettings.ownerIdPhoto }
+							: []
+					);
+
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
+					setAddStoreNameArabic(
+						lastAddedSettings && lastAddedSettings.addStoreNameArabic
+					);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
 					);
@@ -169,6 +187,28 @@ const SettingsMainBoss = () => {
 		) {
 			return toast.error("Please Add Store Thumbnail");
 		}
+
+		if (!longitude || !latitude) {
+			return toast.error("Longitude & Latitude are required");
+		}
+
+		if (!onlineServicesFees) {
+			return toast.error(
+				"Please Add Online Services Fee which should be at least 3 EGP"
+			);
+		}
+
+		if (Number(onlineServicesFees) < 3) {
+			return toast.error("Online Services Fee which should be at least 3 EGP");
+		}
+
+		if (!addStoreName) {
+			return toast.error("Store Name Required");
+		}
+		if (!addStoreNameArabic) {
+			return toast.error("Store Name Arabic Required");
+		}
+
 		LoyaltyPointsAndStoreStatus(ownerId, token, {
 			loyaltyPointsAward: loyaltyPointsAward ? loyaltyPointsAward : 1000000,
 			discountPercentage: discountPercentage ? discountPercentage : 0,
@@ -177,8 +217,11 @@ const SettingsMainBoss = () => {
 			onlineServicesFees: onlineServicesFees,
 			addStoreLogo: addStoreLogo.images,
 			storeThumbnail: storeThumbnail.images,
+			ownerIdPhoto: ownerIdPhoto.images,
 			addStoreName: addStoreName,
+			addStoreNameArabic: addStoreNameArabic,
 			activeOnlineBooking: activeOnlineBooking,
+			activeWhatsAppNotification: activeWhatsAppNotification,
 			belongsTo: ownerId,
 			longitude: longitude,
 			latitude: latitude,
@@ -278,7 +321,9 @@ const SettingsMainBoss = () => {
 							addStoreLogo={addStoreLogo}
 							setAddStoreLogo={setAddStoreLogo}
 							addStoreName={addStoreName}
+							addStoreNameArabic={addStoreNameArabic}
 							setAddStoreName={setAddStoreName}
+							setAddStoreNameArabic={setAddStoreNameArabic}
 							alreadySetLoyaltyPointsManagement={
 								alreadySetLoyaltyPointsManagement
 							}
@@ -292,6 +337,8 @@ const SettingsMainBoss = () => {
 							setLatitude={setLatitude}
 							loading={loading}
 							setLoading={setLoading}
+							ownerIdPhoto={ownerIdPhoto}
+							setOwnerIdPhoto={setOwnerIdPhoto}
 						/>
 					) : null}
 
@@ -327,6 +374,8 @@ const SettingsMainBoss = () => {
 							}
 							clickSubmit={clickSubmit}
 							setClickedMenu={setClickedMenu}
+							activeWhatsAppNotification={activeWhatsAppNotification}
+							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
 						/>
 					) : null}
 
@@ -342,6 +391,8 @@ const SettingsMainBoss = () => {
 								alreadySetLoyaltyPointsManagement
 							}
 							clickSubmit2={clickSubmit}
+							addStoreName={addStoreName}
+							addStoreNameArabic={addStoreNameArabic}
 						/>
 					) : null}
 				</div>

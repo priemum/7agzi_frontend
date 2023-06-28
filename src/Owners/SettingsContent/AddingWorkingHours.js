@@ -106,7 +106,12 @@ const AllPossibleHours = [
 	"23:45",
 ];
 
-const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
+const AddingWorkingHours = ({
+	clickSubmit2,
+	storeThumbnail,
+	addStoreName,
+	addStoreNameArabic,
+}) => {
 	const [AllAddedHoursCombined, setAllAddedHoursCombined] = useState({
 		AllAddedHoursCombined: [
 			"08:00",
@@ -231,6 +236,13 @@ const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
 			storeThumbnail.images.length === 0
 		) {
 			return toast.error("Please Add Store Thumbnail");
+		}
+
+		if (!addStoreName) {
+			return toast.error("Store Name Required");
+		}
+		if (!addStoreNameArabic) {
+			return toast.error("Store Name Arabic Required");
 		}
 
 		AddingAppointmentWorkingHours(user._id, token, {

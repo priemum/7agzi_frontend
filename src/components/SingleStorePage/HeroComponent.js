@@ -26,8 +26,10 @@ const HeroComponent = ({
 	const handleScroll = () => setOffsetY(window.pageYOffset);
 
 	useEffect(() => {
+		setTimeout(() => {
+			window.scrollTo({ top: 5, behavior: "smooth" });
+		}, 1000);
 		window.addEventListener("scroll", handleScroll);
-
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
@@ -42,15 +44,14 @@ const HeroComponent = ({
 						hero1 && hero1.images && hero1.images[0]
 							? `url(${hero1.images[0].url})`
 							: `url(
-          "https://cdn.pixabay.com/photo/2020/05/21/11/42/hair-salon-5200393_960_720.jpg"
-        )`,
-					backgroundPosition: `center ${offsetY * 0.5}px`,
+                    "https://cdn.pixabay.com/photo/2020/05/21/11/42/hair-salon-5200393_960_720.jpg"
+                )`,
+					backgroundPosition: `center ${offsetY * 0.7}px`,
 					backgroundRepeat: "no-repeat",
-					backgroundSize: "cover",
+					backgroundSize: "cover", // add this line
 					position: "relative",
-					height: "820px",
+					height: "790px",
 					width: "104%",
-					objectFit: "cover",
 					borderRadius: "10px",
 				}}
 			>
@@ -124,7 +125,7 @@ const HeroComponent = ({
 											return (
 												<span
 													style={{
-														color: "white",
+														color: "darkgrey",
 														textTransform: "uppercase",
 														fontSize: "12px",
 													}}
@@ -150,15 +151,6 @@ export default HeroComponent;
 
 const HeroComponentWrapper = styled.div`
 	overflow: hidden;
-
-	.rowWrapper {
-		background-size: cover;
-		position: relative;
-		height: 820px;
-		width: 100%;
-		object-fit: cover;
-		border-radius: 10px;
-	}
 
 	.firstAppointWrapper {
 		position: relative; // Relative positioning is necessary for absolute child positioning
@@ -198,7 +190,7 @@ const HeroComponentWrapper = styled.div`
 		}
 
 		.rowWrapper {
-			height: 390px !important;
+			height: 450px !important;
 		}
 
 		.firstAppointWrapperSub {

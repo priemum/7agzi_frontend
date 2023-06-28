@@ -10,6 +10,8 @@ const Adding3Awards = ({
 	alreadySetLoyaltyPointsManagement,
 	clickSubmit,
 	setClickedMenu,
+	activeWhatsAppNotification,
+	setActiveWhatsAppNotification,
 }) => {
 	const handleChange1 = (e) => {
 		setLoyaltyPointsAward(e.target.value);
@@ -50,6 +52,24 @@ const Adding3Awards = ({
 						placeholder='Percentage to be discounted from the user total if reached to the required points e.g. 10% will be added as 10'
 						required
 					/>
+				</div>
+			</div>
+
+			<div className='col-md-10 mx-auto'>
+				<div className='form-group form-check'>
+					<label className='form-check-label' htmlFor='whatsAppNotification'>
+						Would You Like To Get WhatsApp Notifications?
+					</label>
+					<label className='form-check-label ml-2'>
+						<strong>YES</strong>
+						<input
+							type='checkbox'
+							className='form-check-input ml-1'
+							id='whatsAppNotification'
+							onChange={(e) => setActiveWhatsAppNotification(e.target.checked)}
+							checked={activeWhatsAppNotification}
+						/>
+					</label>
 				</div>
 			</div>
 

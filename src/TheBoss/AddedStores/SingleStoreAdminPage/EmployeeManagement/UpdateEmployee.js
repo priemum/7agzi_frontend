@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated, signup} from "../../../../auth";
+import { isAuthenticated, signup } from "../../../../auth";
 import {
 	cloudinaryUpload1,
 	getEmployees,
@@ -11,7 +11,7 @@ import {
 	updateUserByAdmin,
 } from "../apiOwner";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import AddEmpSection1 from "./AddEmpSection1";
 import AddEmpSection2 from "./AddEmpSection2";
@@ -46,7 +46,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const UpdateEmployee = ({ownerId}) => {
+const UpdateEmployee = ({ ownerId }) => {
 	const [clickedMenu, setClickedMenu] = useState("AddImagesAndName");
 	const [pickedEmployee, setPickedEmployee] = useState("");
 	const [employeeClicked, setEmployeeClicked] = useState(false);
@@ -80,7 +80,7 @@ const UpdateEmployee = ({ownerId}) => {
 	const [allEmployees, setAllEmployees] = useState([]);
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const [query, setQuery] = useState([]);
 	const [query2, setQuery2] = useState([]);
@@ -106,17 +106,17 @@ const UpdateEmployee = ({ownerId}) => {
 	const handleQueryChange = (event) => {
 		if (event.target.checked && !query.includes(event.target.value)) {
 			setQuery([...query, event.target.value]);
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		} else if (!event.target.checked && query.includes(event.target.value)) {
 			setQuery(query.filter((q) => q !== event.target.value));
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		}
 
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 		gettingAllEmployees();
 		// eslint-disable-next-line
 	}, [query, values.workingDays]);
@@ -125,34 +125,34 @@ const UpdateEmployee = ({ownerId}) => {
 		// console.log(e.target, "event.target");
 		if (e.target.checked && !query4.includes(e.target.value)) {
 			setQuery4([...query4, e.target.value]);
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		} else if (!e.target.checked && query4.includes(e.target.value)) {
 			setQuery4(query4.filter((q) => q !== e.target.value));
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		}
 
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 		// eslint-disable-next-line
 	}, [query4, values.workingHours]);
 
 	const handleQueryChange_Services = (event) => {
 		if (event.target.checked && !query2.includes(event.target.value)) {
 			setQuery2([...query2, event.target.value]);
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		} else if (!event.target.checked && query2.includes(event.target.value)) {
 			setQuery2(query2.filter((q) => q !== event.target.value));
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		}
 
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 	};
 
 	useEffect(() => {
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 		// eslint-disable-next-line
 	}, [query2, values.services]);
 
@@ -185,8 +185,16 @@ const UpdateEmployee = ({ownerId}) => {
 			return toast.error("Please Select Stylist Services he/she can perform");
 		}
 
+		var myArrayOfWorkingDays = values.workingDays;
+
+		var timePattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
+
+		var finalArray = myArrayOfWorkingDays.filter((item) => {
+			return !timePattern.test(item);
+		});
+
 		updateEmployee(pickedEmployee._id, ownerId, token, {
-			employee: values,
+			employee: { ...values, workingDays: finalArray },
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -207,7 +215,7 @@ const UpdateEmployee = ({ownerId}) => {
 							</React.Fragment>
 						);
 					} else {
-						setValues2({...values2, error: false, misMatch: false});
+						setValues2({ ...values2, error: false, misMatch: false });
 						console.log("Ahowan 2ara yad el update");
 						updateUserByAdmin(values2._id, ownerId, token, {
 							userId: values2._id,
@@ -238,7 +246,7 @@ const UpdateEmployee = ({ownerId}) => {
 								</React.Fragment>
 							);
 						} else {
-							setValues2({...values2, error: false, misMatch: false});
+							setValues2({ ...values2, error: false, misMatch: false });
 							signup({
 								name: values.employeeName,
 								email: values.employeePhone,
@@ -272,8 +280,10 @@ const UpdateEmployee = ({ownerId}) => {
 	const handleChange = (name) => (e) => {
 		const value = e.target.value;
 
-		setValues({...values, [name]: value});
+		setValues({ ...values, [name]: value });
 	};
+
+	console.log(values, "All Employees Saved Data");
 
 	const gettingAllServices = () => {
 		getServices(token, ownerId).then((data) => {
@@ -327,11 +337,11 @@ const UpdateEmployee = ({ownerId}) => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(ownerId, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setValues({...values, workPhotos: allUploadedFiles});
+								setValues({ ...values, workPhotos: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -347,7 +357,7 @@ const UpdateEmployee = ({ownerId}) => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -356,11 +366,11 @@ const UpdateEmployee = ({ownerId}) => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {workPhotos} = values.workPhotos;
+				const { workPhotos } = values.workPhotos;
 				let filteredImages = values.workPhotos.filter((item) => {
 					return item.public_id !== public_id;
 				});
-				setValues({...values, workPhotos: filteredImages});
+				setValues({ ...values, workPhotos: filteredImages });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -372,14 +382,14 @@ const UpdateEmployee = ({ownerId}) => {
 		readByAdmin(phoneNumber, token).then((data) => {
 			if (data.error) {
 				console.log(data.error, "error");
-				setValues2({...values2, error: true});
+				setValues2({ ...values2, error: true });
 			} else {
 				setValues2(data[0]);
 			}
 		});
 	};
 
-	console.log(values2, "values2");
+	console.log(values.workingDays, "values.workingDays");
 
 	useEffect(() => {
 		readEmployeeAccount(pickedEmployee.employeePhone);
@@ -399,7 +409,7 @@ const UpdateEmployee = ({ownerId}) => {
 					{allEmployees &&
 						allEmployees.map((s, i) => (
 							<div
-								style={{textTransform: "capitalize", cursor: "pointer"}}
+								style={{ textTransform: "capitalize", cursor: "pointer" }}
 								key={i}
 							>
 								<div
@@ -427,12 +437,12 @@ const UpdateEmployee = ({ownerId}) => {
 										setQuery(s.workingDays);
 										setQuery2(s.services.map((i) => i._id));
 										setQuery4(s.workingHours);
-										window.scrollTo({top: 150, behavior: "smooth"});
+										window.scrollTo({ top: 150, behavior: "smooth" });
 									}}
 								>
 									<li
 										className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center col-md-6'
-										style={{fontSize: "0.75rem"}}
+										style={{ fontSize: "0.75rem" }}
 									>
 										<strong>{s.employeeName}</strong>
 									</li>
@@ -458,14 +468,14 @@ const UpdateEmployee = ({ownerId}) => {
 			{employeeClicked && pickedEmployee && pickedEmployee.employeeName ? (
 				<div
 					className='mt-3 p-4'
-					style={{border: "2px #0f377e solid", borderRadius: "20px"}}
+					style={{ border: "2px #0f377e solid", borderRadius: "20px" }}
 				>
 					<h5
 						className='mt-2 mb-3'
-						style={{cursor: "pointer"}}
+						style={{ cursor: "pointer" }}
 						onClick={() => {
 							setEmployeeClicked(false);
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
 					>
 						<i className='fa-sharp fa-solid fa-arrow-left mr-2'></i>
@@ -564,7 +574,7 @@ const UpdateEmployee = ({ownerId}) => {
 						<div className='col-md-6 mx-auto'>
 							<button
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								className='btn btn-outline-primary mt-3 btn-block'
 							>

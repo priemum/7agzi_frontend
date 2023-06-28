@@ -107,7 +107,12 @@ const AllPossibleHours = [
 	"23:45",
 ];
 
-const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
+const AddingWorkingHours = ({
+	clickSubmit2,
+	storeThumbnail,
+	addStoreName,
+	addStoreNameArabic,
+}) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
 
@@ -245,6 +250,14 @@ const AddingWorkingHours = ({ clickSubmit2, storeThumbnail }) => {
 		) {
 			return toast.error("Please Add Store Thumbnail");
 		}
+
+		if (!addStoreName) {
+			return toast.error("Store Name Required");
+		}
+		if (!addStoreNameArabic) {
+			return toast.error("Store Name Arabic Required");
+		}
+
 		AddingAppointmentWorkingHours(ownerId, token, {
 			hoursCanBeScheduled,
 			belongsTo: ownerId,

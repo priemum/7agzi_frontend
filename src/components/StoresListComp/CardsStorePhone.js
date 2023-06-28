@@ -112,7 +112,7 @@ const CardsStorePhone = ({ store, allServicesCombined }) => {
 export default CardsStorePhone;
 
 const CardsStorePhoneWrapper = styled.div`
-	margin-top: 50px;
+	margin-top: 20px;
 	margin-bottom: 20px;
 
 	.row {

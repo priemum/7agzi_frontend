@@ -59,7 +59,9 @@ const SettingsMain = () => {
 	const [onlineServicesFees, setOnlineServicesFees] = useState("");
 	const [addStoreLogo, setAddStoreLogo] = useState([]);
 	const [storeThumbnail, setStoreThumbnail] = useState([]);
+	const [ownerIdPhoto, setOwnerIdPhoto] = useState([]);
 	const [addStoreName, setAddStoreName] = useState("");
+	const [addStoreNameArabic, setAddStoreNameArabic] = useState("");
 	const [daysStoreClosed, setDaysStoreClosed] = useState("");
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
 	const [query, setQuery] = useState([]);
@@ -67,6 +69,8 @@ const SettingsMain = () => {
 	const [longitude, setLongitude] = useState("");
 	const [latitude, setLatitude] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [activeWhatsAppNotification, setActiveWhatsAppNotification] =
+		useState(true);
 	const [loading, setLoading] = useState(false);
 
 	//Checking whether services were added or not
@@ -103,6 +107,9 @@ const SettingsMain = () => {
 							lastAddedSettings && lastAddedSettings.daysStoreClosed,
 					});
 					setQuery(lastAddedSettings && lastAddedSettings.daysStoreClosed);
+					setActiveWhatsAppNotification(
+						lastAddedSettings && lastAddedSettings.activeWhatsAppNotification
+					);
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
@@ -123,7 +130,19 @@ const SettingsMain = () => {
 							? { images: lastAddedSettings.storeThumbnail }
 							: []
 					);
+
+					setOwnerIdPhoto(
+						lastAddedSettings &&
+							lastAddedSettings.ownerIdPhoto &&
+							lastAddedSettings.ownerIdPhoto.length > 0
+							? { images: lastAddedSettings.ownerIdPhoto }
+							: []
+					);
+
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
+					setAddStoreNameArabic(
+						lastAddedSettings && lastAddedSettings.addStoreNameArabic
+					);
 					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
 					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setActiveOnlineBooking(
@@ -165,12 +184,15 @@ const SettingsMain = () => {
 			);
 		}
 
-		if (onlineServicesFees < 3) {
+		if (Number(onlineServicesFees) < 3) {
 			return toast.error("Online Services Fee which should be at least 3 EGP");
 		}
 
 		if (!addStoreName) {
 			return toast.error("Store Name Required");
+		}
+		if (!addStoreNameArabic) {
+			return toast.error("Store Name Arabic Required");
 		}
 
 		LoyaltyPointsAndStoreStatus(user._id, token, {
@@ -181,10 +203,13 @@ const SettingsMain = () => {
 			onlineServicesFees: onlineServicesFees,
 			addStoreLogo: addStoreLogo.images,
 			storeThumbnail: storeThumbnail.images,
+			ownerIdPhoto: ownerIdPhoto.images,
 			addStoreName: addStoreName,
+			addStoreNameArabic: addStoreNameArabic,
 			longitude: longitude,
 			latitude: latitude,
 			activeOnlineBooking: activeOnlineBooking,
+			activeWhatsAppNotification: activeWhatsAppNotification,
 			storePhone: user.phone,
 			belongsTo: isAuthenticated().user._id,
 		}).then((data) => {
@@ -271,7 +296,9 @@ const SettingsMain = () => {
 							addStoreLogo={addStoreLogo}
 							setAddStoreLogo={setAddStoreLogo}
 							addStoreName={addStoreName}
+							addStoreNameArabic={addStoreNameArabic}
 							setAddStoreName={setAddStoreName}
+							setAddStoreNameArabic={setAddStoreNameArabic}
 							alreadySetLoyaltyPointsManagement={
 								alreadySetLoyaltyPointsManagement
 							}
@@ -285,6 +312,8 @@ const SettingsMain = () => {
 							longitude={longitude}
 							loading={loading}
 							setLoading={setLoading}
+							ownerIdPhoto={ownerIdPhoto}
+							setOwnerIdPhoto={setOwnerIdPhoto}
 						/>
 					) : null}
 
@@ -320,6 +349,8 @@ const SettingsMain = () => {
 							}
 							clickSubmit={clickSubmit}
 							setClickedMenu={setClickedMenu}
+							activeWhatsAppNotification={activeWhatsAppNotification}
+							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
 						/>
 					) : null}
 
@@ -336,6 +367,8 @@ const SettingsMain = () => {
 							}
 							clickSubmit2={clickSubmit}
 							storeThumbnail={storeThumbnail}
+							addStoreName={addStoreName}
+							addStoreNameArabic={addStoreNameArabic}
 						/>
 					) : null}
 				</div>
