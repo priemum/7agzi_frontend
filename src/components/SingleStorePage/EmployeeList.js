@@ -1,19 +1,20 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // import ReactGA from "react-ga";
 
 import styled from "styled-components";
-import {getSingleUser, isAuthenticated} from "../../auth";
+import { getSingleUser, isAuthenticated } from "../../auth";
 import CardForEmployeesList from "./CardForEmployeesList";
+import CardEmployeePhone from "./CardEmployeePhone";
 // import { Helmet } from "react-helmet";
 
-const EmployeesList = ({storeProperties, contact, filteredResults}) => {
+const EmployeesList = ({ storeProperties, contact, filteredResults }) => {
 	// eslint-disable-next-line
 	const [updatedUser, setUpdatedUser] = useState({});
 	const [loading, setLoading] = useState(true);
 
-	const {token} = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const getCurrentUser = () => {
 		setLoading(true);
@@ -74,9 +75,29 @@ const EmployeesList = ({storeProperties, contact, filteredResults}) => {
 								<div
 									className='col-lg-4 col-md-6 col-sm-12 mx-auto text-center'
 									key={i}
-									onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
+									onClick={() =>
+										window.scrollTo({ top: 0, behavior: "smooth" })
+									}
 								>
 									<CardForEmployeesList
+										employee={employee}
+										storeProperties={storeProperties}
+										contact={contact}
+									/>
+								</div>
+							))}
+						</div>
+
+						<div className='row '>
+							{filteredResults.map((employee, i) => (
+								<div
+									className=''
+									key={i}
+									onClick={() =>
+										window.scrollTo({ top: 0, behavior: "smooth" })
+									}
+								>
+									<CardEmployeePhone
 										employee={employee}
 										storeProperties={storeProperties}
 										contact={contact}
@@ -106,8 +127,8 @@ const ScheduleStyling = styled.div`
 	}
 
 	@media (max-width: 900px) {
-		margin-left: 15px;
-		margin-right: 15px;
+		margin-left: 5px;
+		margin-right: 5px;
 
 		.continueShoppingEmpty {
 			display: none;

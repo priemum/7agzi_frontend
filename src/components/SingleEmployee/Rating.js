@@ -26,7 +26,7 @@ export const showAverageRating = (e) => {
 					<StarRating
 						starDimension='15px'
 						starSpacing='2px'
-						starRatedColor='red'
+						starRatedColor='#ffba3b'
 						rating={result}
 						editing={false}
 					/>{" "}
@@ -57,12 +57,12 @@ export const showAverageRating2 = (e) => {
 		// console.log("result", result);
 
 		return (
-			<div className='text-center '>
+			<div className=' '>
 				<span>
 					<StarRating
 						starDimension='20px'
 						starSpacing='2px'
-						starRatedColor='red'
+						starRatedColor='#ffba3b'
 						rating={result}
 						editing={false}
 					/>{" "}

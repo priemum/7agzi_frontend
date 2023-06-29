@@ -7,8 +7,9 @@ import { views, viewsCounter } from "../../apiCore";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { showAverageRating2 } from "../SingleEmployee/Rating";
+import StarRating from "react-star-ratings";
 
-const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
+const CardEmployeePhone = ({ employee, storeProperties, contact }) => {
 	const [redirect, setRedirect] = useState(false);
 	// eslint-disable-next-line
 	const [viewss, setViewss] = useState(0);
@@ -69,9 +70,9 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 		return (
 			<button
 				onClick={AddEmployee}
-				className='btn btn-primary mt-2 mb-2 card-btn-1 mx-auto '
+				className='btn btn-primary btn-block card-btn-1 mx-auto '
 			>
-				Schedule An Appointment!
+				BOOK NOW!
 			</button>
 		);
 	};
@@ -89,7 +90,7 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 	var chosenDateName = days[d.getDay()];
 
 	const ShowImage = ({ item }) => (
-		<div className='product-img' style={{ borderRadius: "50%" }}>
+		<div className='product-img'>
 			{item && item.workPhotos && (
 				<Carousel
 					showArrows={false}
@@ -106,7 +107,11 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 							alt={item.employeeName}
 							src={i.url}
 							key={i.public_id}
-							style={{ height: "240px", width: "240px", objectFit: "cover" }}
+							style={{
+								height: "75%",
+								width: "100%",
+								objectFit: "cover",
+							}}
 						/>
 					))}
 				</Carousel>
@@ -118,36 +123,74 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 		employee.employeeName &&
 		employee.employeeName.split(" ").join("-");
 
+	console.log(employee, "employee");
+
 	return (
-		<ProductWrapper className='my-3 pcCard'>
-			<div
-				className='card '
-				style={{ borderRadius: "5% 20%", backgroundColor: "#f7f7f6" }}
-			>
-				<div className='card-body  '>
-					{shouldRedirect(redirect)}
-					<div className='card-img-top center img'>
-						{employee && employee.ratings && employee.ratings.length > 0 ? (
-							<div className='mb-3'>{showAverageRating2(employee)}</div>
-						) : null}
-						<Link
-							to={`/employee/${employeeNameModified}/${employee._id}${employee._id}${employee._id}`}
-							onClick={SettingViews}
-						>
-							<ShowImage item={employee} />
-						</Link>
-					</div>
+		<ProductWrapper className='cardPhone'>
+			{shouldRedirect(redirect)}
+
+			<div className='card-img-top center img'>
+				<Link
+					to={`/employee/${employeeNameModified}/${employee._id}${employee._id}${employee._id}`}
+					onClick={SettingViews}
+				>
+					<ShowImage item={employee} />
+				</Link>
+			</div>
+			<div className='row mb-4'>
+				<div className='col-6'>
 					<div
-						className='mt-2 mb-3'
+						className='mt-2 ml-4'
 						style={{
 							fontSize: "18px",
 							fontWeight: "bold",
-							textAlign: "center",
-							color: "black",
-							textTransform: "capitalize",
+							color: "white",
+							textTransform: "uppercase",
 						}}
 					>
 						{employee.employeeName}
+					</div>
+					{employee && employee.ratings && employee.ratings.length > 0 ? (
+						<div className='mb-1 ml-4'>{showAverageRating2(employee)}</div>
+					) : (
+						<div className='mb-1 ml-4'>
+							<span>
+								<StarRating
+									starDimension='20px'
+									starSpacing='2px'
+									starRatedColor='#ffba3b'
+									rating={3.5}
+									editing={false}
+								/>{" "}
+							</span>
+						</div>
+					)}
+
+					<div className='ml-4'>
+						{employee &&
+							employee.services &&
+							employee.services.map((s, i) => {
+								if (i <= 4) {
+									// Check if current element is the last one in the iteration or the 5th one (since we're showing max 5 items)
+									const isLastElement =
+										i === employee.services.length - 1 || i === 4;
+
+									return (
+										<span
+											style={{
+												color: "lightgrey",
+												textTransform: "uppercase",
+												fontSize: "11px",
+											}}
+											key={i}
+										>
+											{s.serviceName} {isLastElement ? "" : "- "}
+										</span>
+									);
+								} else {
+									return null;
+								}
+							})}
 					</div>
 					<p
 						style={{
@@ -160,25 +203,37 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 								style={{
 									fontSize: "0.7rem",
 									color: "red",
-									textTransform: "capitalize",
+									textTransform: "uppercase",
 								}}
 							>
 								Note: {employee.employeeName} is off today
 							</span>
 						) : null}
 					</p>
+				</div>
 
+				<div className='col-6 mt-3'>
 					{storeProperties && storeProperties.activeOnlineBooking ? (
-						<div onClick={SettingViews}>
+						<div onClick={SettingViews} className='mr-3'>
 							{/* {showViewButton()} */}
 							{scheduleAppointmentbtn()}
+							<div
+								className='mx-auto mt-2 text-center'
+								style={{
+									fontSize: "12px",
+									color: "lightgreen",
+									fontWeight: "bolder",
+								}}
+							>
+								<strong>AVAILABLE TODAY</strong>
+							</div>
 						</div>
 					) : (
 						<div>
 							Please Call{" "}
 							<Link
 								style={{ textDecoration: "underline" }}
-								className='ml-2 noAppointFirstAvail'
+								className='ml-4 noAppointFirstAvail'
 								to='#'
 								onClick={() => window.open(`tel:+1${contact && contact.phone}`)}
 							>
@@ -192,57 +247,19 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 	);
 };
 
-export default CardForEmployeesList;
+export default CardEmployeePhone;
 
 const ProductWrapper = styled.div`
-	.card {
-		text-align: center;
-		box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.3);
-		transition: var(--mainTransition);
-		min-height: 550px;
-		width: 85%;
-	}
+	display: none;
 
-	.card:hover {
-		box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.5);
-		cursor: pointer;
-	}
-	.card-img-top {
-		transition: var(--mainTransition);
-	}
-
-	.card:hover .card-img-top {
-		transform: scale(1.1);
-		opacity: 0.7;
-	}
-
-	.card-body {
-		font-weight: bold;
-		/* letter-spacing: 2px; */
-	}
-
-	button {
-		position: absolute;
-		top: 80%;
-		text-align: center;
-		right: 23%;
-	}
 	@media (max-width: 1000px) {
-		.card {
-			width: 100%;
-		}
-		button {
-			top: 80%;
-			text-align: center;
-			right: 25%;
-		}
+		display: block;
 
-		.cardData {
-			font-size: 12px !important;
+		button {
+			background-color: #222427;
+			border: 1px solid #222427;
+			font-size: 15px;
+			font-weight: bolder;
 		}
-		.BarberDetails {
-			font-size: 12px !important;
-		}
-		display: none;
 	}
 `;
