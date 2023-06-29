@@ -1,18 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import {
 	allLoyaltyPointsAndStoreStatus,
 	gettingAllUsers,
+	gettingOverallSalonOwners,
 	updateUserByBoss,
 } from "../apiBoss";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const AgentsReport = () => {
 	const [storeProperties, setStoreProperties] = useState([]);
 	const [ownerAccounts, setOwnerAccounts] = useState([]);
+	const [ownersOverallData, setOwnerOverallData] = useState([]);
+	const [searchQuery, setSearchQuery] = useState("");
 
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		allLoyaltyPointsAndStoreStatus().then((data) => {
@@ -64,9 +67,21 @@ const AgentsReport = () => {
 		});
 	};
 
+	const gettingOverallOwnersData = () => {
+		gettingOverallSalonOwners(user._id, token).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				console.log(data, "data");
+				setOwnerOverallData(data);
+			}
+		});
+	};
+
 	useEffect(() => {
 		getOnlineStoreName();
 		allStoreOwnerAccounts();
+		gettingOverallOwnersData();
 
 		// eslint-disable-next-line
 	}, []);
@@ -120,6 +135,13 @@ const AgentsReport = () => {
 		}
 	};
 
+	// Filter owner accounts based on search query
+	const filteredOwnerAccounts = ownerAccounts.filter(
+		(o) =>
+			o.agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
 	return (
 		<AgentsReportWrapper className=''>
 			<div
@@ -129,10 +151,10 @@ const AgentsReport = () => {
 					overflow: "auto",
 				}}
 			>
-				<h3 style={{fontWeight: "bolder"}}>Registered Owners With Agents</h3>
+				<h3 style={{ fontWeight: "bolder" }}>AGENTS SUMMARY</h3>
 				<table
 					className='table table-bordered table-md-responsive table-hover table-striped'
-					style={{fontSize: "0.75rem"}}
+					style={{ fontSize: "0.75rem" }}
 				>
 					<thead
 					// className='thead-light'
@@ -140,13 +162,141 @@ const AgentsReport = () => {
 					>
 						<tr>
 							<th scope='col'>#</th>
-							<th scope='col'>Name</th>
-							<th scope='col'>Phone</th>
+							<th scope='col'>Agent</th>
+							<th scope='col'>Registered Salons</th>
+							<th scope='col'>Settings Added</th>
+							<th scope='col'>Services Added</th>
+							<th scope='col'>Employees Added</th>
+							<th scope='col'>Active Salons</th>
+							<th scope='col'>Overall Appointments</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{ownersOverallData &&
+							ownersOverallData.map((o, i) => {
+								return (
+									<tr key={i}>
+										<td
+											style={{
+												background: "#0d3763",
+												color: "white",
+											}}
+										>
+											{i + 1}
+										</td>
+										<td
+											style={{
+												textTransform: "capitalize",
+												background: "#0d3763",
+												color: "white",
+											}}
+										>
+											{o.agentName}
+										</td>
+										<td
+											style={{
+												background: o.everythingIsGood ? "green" : "",
+												color: o.everythingIsGood ? "white" : "",
+											}}
+										>
+											{" "}
+											<strong>
+												{Number(o.RegisteredSalons).toFixed(2)}
+											</strong>{" "}
+										</td>
+										<td
+											style={{
+												background: o.everythingIsGood ? "green" : "",
+												color: o.everythingIsGood ? "white" : "",
+											}}
+										>
+											{" "}
+											<strong>{Number(o.addedSettings).toFixed(2)}</strong>{" "}
+											Salons
+										</td>
+										<td
+											style={{
+												background: o.everythingIsGood ? "green" : "",
+												color: o.everythingIsGood ? "white" : "",
+											}}
+										>
+											{" "}
+											<strong>{Number(o.addedServices).toFixed(2)}</strong>{" "}
+											Salons
+										</td>
+										<td
+											style={{
+												background: o.everythingIsGood ? "green" : "",
+												color: o.everythingIsGood ? "white" : "",
+											}}
+										>
+											{" "}
+											<strong>
+												{Number(o.addedEmployees).toFixed(2)}
+											</strong>{" "}
+											Salons
+										</td>
+										<td
+											style={{
+												background: o.everythingIsGood ? "green" : "",
+												color: o.everythingIsGood ? "white" : "",
+											}}
+										>
+											{" "}
+											<strong>{Number(o.activeSalons).toFixed(2)}</strong>{" "}
+											Salons
+										</td>
+										<td>
+											<strong>{Number(o.appointmentsCount).toFixed(2)} </strong>{" "}
+											Appointments
+										</td>
+									</tr>
+								);
+							})}
+					</tbody>
+				</table>
+			</div>
+			<div
+				className='mt-5'
+				style={{
+					maxHeight: "800px",
+					overflow: "auto",
+				}}
+			>
+				<h3 style={{ fontWeight: "bolder" }}>Registered Owners With Agents</h3>
+				<div className='text-center col-md-5 mx-auto'>
+					<label>
+						{" "}
+						<strong>Search</strong>{" "}
+					</label>
+					<br />
+					<input
+						className='form-control'
+						type='text'
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						placeholder='Search by agent or owner name'
+						style={{ marginBottom: "10px" }}
+					/>
+				</div>
+				<table
+					className='table table-bordered table-md-responsive table-hover table-striped'
+					style={{ fontSize: "0.75rem" }}
+				>
+					<thead
+					// className='thead-light'
+					// style={{border: "2px black solid"}}
+					>
+						<tr>
+							<th scope='col'>#</th>
+							<th scope='col'>Agent</th>
+							<th scope='col'>Owner Name</th>
+							<th scope='col'>Owner Phone</th>
 							<th scope='col'>Governorate</th>
 							<th scope='col'>Address</th>
 							<th scope='col'>Store Type</th>
 							<th scope='col'>Settings?</th>
-							<th scope='col'>Agent</th>
 							<th scope='col'>Account Created</th>
 							<th scope='col'>Pro Account</th>
 							<th scope='col'>Agent Paid Initial?</th>
@@ -155,8 +305,8 @@ const AgentsReport = () => {
 					</thead>
 
 					<tbody>
-						{ownerAccounts &&
-							ownerAccounts.map((o, i) => {
+						{filteredOwnerAccounts &&
+							filteredOwnerAccounts.map((o, i) => {
 								const now = new Date();
 								const endDate = new Date(o.createdAt);
 								const diffTime = Math.abs(endDate - now);
@@ -167,13 +317,16 @@ const AgentsReport = () => {
 								return (
 									<tr key={i}>
 										<td>{i + 1}</td>
+										<td>{o.agent.name}</td>
 										<td>{o.name}</td>
 										<td>{o.phone}</td>
-										<td style={{textTransform: "capitalize"}}>
+										<td style={{ textTransform: "capitalize" }}>
 											{o.storeGovernorate}
 										</td>
 										<td>{o.storeAddress}</td>
-										<td style={{textTransform: "capitalize"}}>{o.storeType}</td>
+										<td style={{ textTransform: "capitalize" }}>
+											{o.storeType}
+										</td>
 										<td
 											style={{
 												background:
@@ -199,7 +352,6 @@ const AgentsReport = () => {
 												? "NO"
 												: "YES"}
 										</td>
-										<td>{o.agent.name}</td>
 										<td>
 											{diffDays}{" "}
 											{Number(diffDays) <= 1 ? "Day Ago" : "Days Ago"}
@@ -250,7 +402,7 @@ const AgentsReport = () => {
 				</table>
 			</div>
 
-			<div className=''>
+			{/* <div className=''>
 				<div
 					className='mt-5'
 					style={{
@@ -258,10 +410,10 @@ const AgentsReport = () => {
 						overflow: "auto",
 					}}
 				>
-					<h3 style={{fontWeight: "bolder"}}>Stores Added Settings</h3>
+					<h3 style={{ fontWeight: "bolder" }}>Stores Added Settings</h3>
 					<table
 						className='table table-bordered table-md-responsive table-hover table-striped'
-						style={{fontSize: "0.75rem"}}
+						style={{ fontSize: "0.75rem" }}
 					>
 						<thead
 						// className='thead-light'
@@ -269,11 +421,11 @@ const AgentsReport = () => {
 						>
 							<tr>
 								<th scope='col'>#</th>
-								<th scope='col'>Name</th>
-								<th scope='col'>Phone</th>
+								<th scope='col'>Agent</th>
+								<th scope='col'>Owner Name</th>
+								<th scope='col'>Owner Phone</th>
 								<th scope='col'>Governorate</th>
 								<th scope='col'>Store Name</th>
-								<th scope='col'>Agent</th>
 								<th scope='col'>Address</th>
 							</tr>
 						</thead>
@@ -284,13 +436,13 @@ const AgentsReport = () => {
 									return (
 										<tr key={i}>
 											<td>{i + 1}</td>
+											<td>{o.belongsTo && o.belongsTo.agent.name}</td>
 											<td>{o.belongsTo && o.belongsTo.name}</td>
 											<td>{o.belongsTo && o.belongsTo.phone}</td>
-											<td style={{textTransform: "capitalize"}}>
+											<td style={{ textTransform: "capitalize" }}>
 												{o.belongsTo && o.belongsTo.storeGovernorate}
 											</td>
 											<td>{o.addStoreName}</td>
-											<td>{o.belongsTo && o.belongsTo.agent.name}</td>
 											<td>{o.belongsTo && o.belongsTo.storeAddress}</td>
 										</tr>
 									);
@@ -298,7 +450,7 @@ const AgentsReport = () => {
 						</tbody>
 					</table>
 				</div>
-			</div>
+			</div> */}
 		</AgentsReportWrapper>
 	);
 };
@@ -306,11 +458,14 @@ const AgentsReport = () => {
 export default AgentsReport;
 
 const AgentsReportWrapper = styled.div`
-	margin-right: 100px;
-	margin-left: 100px;
+	min-height: 800px;
+	margin-right: 50px;
+	margin-left: 50px;
+	margin-bottom: 100px;
 
 	@media (max-width: 1000px) {
 		margin-right: 5px;
 		margin-left: 5px;
+		margin-bottom: 50px;
 	}
 `;

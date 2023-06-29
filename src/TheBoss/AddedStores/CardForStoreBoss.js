@@ -1,15 +1,15 @@
 /** @format */
 
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from "react-responsive-carousel";
-import {isAuthenticated} from "../../auth";
-import {updateStoreStatus} from "../apiBoss";
+import { Carousel } from "react-responsive-carousel";
+import { isAuthenticated } from "../../auth";
+import { updateStoreStatus } from "../apiBoss";
 
-const CardForStoreBoss = ({store, allAppointments}) => {
-	const {user, token} = isAuthenticated();
+const CardForStoreBoss = ({ store, allAppointments }) => {
+	const { user, token } = isAuthenticated();
 
 	const handleStatusChange = (e, storeId) => {
 		if (window.confirm("Are You Sure Your Want To Deactivate Store?")) {
@@ -22,15 +22,15 @@ const CardForStoreBoss = ({store, allAppointments}) => {
 				if (data.error) {
 					console.log("Status update failed");
 				} else {
-					window.scrollTo({top: 0, behavior: "smooth"});
+					window.scrollTo({ top: 0, behavior: "smooth" });
 					window.location.reload(false);
 				}
 			});
 		}
 	};
 
-	const ShowImage = ({item}) => (
-		<div className='product-img' style={{borderRadius: "50%"}}>
+	const ShowImage = ({ item }) => (
+		<div className='product-img' style={{ borderRadius: "50%" }}>
 			{item && item.storeThumbnail && (
 				<Carousel
 					showArrows={false}
@@ -47,7 +47,7 @@ const CardForStoreBoss = ({store, allAppointments}) => {
 							alt='Developed By Infinite-Apps.com'
 							src={i.url}
 							key={i.public_id}
-							style={{height: "240px", width: "100%", objectFit: "cover"}}
+							style={{ height: "240px", width: "100%", objectFit: "cover" }}
 						/>
 					))}
 				</Carousel>
@@ -63,7 +63,7 @@ const CardForStoreBoss = ({store, allAppointments}) => {
 		<ProductWrapper className='my-3'>
 			<div
 				className='card '
-				style={{borderRadius: "5% 10%", backgroundColor: "#f7f7f6"}}
+				style={{ borderRadius: "5% 10%", backgroundColor: "#f7f7f6" }}
 			>
 				<div className='card-body  '>
 					<div className='card-img-top  img'>
@@ -126,7 +126,7 @@ const CardForStoreBoss = ({store, allAppointments}) => {
 					{!store.activeStore ? (
 						<div
 							className='mt-3 mx-auto text-center'
-							style={{fontWeight: "bolder", color: "darkred"}}
+							style={{ fontWeight: "bolder", color: "darkred" }}
 						>
 							INACTIVE STORE
 						</div>

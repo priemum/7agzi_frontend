@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {Redirect, Link} from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
 	// eslint-disable-next-line
 	BranchesOutlined,
@@ -15,7 +15,7 @@ import {
 	ShoppingCartOutlined,
 	TeamOutlined,
 } from "@ant-design/icons";
-import {Button, Menu} from "antd";
+import { Button, Menu } from "antd";
 import LastAddedLogoImage from "./LastAddedLogoImage";
 
 function getItem(label, key, icon, children, type) {
@@ -204,7 +204,7 @@ export default AdminNavbar;
 
 const AdminNavbarWrapper = styled.div`
 	margin-bottom: 15px;
-	background: ${(props) => (props.show ? "" : "#1e1e2d")};
+	background: ${(props) => (props.show ? "" : "black")};
 	top: 0px !important;
 	position: fixed;
 	z-index: 20000;
@@ -235,7 +235,7 @@ const AdminNavbarWrapper = styled.div`
 	.ant-menu-dark .ant-menu-sub,
 	.ant-menu.ant-menu-dark .ant-menu-sub {
 		color: rgba(255, 255, 255, 0.65);
-		background: #1e1e2d !important;
+		background: black !important;
 	}
 
 	.ant-menu.ant-menu-dark,

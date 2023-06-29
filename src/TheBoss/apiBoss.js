@@ -78,7 +78,7 @@ export const updateStoreStatus = (userId, token, storeId, status) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, storeId}),
+			body: JSON.stringify({ status, storeId }),
 		}
 	)
 		.then((response) => {
@@ -118,6 +118,22 @@ export const updateUserByBoss = (userId, token, user) => {
 			body: JSON.stringify(user),
 		}
 	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const gettingOverallSalonOwners = (userId, token) => {
+	console.log(userId, "userId from api boss");
+	return fetch(`${process.env.REACT_APP_API_URL}/boss/salon-owners/${userId}`, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	})
 		.then((response) => {
 			return response.json();
 		})
@@ -168,7 +184,7 @@ export const updateSharePaidStatus = (userId, token, idsToUpdate) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({idsToUpdate}),
+			body: JSON.stringify({ idsToUpdate }),
 		}
 	)
 		.then((response) => {

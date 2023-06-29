@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated, signup} from "../../auth";
+import { isAuthenticated, signup } from "../../auth";
 import {
 	cloudinaryUpload1,
 	createEmployee,
@@ -9,7 +9,7 @@ import {
 	getServices,
 } from "../apiOwner";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import AddEmpSection1 from "./AddEmpSection1";
 import AddEmpSection2 from "./AddEmpSection2";
@@ -49,6 +49,7 @@ const AddEmployee = () => {
 
 	const [values, setValues] = useState({
 		employeeName: "",
+		employeeNameOtherLanguage: "",
 		employeeAddress: "",
 		employeePhone: "",
 		employeeWorkingAt: "",
@@ -77,7 +78,7 @@ const AddEmployee = () => {
 	const [loading, setLoading] = useState(true);
 	const [allEmployees, setAllEmployees] = useState(true);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const [query, setQuery] = useState([]);
 	const [query2, setQuery2] = useState([]);
@@ -102,17 +103,17 @@ const AddEmployee = () => {
 	const handleQueryChange = (event) => {
 		if (event.target.checked && !query.includes(event.target.value)) {
 			setQuery([...query, event.target.value]);
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		} else if (!event.target.checked && query.includes(event.target.value)) {
 			setQuery(query.filter((q) => q !== event.target.value));
-			setValues({...values, workingDays: query});
+			setValues({ ...values, workingDays: query });
 		}
 
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingDays: query});
+		setValues({ ...values, workingDays: query });
 		gettingAllEmployees();
 		// eslint-disable-next-line
 	}, [query, values.workingDays]);
@@ -121,34 +122,34 @@ const AddEmployee = () => {
 		// console.log(e.target, "event.target");
 		if (e.target.checked && !query4.includes(e.target.value)) {
 			setQuery4([...query4, e.target.value]);
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		} else if (!e.target.checked && query4.includes(e.target.value)) {
 			setQuery4(query4.filter((q) => q !== e.target.value));
-			setValues({...values, workingHours: query4});
+			setValues({ ...values, workingHours: query4 });
 		}
 
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 	};
 
 	useEffect(() => {
-		setValues({...values, workingHours: query4});
+		setValues({ ...values, workingHours: query4 });
 		// eslint-disable-next-line
 	}, [query4, values.workingHours]);
 
 	const handleQueryChange_Services = (event) => {
 		if (event.target.checked && !query2.includes(event.target.value)) {
 			setQuery2([...query2, event.target.value]);
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		} else if (!event.target.checked && query2.includes(event.target.value)) {
 			setQuery2(query2.filter((q) => q !== event.target.value));
-			setValues({...values, services: query2});
+			setValues({ ...values, services: query2 });
 		}
 
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 	};
 
 	useEffect(() => {
-		setValues({...values, services: query2});
+		setValues({ ...values, services: query2 });
 		// eslint-disable-next-line
 	}, [query2, values.services]);
 
@@ -165,6 +166,10 @@ const AddEmployee = () => {
 
 		if (!values.employeeName) {
 			return toast.error("Stylist Name is required");
+		}
+
+		if (!values.employeeNameOtherLanguage) {
+			return toast.error("Stylist Name In Arabic is required");
 		}
 
 		if (!values.employeePhone) {
@@ -213,7 +218,7 @@ const AddEmployee = () => {
 							</React.Fragment>
 						);
 					} else {
-						setValues2({...values2, error: false, misMatch: false});
+						setValues2({ ...values2, error: false, misMatch: false });
 						signup({
 							name: values.employeeName,
 							email: values.employeePhone,
@@ -246,7 +251,7 @@ const AddEmployee = () => {
 	const handleChange = (name) => (e) => {
 		const value = e.target.value;
 
-		setValues({...values, [name]: value});
+		setValues({ ...values, [name]: value });
 	};
 
 	const gettingAllServices = () => {
@@ -278,7 +283,7 @@ const AddEmployee = () => {
 
 				setAllWorkingHours(allAddedHours_Settings);
 
-				setValues({...values, workingDays: allAddedHours_Settings});
+				setValues({ ...values, workingDays: allAddedHours_Settings });
 				setQuery4(allAddedHours_Settings);
 				setLoading(false);
 			}
@@ -311,11 +316,11 @@ const AddEmployee = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setValues({...values, workPhotos: allUploadedFiles});
+								setValues({ ...values, workPhotos: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -331,7 +336,7 @@ const AddEmployee = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -340,11 +345,11 @@ const AddEmployee = () => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {workPhotos} = values.workPhotos;
+				const { workPhotos } = values.workPhotos;
 				let filteredImages = values.workPhotos.filter((item) => {
 					return item.public_id !== public_id;
 				});
-				setValues({...values, workPhotos: filteredImages});
+				setValues({ ...values, workPhotos: filteredImages });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -355,7 +360,7 @@ const AddEmployee = () => {
 		<AddEmployeeWrapper>
 			<div
 				className='mt-3 p-4'
-				style={{border: "2px #0f377e solid", borderRadius: "20px"}}
+				style={{ border: "2px #0f377e solid", borderRadius: "20px" }}
 			>
 				<div className='row mx-auto mb-4'>
 					<div
@@ -446,7 +451,7 @@ const AddEmployee = () => {
 					<div className='col-md-6 mx-auto'>
 						<button
 							onClick={() => {
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 							className='btn btn-outline-primary mt-3 btn-block'
 						>

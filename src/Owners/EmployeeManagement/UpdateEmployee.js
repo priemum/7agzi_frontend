@@ -52,6 +52,7 @@ const UpdateEmployee = () => {
 	const [employeeClicked, setEmployeeClicked] = useState(false);
 	const [values, setValues] = useState({
 		employeeName: "",
+		employeeNameOtherLanguage: "",
 		employeeAddress: "",
 		employeePhone: "",
 		employeeWorkingAt: "",
@@ -166,6 +167,10 @@ const UpdateEmployee = () => {
 			return toast.error("Stylist Name is required");
 		}
 
+		if (!values.employeeNameOtherLanguage) {
+			return toast.error("Stylist Name In Arabic is required");
+		}
+
 		if (!values.employeePhone) {
 			return toast.error("Stylist Phone is required");
 		}
@@ -193,8 +198,8 @@ const UpdateEmployee = () => {
 				toast.success("Stylist Was Successfully Updated");
 				// Creating An Account
 
-				if (values2.name && values2.email) {
-					if (values2.password !== values2.password2) {
+				if (values2 && values2.name && values2.email) {
+					if (values2 && values2.password !== values2.password2) {
 						setValues2({
 							...values2,
 							success: false,
@@ -207,8 +212,7 @@ const UpdateEmployee = () => {
 						);
 					} else {
 						setValues2({ ...values2, error: false, misMatch: false });
-						console.log("Ahowan 2ara yad el update");
-						updateUserByAdmin(values2._id, user._id, token, {
+						updateUserByAdmin(values2 && values2._id, user._id, token, {
 							userId: values2._id,
 							name: values.employeeName,
 							password: values2.password,
@@ -224,7 +228,7 @@ const UpdateEmployee = () => {
 						});
 					}
 				} else {
-					if (values2.password && !values2.name && !values2.email) {
+					if (values2 && values2.password && !values2.name && !values2.email) {
 						if (values2.password !== values2.password2) {
 							setValues2({
 								...values2,
@@ -378,8 +382,6 @@ const UpdateEmployee = () => {
 		});
 	};
 
-	console.log(values2, "values2");
-
 	useEffect(() => {
 		readEmployeeAccount(pickedEmployee.employeePhone);
 		// eslint-disable-next-line
@@ -409,6 +411,7 @@ const UpdateEmployee = () => {
 										setValues({
 											...values,
 											employeeName: s.employeeName,
+											employeeNameOtherLanguage: s.employeeNameOtherLanguage,
 											employeeAddress: s.employeeAddress,
 											employeePhone: s.employeePhone,
 											employeeWorkingAt: s.employeeWorkingAt,

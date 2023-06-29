@@ -1,7 +1,7 @@
 // eslint-disable-next-line
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Redirect, Link} from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
 	// eslint-disable-next-line
 	BranchesOutlined,
@@ -17,7 +17,7 @@ import {
 	ShoppingCartOutlined,
 	TeamOutlined,
 } from "@ant-design/icons";
-import {Button, Menu} from "antd";
+import { Button, Menu } from "antd";
 import LastAddedLogoImage from "./LastAddedLogoImage";
 
 function getItem(label, key, icon, children, type) {
