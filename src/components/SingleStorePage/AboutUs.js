@@ -88,19 +88,19 @@ const AboutUs = ({ aboutus, storeProperties }) => {
 								className='row'
 								style={{ fontSize: "11px", fontWeight: "bolder" }}
 							>
-								<div className='col-4'>
+								<div className='col-4 text-center'>
 									BRANCHES
 									<div className='text-center'>
 										{storeProperties && storeProperties.branchesCount}
 									</div>
 								</div>
-								<div className='col-4'>
+								<div className='col-4 text-center'>
 									STYLISTS{" "}
 									<div className='text-center'>
 										{storeProperties && storeProperties.stylistsCount}
 									</div>
 								</div>
-								<div className='col-4'>
+								<div className='col-4 text-center'>
 									CHAIRS{" "}
 									<div className='text-center'>
 										{storeProperties && storeProperties.chairsCount}
@@ -111,7 +111,7 @@ const AboutUs = ({ aboutus, storeProperties }) => {
 
 						<div className='col-5'>
 							<div className='row'>
-								<div className='col-6' style={{ fontSize: "10px" }}>
+								<div className='col-6 text-center' style={{ fontSize: "10px" }}>
 									GOVERNORATE
 									<div
 										className='text-center mx-auto my-auto'
@@ -127,7 +127,7 @@ const AboutUs = ({ aboutus, storeProperties }) => {
 											storeProperties.belongsTo.storeGovernorate}
 									</div>
 								</div>
-								<div className='col-6' style={{ fontSize: "10px" }}>
+								<div className='col-6 text-center' style={{ fontSize: "10px" }}>
 									DISTRICT
 									<div
 										className='text-center mx-auto my-auto'

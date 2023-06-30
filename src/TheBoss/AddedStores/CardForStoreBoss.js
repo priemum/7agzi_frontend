@@ -102,6 +102,15 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 					>
 						Address: {store.belongsTo.storeAddress}
 					</div>
+					<div
+						className='mt-3 mb-3'
+						style={{
+							fontSize: "13px",
+							fontWeight: "bold",
+						}}
+					>
+						Agent: {store.belongsTo.agent.name}
+					</div>
 					<div className='mt-3'>
 						Total Appointments:{" "}
 						{allAppointments &&

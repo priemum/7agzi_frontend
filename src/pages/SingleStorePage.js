@@ -348,7 +348,7 @@ const SingleStorePage = ({ props, language }) => {
 						</div>
 
 						<div>
-							<AboutUs aboutus={aboutus} />
+							<AboutUs aboutus={aboutus} storeProperties={storeChosen} />
 						</div>
 
 						<div>
