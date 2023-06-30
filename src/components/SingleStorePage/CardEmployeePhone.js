@@ -123,8 +123,6 @@ const CardEmployeePhone = ({ employee, storeProperties, contact }) => {
 		employee.employeeName &&
 		employee.employeeName.split(" ").join("-");
 
-	console.log(employee, "employee");
-
 	return (
 		<ProductWrapper className='cardPhone'>
 			{shouldRedirect(redirect)}

@@ -1,4 +1,4 @@
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import moment from "moment";
 import styled from "styled-components";
 
@@ -15,6 +15,8 @@ const Adding2DaysClosed = ({
 	setClickedMenu,
 	activeOnlineBooking,
 	setActiveOnlineBooking,
+	setExtraData,
+	extraData,
 }) => {
 	const pushToAllDates = (e) => {
 		e.preventDefault();
@@ -32,13 +34,13 @@ const Adding2DaysClosed = ({
 	const handleQueryChange = (event) => {
 		if (event.target.checked && !query.includes(event.target.value)) {
 			setQuery([...query, event.target.value]);
-			setDaysStoreClosed({...daysStoreClosed, daysStoreClosed: query});
+			setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
 		} else if (!event.target.checked && query.includes(event.target.value)) {
 			setQuery(query.filter((q) => q !== event.target.value));
-			setDaysStoreClosed({...daysStoreClosed, daysStoreClosed: query});
+			setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
 		}
 
-		setDaysStoreClosed({...daysStoreClosed, daysStoreClosed: query});
+		setDaysStoreClosed({ ...daysStoreClosed, daysStoreClosed: query });
 	};
 
 	const disabledDate = (current) => {
@@ -57,7 +59,7 @@ const Adding2DaysClosed = ({
 	return (
 		<Adding2DaysClosedWrapper className='container'>
 			<div className='mb-3'>
-				<label className='mr-2' style={{fontWeight: "bold"}}>
+				<label className='mr-2' style={{ fontWeight: "bold" }}>
 					Activate Online Booking (Self Service Online Booking)?
 				</label>
 
@@ -169,6 +171,185 @@ const Adding2DaysClosed = ({
 				</div>
 			</div>
 
+			<div className='my-3'>
+				<h4 style={{ fontWeight: "bolder" }}>General Data</h4>
+
+				<div className='row'>
+					<div className='mb-3 col-md-3'>
+						<label className='mr-1' style={{ fontWeight: "bold" }}>
+							Accept Cash?
+						</label>
+
+						<label className='block'>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, cashPayment: true })
+								}
+								value={extraData.cashPayment}
+								className='my-3 mx-1'
+								checked={extraData.cashPayment}
+							/>
+							Yes
+						</label>
+						<label className='block ml-1 '>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, cashPayment: false })
+								}
+								value={extraData.cashPayment}
+								className='my-3 mx-1'
+								checked={!extraData.cashPayment}
+							/>
+							No
+						</label>
+					</div>
+
+					<div className='mb-3 col-md-3'>
+						<label className='mr-1' style={{ fontWeight: "bold" }}>
+							Accept Cards?
+						</label>
+
+						<label className='block'>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, visaPayment: true })
+								}
+								value={extraData.visaPayment}
+								className='my-3 mx-1'
+								checked={extraData.visaPayment}
+							/>
+							Yes
+						</label>
+						<label className='block ml-1 '>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, visaPayment: false })
+								}
+								value={extraData.visaPayment}
+								className='my-3 mx-1'
+								checked={!extraData.visaPayment}
+							/>
+							No
+						</label>
+					</div>
+
+					<div className='mb-3 col-md-3'>
+						<label className='mr-1' style={{ fontWeight: "bold" }}>
+							Parking Lot?
+						</label>
+
+						<label className='block'>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() => setExtraData({ ...extraData, parking: true })}
+								value={extraData.parking}
+								className='my-3 mx-1'
+								checked={extraData.parking}
+							/>
+							Yes
+						</label>
+						<label className='block ml-1 '>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() => setExtraData({ ...extraData, parking: false })}
+								value={extraData.parking}
+								className='my-3 mx-1'
+								checked={!extraData.parking}
+							/>
+							No
+						</label>
+					</div>
+
+					<div className='mb-3 col-md-3'>
+						<label className='mr-1' style={{ fontWeight: "bold" }}>
+							Air Condition?
+						</label>
+
+						<label className='block'>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, airConditioned: true })
+								}
+								value={extraData.airConditioned}
+								className='my-3 mx-1'
+								checked={extraData.airConditioned}
+							/>
+							Yes
+						</label>
+						<label className='block ml-1 '>
+							<input
+								type='checkbox'
+								id='one'
+								onChange={() =>
+									setExtraData({ ...extraData, airConditioned: false })
+								}
+								value={extraData.airConditioned}
+								className='my-3 mx-1'
+								checked={!extraData.airConditioned}
+							/>
+							No
+						</label>
+					</div>
+
+					<div className='col-md-4 mx-auto'>
+						<div className='form-group'>
+							<label className='text-muted'>How Many Branches?</label>
+							<input
+								type='number'
+								className='form-control'
+								onChange={(e) =>
+									setExtraData({ ...extraData, branchesCount: e.target.value })
+								}
+								value={extraData.branchesCount}
+								placeholder='How Many Branches'
+							/>
+						</div>
+					</div>
+
+					<div className='col-md-4 mx-auto'>
+						<div className='form-group'>
+							<label className='text-muted'>How Many Employees?</label>
+							<input
+								type='number'
+								className='form-control'
+								onChange={(e) =>
+									setExtraData({ ...extraData, stylistsCount: e.target.value })
+								}
+								value={extraData.stylistsCount}
+								placeholder='Stylists Count'
+							/>
+						</div>
+					</div>
+
+					<div className='col-md-4 mx-auto'>
+						<div className='form-group'>
+							<label className='text-muted'>How Many Chairs?</label>
+							<input
+								type='number'
+								className='form-control'
+								onChange={(e) =>
+									setExtraData({ ...extraData, chairsCount: e.target.value })
+								}
+								value={extraData.chairsCount}
+								placeholder='Chairs Count'
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div className='form-group'>
 				<label className='text-muted'>
 					Add dates your store is closed (e.g. Holidays, labor day, etc...)
@@ -218,7 +399,7 @@ const Adding2DaysClosed = ({
 								<span
 									className='ml-2 removeButton'
 									onClick={() => removeDay(e)}
-									style={{cursor: "pointer", fontWeight: "bolder"}}
+									style={{ cursor: "pointer", fontWeight: "bolder" }}
 								>
 									X
 								</span>
@@ -243,12 +424,11 @@ export default Adding2DaysClosed;
 
 const Adding2DaysClosedWrapper = styled.div`
 	overflow: hidden;
-	margin-left: 230px;
 	margin-top: 50px;
 	background-color: white;
 	padding: 20px;
 	border-radius: 10px;
-	width: 900px !important;
+	width: 1200px !important;
 
 	.inputFieldsFirstAvail {
 		padding-top: 9px;

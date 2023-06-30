@@ -1,11 +1,11 @@
 /** @format */
 
-import React, {Fragment, useEffect, useState} from "react";
-import {contactUs} from "../../auth/index";
-import {ToastContainer, toast} from "react-toastify";
+import React, { Fragment, useEffect, useState } from "react";
+import { contactUs } from "../../auth/index";
+import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
 
-const ContactUs = ({contact}) => {
+const ContactUs = ({ contact }) => {
 	useEffect(() => {
 		if (window !== "undefined") {
 			localStorage.removeItem("reservationData");
@@ -20,7 +20,7 @@ const ContactUs = ({contact}) => {
 		loading: false,
 	});
 
-	const {name, email, subject, text, loading} = values;
+	const { name, email, subject, text, loading } = values;
 
 	const handleChange = (name) => (event) => {
 		setValues({
@@ -33,11 +33,11 @@ const ContactUs = ({contact}) => {
 	const clickSubmit = (event) => {
 		event.preventDefault();
 		console.log("Form was submitted");
-		window.scrollTo({top: 0, behavior: "smooth"});
+		window.scrollTo({ top: 0, behavior: "smooth" });
 
-		contactUs({name, email, subject, text, loading: true}).then((data) => {
+		contactUs({ name, email, subject, text, loading: true }).then((data) => {
 			if (data.error) {
-				setValues({...values, error: data.error, success: false});
+				setValues({ ...values, error: data.error, success: false });
 				toast.error(data.error);
 			} else {
 				toast.success(SuccessfullySubmitted);
@@ -64,33 +64,36 @@ const ContactUs = ({contact}) => {
 			<div>
 				<div className='row mt-5 ml-3'>
 					<div className='col-md-4 my-3'>
-						<h3 style={{color: "var(--orangePrimary)"}} className='text-center'>
+						<h3
+							style={{ color: "var(--orangePrimary)" }}
+							className='text-center'
+						>
 							Do you have any inquiries...?
 						</h3>
 						<p className='Contact-us-paragraph mt-5'>
-							Please allow up to 24 hours for our Resort Support Team to answer
+							Please allow up to 24 hours for our Salon Support Team to answer
 							your inquiry by filling out the form.
 						</p>
 
 						<p className='Contact-us-paragraph'>
 							<div className='mt-3'>
-								<strong style={{color: "var(--orangePrimary)"}}>
+								<strong style={{ color: "var(--orangePrimary)" }}>
 									Business Hour:
 								</strong>{" "}
 								{contact && contact.business_hours}.
 							</div>
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Address:
 							</strong>{" "}
 							{contact && contact.address}.
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Phone #:
 							</strong>{" "}
 							{contact && contact.phone}.
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Email:
 							</strong>{" "}
 							{contact && contact.email}.
@@ -99,7 +102,7 @@ const ContactUs = ({contact}) => {
 
 						<div className='mt-5'>
 							<h3
-								style={{color: "var(--orangePrimary)"}}
+								style={{ color: "var(--orangePrimary)" }}
 								className='text-center'
 							>
 								{contact && contact.header_1}
@@ -123,7 +126,10 @@ const ContactUs = ({contact}) => {
 							}
 						>
 							<Fragment>
-								<h2 style={{color: "var(--mainBlue)"}} className='text-center'>
+								<h2
+									style={{ color: "var(--mainBlue)" }}
+									className='text-center'
+								>
 									Contact Us
 								</h2>
 							</Fragment>
@@ -157,7 +163,7 @@ const ContactUs = ({contact}) => {
 									<div className='form-group'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Email Address:
 										</label>
@@ -176,7 +182,7 @@ const ContactUs = ({contact}) => {
 									<div className='form-group'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Subject:
 										</label>
@@ -194,7 +200,7 @@ const ContactUs = ({contact}) => {
 									<div className='form'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Your Inquiry / Complaint:
 										</label>

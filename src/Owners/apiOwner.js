@@ -353,7 +353,7 @@ export const updateOrderStatus = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, scheduleorderId, updatedByUser}),
+			body: JSON.stringify({ status, scheduleorderId, updatedByUser }),
 		}
 	)
 		.then((response) => {
@@ -377,7 +377,7 @@ export const updateOrderStatusStore = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, scheduleorderId}),
+			body: JSON.stringify({ status, scheduleorderId }),
 		}
 	)
 		.then((response) => {
@@ -477,7 +477,7 @@ export const updateClientActivity = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({activeUser, clientUserId}),
+			body: JSON.stringify({ activeUser, clientUserId }),
 		}
 	)
 		.then((response) => {
@@ -501,7 +501,7 @@ export const updateOrderStylistComment = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({commentsByStylist, scheduleorderId}),
+			body: JSON.stringify({ commentsByStylist, scheduleorderId }),
 		}
 	)
 		.then((response) => {

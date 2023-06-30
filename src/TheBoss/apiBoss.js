@@ -49,8 +49,6 @@ export const allLoyaltyPointsAndStoreStatusByPhoneAndStore = (
 	storeName,
 	phone
 ) => {
-	console.log(storeName, "apiBoss");
-	console.log(phone, "apiBoss");
 	return fetch(
 		`${process.env.REACT_APP_API_URL}/store-management/boss/${storeName}/${phone}`,
 		{

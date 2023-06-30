@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {useParams} from "react-router-dom";
-import {allLoyaltyPointsAndStoreStatusByPhoneAndStore} from "../apiBoss";
+import { useParams } from "react-router-dom";
+import { allLoyaltyPointsAndStoreStatusByPhoneAndStore } from "../apiBoss";
 import {
 	getAbouts,
 	getContacts,
@@ -15,8 +15,8 @@ import ContactUs from "../../components/SingleStorePage/ContactUs";
 import AboutUs from "../../components/SingleStorePage/AboutUs";
 
 const StorePreviewPageMain = () => {
-	let {storeName} = useParams();
-	let {phone} = useParams();
+	let { storeName } = useParams();
+	let { phone } = useParams();
 
 	const [chosenStore, setChosenStore] = useState("");
 	const [aboutus, setAboutUs] = useState({});

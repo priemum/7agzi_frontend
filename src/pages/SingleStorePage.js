@@ -17,6 +17,8 @@ import { allLoyaltyPointsAndStoreStatusByPhoneAndStore } from "../TheBoss/apiBos
 import AddedServices from "../components/SingleStorePage/AddedServices";
 import Gallary from "../components/SingleStorePage/Gallary";
 import FirstAvailableAppointments from "../components/SingleStorePage/FirstAvailableAppointments";
+import { Link } from "react-router-dom";
+import GettingMap from "../components/SingleStorePage/GettingMap";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -71,6 +73,19 @@ const SingleStorePage = ({ props, language }) => {
 	const [chosenService, setChosenService] = useState("");
 	const [loading, setLoading] = useState(true);
 
+	const handleButtonClick = () => {
+		const firstAvailableApp = document.getElementById("firstAvailableApp");
+
+		if (firstAvailableApp) {
+			const topPos =
+				firstAvailableApp.getBoundingClientRect().top + window.scrollY;
+
+			window.scrollTo({ top: topPos, behavior: "smooth" });
+		} else {
+			console.log("FirstAvailableAppointments div is not available");
+		}
+	};
+
 	const gettingChosenStore = () => {
 		setLoading(true);
 
@@ -104,6 +119,8 @@ const SingleStorePage = ({ props, language }) => {
 			setClickedMenu("ABOUT");
 		} else if (window.location.search.includes("gallery")) {
 			setClickedMenu("GALLERY");
+		} else if (window.location.search.includes("map")) {
+			setClickedMenu("MAP");
 		} else {
 			setClickedMenu("SERVICES");
 		}
@@ -333,6 +350,10 @@ const SingleStorePage = ({ props, language }) => {
 						<div>
 							<AboutUs aboutus={aboutus} />
 						</div>
+
+						<div>
+							<GettingMap storeProperties={storeChosen} />
+						</div>
 					</div>
 
 					<div className='phoneContent mt-2'>
@@ -356,7 +377,7 @@ const SingleStorePage = ({ props, language }) => {
 								style={isActive(clickedMenu, "STYLISTS")}
 								onClick={() => setClickedMenu("STYLISTS")}
 							>
-								BOOK
+								TEAM
 							</div>
 							<div
 								className='col-2 navLinks'
@@ -372,10 +393,49 @@ const SingleStorePage = ({ props, language }) => {
 							>
 								GALLERY
 							</div>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "MAP")}
+								onClick={() => setClickedMenu("MAP")}
+							>
+								MAP
+							</div>
 						</div>
+						{language === "Arabic" ? (
+							<div className='text-center mt-2'>
+								<Link
+									onClick={handleButtonClick}
+									to='#'
+									style={{
+										fontWeight: "bold",
+										textAlign: "center",
+										fontSize: "20px",
+										color: "lightgrey",
+										textDecoration: "underline",
+									}}
+								>
+									تحقق من أول موعد متاح
+								</Link>
+							</div>
+						) : (
+							<div className='text-center mt-2'>
+								<Link
+									onClick={handleButtonClick}
+									to='#'
+									style={{
+										fontWeight: "bold",
+										textAlign: "center",
+										color: "lightgrey",
+										textDecoration: "underline",
+									}}
+								>
+									Check First Available Appointment
+								</Link>
+							</div>
+						)}
 
 						{clickedMenu === "SERVICES" ? (
-							<div className='my-5'>
+							<div className='my-4'>
 								<div className='mb-3'>
 									<select
 										style={{
@@ -422,7 +482,7 @@ const SingleStorePage = ({ props, language }) => {
 						) : null}
 
 						{clickedMenu === "STYLISTS" ? (
-							<div className='my-5'>
+							<div className='my-4'>
 								<EmployeesList
 									storeProperties={storeChosen}
 									contact={contact}
@@ -432,8 +492,8 @@ const SingleStorePage = ({ props, language }) => {
 						) : null}
 
 						{clickedMenu === "ABOUT" ? (
-							<div className='my-5'>
-								<AboutUs aboutus={aboutus} />
+							<div className='my-2'>
+								<AboutUs aboutus={aboutus} storeProperties={storeChosen} />
 								<div className='mb-5'>
 									<ContactUs contact={contact} />
 								</div>
@@ -441,11 +501,17 @@ const SingleStorePage = ({ props, language }) => {
 						) : null}
 
 						{clickedMenu === "GALLERY" ? (
-							<div className='my-5'>
+							<div className='my-4'>
 								<Gallary filteredResults={allEmployees} />
 							</div>
 						) : null}
-						<div className='firstAvailableApp'>
+
+						{clickedMenu === "MAP" ? (
+							<div className='my-4'>
+								<GettingMap storeProperties={storeChosen} />
+							</div>
+						) : null}
+						<div id='firstAvailableApp' className='firstAvailableApp mb-5'>
 							<FirstAvailableAppointments
 								onlineStoreName={storeChosen}
 								allEmployees={allEmployees}

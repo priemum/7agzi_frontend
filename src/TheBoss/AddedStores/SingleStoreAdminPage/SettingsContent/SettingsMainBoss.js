@@ -81,6 +81,15 @@ const SettingsMainBoss = () => {
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [extraData, setExtraData] = useState({
+		branchesCount: 1,
+		stylistsCount: 2,
+		chairsCount: 2,
+		cashPayment: true,
+		visaPayment: false,
+		airConditioned: false,
+		parking: false,
+	});
 	const [activeWhatsAppNotification, setActiveWhatsAppNotification] =
 		useState(true);
 	const [loading, setLoading] = useState(false);
@@ -112,6 +121,17 @@ const SettingsMainBoss = () => {
 					setDiscountPercentage(
 						lastAddedSettings && lastAddedSettings.discountPercentage
 					);
+					setExtraData({
+						...extraData,
+						branchesCount: lastAddedSettings && lastAddedSettings.branchesCount,
+						stylistsCount: lastAddedSettings && lastAddedSettings.stylistsCount,
+						chairsCount: lastAddedSettings && lastAddedSettings.chairsCount,
+						cashPayment: lastAddedSettings && lastAddedSettings.cashPayment,
+						visaPayment: lastAddedSettings && lastAddedSettings.visaPayment,
+						airConditioned:
+							lastAddedSettings && lastAddedSettings.airConditioned,
+						parking: lastAddedSettings && lastAddedSettings.parking,
+					});
 					setOnlineServicesFees(
 						lastAddedSettings && lastAddedSettings.onlineServicesFees
 					);
@@ -226,6 +246,13 @@ const SettingsMainBoss = () => {
 			longitude: longitude,
 			latitude: latitude,
 			storePhone: currentOwner.phone,
+			branchesCount: extraData.branchesCount,
+			stylistsCount: extraData.stylistsCount,
+			chairsCount: extraData.chairsCount,
+			cashPayment: extraData.cashPayment,
+			visaPayment: extraData.visaPayment,
+			airConditioned: extraData.airConditioned,
+			parking: extraData.parking,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -358,6 +385,8 @@ const SettingsMainBoss = () => {
 							setClickedMenu={setClickedMenu}
 							activeOnlineBooking={activeOnlineBooking}
 							setActiveOnlineBooking={setActiveOnlineBooking}
+							setExtraData={setExtraData}
+							extraData={extraData}
 						/>
 					) : null}
 
