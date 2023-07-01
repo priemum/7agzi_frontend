@@ -4,8 +4,17 @@ import styled from "styled-components";
 const GettingMap = ({ storeProperties }) => {
 	const { latitude, longitude } = storeProperties || {};
 
-	const imgUrlClose = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=12&size=350x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
-	const imgUrlFar = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=9&size=350x300&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
+	const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+
+	const size =
+		storeProperties && storeProperties.from === "update"
+			? "850x600"
+			: isSmallScreen
+			? "350x300"
+			: "550x400";
+
+	const imgUrlClose = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=16&size=${size}&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
+	const imgUrlFar = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=${size}&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
 
 	return (
 		<GettingMapWrapper>
@@ -16,19 +25,16 @@ const GettingMap = ({ storeProperties }) => {
 						target='_blank'
 						rel='noopener noreferrer'
 					>
-						<h3>Click To Get Directions</h3>
+						{storeProperties && storeProperties.from === "update" ? null : (
+							<h3>Click To Get Directions</h3>
+						)}
+						<div className='my-5 col-md-5 mx-auto'>
+							<img src={imgUrlClose} alt='developed by infinite-apps.com' />
+						</div>
+						<div className='mb-2 col-md-5 mx-auto'>
+							<img src={imgUrlFar} alt='developed by infinite-apps.com' />
+						</div>
 					</a>
-					<div className='mb-2 col-12'>
-						<img src={imgUrlFar} alt='developed by infinite-apps.com' />
-					</div>
-					<div className='my-5 col-12 mx-auto'>
-						Latitude: {latitude}
-						<br />
-						Longitude: {longitude}
-					</div>
-					<div className='my-5 col-12 mx-auto'>
-						<img src={imgUrlClose} alt='developed by infinite-apps.com' />
-					</div>
 				</div>
 			) : null}
 		</GettingMapWrapper>

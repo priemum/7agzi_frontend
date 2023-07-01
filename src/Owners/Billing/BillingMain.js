@@ -92,7 +92,7 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 10,
+					amount: 5,
 					email: user.email,
 					customerId: user._id,
 					planId: "One Time Payment",

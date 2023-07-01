@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import DropIn from "braintree-web-drop-in-react";
 import UpdateCardBeProComp from "./UpdateCardBeProComp";
-import {updateSubscriptionCardFn} from "../../apiCore";
-import {toast} from "react-toastify";
+import { updateSubscriptionCardFn } from "../../apiCore";
+import { toast } from "react-toastify";
 import SubscriptionDataInfo from "./SubscriptionDataInfo";
 
 const BeProComp = ({
@@ -16,7 +16,7 @@ const BeProComp = ({
 	setUpdateCardClicked,
 }) => {
 	const updateSubscriptionCard = async () => {
-		const {nonce} = await data.instance.requestPaymentMethod();
+		const { nonce } = await data.instance.requestPaymentMethod();
 		updateSubscriptionCardFn(user._id, token, {
 			paymentMethodNonce: nonce,
 			paymentMethodToken: user.subscriptionToken,
@@ -51,7 +51,7 @@ const BeProComp = ({
 							THANK YOU!
 							<br />
 							<br />
-							<strong style={{fontSize: "1.5rem", color: "darkgreen"}}>
+							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
 								You have already submitted your card, our platform is now
 								authorized to get monthly transactions from you.
 							</strong>
@@ -89,9 +89,9 @@ const BeProComp = ({
 							onClick={() => {
 								setUpdateCardClicked(!updateCardClicked);
 								if (updateCardClicked === true) {
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								} else {
-									window.scrollTo({top: 300, behavior: "smooth"});
+									window.scrollTo({ top: 300, behavior: "smooth" });
 								}
 							}}
 							style={{
@@ -115,13 +115,28 @@ const BeProComp = ({
 				</div>
 			) : (
 				<div className='col-md-6 platformShare mt-5'>
-					<div onBlur={() => setData({...data, error: ""})}>
+					<div onBlur={() => setData({ ...data, error: "" })}>
 						{data && data.clientToken ? (
 							<div className=' col-md-12'>
 								<h3>
 									Our PRO PLAN costs{" "}
-									<strong style={{color: "black"}}>$15/ Month</strong>{" "}
+									<strong style={{ color: "black" }}>$15/ Month</strong>{" "}
 								</h3>
+								<ul
+									className='mx-auto col-md-8'
+									style={{ fontWeight: "bolder" }}
+								>
+									<li>
+										Our Pro Partners Have The Priority In Our Marketing Strategy
+										So You Will Get More Clients
+									</li>
+									<li>Receiving Coupons Regularly</li>
+									<li>Point Of Sale System In Your Store.</li>
+									<li>Adding Unlimited Employees</li>
+									<li>
+										More Reports and More Historical View To Know Your KPI's
+									</li>
+								</ul>
 
 								<DropIn
 									options={{
@@ -155,4 +170,18 @@ const BeProComp = ({
 
 export default BeProComp;
 
-const BeProCompWrapper = styled.div``;
+const BeProCompWrapper = styled.div`
+	ul {
+		list-style-type: none; /* Remove default bullets */
+	}
+
+	ul li {
+		padding-left: 1.5em; /* Add some padding to the left of list items */
+	}
+
+	ul li::before {
+		content: "✔︎"; /* Insert content before each li element */
+		padding-right: 0.5em; /* Add some padding to the right of the check mark */
+		color: green; /* Make the check mark green */
+	}
+`;

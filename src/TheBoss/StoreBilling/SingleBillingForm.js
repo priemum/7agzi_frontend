@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {retriggerPayment} from "../../apiCore";
-import {toast} from "react-toastify";
+import { retriggerPayment } from "../../apiCore";
+import { toast } from "react-toastify";
 import StoredCardInfo from "../../Owners/Billing/StoredCardInfo";
-import {updateSharePaidStatus} from "../apiBoss";
+import { updateSharePaidStatus } from "../apiBoss";
 
 const SingleBillingForm = ({
 	store,
@@ -39,13 +39,13 @@ const SingleBillingForm = ({
 	return (
 		<SingleBillingFormWrapper>
 			<div className='col-md-8 mx-auto platformShare mt-5'>
-				<div onBlur={() => setData({...data, error: ""})}>
+				<div onBlur={() => setData({ ...data, error: "" })}>
 					{data && data.clientToken ? (
 						<div className=' col-md-12'>
 							<h3>
 								Please be noted that you will instantly charge the owner of{" "}
 								<strong>{store.addStoreName}</strong>{" "}
-								<strong style={{color: "red"}}>
+								<strong style={{ color: "red" }}>
 									{allAppointmentsNotPaid &&
 										allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid] &&
 										allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid]
@@ -53,7 +53,7 @@ const SingleBillingForm = ({
 									EGP
 								</strong>{" "}
 								which is equivalent to{" "}
-								<strong style={{color: "darkgreen"}}>
+								<strong style={{ color: "darkgreen" }}>
 									$
 									{allAppointmentsNotPaid &&
 										allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid] &&
@@ -67,7 +67,10 @@ const SingleBillingForm = ({
 								.
 							</h3>
 
-							<h3>Would you like to customize this amount?</h3>
+							<h3>
+								{" "}
+								<strong>Would you like to customize this amount?</strong>{" "}
+							</h3>
 
 							<div className='form-check form-check-inline'>
 								<input
@@ -103,7 +106,7 @@ const SingleBillingForm = ({
 								<div className='col-md-8 my-4'>
 									<label>
 										Fill In The Desired Amount in{" "}
-										<strong style={{color: "green", fontSize: "1.1rem"}}>
+										<strong style={{ color: "green", fontSize: "1.1rem" }}>
 											DOLLAR
 										</strong>{" "}
 									</label>
@@ -193,7 +196,7 @@ const SingleBillingForm = ({
 								className='btn btn-info btn-block my-2 col-md-8 mx-auto'
 							>
 								Charge Store With Amount{" "}
-								<strong className='ml-2' style={{fontSize: "1.5rem"}}>
+								<strong className='ml-2' style={{ fontSize: "1.5rem" }}>
 									$
 									{!customizeClicked
 										? allAppointmentsNotPaid &&

@@ -129,7 +129,7 @@ const PlatformShareComp = ({
 											<h5>
 												الدفع الأولي سيكون{" "}
 												<strong style={{ color: "black", fontSize: "1.3rem" }}>
-													10 دولارات
+													5 دولارات
 												</strong>{" "}
 												ومن ثم سيتم إعادة الشحن كل أسبوع بمقدار 3 جنيهات مصرية
 												من إجمالي مواعيدك
@@ -143,7 +143,7 @@ const PlatformShareComp = ({
 											<h5>
 												The initial payment will be{" "}
 												<strong style={{ color: "black", fontSize: "1.3rem" }}>
-													$10
+													$5
 												</strong>{" "}
 												and then you will be re-charged 3 EGP each week based on
 												your overall appointments

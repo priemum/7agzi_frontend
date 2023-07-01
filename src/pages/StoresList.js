@@ -13,6 +13,7 @@ import CardForStore from "../components/StoresListComp/CardForStore";
 import StoreFilter from "../components/StoreFilter";
 import { Spin } from "antd";
 import StoreListPhone from "../components/StoresListComp/StoreListPhone";
+import SideFilter from "../components/StoresListComp/SideFilter";
 // import { Helmet } from "react-helmet";
 
 const StoresList = () => {
@@ -29,11 +30,12 @@ const StoresList = () => {
 	const [allServicesCombined, setAllServicesCombined] = useState([]);
 	const [latitude, setLatitude] = useState("");
 	const [longitude, setLongitude] = useState("");
+	const [filtersClicked, setFiltersClicked] = useState(false);
+	const [selectedService, setSelectedService] = useState([]);
+	const [priceRange, setPriceRange] = useState([]);
+	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
 
 	const { token } = isAuthenticated();
-
-	console.log(latitude, "latitude");
-	console.log(longitude, "longitude");
 
 	const getUserCoordinates = (position) => {
 		setLatitude(position.coords.latitude);
@@ -90,7 +92,7 @@ const StoresList = () => {
 					// setUserAddress4(data.results[3].formatted_address);
 					// setUserAddress5(data.results[4].formatted_address);
 					// setUserAddress6(data.results[5].formatted_address);
-					console.log(data, "This is data");
+					// console.log(data, "This is data");
 					///////////Creating Calling Order
 				})
 				.catch((error) => console.log(error, "error"));
@@ -252,8 +254,16 @@ const StoresList = () => {
 			if (data.error) {
 				console.log("Error getting services combined");
 			} else {
-				console.log(data, "data");
 				setAllServicesCombined(data);
+
+				setPriceRange([
+					data && data.length > 0
+						? Math.min(...data.map((service) => service.servicePriceDiscount))
+						: 0,
+					data && data.length > 0
+						? Math.max(...data.map((service) => service.servicePriceDiscount))
+						: 0,
+				]);
 			}
 		});
 	};
@@ -325,6 +335,27 @@ const StoresList = () => {
 
 	return (
 		<StoresListWrapper>
+			<SideFilter
+				filtersClicked={filtersClicked}
+				setFiltersClicked={setFiltersClicked}
+				availableCountries={availableCountries}
+				availableGovernorates={availableGovernorates}
+				availableDistricts={availableDistricts}
+				selectedCountry={selectedCountry}
+				setSelectedCountry={setSelectedCountry}
+				selectedGovernorate={selectedGovernorate}
+				setSelectedGovernorate={setSelectedGovernorate}
+				selectedDistrict={selectedDistrict}
+				setSelectedDistrict={setSelectedDistrict}
+				allServicesCombined={allServicesCombined}
+				selectedService={selectedService}
+				setSelectedService={setSelectedService}
+				priceRange={priceRange}
+				setPriceRange={setPriceRange}
+				servicesInPriceRange={servicesInPriceRange}
+				setServicesInPriceRange={setServicesInPriceRange}
+			/>
+
 			<React.Fragment>
 				{loading ? (
 					<div
@@ -385,6 +416,8 @@ const StoresList = () => {
 							<StoreListPhone
 								activeStoresOnly={activeStoresOnly}
 								allServicesCombined={allServicesCombined}
+								filtersClicked={filtersClicked}
+								setFiltersClicked={setFiltersClicked}
 							/>
 						</div>
 					</div>

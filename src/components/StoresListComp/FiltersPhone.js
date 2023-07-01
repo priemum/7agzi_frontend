@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const FiltersPhone = () => {
+const FiltersPhone = ({ filtersClicked, setFiltersClicked }) => {
 	return (
 		<FiltersPhoneWrapper>
 			<div className='grid-container'>
-				<div className='regularStyling'>
+				<div
+					className='regularStyling'
+					onClick={() => setFiltersClicked(!filtersClicked)}
+				>
 					{" "}
 					<strong>FILTERS</strong>{" "}
 				</div>

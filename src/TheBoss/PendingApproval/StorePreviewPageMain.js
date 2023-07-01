@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { allLoyaltyPointsAndStoreStatusByPhoneAndStore } from "../apiBoss";
 import {
 	getAbouts,
@@ -13,12 +13,50 @@ import HeroComponent from "../../components/SingleStorePage/HeroComponent";
 import EmployeesList from "../../components/SingleStorePage/EmployeeList";
 import ContactUs from "../../components/SingleStorePage/ContactUs";
 import AboutUs from "../../components/SingleStorePage/AboutUs";
+import AddedServices from "../../components/SingleStorePage/AddedServices";
+import Gallary from "../../components/SingleStorePage/Gallary";
+import FirstAvailableAppointments from "../../components/SingleStorePage/FirstAvailableAppointments";
+import GettingMap from "../../components/SingleStorePage/GettingMap";
+import { Helmet } from "react-helmet";
 
-const StorePreviewPageMain = () => {
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "grey",
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			fontSize: "11.5px",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			marginLeft: "3px",
+			fontSize: "11.5px",
+			cursor: "pointer",
+		};
+	}
+};
+
+const StorePreviewPageMain = ({ props, language }) => {
 	let { storeName } = useParams();
 	let { phone } = useParams();
 
-	const [chosenStore, setChosenStore] = useState("");
+	const [clickedMenu, setClickedMenu] = useState("SERVICES");
+	const [storeChosen, setStoreChosen] = useState("");
+	// eslint-disable-next-line
 	const [aboutus, setAboutUs] = useState({});
 	const [contact, setContact] = useState({});
 	const [hero1, setHero1] = useState("");
@@ -26,14 +64,30 @@ const StorePreviewPageMain = () => {
 	const [hero2, setHero2] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
 	const [AllServices, setAllServices] = useState([]);
+	const [AllServices2, setAllServices2] = useState([]);
 	const [allCustomerType, setAllCustomerType] = useState([]);
 	const [chosenCustomerType, setChosenCustomerType] = useState("");
+	const [chosenCustomerType2, setChosenCustomerType2] = useState("");
 	const [chosenDate, setChosenDate] = useState("");
 	const [chosenService, setChosenService] = useState("");
 	const [loading, setLoading] = useState(true);
 
+	const handleButtonClick = () => {
+		const firstAvailableApp = document.getElementById("firstAvailableApp");
+
+		if (firstAvailableApp) {
+			const topPos =
+				firstAvailableApp.getBoundingClientRect().top + window.scrollY;
+
+			window.scrollTo({ top: topPos, behavior: "smooth" });
+		} else {
+			console.log("FirstAvailableAppointments div is not available");
+		}
+	};
+
 	const gettingChosenStore = () => {
 		setLoading(true);
+
 		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
 			"token",
 			storeName.split("-").join(" "),
@@ -43,20 +97,34 @@ const StorePreviewPageMain = () => {
 				console.log("error rendering store data");
 			} else {
 				var pickedStoreRendered = data[data.length - 1];
-				setChosenStore({
+				setStoreChosen({
 					...pickedStoreRendered,
-					storeId:
-						pickedStoreRendered.belongsTo &&
-						pickedStoreRendered.belongsTo &&
-						pickedStoreRendered.belongsTo._id,
-					storeCreatedAt:
-						pickedStoreRendered.belongsTo &&
-						pickedStoreRendered.belongsTo &&
-						pickedStoreRendered.belongsTo.createdAt,
+					storeId: pickedStoreRendered.belongsTo._id,
+					storeCreatedAt: pickedStoreRendered.belongsTo.createdAt,
 				});
 			}
 		});
 	};
+
+	useEffect(() => {
+		gettingChosenStore();
+		// eslint-disable-next-line
+	}, [phone, storeName]);
+
+	useEffect(() => {
+		if (window.location.search.includes("STYLISTS")) {
+			setClickedMenu("STYLISTS");
+		} else if (window.location.search.includes("about")) {
+			setClickedMenu("ABOUT");
+		} else if (window.location.search.includes("gallery")) {
+			setClickedMenu("GALLERY");
+		} else if (window.location.search.includes("map")) {
+			setClickedMenu("MAP");
+		} else {
+			setClickedMenu("SERVICES");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const gettingAllAbouts = (ownerId) => {
 		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
@@ -65,7 +133,7 @@ const StorePreviewPageMain = () => {
 			phone
 		).then((data2) => {
 			if (data2.error) {
-				console.log(" rendering store data");
+				console.log("error rendering store data");
 			} else {
 				var pickedStoreRendered = data2[data2.length - 1];
 				getAbouts("asdasd", pickedStoreRendered.belongsTo._id).then((data) => {
@@ -86,7 +154,7 @@ const StorePreviewPageMain = () => {
 			phone
 		).then((data2) => {
 			if (data2.error) {
-				console.log(" rendering store data");
+				console.log("error rendering store data");
 			} else {
 				var pickedStoreRendered = data2[data2.length - 1];
 				getContacts("asdasd", pickedStoreRendered.belongsTo._id).then(
@@ -142,6 +210,8 @@ const StorePreviewPageMain = () => {
 	};
 
 	const gettingAllEmployees = (ownerId) => {
+		setLoading(true);
+
 		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
 			"token",
 			storeName.split("-").join(" "),
@@ -181,6 +251,16 @@ const StorePreviewPageMain = () => {
 							...new Set(data && data.map((i) => i.customerType)),
 						]);
 
+						setChosenCustomerType2(
+							[...new Set(data && data.map((i) => i.customerType))][0]
+						);
+
+						var allServices2 =
+							data.filter((i) => i.activeService === true) &&
+							data.filter((i) => i.activeService === true).map((ii) => ii);
+
+						setAllServices2([...new Set(allServices2)]);
+
 						if (chosenCustomerType) {
 							setAllServices(
 								data.filter((i) => i.activeService === true) &&
@@ -200,12 +280,7 @@ const StorePreviewPageMain = () => {
 	};
 
 	useEffect(() => {
-		gettingChosenStore();
-		// eslint-disable-next-line
-	}, [phone, storeName]);
-
-	useEffect(() => {
-		if (chosenStore && chosenStore.belongsTo) {
+		if (storeChosen && storeChosen.belongsTo) {
 			getAllService();
 			gettingAllAbouts();
 			gettingAllContacts();
@@ -213,7 +288,7 @@ const StorePreviewPageMain = () => {
 			gettingAllEmployees();
 		}
 		// eslint-disable-next-line
-	}, [chosenDate, chosenCustomerType, chosenService]);
+	}, [props, chosenDate, chosenCustomerType, chosenService]);
 
 	const handleChosenCustomerType = (event) => {
 		setChosenCustomerType(event.target.value);
@@ -221,15 +296,30 @@ const StorePreviewPageMain = () => {
 
 	return (
 		<SingleStorePageWrapper>
-			{loading && !chosenStore && !chosenStore.belongsTo ? (
-				<div>Loading.....</div>
+			{loading && !storeChosen && !storeChosen.belongsTo ? (
+				<div></div>
 			) : (
 				<React.Fragment>
+					<Helmet>
+						<meta charSet='utf-8' />
+						<title>
+							{storeChosen && storeChosen.addStoreName.toUpperCase()} |
+							Barbershop Official Booking Website
+						</title>
+						<meta
+							name='description'
+							content={`${
+								storeChosen && storeChosen.addStoreName.toUpperCase()
+							} Booking Software Developed By Infinite-Apps.com`}
+						/>
+						<link rel='canonical' href='https://infinite-apps.com' />
+					</Helmet>
 					<HeroComponent
 						hero1={hero1}
-						onlineStoreName={chosenStore}
+						onlineStoreName={storeChosen}
 						allEmployees={allEmployees}
 						AllServices={AllServices}
+						AllServices2={AllServices2}
 						contact={contact}
 						allCustomerType={allCustomerType}
 						setChosenCustomerType={setChosenCustomerType}
@@ -239,23 +329,206 @@ const StorePreviewPageMain = () => {
 						setChosenService={setChosenService}
 						chosenService={chosenService}
 						handleChosenCustomerType={handleChosenCustomerType}
-						fromLocalStore={chosenStore}
+						fromLocalStore={storeChosen}
+						language={language}
 					/>
 
-					<div>
-						<EmployeesList
-							storeProperties={chosenStore}
-							contact={contact}
-							filteredResults={allEmployees}
-						/>
+					<div className='deskTopContent'>
+						<div>
+							<EmployeesList
+								storeProperties={storeChosen}
+								contact={contact}
+								filteredResults={allEmployees}
+							/>
+						</div>
+
+						<div>
+							<ContactUs contact={contact} />
+						</div>
+
+						<div>
+							<AboutUs aboutus={aboutus} storeProperties={storeChosen} />
+						</div>
+
+						<div>
+							<GettingMap storeProperties={storeChosen} />
+						</div>
 					</div>
 
-					<div>
-						<ContactUs contact={contact} />
-					</div>
+					<div className='phoneContent mt-2'>
+						<div
+							className='row'
+							style={{
+								background: "#1e1e1e",
+								padding: "5px 0px",
+								paddingLeft: "20px",
+							}}
+						>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "SERVICES")}
+								onClick={() => setClickedMenu("SERVICES")}
+							>
+								SERVICES
+							</div>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "STYLISTS")}
+								onClick={() => setClickedMenu("STYLISTS")}
+							>
+								TEAM
+							</div>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "ABOUT")}
+								onClick={() => setClickedMenu("ABOUT")}
+							>
+								ABOUT
+							</div>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "GALLERY")}
+								onClick={() => setClickedMenu("GALLERY")}
+							>
+								GALLERY
+							</div>
+							<div
+								className='col-2 navLinks'
+								style={isActive(clickedMenu, "MAP")}
+								onClick={() => setClickedMenu("MAP")}
+							>
+								MAP
+							</div>
+						</div>
+						{language === "Arabic" ? (
+							<div className='text-center mt-2'>
+								<Link
+									onClick={handleButtonClick}
+									to='#'
+									style={{
+										fontWeight: "bold",
+										textAlign: "center",
+										fontSize: "20px",
+										color: "lightgrey",
+										textDecoration: "underline",
+									}}
+								>
+									تحقق من أول موعد متاح
+								</Link>
+							</div>
+						) : (
+							<div className='text-center mt-2'>
+								<Link
+									onClick={handleButtonClick}
+									to='#'
+									style={{
+										fontWeight: "bold",
+										textAlign: "center",
+										color: "lightgrey",
+										textDecoration: "underline",
+									}}
+								>
+									Check First Available Appointment
+								</Link>
+							</div>
+						)}
 
-					<div>
-						<AboutUs aboutus={aboutus} />
+						{clickedMenu === "SERVICES" ? (
+							<div className='my-4'>
+								<div className='mb-3'>
+									<select
+										style={{
+											textTransform: "capitalize",
+											backgroundColor: "#1e1e1e",
+											color: "white",
+											border: "none",
+										}}
+										className='form-control'
+										onChange={(e) => setChosenCustomerType2(e.target.value)}
+									>
+										{chosenCustomerType2 ? (
+											<option
+												value={chosenCustomerType2}
+												style={{ textTransform: "capitalize" }}
+											>
+												{chosenCustomerType2}
+											</option>
+										) : (
+											<option value='Please Select'>
+												Please Select Customer Type
+											</option>
+										)}
+
+										{allCustomerType &&
+											allCustomerType.map((customerType, i) => {
+												return (
+													<option
+														style={{ textTransform: "capitalize" }}
+														key={i}
+														value={customerType}
+													>
+														{customerType}
+													</option>
+												);
+											})}
+									</select>
+								</div>
+								<AddedServices
+									ownerId={storeChosen.belongsTo._id}
+									chosenCustomerType={chosenCustomerType2}
+								/>
+							</div>
+						) : null}
+
+						{clickedMenu === "STYLISTS" ? (
+							<div className='my-4'>
+								<EmployeesList
+									storeProperties={storeChosen}
+									contact={contact}
+									filteredResults={allEmployees}
+								/>
+							</div>
+						) : null}
+
+						{clickedMenu === "ABOUT" ? (
+							<div className='my-2'>
+								<AboutUs aboutus={aboutus} storeProperties={storeChosen} />
+								<div className='mb-5'>
+									<ContactUs contact={contact} />
+								</div>
+							</div>
+						) : null}
+
+						{clickedMenu === "GALLERY" ? (
+							<div className='my-4'>
+								<Gallary filteredResults={allEmployees} />
+							</div>
+						) : null}
+
+						{clickedMenu === "MAP" ? (
+							<div className='my-4'>
+								<GettingMap storeProperties={storeChosen} />
+							</div>
+						) : null}
+						<div id='firstAvailableApp' className='firstAvailableApp mb-5'>
+							<FirstAvailableAppointments
+								onlineStoreName={storeChosen}
+								allEmployees={allEmployees}
+								AllServices={AllServices}
+								contact={contact}
+								allCustomerType={allCustomerType}
+								chosenCustomerType={chosenCustomerType}
+								setChosenCustomerType={setChosenCustomerType}
+								chosenDate={chosenDate}
+								setChosenDate={setChosenDate}
+								setChosenService={setChosenService}
+								chosenService={chosenService}
+								handleChosenCustomerType={handleChosenCustomerType}
+								fromLocalStore={storeChosen}
+								language={language}
+								clickedMenu={clickedMenu}
+							/>
+						</div>
 					</div>
 				</React.Fragment>
 			)}
@@ -267,4 +540,34 @@ export default StorePreviewPageMain;
 
 const SingleStorePageWrapper = styled.div`
 	min-height: 900px;
+	background-color: black;
+
+	.phoneContent {
+		display: none;
+	}
+
+	@media (max-width: 800px) {
+		.deskTopContent {
+			display: none;
+		}
+		.phoneContent {
+			display: block;
+			color: white;
+			padding: 5px;
+			overflow: hidden;
+		}
+
+		.navLinks {
+			font-weight: bolder;
+			padding: 5px;
+			border: lightgrey 0.1px solid;
+			text-align: center;
+			border-radius: 2px;
+			cursor: pointer;
+		}
+
+		.firstAvailableApp {
+			border-radius: 25px 110px;
+		}
+	}
 `;

@@ -40,7 +40,7 @@ const AddEmpSection1 = ({
 							className='form-control'
 							type='text'
 							placeholder='Fill In Stylist Full Name In Arabic'
-							value={values.employeeName}
+							value={values.employeeNameOtherLanguage}
 							onChange={(e) => {
 								setValues({
 									...values,

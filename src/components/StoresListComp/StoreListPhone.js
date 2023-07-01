@@ -3,10 +3,18 @@ import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
 import CardsStorePhone from "./CardsStorePhone";
 
-const StoreListPhone = ({ activeStoresOnly, allServicesCombined }) => {
+const StoreListPhone = ({
+	activeStoresOnly,
+	allServicesCombined,
+	filtersClicked,
+	setFiltersClicked,
+}) => {
 	return (
 		<StoreListPhoneWrapper>
-			<FiltersPhone />
+			<FiltersPhone
+				filtersClicked={filtersClicked}
+				setFiltersClicked={setFiltersClicked}
+			/>
 			<div className='container'>
 				<div className='row'>
 					{activeStoresOnly &&

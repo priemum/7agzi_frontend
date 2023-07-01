@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import {
@@ -7,8 +7,8 @@ import {
 	listScheduledOrdersForTheBossNotPaid,
 	schedulesNotPaid,
 } from "../apiBoss";
-import {isAuthenticated} from "../../auth";
-import {getBraintreeClientToken} from "../../apiCore";
+import { isAuthenticated } from "../../auth";
+import { getBraintreeClientToken } from "../../apiCore";
 import SingleBillingForm from "./SingleBillingForm";
 
 //DreamProject2023!
@@ -34,7 +34,7 @@ const StoreBillingMain = () => {
 	});
 
 	// eslint-disable-next-line
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
@@ -133,13 +133,13 @@ const StoreBillingMain = () => {
 	}, [chosenStore]);
 
 	const getToken = (userId, token) => {
-		setData({...data, loading: true});
+		setData({ ...data, loading: true });
 		getBraintreeClientToken(userId, token).then((data) => {
 			if (data.error) {
-				setData({...data, error: data.error});
+				setData({ ...data, error: data.error });
 			} else {
-				setData({...data, clientToken: data.clientToken});
-				setData({...data, loading: false});
+				setData({ ...data, clientToken: data.clientToken });
+				setData({ ...data, loading: false });
 			}
 		});
 	};
@@ -219,11 +219,11 @@ const StoreBillingMain = () => {
 														<strong>
 															{" "}
 															{store.belongsTo.platFormShare ? (
-																<span style={{color: "darkgreen"}}>
+																<span style={{ color: "darkgreen" }}>
 																	Credit Card Added
 																</span>
 															) : (
-																<span style={{color: "darkred"}}>
+																<span style={{ color: "darkred" }}>
 																	No Credit Card Added
 																</span>
 															)}{" "}
@@ -261,7 +261,7 @@ const StoreBillingMain = () => {
 													</div>
 													<div
 														className='mt-3'
-														style={{color: "red", fontWeight: "bolder"}}
+														style={{ color: "red", fontWeight: "bolder" }}
 													>
 														Our Share Due:{" "}
 														<strong>
@@ -284,7 +284,7 @@ const StoreBillingMain = () => {
 							<div>
 								<div className='my-3'>
 									<h3
-										style={{fontWeight: "bold", cursor: "pointer"}}
+										style={{ fontWeight: "bold", cursor: "pointer" }}
 										onClick={() => {
 											setChosenStore("");
 										}}
