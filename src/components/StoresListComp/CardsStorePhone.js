@@ -54,15 +54,7 @@ const CardsStorePhone = ({ store, allServicesCombined }) => {
 	const storeNameModified =
 		store && store.addStoreName && store.addStoreName.split(" ").join("-");
 
-	var servicesForStore =
-		allServicesCombined &&
-		allServicesCombined.filter(
-			(i) => i.belongsTo && i.belongsTo._id === store.belongsTo._id
-		) &&
-		allServicesCombined &&
-		allServicesCombined
-			.filter((i) => i.belongsTo && i.belongsTo._id === store.belongsTo._id)
-			.map((ii) => ii.catchyPhrase);
+	var servicesForStore = store && store.services.map((i) => i.catchyPhrase);
 
 	servicesForStore = shuffleArray(servicesForStore);
 

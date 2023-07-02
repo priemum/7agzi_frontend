@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from "react";
 // import ReactGA from "react-ga";
 import {
-	allLoyaltyPointsAndStoreStatus,
+	allLoyaltyPointsAndStoreStatusWithServices,
 	getCountriesDistrictsGov,
-	getServicesCombined,
 } from "../apiCore";
 import styled from "styled-components";
 import { isAuthenticated } from "../auth";
@@ -31,7 +30,9 @@ const StoresList = () => {
 	const [latitude, setLatitude] = useState("");
 	const [longitude, setLongitude] = useState("");
 	const [filtersClicked, setFiltersClicked] = useState(false);
-	const [selectedService, setSelectedService] = useState([]);
+	const [selectedService, setSelectedService] = useState("");
+	const [allSalonTypes, setAllSalonTypes] = useState("");
+	const [selectedSalonType, setSelectedSalonType] = useState("");
 	const [priceRange, setPriceRange] = useState([]);
 	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
 
@@ -109,7 +110,7 @@ const StoresList = () => {
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
-		allLoyaltyPointsAndStoreStatus(token).then((data) => {
+		allLoyaltyPointsAndStoreStatusWithServices(token).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
@@ -141,8 +142,35 @@ const StoresList = () => {
 					(a, b) => new Date(a.storeCreatedAt) - new Date(b.storeCreatedAt)
 				);
 
+				var filteredStoresSalonType = selectedSalonType
+					? uniqueStoresWithLatestDates &&
+					  uniqueStoresWithLatestDates.filter(
+							(store) =>
+								store.belongsTo.storeType.toLowerCase() ===
+								selectedSalonType.toLowerCase()
+					  )
+					: uniqueStoresWithLatestDates;
+
+				var filteredStores = selectedService
+					? filteredStoresSalonType &&
+					  filteredStoresSalonType.filter((store) =>
+							store.services.some(
+								(service) =>
+									service.serviceName.toLowerCase() ===
+									selectedService.toLowerCase()
+							)
+					  )
+					: filteredStoresSalonType;
+
+				//Salon Types
+				var allSalonTypesArray =
+					filteredStores &&
+					filteredStores.map((iii) => iii.belongsTo.storeType);
+
+				setAllSalonTypes([...new Set(allSalonTypesArray)]);
+
 				if (selectedCountry) {
-					uniqueStoresWithLatestDates = uniqueStoresWithLatestDates.filter(
+					filteredStores = filteredStores.filter(
 						(store) =>
 							store.belongsTo.storeCountry.toLowerCase() ===
 							selectedCountry.toLowerCase()
@@ -150,7 +178,7 @@ const StoresList = () => {
 				}
 
 				if (selectedGovernorate && selectedDistrict) {
-					uniqueStoresWithLatestDates = uniqueStoresWithLatestDates.filter(
+					filteredStores = filteredStores.filter(
 						(store) =>
 							store.belongsTo.storeGovernorate.toLowerCase() ===
 								selectedGovernorate.toLowerCase() &&
@@ -160,7 +188,7 @@ const StoresList = () => {
 				}
 
 				if (selectedGovernorate) {
-					uniqueStoresWithLatestDates = uniqueStoresWithLatestDates.filter(
+					filteredStores = filteredStores.filter(
 						(store) =>
 							store.belongsTo.storeGovernorate.toLowerCase() ===
 							selectedGovernorate.toLowerCase()
@@ -183,7 +211,7 @@ const StoresList = () => {
 				}
 
 				if (selectedDistrict) {
-					uniqueStoresWithLatestDates = uniqueStoresWithLatestDates.filter(
+					filteredStores = filteredStores.filter(
 						(store) =>
 							store.belongsTo.storeDistrict.toLowerCase() ===
 							selectedDistrict.toLowerCase()
@@ -206,7 +234,34 @@ const StoresList = () => {
 					setAvailableGovernorates(uniqueGovernorates);
 				}
 
-				setStoreProperties(uniqueStoresWithLatestDates);
+				setStoreProperties(filteredStores);
+
+				const allServices = data.flatMap((item) => item.services);
+				const uniqueServices = allServices.reduce((accumulator, service) => {
+					const serviceName = service.serviceName;
+					const existingService = accumulator.find(
+						(s) => s.serviceName === serviceName
+					);
+					if (!existingService) {
+						accumulator.push(service);
+					}
+					return accumulator;
+				}, []);
+
+				uniqueServices.sort((a, b) =>
+					a.serviceName.localeCompare(b.serviceName)
+				);
+				setAllServicesCombined(uniqueServices);
+
+				const allServicesPrices = data.flatMap((item) =>
+					item.services.map((service) => service.servicePriceDiscount)
+				);
+				const minPrice =
+					allServicesPrices.length > 0 ? Math.min(...allServicesPrices) : 0;
+				const maxPrice =
+					allServicesPrices.length > 0 ? Math.max(...allServicesPrices) : 0;
+
+				setPriceRange([minPrice, maxPrice]);
 
 				setTimeout(() => {
 					setLoading(false);
@@ -249,39 +304,27 @@ const StoresList = () => {
 		});
 	};
 
-	const gettingListServicesCombined = () => {
-		getServicesCombined().then((data) => {
-			if (data.error) {
-				console.log("Error getting services combined");
-			} else {
-				setAllServicesCombined(data);
-
-				setPriceRange([
-					data && data.length > 0
-						? Math.min(...data.map((service) => service.servicePriceDiscount))
-						: 0,
-					data && data.length > 0
-						? Math.max(...data.map((service) => service.servicePriceDiscount))
-						: 0,
-				]);
-			}
-		});
-	};
-
-	useEffect(() => {
-		getOnlineStoreName();
-		gettingListServicesCombined();
-		localStorage.removeItem("pickedServiceFirstAvailable");
-		localStorage.removeItem("pickedPetSizeFirstAvailable");
-		localStorage.removeItem("pickedPetTypeFirstAvailable");
-		localStorage.removeItem("chosenDateFromFirstAvailable");
-		localStorage.removeItem("barber");
-		localStorage.removeItem("chosenStylistId_Store");
-		localStorage.removeItem("CustomerType");
-		localStorage.removeItem("chosenStylistUpdate");
-
+	useEffect(
+		() => {
+			getOnlineStoreName();
+			localStorage.removeItem("pickedServiceFirstAvailable");
+			localStorage.removeItem("pickedPetSizeFirstAvailable");
+			localStorage.removeItem("pickedPetTypeFirstAvailable");
+			localStorage.removeItem("chosenDateFromFirstAvailable");
+			localStorage.removeItem("barber");
+			localStorage.removeItem("chosenStylistId_Store");
+			localStorage.removeItem("CustomerType");
+			localStorage.removeItem("chosenStylistUpdate");
+		},
 		// eslint-disable-next-line
-	}, [selectedCountry, selectedGovernorate, selectedDistrict]);
+		[
+			selectedCountry,
+			selectedGovernorate,
+			selectedDistrict,
+			selectedService,
+			selectedSalonType,
+		]
+	);
 
 	// useEffect(() => {
 	// 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
@@ -354,6 +397,9 @@ const StoresList = () => {
 				setPriceRange={setPriceRange}
 				servicesInPriceRange={servicesInPriceRange}
 				setServicesInPriceRange={setServicesInPriceRange}
+				allSalonTypes={allSalonTypes}
+				selectedSalonType={selectedSalonType}
+				setSelectedSalonType={setSelectedSalonType}
 			/>
 
 			<React.Fragment>

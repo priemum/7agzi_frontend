@@ -19,8 +19,11 @@ const SideFilter = ({
 	setSelectedService,
 	priceRange,
 	setPriceRange,
-	servicesInPriceRange,
 	setServicesInPriceRange,
+	allSalonTypes,
+	selectedSalonType,
+	setSelectedSalonType,
+	servicesInPriceRange,
 	language,
 }) => {
 	const [scrollTop, setScrollTop] = useState(0);
@@ -38,7 +41,11 @@ const SideFilter = ({
 	}, [scrollTop]);
 
 	const handleChange = (e) => {
-		setSelectedService(e.target.value);
+		if (e.target.value === "Please Select") {
+			setSelectedService("");
+		} else {
+			setSelectedService(e.target.value);
+		}
 	};
 
 	useEffect(() => {
@@ -60,7 +67,7 @@ const SideFilter = ({
 					fontWeight: "bolder",
 					color: "darkred",
 					marginRight: "5px",
-					fontSize: "20px",
+					fontSize: "23px",
 				}}
 				onClick={handleSidebar}
 			>
@@ -104,9 +111,15 @@ const SideFilter = ({
 									fontSize: "14px",
 								}}
 								value={selectedGovernorate}
-								onChange={(e) => setSelectedGovernorate(e.target.value)}
+								onChange={(e) => {
+									if (e.target.value === "Please Select") {
+										setSelectedGovernorate("");
+									} else {
+										setSelectedGovernorate(e.target.value);
+									}
+								}}
 							>
-								<option value='Please Select'>Select governorate</option>
+								<option value='Please Select'>All governorates</option>
 								{availableGovernorates &&
 									availableGovernorates.map((gov, i) => (
 										<option key={i} value={gov}>
@@ -129,12 +142,50 @@ const SideFilter = ({
 									fontSize: "14px",
 								}}
 								value={selectedDistrict}
-								onChange={(e) => setSelectedDistrict(e.target.value)}
+								onChange={(e) => {
+									if (e.target.value === "Please Select") {
+										setSelectedDistrict("");
+									} else {
+										setSelectedDistrict(e.target.value);
+									}
+								}}
 							>
-								<option value='Please Select'>Select District</option>
+								<option value='Please Select'>All Districts</option>
 
 								{availableDistricts &&
 									availableDistricts.map((d, i) => (
+										<option key={i} value={d}>
+											{d}
+										</option>
+									))}
+							</select>
+						</div>
+					</div>
+
+					<div className='col-md-3 mx-auto'>
+						<div className='form-group'>
+							<label htmlFor='SalonType'>Salon Type:</label>
+							<select
+								className='form-control'
+								id='salon'
+								style={{
+									width: "100%",
+									textTransform: "capitalize",
+									fontSize: "14px",
+								}}
+								value={selectedSalonType}
+								onChange={(e) => {
+									if (e.target.value === "Please Select") {
+										setSelectedSalonType("");
+									} else {
+										setSelectedSalonType(e.target.value);
+									}
+								}}
+							>
+								<option value='Please Select'>All Salon Types</option>
+
+								{allSalonTypes &&
+									allSalonTypes.map((d, i) => (
 										<option key={i} value={d}>
 											{d}
 										</option>
@@ -157,7 +208,7 @@ const SideFilter = ({
 								onChange={handleChange}
 								value={selectedService}
 							>
-								<option value=''>Please Select A Service</option>
+								<option value='Please Select'>All Services</option>
 								{allServicesCombined.map((service) => (
 									<option key={service._id} value={service.serviceName}>
 										{service.serviceName}
@@ -195,7 +246,7 @@ const SideFilter = ({
 								</div>
 							</div>
 
-							{servicesInPriceRange.length > 0 && (
+							{/* {servicesInPriceRange.length > 0 && (
 								<div
 									className='col-md-3 mx-auto'
 									style={{
@@ -216,11 +267,15 @@ const SideFilter = ({
 										</div>
 									</div>
 								</div>
-							)}
+							)} */}
 						</>
 					) : null}
 
-					{selectedCountry || selectedDistrict || selectedGovernorate ? (
+					{selectedCountry ||
+					selectedDistrict ||
+					selectedGovernorate ||
+					selectedSalonType ||
+					selectedService ? (
 						<div
 							className='mx-auto mt-2'
 							style={{
@@ -234,6 +289,7 @@ const SideFilter = ({
 								setSelectedCountry("");
 								setSelectedDistrict("");
 								setSelectedGovernorate("");
+								setSelectedSalonType("");
 								setSelectedService(null);
 							}}
 						>
@@ -252,7 +308,7 @@ const SideFilterWrapper = styled.div`
 	position: fixed;
 	top: ${(props) => (props.scrollTop > 50 ? "68px" : "107px")};
 	left: 0;
-	width: 70%;
+	width: 100%;
 	height: 100%;
 	background: var(--mainGrey);
 	color: black;

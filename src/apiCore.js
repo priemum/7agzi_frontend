@@ -576,6 +576,24 @@ export const getCountriesDistrictsGov = (token) => {
 		.catch((err) => console.log(err));
 };
 
+export const allLoyaltyPointsAndStoreStatusWithServices = (token) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/store-management-frontend-updated`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const EgyptGovernorate = () => {
 	var egyptsMainGovernorates = [
 		"Alexandria",
