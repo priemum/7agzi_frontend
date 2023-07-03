@@ -52,7 +52,7 @@ const BeProComp = ({
 							<br />
 							<br />
 							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
-								You have already submitted your card, our platform is now
+								You have already submitted your card, our XLOOK is now
 								authorized to get monthly transactions from you.
 							</strong>
 						</h3>

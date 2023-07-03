@@ -191,7 +191,7 @@ const BillingMain = ({ language }) => {
 							// eslint-disable-next-line
 
 							toast.success(
-								"CONGRATULATIONS! You now subscribed to our PRO platform"
+								"CONGRATULATIONS! You now subscribed to our XLOOK PRO Plan"
 							);
 
 							console.log(response.subscription, "response.subscription");
@@ -363,7 +363,7 @@ const BillingMain = ({ language }) => {
 									style={isActive(clickedMenu, "PlatformShare")}
 									to='/store/admin/billing-account?platform-share'
 								>
-									<i className='fa-sharp fa-solid fa-house'></i> Platform Share
+									<i className='fa-sharp fa-solid fa-house'></i> XLOOK Share
 								</Link>
 							</div>
 							<div

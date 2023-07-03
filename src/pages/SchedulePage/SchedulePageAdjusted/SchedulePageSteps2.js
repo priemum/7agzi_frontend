@@ -1,15 +1,15 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 // import ReactGA from "react-ga";
-import {Steps, Button, message} from "antd";
+import { Steps, Button, message } from "antd";
 import styled from "styled-components";
 import moment from "moment";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import {
 	cloudinaryCommentUpload,
 	createScheduledAppointment,
@@ -27,7 +27,7 @@ import {
 import FormStep1 from "./FormStep1";
 import FormStep2 from "./FormStep2";
 import FormStep3 from "./FormStep3";
-const {Step} = Steps;
+const { Step } = Steps;
 const allDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 const SchedulePageSteps2 = () => {
@@ -64,7 +64,7 @@ const SchedulePageSteps2 = () => {
 	const token = isAuthenticated() && isAuthenticated().token;
 	let getChosenStore = JSON.parse(localStorage.getItem("chosenStore"));
 
-	const {email} = user;
+	const { email } = user;
 	const email_phone_Check = () => {
 		if (
 			user &&
@@ -602,11 +602,11 @@ const SchedulePageSteps2 = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryCommentUpload(user._id, token, {image: uri})
+						cloudinaryCommentUpload(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setScheduleAppointmentPhoto({images: allUploadedFiles});
+								setScheduleAppointmentPhoto({ images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -623,7 +623,7 @@ const SchedulePageSteps2 = () => {
 			<React.Fragment>
 				<label
 					className='btn btn-info btn-raised mb-3'
-					style={{cursor: "pointer", fontSize: "0.80rem"}}
+					style={{ cursor: "pointer", fontSize: "0.80rem" }}
 				>
 					Please add the desired styling photo if available
 					<input
@@ -810,23 +810,29 @@ const SchedulePageSteps2 = () => {
 		}
 	};
 
-	var ScheduleStartsAt = () => {
-		var helper = chosenDate && new Date(chosenDate).toLocaleDateString();
+	var getLocaleTimeZone = () => {
+		return moment.tz.guess();
+	};
 
-		return chosenTime && new Date(helper + " " + chosenTime);
+	var ScheduleStartsAt = () => {
+		var helper = chosenDate && moment(chosenDate).format("YYYY-MM-DD");
+		return (
+			chosenTime && moment.tz(helper + " " + chosenTime, getLocaleTimeZone())
+		);
 	};
 
 	var ScheduleEndsAt = () => {
-		var helper = chosenDate && new Date(chosenDate).toLocaleDateString();
+		var helper = chosenDate && moment(chosenDate).format("YYYY-MM-DD");
 		var serviceTimeDuration = ServiceTime_Duration
 			? ServiceTime_Duration.serviceTime
 			: 0;
-		return (
-			chosenTime &&
-			new Date(helper + " " + chosenTime).setMinutes(
-				new Date(helper + " " + chosenTime).getMinutes() + serviceTimeDuration
-			)
+		var scheduledStart =
+			chosenTime && moment.tz(helper + " " + chosenTime, getLocaleTimeZone());
+		var scheduledEnd = moment(scheduledStart).add(
+			serviceTimeDuration,
+			"minutes"
 		);
+		return scheduledEnd;
 	};
 
 	// console.log(
@@ -835,7 +841,7 @@ const SchedulePageSteps2 = () => {
 	// );
 
 	const clickSubmitSchedule_NoPayment = () => {
-		window.scrollTo({top: 0, behavior: "smooth"});
+		window.scrollTo({ top: 0, behavior: "smooth" });
 		if (
 			pickedEmployee &&
 			pickedEmployee.workingDays[0] &&
@@ -950,7 +956,7 @@ const SchedulePageSteps2 = () => {
 			// console.log(response);
 			// console.log("schedule booked");
 
-			window.scrollTo({top: 0, behavior: "smooth"});
+			window.scrollTo({ top: 0, behavior: "smooth" });
 			localStorage.removeItem("barber");
 			localStorage.removeItem("pickedServiceFirstAvailable");
 			localStorage.removeItem("chosenDateFromFirstAvailable");
@@ -1021,7 +1027,7 @@ const SchedulePageSteps2 = () => {
 							}}
 							onClick={() => {
 								next();
-								window.scrollTo({top: 100, behavior: "smooth"});
+								window.scrollTo({ top: 100, behavior: "smooth" });
 							}}
 						>
 							Next
@@ -1052,7 +1058,7 @@ const SchedulePageSteps2 = () => {
 							}).then((data) => {
 								if (data.error || data.misMatch) {
 									console.log(data.error);
-									signin({email: phone, password: phone}).then((data2) => {
+									signin({ email: phone, password: phone }).then((data2) => {
 										if (data2.error) {
 											console.log(data2.error);
 										} else if (data2.user.activeUser === false) {
@@ -1068,7 +1074,7 @@ const SchedulePageSteps2 = () => {
 										}
 									});
 								} else {
-									signin({email: phone, password: phone}).then((data2) => {
+									signin({ email: phone, password: phone }).then((data2) => {
 										if (data2.error) {
 											console.log(data2.error);
 										} else if (data2.user.activeUser === false) {
@@ -1086,7 +1092,7 @@ const SchedulePageSteps2 = () => {
 								}
 							});
 
-							window.scrollTo({top: 150, behavior: "smooth"});
+							window.scrollTo({ top: 150, behavior: "smooth" });
 							next();
 						}}
 					>
@@ -1108,7 +1114,7 @@ const SchedulePageSteps2 = () => {
 						onClick={() => {
 							message.success("Processing complete!");
 							console.log("Success");
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 							setCurrent(0);
 						}}
 					>
@@ -1144,7 +1150,7 @@ const SchedulePageSteps2 = () => {
 										return "Appoitnment was successfully scheduled!";
 									}
 								});
-								window.scrollTo({top: 0, behavior: "smooth"});
+								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
 							Schedule Now
@@ -1170,7 +1176,7 @@ const SchedulePageSteps2 = () => {
 				<Link
 					to='/schedule'
 					onClick={() => {
-						window.scrollTo({top: 0, behavior: "smooth"});
+						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}
 				>
 					<div className='continueShoppingEmpty  my-5'>

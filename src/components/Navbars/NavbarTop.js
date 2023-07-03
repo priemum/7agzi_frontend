@@ -258,7 +258,7 @@ const Navbar1 = ({
 											setClick(false);
 										}}
 									>
-										Platform <strong>AGENT</strong>
+										XLOOK <strong>AGENT</strong>
 									</Link>
 								</li>
 							</React.Fragment>

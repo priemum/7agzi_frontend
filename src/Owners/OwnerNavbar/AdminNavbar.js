@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Redirect, Link} from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import {
 	BranchesOutlined,
 	ContactsFilled,
@@ -13,10 +13,11 @@ import {
 	ShoppingCartOutlined,
 	TeamOutlined,
 } from "@ant-design/icons";
-import {Button, Menu} from "antd";
-import {isAuthenticated} from "../../auth";
-import {getAllUsers} from "../apiOwner";
+import { Button, Menu } from "antd";
+import { isAuthenticated } from "../../auth";
+import { getAllUsers } from "../apiOwner";
 import LastAddedLogoImage from "./LastAddedLogoImage";
+import GetBrandName from "./GetBrandName";
 
 function getItem(label, key, icon, children, type) {
 	return {
@@ -32,8 +33,11 @@ const items = [
 	getItem(
 		<div className='logoClass'></div>,
 		"StoreLogo",
-		<LastAddedLogoImage />
+		<div>
+			<LastAddedLogoImage />
+		</div>
 	),
+	getItem(<div className='logoClass '></div>, "StoreLogo", <GetBrandName />),
 	getItem(
 		<div className='logoClass '></div>,
 		"StoreLogo",
@@ -126,7 +130,7 @@ const AdminNavbar = ({
 		setAdminMenuStatus(!collapsed);
 	};
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllUsers = () => {
 		getAllUsers(user._id, token).then((data) => {
@@ -173,7 +177,7 @@ const AdminNavbar = ({
 		"jwt",
 		JSON.stringify({
 			...currUser,
-			user: {...currUser.user, userRole: values.userRole},
+			user: { ...currUser.user, userRole: values.userRole },
 		})
 	);
 
@@ -257,7 +261,7 @@ export default AdminNavbar;
 
 const AdminNavbarWrapper = styled.div`
 	margin-bottom: 15px;
-	background: ${(props) => (props.show ? "" : "#1e1e2d")};
+	background: ${(props) => (props.show ? "" : "black")};
 	top: 0px !important;
 	position: fixed;
 	z-index: 20000;
@@ -288,7 +292,7 @@ const AdminNavbarWrapper = styled.div`
 	.ant-menu-dark .ant-menu-sub,
 	.ant-menu.ant-menu-dark .ant-menu-sub {
 		color: rgba(255, 255, 255, 0.65);
-		background: #1e1e2d !important;
+		background: black !important;
 	}
 
 	.ant-menu.ant-menu-dark,

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+/* eslint-disable import/no-webpack-loader-syntax */
+import "antd/dist/antd.min.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";

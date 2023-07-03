@@ -1,6 +1,6 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
 	employeeStar,
@@ -11,15 +11,14 @@ import {
 	//cloudinaryCommentUpload,
 } from "../apiCore";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from "react-responsive-carousel";
-import StarRating from "react-star-ratings";
+
 // import ReactGA from "react-ga4";
-import {Modal} from "antd";
-import {toast} from "react-toastify";
-import {isAuthenticated} from "../auth";
-import {useHistory, useParams} from "react-router-dom";
-import {showAverageRating} from "../components/SingleEmployee/Rating";
-import {Link} from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
+import { isAuthenticated } from "../auth";
+import { useHistory, useParams } from "react-router-dom";
+
+import Section1PC from "../components/SingleEmployee/Section1PC";
+import Section1Phone from "../components/SingleEmployee/Section1Phone";
 // import Resizer from "react-image-file-resizer";
 
 const SingleEmployee = (props) => {
@@ -75,10 +74,6 @@ const SingleEmployee = (props) => {
 					existingRatingObject[existingRatingObject.length - 1] &&
 					existingRatingObject[existingRatingObject.length - 1].star
 			);
-			console.log(
-				existingRatingObject &&
-					existingRatingObject[existingRatingObject.length - 1]
-			);
 		}
 		// eslint-disable-next-line
 	}, [modalVisible]);
@@ -116,7 +111,9 @@ const SingleEmployee = (props) => {
 		});
 	};
 	let history = useHistory();
-	let {employeeId, employeeName} = useParams();
+	let { employeeId, employeeName } = useParams();
+
+	console.log(Employee, "employee");
 
 	const handleModal = () => {
 		if (user && token) {
@@ -164,7 +161,7 @@ const SingleEmployee = (props) => {
 		e.preventDefault();
 		setLoading(true);
 		if (!isAuthenticated()) {
-			setError({error: "Please signin to leave a comment"});
+			setError({ error: "Please signin to leave a comment" });
 			return false;
 		}
 
@@ -189,6 +186,9 @@ const SingleEmployee = (props) => {
 					toast.success(`Thank you for your review ${user.name}`);
 				}
 			});
+		} else {
+			setLoading(false);
+			setModalVisible(false);
 		}
 	};
 
@@ -196,7 +196,6 @@ const SingleEmployee = (props) => {
 		const userId = isAuthenticated().user._id;
 		const token = isAuthenticated().token;
 		const employeeId = Employee && Employee._id;
-		console.log(comment, "from delete");
 
 		uncomment(userId, token, employeeId, comment).then((data) => {
 			if (data.error) {
@@ -213,7 +212,7 @@ const SingleEmployee = (props) => {
 					<React.Fragment>
 						<h5
 							className='mt-5 mb-3'
-							style={{fontWeight: "bold", fontStyle: "italic"}}
+							style={{ fontWeight: "bold", fontStyle: "italic" }}
 						>
 							Your Feedback Is Important To Us!!
 						</h5>
@@ -225,7 +224,6 @@ const SingleEmployee = (props) => {
 									value={text}
 									className='form-control'
 									placeholder='Leave a comment...'
-									required
 								/>
 								<button className='btn btn-raised btn-success mt-3'>
 									Post
@@ -252,7 +250,7 @@ const SingleEmployee = (props) => {
 			<React.Fragment>
 				{!loading && Employee && Employee.comments && comments ? (
 					<div className='col-md-12'>
-						<h3 className='text-primary'>
+						<h3 className='text-primary commentHeader'>
 							{comments && comments.length} Comments
 						</h3>
 						<hr />
@@ -293,7 +291,7 @@ const SingleEmployee = (props) => {
 												>
 													Posted by {comment.postedBy.name.slice(0, 6)} on{" "}
 													{new Date(comment.created).toDateString()}
-													<span style={{cursor: "pointer"}}>
+													<span style={{ cursor: "pointer" }}>
 														{isAuthenticated().user &&
 															isAuthenticated().user._id ===
 																comment.postedBy._id && (
@@ -368,277 +366,47 @@ const SingleEmployee = (props) => {
 
 	return (
 		<SingleEmp className='mx-auto'>
-			<div className='row'>
-				<div className='col-md-6 text-center  mt-3'>
-					{Employee && Employee.workPhotos && (
-						<Carousel
-							autoPlay
-							infiniteLoop
-							interval={3000}
-							showStatus={false}
-							// dynamicHeight={true}
-							showThumbs={true}
-							thumbWidth={70}
-							width={"100%"}
-							autoFocus={true}
-						>
-							{Employee.workPhotos.map((i) => (
-								<img
-									alt={Employee.employeeName}
-									src={i.url}
-									key={i.public_id}
-									style={{borderRadius: "15px"}}
-								/>
-							))}
-						</Carousel>
-					)}
-				</div>
-				<div
-					className='col-md-5 mx-auto mt-3'
-					style={{border: "1px solid lightgrey", borderRadius: "15px"}}
-				>
-					<h3
-						className='text-title mb-4 my-3'
-						style={{
-							backgroundColor: "black",
-							textAlign: "center",
-							padding: "8px",
-							color: "grey",
-							fontStyle: "italic",
-						}}
-					>
-						Stylist Name: {Employee.employeeName}
-						{!employeeIsWorkingTodayLogic() ? (
-							<div
-								className='mt-2'
-								style={{
-									fontSize: "0.75rem",
-									fontStyle: "italic",
-									fontWeight: "bold",
-									color: "#ffcdcd",
-								}}
-							>
-								Please note that {Employee.employeeName} is not working today,
-								but you still can schedule an appointment for future days.{" "}
-								<br />
-								Check the working days below.
-							</div>
-						) : (
-							<div
-								className='mt-2'
-								style={{
-									fontSize: "0.75rem",
-									fontStyle: "italic",
-									fontWeight: "bold",
-									color: "#cdffcd",
-								}}
-							>
-								{Employee.employeeName} is available today! In case you would
-								like to schedule for other days, please check the stylist
-								working days below.
-							</div>
-						)}
-						{Employee && Employee.ratings && Employee.ratings.length > 0 ? (
-							showAverageRating(Employee)
-						) : (
-							<div
-								className='mt-2'
-								style={{
-									fontSize: "0.75rem",
-									fontStyle: "italic",
-									fontWeight: "bold",
-									color: "white",
-								}}
-							>
-								No Ratings
-							</div>
-						)}
-					</h3>
-
-					<p
-						className='text-capitalize text-title mt-2'
-						style={{color: "#0052a5"}}
-					>
-						A little bit about {Employee.employeeName}:{" "}
-					</p>
-
-					<p
-						className='single-Product-Description-Style'
-						style={{fontSize: "0.85rem"}}
-					>
-						<div
-							className='ml-3'
-							dangerouslySetInnerHTML={{__html: Employee.description}}
-						/>
-					</p>
-					<p
-						className='single-Product-Description-Style'
-						style={{fontSize: "0.85rem"}}
-					>
-						{Employee.description1}
-						<br />
-					</p>
-					<p
-						className='single-Product-Description-Style'
-						style={{fontSize: "0.85rem"}}
-					>
-						{Employee.description2}
-					</p>
-					<ul>
-						<p
-							className='text-capitalize text-title'
-							style={{color: "#0052a5"}}
-						>
-							{Employee.employeeName}'s Working Days and Hours:
-						</p>
-						<div className='row'>
-							<div className='col-md-4 mt-3'>
-								{Employee &&
-									Employee.workingDays &&
-									Employee.workingDays.map((e, i) => (
-										<li key={i} className='ml-4' style={{fontSize: "0.9rem"}}>
-											{e}
-										</li>
-									))}
-							</div>
-							<div className='col-md-6 mt-3'>
-								<div className='row'>
-									{Employee &&
-										Employee.workingHours &&
-										Employee.workingHours.sort() &&
-										Employee.workingHours.sort().map((h, i) => (
-											<div className='col-3'>
-												<li
-													key={i}
-													className='ml-4'
-													style={{fontSize: "0.9rem"}}
-												>
-													{h}
-												</li>
-											</div>
-										))}
-								</div>
-							</div>
-						</div>
-					</ul>
-					<br />
-					<hr />
-					<div className='row text-center col-lg-12 col-md-11 mx-auto my-5 buttons'>
-						{storeProperties && storeProperties.activeOnlineBooking ? (
-							<div
-								className='col-md-3 btn btn-outline-primary p-2 mx-auto mt-2'
-								style={{fontSize: "0.9rem", fontWeight: "bolder"}}
-								onClick={() => {
-									history.push("/schedule-an-appointment");
-									addItem(Employee);
-								}}
-							>
-								<span>
-									<i className='fa fa-calendar mr-2' aria-hidden='true'></i>
-								</span>
-								Schedule Now
-							</div>
-						) : (
-							<div
-								className='col-md-3 btn btn-outline-primary p-2 mx-auto mt-2'
-								style={{fontSize: "0.9rem", fontWeight: "bolder"}}
-							>
-								Call{" "}
-								<Link
-									style={{textDecoration: "underline"}}
-									className=''
-									to='#'
-									onClick={() =>
-										window.open(`tel:+2${contact && contact.phone}`)
-									}
-								>
-									{contact && contact.phone}
-								</Link>
-							</div>
-						)}
-
-						<div
-							className='col-md-4  btn btn-outline-info p-2 mx-auto mt-2'
-							style={{fontSize: "0.9rem", fontWeight: "bolder"}}
-						>
-							<React.Fragment>
-								<div onClick={handleModal}>
-									<span>
-										<i className='far fa-comment-alt mr-2'></i>
-									</span>
-
-									{user ? (
-										"Leave Your Feedback"
-									) : (
-										<span style={{fontSize: "0.65rem", fontWeight: "bold"}}>
-											Login to leave a feedback or a rating
-										</span>
-									)}
-								</div>
-								<Modal
-									title={
-										<div
-											style={{
-												textAlign: "center",
-												margin: "10px",
-												padding: "5px",
-												fontWeight: "bold",
-											}}
-										>
-											{`Please leave a Star Rating and a Comment for ${
-												Employee && Employee.employeeName
-											}`}
-										</div>
-									}
-									visible={modalVisible}
-									onOk={() => {
-										setModalVisible(false);
-										toast.success(`Thank you for your Feedback ${user.name}`);
-									}}
-									okButtonProps={{style: {display: "none"}}}
-									cancelButtonProps={{style: {display: "none"}}}
-									onCancel={() => setModalVisible(false)}
-								>
-									<h5
-										className='mt-4 mb-2'
-										style={{fontWeight: "bold", fontStyle: "italic"}}
-									>
-										Please Leave a Rating
-									</h5>
-									<StarRating
-										name={Employee && Employee._id}
-										numberOfStars={5}
-										rating={star}
-										changeRating={onStarClick}
-										isSelectable={true}
-										starRatedColor='red'
-									/>
-									<br />
-									<div className='mt-5'>
-										{/* {FileUploadComments()} */}
-										{commentForm()}
-									</div>
-								</Modal>
-							</React.Fragment>
-						</div>
-						<div
-							className='col-md-4 btn btn-outline-danger p-2 mx-auto mt-2'
-							style={{fontSize: "0.9rem", fontWeight: "bolder"}}
-							onClick={() =>
-								history.push(
-									`/schedule/${storeProperties.addStoreName}/${storeProperties.belongsTo.phone}`
-								)
-							}
-						>
-							<span>
-								<i className='fas fa-home mr-2'></i>
-							</span>
-							Back to Stylists Page
-						</div>
-					</div>
-				</div>
+			<div className='pcView'>
+				<Section1PC
+					storeProperties={storeProperties}
+					Employee={Employee}
+					employeeIsWorkingTodayLogic={employeeIsWorkingTodayLogic}
+					user={user}
+					token={token}
+					contact={contact}
+					modalVisible={modalVisible}
+					setModalVisible={setModalVisible}
+					handleModal={handleModal}
+					addItem={addItem}
+					star={star}
+					setStar={setStar}
+					onStarClick={onStarClick}
+					commentForm={commentForm}
+					history={history}
+				/>
+				<div className='p-5'>{historicalComments()}</div>
 			</div>
-			<div className='p-5'>{historicalComments()}</div>
+
+			<div className='phoneView'>
+				<Section1Phone
+					storeProperties={storeProperties}
+					Employee={Employee}
+					employeeIsWorkingTodayLogic={employeeIsWorkingTodayLogic}
+					user={user}
+					token={token}
+					contact={contact}
+					modalVisible={modalVisible}
+					setModalVisible={setModalVisible}
+					handleModal={handleModal}
+					addItem={addItem}
+					star={star}
+					setStar={setStar}
+					onStarClick={onStarClick}
+					commentForm={commentForm}
+					history={history}
+					historicalComments={historicalComments}
+				/>
+			</div>
 		</SingleEmp>
 	);
 };
@@ -646,9 +414,13 @@ const SingleEmployee = (props) => {
 export default SingleEmployee;
 
 const SingleEmp = styled.div`
-	width: 85%;
-	margin-top: 5px;
+	width: 100%;
 	object-fit: cover;
+	min-height: 850px;
+	background-color: black;
+	padding: 40px;
+	color: white !important;
+	overflow: hidden;
 
 	.carousel-root {
 		border: 1px solid lightgrey;
@@ -665,5 +437,33 @@ const SingleEmp = styled.div`
 	}
 	.buttons:hover {
 		cursor: pointer;
+	}
+
+	.phoneView {
+		display: none;
+	}
+
+	@media (max-width: 1000px) {
+		width: 100%;
+		padding: 0px;
+
+		.pcView {
+			display: none;
+		}
+
+		.phoneView {
+			display: block;
+		}
+
+		.carousel-root {
+			border: none;
+			border-radius: 5px;
+			object-fit: cover;
+			/* box-shadow: 3px 2px 3px 2px rgba(0, 0, 0, 0.5); */
+		}
+
+		.commentHeader {
+			color: white !important;
+		}
 	}
 `;

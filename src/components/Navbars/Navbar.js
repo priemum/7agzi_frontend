@@ -192,7 +192,7 @@ const Navbar = ({ history, language }) => {
 									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
-								Platform Admin
+								XLOOK Admin
 							</Link>
 						</li>
 					)}
@@ -207,7 +207,7 @@ const Navbar = ({ history, language }) => {
 									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
-								Platform <strong>AGENT</strong>
+								XLOOK <strong>AGENT</strong>
 							</Link>
 						</li>
 					)}

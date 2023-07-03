@@ -52,7 +52,7 @@ const PlatformShareComp = ({
 							<br />
 							<br />
 							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
-								You have already submitted your card, our platform is now
+								You have already submitted your card, our system is now
 								authorized to get transactions from you.
 							</strong>
 						</h3>
@@ -138,7 +138,7 @@ const PlatformShareComp = ({
 									) : (
 										<>
 											<h3>
-												The platform's share will be 3 EGP from each appointment
+												The XLOOK's share will be 3 EGP from each appointment
 											</h3>
 											<h5>
 												The initial payment will be{" "}

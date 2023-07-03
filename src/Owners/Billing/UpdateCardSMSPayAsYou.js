@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import DropIn from "braintree-web-drop-in-react";
 
-const UpdateCardSMSPayAsYou = ({data, updateUserCard}) => {
+const UpdateCardSMSPayAsYou = ({ data, updateUserCard }) => {
 	return (
 		<UpdateCardSMSPayAsYouWrapper>
 			<h4>UPDATE YOUR CARD</h4>

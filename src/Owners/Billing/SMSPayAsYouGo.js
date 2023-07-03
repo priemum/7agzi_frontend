@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import DropIn from "braintree-web-drop-in-react";
 import UpdateCardSMSPayAsYou from "./UpdateCardSMSPayAsYou";
-import {updateUserCardFn} from "../../apiCore";
-import {toast} from "react-toastify";
+import { updateUserCardFn } from "../../apiCore";
+import { toast } from "react-toastify";
 import StoredCardInfo from "./StoredCardInfo";
 
 const SMSPayAsYouGo = ({
@@ -17,7 +17,7 @@ const SMSPayAsYouGo = ({
 }) => {
 	console.log(user.smsPayAsYouGoToken, "user.smsPayAsYouGoToken");
 	const updateUserCard = async () => {
-		const {nonce} = await data.instance.requestPaymentMethod();
+		const { nonce } = await data.instance.requestPaymentMethod();
 		updateUserCardFn(user._id, token, {
 			paymentMethodNonce: nonce,
 			paymentMethodToken: user.smsPayAsYouGoToken,
@@ -51,8 +51,8 @@ const SMSPayAsYouGo = ({
 							THANK YOU!
 							<br />
 							<br />
-							<strong style={{fontSize: "1.5rem", color: "darkgreen"}}>
-								You have already submitted your card, our platform is now
+							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
+								You have already submitted your card, our system is now
 								authorized to charge you for your SMS/ Whats App. reminders and
 								confirmation messages.
 							</strong>
@@ -94,9 +94,9 @@ const SMSPayAsYouGo = ({
 							onClick={() => {
 								setUpdateCardClicked(!updateCardClicked);
 								if (updateCardClicked === true) {
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								} else {
-									window.scrollTo({top: 300, behavior: "smooth"});
+									window.scrollTo({ top: 300, behavior: "smooth" });
 								}
 							}}
 							style={{
@@ -120,22 +120,21 @@ const SMSPayAsYouGo = ({
 				</div>
 			) : (
 				<div className='col-md-6 platformShare mt-5'>
-					<div onBlur={() => setData({...data, error: ""})}>
+					<div onBlur={() => setData({ ...data, error: "" })}>
 						{data && data.clientToken ? (
 							<div className=' col-md-12'>
 								<h3>
-									Platform will charge you weekly on whats app automatic
-									messages
+									XLOOK will charge you weekly on whats app automatic messages
 								</h3>
 								<h5>
 									Initial Payment Will be{" "}
-									<strong style={{color: "black", fontSize: "1.3rem"}}>
+									<strong style={{ color: "black", fontSize: "1.3rem" }}>
 										$2
 									</strong>{" "}
 									and then you will be re-charged every week based on how many
 									messages were sent to your client
 									<br />
-									<strong style={{color: "black", fontSize: "1.3rem"}}>
+									<strong style={{ color: "black", fontSize: "1.3rem" }}>
 										$0.03 per message
 									</strong>
 								</h5>

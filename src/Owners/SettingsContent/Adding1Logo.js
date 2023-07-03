@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
 import ImageCard3 from "./ImageCard3";
+import GettingMap from "../../components/SingleStorePage/GettingMap";
 
 const Adding1Logo = ({
 	addStoreLogo,
@@ -369,6 +370,10 @@ const Adding1Logo = ({
 					</div>
 				</div>
 			) : null}
+
+			<div>
+				<GettingMap storeProperties={{ longitude, latitude, from: "update" }} />
+			</div>
 
 			{alreadySetLoyaltyPointsManagement &&
 			allServices &&

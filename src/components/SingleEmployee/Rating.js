@@ -31,7 +31,9 @@ export const showAverageRating = (e) => {
 						editing={false}
 					/>{" "}
 					<span style={{ fontSize: "0.68rem", color: "white" }}>
-						({e.ratings.length}) Users Rated
+						(
+						{e.ratings.length <= 1 ? "1 Client" : `${e.ratings.length} Clients`}
+						)
 					</span>
 				</span>
 			</div>
@@ -67,7 +69,7 @@ export const showAverageRating2 = (e) => {
 						editing={false}
 					/>{" "}
 					<span style={{ fontSize: "0.68rem", color: "black" }}>
-						({e.ratings.length}) Users Rated
+						({e.ratings.length <= 1 ? "Client" : "Clients"})
 					</span>
 				</span>
 			</div>
