@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import MainHeroComp from "../components/HomePage/MainHeroComp";
 import MainOverallServices from "../components/HomePage/MainOverallServices";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { isAuthenticated } from "../auth";
 
-const Home = ({language, setLanguage}) => {
+const Home = ({ language, setLanguage }) => {
 	useEffect(() => {
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("pickedPetSizeFirstAvailable");
@@ -38,6 +40,27 @@ const Home = ({language, setLanguage}) => {
 
 				<link rel='canonical' href='https://infinite-apps.com' />
 			</Helmet>
+			{isAuthenticated() &&
+			isAuthenticated().user &&
+			isAuthenticated().user.role === 2000 ? (
+				<Redirect to='/agent/dashboard' />
+			) : null}
+			{isAuthenticated() &&
+			isAuthenticated().user &&
+			isAuthenticated().user.role === 1000 ? (
+				<Redirect to='/store/admin/dashboard' />
+			) : null}
+
+			{isAuthenticated() &&
+			isAuthenticated().user &&
+			isAuthenticated().user.role === 10000
+				? null
+				: null}
+
+			{!isAuthenticated() && !isAuthenticated().user ? (
+				<Redirect to='/agents-signup-form' />
+			) : null}
+
 			<MainHeroComp language={language} />
 			<MainOverallServices language={language} />
 		</HomeWrapper>
