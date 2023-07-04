@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import StarRating from "react-star-ratings";
 import { Modal } from "antd";
@@ -86,6 +87,29 @@ const Section1Phone = ({
 }) => {
 	const [clickedMenu, setClickedMenu] = useState("PROFILE");
 
+	const [isHorizontalSwipe, setIsHorizontalSwipe] = useState(true);
+	const [swipeStart, setSwipeStart] = useState({ x: 0, y: 0 });
+
+	const handleTouchStart = (e) => {
+		setSwipeStart({
+			x: e.changedTouches[0].screenX,
+			y: e.changedTouches[0].screenY,
+		});
+	};
+
+	const handleTouchEnd = (e) => {
+		let swipeEndX = e.changedTouches[0].screenX;
+		let swipeEndY = e.changedTouches[0].screenY;
+		let swipeDiffX = swipeEndX - swipeStart.x;
+		let swipeDiffY = swipeEndY - swipeStart.y;
+
+		if (Math.abs(swipeDiffX) > Math.abs(swipeDiffY)) {
+			setIsHorizontalSwipe(true);
+		} else {
+			setIsHorizontalSwipe(false);
+		}
+	};
+
 	var previousAddedHours =
 		Employee &&
 		Employee.workingHours &&
@@ -124,30 +148,35 @@ const Section1Phone = ({
 		findDayIndex(weekDays, chosenDay)
 	);
 
+	//Scroll Effect on phones
 	return (
 		<Section1PhoneWrapper>
-			{Employee && Employee.workPhotos && (
-				<Carousel
-					autoPlay
-					infiniteLoop
-					interval={2500}
-					showStatus={false}
-					// dynamicHeight={true}
-					showThumbs={false}
-					width={"100%"}
-					height={"100%"}
-					autoFocus={true}
-				>
-					{Employee.workPhotos.map((i) => (
-						<img
-							alt={Employee && Employee.employeeName}
-							src={i.url}
-							key={i.public_id}
-							style={{ objectFit: "cover", minHeight: "450px" }}
-						/>
-					))}
-				</Carousel>
-			)}
+			<div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+				{Employee && Employee.workPhotos && (
+					<Carousel
+						autoPlay
+						infiniteLoop
+						interval={5000}
+						showStatus={false}
+						showThumbs={false}
+						autoFocus={true}
+						showArrows={false}
+						dynamicHeight={true}
+						// showIndicators={true}
+						swipeable={isHorizontalSwipe}
+						// swipeScrollTolerance={"100%"}
+					>
+						{Employee.workPhotos.map((i) => (
+							<img
+								alt={Employee && Employee.employeeName}
+								src={i.url}
+								key={i.public_id}
+								style={{ objectFit: "cover", minHeight: "450px" }}
+							/>
+						))}
+					</Carousel>
+				)}
+			</div>
 			<div className='onCarousel'>
 				<div
 					style={{

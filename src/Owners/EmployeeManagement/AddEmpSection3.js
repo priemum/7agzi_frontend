@@ -11,11 +11,16 @@ const AddEmpSection3 = ({
 	query4,
 	query,
 	query2,
+	language,
 }) => {
 	return (
 		<AddEmpSection3Wrapper>
-			<div className='w-100'>
-				<label>Please Select Working Days</label>
+			<div className='w-100' dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<label>
+					{language === "Arabic"
+						? "يرجى تحديد أيام العمل"
+						: "Please Select Working Days"}
+				</label>
 				<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>
 					<label htmlFor='one' className='block '>
 						<input
@@ -26,7 +31,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Saturday") !== -1}
 						/>
-						Saturday
+						{language === "Arabic" ? "السبت" : "Saturday"}
 					</label>
 					<label htmlFor='two' className='block'>
 						<input
@@ -37,7 +42,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Sunday") !== -1}
 						/>
-						Sunday
+						{language === "Arabic" ? "الأحد" : "Sunday"}
 					</label>
 					<label htmlFor='three' className='block'>
 						<input
@@ -48,7 +53,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Monday") !== -1}
 						/>
-						Monday
+						{language === "Arabic" ? "الاثنين" : "Monday"}
 					</label>
 					<label htmlFor='four' className='block'>
 						<input
@@ -59,7 +64,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Tuesday") !== -1}
 						/>
-						Tuesday
+						{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
 					</label>
 					<label htmlFor='five' className='block'>
 						<input
@@ -70,7 +75,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Wednesday") !== -1}
 						/>
-						Wednesday
+						{language === "Arabic" ? "الأربعاء" : "Wednesday"}
 					</label>
 					<label htmlFor='six' className='block'>
 						<input
@@ -81,7 +86,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Thursday") !== -1}
 						/>
-						Thursday
+						{language === "Arabic" ? "الخميس" : "Thursday"}
 					</label>
 					<label htmlFor='seven' className='block'>
 						<input
@@ -92,7 +97,7 @@ const AddEmpSection3 = ({
 							className='m-3'
 							checked={query && query.indexOf("Friday") !== -1}
 						/>
-						Friday
+						{language === "Arabic" ? "الجمعة" : "Friday"}
 					</label>
 				</div>
 			</div>
@@ -133,7 +138,7 @@ const AddEmpSection3 = ({
 									<label
 										htmlFor={i}
 										className='block '
-										style={{fontSize: "0.75rem"}}
+										style={{ fontSize: "0.75rem" }}
 									>
 										<input
 											type='checkbox'
@@ -143,8 +148,11 @@ const AddEmpSection3 = ({
 											className='m-3'
 											checked={query2 && query2.indexOf(s._id) !== -1}
 										/>
-										<span style={{textTransform: "capitalize"}}>
-											{s.customerType} / {s.serviceName}
+										<span style={{ textTransform: "capitalize" }}>
+											{language === "Arabic"
+												? `${s.customerTypeOtherLanguage} /
+												  ${s.serviceNameOtherLanguage}`
+												: `${s.customerType} / ${s.serviceName}`}
 										</span>
 									</label>
 								</span>

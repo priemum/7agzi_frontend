@@ -355,6 +355,7 @@ const BillingMain = ({ language }) => {
 					<div className='container'>
 						<div className='row mx-auto'>
 							<div
+								dir={language === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "PlatformShare")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("PlatformShare")}
@@ -363,10 +364,12 @@ const BillingMain = ({ language }) => {
 									style={isActive(clickedMenu, "PlatformShare")}
 									to='/store/admin/billing-account?platform-share'
 								>
-									<i className='fa-sharp fa-solid fa-house'></i> XLOOK Share
+									<i className='fa-sharp fa-solid fa-house'></i>{" "}
+									{language === "Arabic" ? "مشاركة XLOOK" : "XLOOK Share"}
 								</Link>
 							</div>
 							<div
+								dir={language === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "BePro")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("BePro")}
@@ -375,11 +378,12 @@ const BillingMain = ({ language }) => {
 									style={isActive(clickedMenu, "BePro")}
 									to='/store/admin/billing-account?be-pro'
 								>
-									<i className='fa-brands fa-servicestack mr-1'></i> BE PRO
+									<i className='fa-brands fa-servicestack mr-1'></i>{" "}
+									{language === "Arabic" ? "BE PRO" : "BE PRO"}
 								</Link>
 							</div>
-
 							<div
+								dir={language === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("SMS => PAY AS YOU GO")}
@@ -388,7 +392,10 @@ const BillingMain = ({ language }) => {
 									style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
 									to='/store/admin/billing-account?sms-pay'
 								>
-									<i className='fa-solid fa-pen mr-1'></i> SMS PAY AS YOU GO
+									<i className='fa-solid fa-pen mr-1'></i>{" "}
+									{language === "Arabic"
+										? "SMS الدفع حسب الاستخدام"
+										: "SMS PAY AS YOU GO"}
 								</Link>
 							</div>
 						</div>

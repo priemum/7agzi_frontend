@@ -101,6 +101,7 @@ const CardEmployeePhone = ({ employee, storeProperties, contact }) => {
 					showStatus={false}
 					showIndicators={false}
 					showThumbs={false}
+					// swipeable={false}
 				>
 					{item.workPhotos.map((i) => (
 						<img
@@ -190,24 +191,6 @@ const CardEmployeePhone = ({ employee, storeProperties, contact }) => {
 								}
 							})}
 					</div>
-					<p
-						style={{
-							fontSize: "14px",
-							fontWeight: "bold",
-						}}
-					>
-						{employee.workingDays.indexOf(chosenDateName) === -1 ? (
-							<span
-								style={{
-									fontSize: "0.7rem",
-									color: "red",
-									textTransform: "uppercase",
-								}}
-							>
-								Note: {employee.employeeName} is off today
-							</span>
-						) : null}
-					</p>
 				</div>
 
 				<div className='col-6 mt-3'>
@@ -223,7 +206,19 @@ const CardEmployeePhone = ({ employee, storeProperties, contact }) => {
 									fontWeight: "bolder",
 								}}
 							>
-								<strong>AVAILABLE TODAY</strong>
+								{employee.workingDays.indexOf(chosenDateName) === -1 ? (
+									<strong
+										style={{
+											fontSize: "0.7rem",
+											color: "#f7c8c8",
+											textTransform: "uppercase",
+										}}
+									>
+										Note: {employee.employeeName} is off today
+									</strong>
+								) : (
+									<strong>AVAILABLE TODAY</strong>
+								)}
 							</div>
 						</div>
 					) : (

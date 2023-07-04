@@ -32,7 +32,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const ServicesMain = () => {
+const ServicesMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -64,20 +64,27 @@ const ServicesMain = () => {
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("AddService")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Add A New
-								Service
+								<i className='fa-brands fa-servicestack mr-1'></i>{" "}
+								{language === "Arabic"
+									? "إضافة خدمة جديدة"
+									: "Add A New Service"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "UpdateServices")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("UpdateServices")}
 							>
-								<i className='fa-solid fa-pen mr-1'></i> Services' List
+								<i className='fa-solid fa-pen mr-1'></i>{" "}
+								{language === "Arabic" ? "قائمة الخدمات" : "Services' List"}
 							</div>
 						</div>
 					</div>
-					{clickedMenu === "AddService" ? <AddService /> : null}
-					{clickedMenu === "UpdateServices" ? <UpdateService /> : null}
+					{clickedMenu === "AddService" ? (
+						<AddService language={language} />
+					) : null}
+					{clickedMenu === "UpdateServices" ? (
+						<UpdateService language={language} />
+					) : null}
 				</div>
 			</div>
 		</ServicesMainWrapper>

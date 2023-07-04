@@ -12,6 +12,7 @@ const Adding3Awards = ({
 	setClickedMenu,
 	activeWhatsAppNotification,
 	setActiveWhatsAppNotification,
+	language,
 }) => {
 	const handleChange1 = (e) => {
 		setLoyaltyPointsAward(e.target.value);
@@ -27,13 +28,21 @@ const Adding3Awards = ({
 		<Adding3AwardsWrapper>
 			<div className='col-md-10 mx-auto'>
 				<div className='form-group'>
-					<label className='text-muted'>Loyalty Points To Award</label>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? "نقاط الولاء للمكافأة"
+							: "Loyalty Points To Award"}
+					</label>
 					<input
 						type='number'
 						className='form-control'
 						onChange={handleChange1}
 						value={loyaltyPointsAward}
-						placeholder='Number of points so you can award the customer with a specific %'
+						placeholder={
+							language === "Arabic"
+								? "عدد النقاط التي يتم منحها للعميل مقابل النسبة المحددة"
+								: "Number of points to award the customer with a specific %"
+						}
 						required
 					/>
 				</div>
@@ -42,14 +51,20 @@ const Adding3Awards = ({
 			<div className='col-md-10 mx-auto'>
 				<div className='form-group'>
 					<label className='text-muted'>
-						Loyalty Points Discount Percentage
+						{language === "Arabic"
+							? "نسبة الخصم بناءً على نقاط الولاء"
+							: "Loyalty Points Discount Percentage"}
 					</label>
 					<input
 						type='number'
 						className='form-control'
 						onChange={handleChange2}
 						value={discountPercentage}
-						placeholder='Percentage to be discounted from the user total if reached to the required points e.g. 10% will be added as 10'
+						placeholder={
+							language === "Arabic"
+								? "النسبة المئوية التي سيتم خصمها من إجمالي المستخدم إذا تم الوصول إلى النقاط المطلوبة مثلاً 10٪ سيتم إضافة 10"
+								: "Percentage to be discounted from the user total if reached to the required points e.g. 10% will be added as 10"
+						}
 						required
 					/>
 				</div>
@@ -58,10 +73,12 @@ const Adding3Awards = ({
 			<div className='col-md-10 mx-auto'>
 				<div className='form-group form-check'>
 					<label className='form-check-label' htmlFor='whatsAppNotification'>
-						Would You Like To Get WhatsApp Notifications?
+						{language === "Arabic"
+							? "هل ترغب في تلقي إشعارات WhatsApp؟"
+							: "Would You Like To Get WhatsApp Notifications?"}
 					</label>
 					<label className='form-check-label ml-2'>
-						<strong>YES</strong>
+						<strong>{language === "Arabic" ? "نعم" : "YES"}</strong>
 						<input
 							type='checkbox'
 							className='form-check-input ml-1'
@@ -75,31 +92,41 @@ const Adding3Awards = ({
 
 			<div className='col-md-12 mx-auto mt-5'>
 				<div className='form-group'>
-					<label className='text-muted'>Online Services Fees (Flat Fee)</label>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? "رسوم الخدمات الإلكترونية (رسوم ثابتة)"
+							: "Online Services Fees (Flat Fee)"}
+					</label>
+					إ
 					<input
 						type='number'
 						className='form-control'
 						onChange={handleChange3}
 						value={onlineServicesFees}
-						placeholder='Online Services fee is the fee charged on scheduling online to your clients. You will get this money (e.g. 25 cents will be added as "0.25")'
+						placeholder={
+							language === "Arabic"
+								? "رسوم الخدمات الإلكترونية (رسوم ثابتة)"
+								: "Online Services Fees (Flat Fee)"
+						}
 					/>
 				</div>
 			</div>
-
 			{/* <div className='ml-2 mb-3 col-md-8 mx-auto'>
-				<button
-					onClick={() => clickSubmit()}
-					className='btn btn-outline-success btn-block mb-3 '
-				>
-					Submit Settings
-				</button>
-			</div> */}
+			<button
+				onClick={() => clickSubmit()}
+				className='btn btn-outline-success btn-block mb-3 '
+			>
+				Submit Settings
+			</button>
+		</div> */}
 			<div className='ml-2 mb-3 col-md-8 mx-auto'>
 				<button
 					onClick={() => setClickedMenu("WorkingHours")}
 					className='btn btn-primary btn-block mb-3 '
 				>
-					Add Active Working Hours
+					{language === "Arabic"
+						? "إضافة ساعات العمل النشطة"
+						: "Add Active Working Hours"}
 				</button>
 			</div>
 		</Adding3AwardsWrapper>

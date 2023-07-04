@@ -31,6 +31,7 @@ const Adding1Logo = ({
 	setLongitude,
 	loading,
 	setLoading,
+	language,
 }) => {
 	const [loading2, setLoading2] = useState(false);
 	const [loading3, setLoading3] = useState(false);
@@ -247,6 +248,7 @@ const Adding1Logo = ({
 							handleImageRemove={handleImageRemove}
 							setAddThumbnail={setAddStoreLogo}
 							fileUploadAndResizeThumbNail={fileUploadAndResizeLogo}
+							language={language}
 						/>
 					)}
 				</div>
@@ -261,6 +263,7 @@ const Adding1Logo = ({
 							handleImageRemove={handleImageRemove2}
 							setAddThumbnail={setStoreThumbnail}
 							fileUploadAndResizeThumbNail={fileUploadAndResizeStoreThumbnail}
+							language={language}
 						/>
 					)}
 				</div>
@@ -275,12 +278,15 @@ const Adding1Logo = ({
 							handleImageRemove={handleImageRemove3}
 							setAddThumbnail={setOwnerIdPhoto}
 							fileUploadAndResizeThumbNail={fileUploadAndResizeOwnerIdPhoto}
+							language={language}
 						/>
 					)}
 				</div>
 				<div className='col-md-5 pt-5 mx-auto'>
 					<label>
-						Store Name{" "}
+						{language === "Arabic"
+							? "اسم المتجر بالإنجليزية"
+							: "Store Name In English"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
 							{" "}
 							<strong>*</strong>{" "}
@@ -289,7 +295,11 @@ const Adding1Logo = ({
 					<input
 						className='form-control'
 						type='text'
-						placeholder='Fill In Your Store Name'
+						placeholder={
+							language === "Arabic"
+								? "ادخل اسم متجرك"
+								: "Fill In Your Store Name In English"
+						}
 						value={addStoreName}
 						onChange={(e) => {
 							setAddStoreName(e.target.value);
@@ -299,7 +309,9 @@ const Adding1Logo = ({
 
 				<div className='col-md-5 pt-5 mx-auto'>
 					<label>
-						Store Name (Arabic){" "}
+						{language === "Arabic"
+							? "اسم المتجر (بالعربية)"
+							: "Store Name (Arabic)"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
 							{" "}
 							<strong>*</strong>{" "}
@@ -308,7 +320,11 @@ const Adding1Logo = ({
 					<input
 						className='form-control'
 						type='text'
-						placeholder='Fill In Your Store Name In Arabic'
+						placeholder={
+							language === "Arabic"
+								? "ادخل اسم متجرك بالعربية"
+								: "Fill In Your Store Name In Arabic"
+						}
 						value={addStoreNameArabic}
 						onChange={(e) => {
 							setAddStoreNameArabic(e.target.value);
@@ -318,7 +334,7 @@ const Adding1Logo = ({
 
 				<div className='col-md-5 py-5 mx-auto'>
 					<label>
-						Longitude{" "}
+						{language === "Arabic" ? "خط الطول" : "Longitude"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
 							{" "}
 							<strong>*</strong>{" "}
@@ -327,7 +343,11 @@ const Adding1Logo = ({
 					<input
 						className='form-control'
 						type='text'
-						placeholder='Fill In Your Location Longitude'
+						placeholder={
+							language === "Arabic"
+								? "ادخل خط الطول الخاص بالموقع"
+								: "Fill In Your Location Longitude"
+						}
 						value={longitude}
 						onChange={(e) => {
 							setLongitude(e.target.value);
@@ -336,7 +356,7 @@ const Adding1Logo = ({
 				</div>
 				<div className='col-md-5 py-5 mx-auto'>
 					<label>
-						Latitude{" "}
+						{language === "Arabic" ? "خط العرض" : "Latitude"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
 							{" "}
 							<strong>*</strong>{" "}
@@ -345,7 +365,11 @@ const Adding1Logo = ({
 					<input
 						className='form-control'
 						type='text'
-						placeholder='Fill In Your Location Latitude'
+						placeholder={
+							language === "Arabic"
+								? "ادخل خط العرض الخاص بالموقع"
+								: "Fill In Your Location Latitude"
+						}
 						value={latitude}
 						onChange={(e) => {
 							setLatitude(e.target.value);
@@ -366,7 +390,9 @@ const Adding1Logo = ({
 						className='btn btn-primary mt-4 text-center w-25'
 						onClick={() => setClickedMenu("WorkingDays")}
 					>
-						Add Your Working Hours
+						{language === "Arabic"
+							? "أضف ساعات اعمل"
+							: "Add Your Working Hours"}
 					</div>
 				</div>
 			) : null}
@@ -389,7 +415,9 @@ const Adding1Logo = ({
 							}}
 							className='btn btn-danger text-center btn-block w-25 float-left'
 						>
-							Add Services (Next Step)
+							{language === "Arabic"
+								? "Add Services (Next Step)"
+								: "Add Services (Next Step)"}
 						</Link>
 					</span>
 				</div>

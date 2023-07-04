@@ -8,7 +8,7 @@ const FooterComp = () => {
 		<Wrapper>
 			<h5>
 				&copy; {new Date().getFullYear()}
-				<span> Hair Brush </span>
+				<span> XLOOK PRO </span>
 			</h5>{" "}
 			<h5>All rights reserved</h5>
 		</Wrapper>

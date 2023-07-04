@@ -111,6 +111,7 @@ const AddingWorkingHours = ({
 	storeThumbnail,
 	addStoreName,
 	addStoreNameArabic,
+	language,
 }) => {
 	const [AllAddedHoursCombined, setAllAddedHoursCombined] = useState({
 		AllAddedHoursCombined: [
@@ -322,7 +323,9 @@ const AddingWorkingHours = ({
 						style={{ border: "1px black solid", borderRadius: "20px" }}
 					>
 						<h3 className='mb-4 text-center'>
-							Add Active Appointments Hours/Times
+							{language === "Arabic"
+								? "إضافة أوقات العمل المتاحة"
+								: "Add Active Appointments Hours/Times"}
 						</h3>
 
 						<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>

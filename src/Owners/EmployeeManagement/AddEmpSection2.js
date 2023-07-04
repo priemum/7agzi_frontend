@@ -4,14 +4,14 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const toolbarOptions = [
-	[{header: [1, 2, 3, 4, 5, 6, false]}],
-	["bold", "italic", "underline", "strike", {color: []}],
-	[{list: "ordered"}, {list: "bullet"}, {indent: "-1"}, {indent: "+1"}],
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
 	["link", "image", "video"],
 	["clean"],
 ];
 
-const AddEmpSection2 = ({values, setValues, handleChange}) => {
+const AddEmpSection2 = ({ values, setValues, handleChange, language }) => {
 	function handlePaste(e) {
 		const clipboardData = e.clipboardData || window.clipboardData;
 		if (clipboardData && clipboardData.getData) {
@@ -25,7 +25,7 @@ const AddEmpSection2 = ({values, setValues, handleChange}) => {
 
 	function handleEditorChange(content, delta, source, editor) {
 		const html = editor.getHTML();
-		setValues({...values, description: html});
+		setValues({ ...values, description: html });
 	}
 
 	return (
@@ -34,48 +34,73 @@ const AddEmpSection2 = ({values, setValues, handleChange}) => {
 				<div className='row'>
 					<div className='form-group col-md-6 mx-auto mt-5'>
 						<div>
-							<label className=''>Employee Address</label>
+							<label className=''>
+								{language === "Arabic" ? "عنوان الموظف" : "Employee Address"}
+							</label>
 							<input
 								onChange={handleChange("employeeAddress")}
 								type='text'
 								className='form-control'
 								value={values.employeeAddress}
-								placeholder='Optional - Stylist address'
+								placeholder={
+									language === "Arabic"
+										? "اختياري - عنوان المصفف"
+										: "Optional - Stylist address"
+								}
 							/>
 						</div>
 
 						<div className='form-group mt-3'>
-							<label className=''>Employee Working Location</label>
+							<label className=''>
+								{language === "Arabic"
+									? "موقع عمل الموظف"
+									: "Employee Working Location"}
+							</label>
 							<input
 								onChange={handleChange("employeeWorkingAt")}
 								type='text'
 								className='form-control'
 								value={values.employeeWorkingAt}
-								placeholder='Optional - Stylist working address'
+								placeholder={
+									language === "Arabic"
+										? "اختياري - عنوان مكان عمل المصفف"
+										: "Optional - Stylist working address"
+								}
 							/>
 						</div>
 
 						<div className='form-group mt-3'>
-							<label className=''>Active Employee?</label>
+							<label className=''>
+								{language === "Arabic" ? "الموظف نشط؟" : "Active Employee?"}
+							</label>
 							<select
 								onChange={handleChange("activeEmployee")}
 								className='form-control'
 							>
-								<option>Please select / Required*</option>
-								<option value='0'>No</option>
-								<option value='1'>Yes</option>
+								<option>
+									{language === "Arabic"
+										? "الرجاء الاختيار / إجباري*"
+										: "Please select / Required*"}
+								</option>
+								<option value='0'>{language === "Arabic" ? "لا" : "No"}</option>
+								<option value='1'>
+									{language === "Arabic" ? "نعم" : "Yes"}
+								</option>
 							</select>
 						</div>
 					</div>
 
 					<div className='form-group col-md-6 mx-auto'>
-						<p style={{fontWeight: "bolder"}}>
-							<span style={{fontSize: "13.5px"}}>
-								Write a little bit about the employee (e.g. certicates, hobbies,
-								how many years of experience).
+						<p style={{ fontWeight: "bolder" }}>
+							<span style={{ fontSize: "13.5px" }}>
+								{language === "Arabic"
+									? "اكتب قليلاً عن الموظف (على سبيل المثال: الشهادات، الهوايات، عدد سنوات الخبرة)."
+									: "Write a little bit about the employee (e.g. certificates, hobbies, how many years of experience)."}
 							</span>
 							<br />
-							This description will be visible to clients.
+							{language === "Arabic"
+								? "هذا الوصف سيكون مرئيًا للعملاء."
+								: "This description will be visible to clients."}
 						</p>
 
 						<>
@@ -83,8 +108,8 @@ const AddEmpSection2 = ({values, setValues, handleChange}) => {
 								value={values.description}
 								onChange={handleEditorChange}
 								modules={{
-									toolbar: {container: toolbarOptions},
-									clipboard: {matchVisual: false},
+									toolbar: { container: toolbarOptions },
+									clipboard: { matchVisual: false },
 								}}
 								onPaste={handlePaste}
 							/>

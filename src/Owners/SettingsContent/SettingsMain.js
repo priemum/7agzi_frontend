@@ -42,7 +42,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const SettingsMain = () => {
+const SettingsMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -284,6 +284,7 @@ const SettingsMain = () => {
 						setCollapsed={setCollapsed}
 					/>
 				</div>
+
 				<div>
 					<div className='container'>
 						<div className='row mx-auto'>
@@ -292,29 +293,32 @@ const SettingsMain = () => {
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("AddLogo")}
 							>
-								<i className='fa-brands fa-html5 mr-1'></i> Add Logo
+								<i className='fa-brands fa-html5 mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف شعار" : "Add Logo"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingDays")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingDays")}
 							>
-								<i className='fa-solid fa-calendar-days mr-1'></i> Add Working
-								Days
+								<i className='fa-solid fa-calendar-days mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف أيام عمل" : "Add Working Days"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("Awards")}
 							>
-								<i className='fa-solid fa-award mr-1'></i> Add Awards
+								<i className='fa-solid fa-award mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف جوائز" : "Add Awards"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingHours")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingHours")}
 							>
-								<i className='fa-solid fa-clock mr-1'></i> Add Working Hours
+								<i className='fa-solid fa-clock mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف ساعات عمل" : "Add Working Hours"}
 							</div>
 						</div>
 					</div>
@@ -342,6 +346,7 @@ const SettingsMain = () => {
 							setLoading={setLoading}
 							ownerIdPhoto={ownerIdPhoto}
 							setOwnerIdPhoto={setOwnerIdPhoto}
+							language={language}
 						/>
 					) : null}
 
@@ -363,6 +368,7 @@ const SettingsMain = () => {
 							setActiveOnlineBooking={setActiveOnlineBooking}
 							setExtraData={setExtraData}
 							extraData={extraData}
+							language={language}
 						/>
 					) : null}
 
@@ -381,6 +387,7 @@ const SettingsMain = () => {
 							setClickedMenu={setClickedMenu}
 							activeWhatsAppNotification={activeWhatsAppNotification}
 							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
+							language={language}
 						/>
 					) : null}
 
@@ -399,6 +406,7 @@ const SettingsMain = () => {
 							storeThumbnail={storeThumbnail}
 							addStoreName={addStoreName}
 							addStoreNameArabic={addStoreNameArabic}
+							language={language}
 						/>
 					) : null}
 				</div>

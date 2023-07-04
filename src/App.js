@@ -208,20 +208,21 @@ function App() {
 					<OwnerRoute
 						path='/store/admin/settings'
 						exact
-						component={SettingsMain}
+						component={() => <SettingsMain language={language} />}
 					/>
 
 					<OwnerRoute
 						path='/store/admin/services'
 						exact
-						component={ServicesMain}
+						component={() => <ServicesMain language={language} />}
 					/>
 
 					<OwnerRoute
 						path='/store/admin/employees'
 						exact
-						component={EmployeeMain}
+						component={() => <EmployeeMain language={language} />}
 					/>
+
 					<OwnerRoute
 						path='/store/admin/edit-website'
 						exact

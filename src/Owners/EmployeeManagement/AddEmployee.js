@@ -44,7 +44,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const AddEmployee = () => {
+const AddEmployee = ({ language }) => {
 	const [clickedMenu, setClickedMenu] = useState("AddImagesAndName");
 
 	const [values, setValues] = useState({
@@ -368,29 +368,32 @@ const AddEmployee = () => {
 						className='col-md-3 menuItems'
 						onClick={() => setClickedMenu("AddImagesAndName")}
 					>
-						<i className='fa-solid fa-address-book mr-1'></i> Add Images & Name
+						<i className='fa-solid fa-address-book mr-1'></i>{" "}
+						{language === "Arabic" ? "إضافة الصور والاسم" : "Add Images & Name"}
 					</div>
 					<div
 						style={isActive(clickedMenu, "AboutEmployee")}
 						className='col-md-3 menuItems'
 						onClick={() => setClickedMenu("AboutEmployee")}
 					>
-						<i className='fa-solid fa-address-card mr-1'></i> About Employee
+						<i className='fa-solid fa-address-card mr-1'></i>{" "}
+						{language === "Arabic" ? "عن الموظف" : "About Employee"}
 					</div>
 					<div
 						style={isActive(clickedMenu, "WorkingDays")}
 						className='col-md-3 menuItems'
 						onClick={() => setClickedMenu("WorkingDays")}
 					>
-						<i className='fa-solid fa-calendar mr-1'></i> Working Days/ Hours
+						<i className='fa-solid fa-calendar mr-1'></i>{" "}
+						{language === "Arabic" ? "أيام وساعات العمل" : "Working Days/Hours"}
 					</div>
 					<div
 						style={isActive(clickedMenu, "EmployeeAccount")}
 						className='col-md-3 menuItems'
 						onClick={() => setClickedMenu("EmployeeAccount")}
 					>
-						<i className='fa-solid fa-right-to-bracket mr-1'></i> Employee
-						Account
+						<i className='fa-solid fa-right-to-bracket mr-1'></i>{" "}
+						{language === "Arabic" ? "حساب الموظف" : "Employee Account"}
 					</div>
 				</div>
 				{clickedMenu === "AddImagesAndName" ? (
@@ -402,6 +405,7 @@ const AddEmployee = () => {
 							fileUploadAndResizeThumbNail={fileUploadAndResizeWorkPhotos}
 							values={values}
 							setValues={setValues}
+							language={language}
 						/>
 					</div>
 				) : null}
@@ -412,6 +416,7 @@ const AddEmployee = () => {
 							values={values}
 							setValues={setValues}
 							handleChange={handleChange}
+							language={language}
 						/>
 					</div>
 				) : null}
@@ -430,6 +435,7 @@ const AddEmployee = () => {
 							query={query}
 							query2={query2}
 							query4={query4}
+							language={language}
 						/>
 					</div>
 				) : null}
@@ -440,6 +446,7 @@ const AddEmployee = () => {
 							values={values}
 							setValues2={setValues2}
 							values2={values2}
+							language={language}
 						/>
 					</div>
 				) : null}

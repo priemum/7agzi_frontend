@@ -370,35 +370,35 @@ const SingleStorePage = ({ props, language }) => {
 								style={isActive(clickedMenu, "SERVICES")}
 								onClick={() => setClickedMenu("SERVICES")}
 							>
-								SERVICES
+								{language === "Arabic" ? "الخدمات" : "SERVICES"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "STYLISTS")}
 								onClick={() => setClickedMenu("STYLISTS")}
 							>
-								TEAM
+								{language === "Arabic" ? "الفريق" : "TEAM"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "ABOUT")}
 								onClick={() => setClickedMenu("ABOUT")}
 							>
-								ABOUT
+								{language === "Arabic" ? "عنا" : "ABOUT"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "GALLERY")}
 								onClick={() => setClickedMenu("GALLERY")}
 							>
-								GALLERY
+								{language === "Arabic" ? "المعرض" : "GALLERY"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "MAP")}
 								onClick={() => setClickedMenu("MAP")}
 							>
-								MAP
+								{language === "Arabic" ? "الخريطة" : "MAP"}
 							</div>
 						</div>
 						{language === "Arabic" ? (
@@ -477,6 +477,7 @@ const SingleStorePage = ({ props, language }) => {
 								<AddedServices
 									ownerId={storeChosen.belongsTo._id}
 									chosenCustomerType={chosenCustomerType2}
+									language={language}
 								/>
 							</div>
 						) : null}
@@ -487,6 +488,7 @@ const SingleStorePage = ({ props, language }) => {
 									storeProperties={storeChosen}
 									contact={contact}
 									filteredResults={allEmployees}
+									language={language}
 								/>
 							</div>
 						) : null}

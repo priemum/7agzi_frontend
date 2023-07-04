@@ -104,7 +104,11 @@ const HeroComponent = ({
 										letterSpacing: "2px",
 									}}
 								>
-									<strong>{fromLocalStore.addStoreName}</strong>
+									{language === "Arabic" ? (
+										<strong>{fromLocalStore.addStoreNameArabic}</strong>
+									) : (
+										<strong>{fromLocalStore.addStoreName}</strong>
+									)}
 								</h3>
 							</div>
 							<div className='ml-3'>
@@ -131,7 +135,10 @@ const HeroComponent = ({
 													}}
 													key={i}
 												>
-													{s.serviceName} {isLastElement ? "" : "- "}
+													{language === "Arabic"
+														? s.serviceNameOtherLanguage
+														: s.serviceName}{" "}
+													{isLastElement ? "" : "- "}
 												</span>
 											);
 										} else {

@@ -166,12 +166,14 @@ const AgentDashboard = ({ language }) => {
 						{" "}
 						<strong> HI AGENT {currentUser && currentUser.name}</strong>
 					</h1>
-					<div className='row'>
+					<div className='row' dir={language === "Arabic" ? "rtl" : "ltr"}>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
 							<div className='card' style={{ background: "#f1416c" }}>
 								<div className='card-body'>
 									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										Stores You Registered
+										{language === "Arabic"
+											? "المتاجر التي سجلت بها"
+											: "Stores You Registered"}
 									</h5>
 									<CountUp
 										style={{ color: "white" }}
@@ -187,7 +189,9 @@ const AgentDashboard = ({ language }) => {
 							<div className='card' style={{ background: "#009ef7" }}>
 								<div className='card-body'>
 									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										Stores Went Pro
+										{language === "Arabic"
+											? "المتاجر التي أصبحت برو"
+											: "Stores Went Pro"}
 									</h5>
 									<CountUp
 										style={{ color: "white" }}
@@ -203,7 +207,7 @@ const AgentDashboard = ({ language }) => {
 							<div className='card' style={{ background: "#50cd89" }}>
 								<div className='card-body'>
 									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										Your Share ($)
+										{language === "Arabic" ? "حصتك ($)" : "Your Share ($)"}
 									</h5>
 									<span style={{ color: "white" }}>$</span>{" "}
 									<CountUp
@@ -223,7 +227,9 @@ const AgentDashboard = ({ language }) => {
 							<div className='card' style={{ background: "#185434" }}>
 								<div className='card-body'>
 									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										You Got Paid ($)
+										{language === "Arabic"
+											? "المبلغ المستلم ($)"
+											: "You Got Paid ($)"}
 									</h5>
 									<span style={{ color: "white" }}>$</span>{" "}
 									<CountUp
@@ -256,31 +262,59 @@ const AgentDashboard = ({ language }) => {
 							// className='thead-light'
 							// style={{border: "2px black solid"}}
 							>
-								<tr>
+								<tr dir={language === "Arabic" ? "rtl" : "ltr"}>
 									<th scope='col'>#</th>
-									<th scope='col'>Name</th>
-									<th scope='col'>Phone</th>
-									<th scope='col'>Governorate</th>
-									<th scope='col'>Address</th>
-									<th scope='col'>Store Name</th>
-									<th scope='col'>Store Type</th>
-									<th scope='col'>Account Created</th>
-									<th scope='col'>Settings?</th>
+									<th scope='col'>
+										{language === "Arabic" ? "الاسم" : "Name"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "الهاتف" : "Phone"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "المحافظة" : "Governorate"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "العنوان" : "Address"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "اسم المتجر" : "Store Name"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "نوع المتجر" : "Store Type"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic"
+											? "تاريخ الإنشاء"
+											: "Account Created"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic" ? "الإعدادات؟" : "Settings?"}
+									</th>
 									<th
 										scope='col'
 										style={{ background: "black", color: "white" }}
 									>
-										Active Store?
+										{language === "Arabic" ? "المتجر النشط؟" : "Active Store?"}
 									</th>
-									<th scope='col'>Agent</th>
+									<th scope='col'>
+										{language === "Arabic" ? "الوكيل" : "Agent"}
+									</th>
 									<th
 										scope='col'
 										style={{ background: "darkgoldenrod", color: "white" }}
 									>
-										Pro Account
+										{language === "Arabic" ? "حساب Pro" : "Pro Account"}
 									</th>
-									<th scope='col'>Agent Paid Initial?</th>
-									<th scope='col'>Agent Paid Pro?</th>
+									<th scope='col'>
+										{language === "Arabic"
+											? "الوكيل قام بالدفع الأولي؟"
+											: "Agent Paid Initial?"}
+									</th>
+									<th scope='col'>
+										{language === "Arabic"
+											? "الوكيل قام بدفع Pro؟"
+											: "Agent Paid Pro?"}
+									</th>
 								</tr>
 							</thead>
 

@@ -46,29 +46,58 @@ const PlatformShareComp = ({
 		<PlatformShareCompWrapper>
 			{user && user.platFormShare ? (
 				<div className='col-md-6 platformShare mt-5'>
-					<div>
+					<div dir={language === "Arabic" ? "rtl" : "ltr"}>
 						<h3>
-							THANK YOU!
-							<br />
-							<br />
-							<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
-								You have already submitted your card, our system is now
-								authorized to get transactions from you.
-							</strong>
+							{language === "Arabic" ? (
+								<>
+									شكرًا لك!
+									<br />
+									<br />
+									<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
+										لقد قمت بإرسال بطاقتك بالفعل، نظامنا مفوض الآن للحصول على
+										المعاملات منك.
+									</strong>
+								</>
+							) : (
+								<>
+									THANK YOU!
+									<br />
+									<br />
+									<strong style={{ fontSize: "1.5rem", color: "darkgreen" }}>
+										You have already submitted your card, our system is now
+										authorized to get transactions from you.
+									</strong>
+								</>
+							)}
 						</h3>
 						<br />
 						<br />
 						<h5>
-							{" "}
-							<strong
-								style={{
-									fontSize: "1.3rem",
-									textTransform: "uppercase",
-									color: "black",
-								}}
-							>
-								Thank you again for your business!
-							</strong>{" "}
+							{language === "Arabic" ? (
+								<>
+									<strong
+										style={{
+											fontSize: "1.3rem",
+											textTransform: "uppercase",
+											color: "black",
+										}}
+									>
+										شكرًا مرة أخرى على تعاونكم!
+									</strong>{" "}
+								</>
+							) : (
+								<>
+									<strong
+										style={{
+											fontSize: "1.3rem",
+											textTransform: "uppercase",
+											color: "black",
+										}}
+									>
+										Thank you again for your business!
+									</strong>{" "}
+								</>
+							)}
 						</h5>
 					</div>
 					<div

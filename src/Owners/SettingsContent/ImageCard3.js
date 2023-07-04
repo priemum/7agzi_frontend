@@ -9,6 +9,7 @@ const ImageCard3 = ({
 	handleImageRemove,
 	addThumbnail,
 	fileUploadAndResizeThumbNail,
+	language,
 }) => {
 	return (
 		<ImageCardWrapper>
@@ -16,7 +17,9 @@ const ImageCard3 = ({
 				<div className=''>
 					<div className=' p-2'>
 						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-							Owner ID Photo
+							{language === "Arabic"
+								? "صورة بطاقة هوية المالك"
+								: "Owner ID Photo"}
 						</h5>
 					</div>
 				</div>

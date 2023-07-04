@@ -34,7 +34,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const EmployeeMain = () => {
+const EmployeeMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -75,8 +75,10 @@ const EmployeeMain = () => {
 									onClick={() => setClickedMenu("AddEmployee")}
 									to='/store/admin/employees'
 								>
-									<i className='fa-solid fa-person-dress-burst mr-1'></i> Add A
-									New Employee
+									<i className='fa-solid fa-person-dress-burst mr-1'></i>{" "}
+									{language === "Arabic"
+										? "إضافة موظف جديد"
+										: "Add A New Employee"}
 								</Link>
 							</div>
 							<div
@@ -89,13 +91,18 @@ const EmployeeMain = () => {
 									onClick={() => setClickedMenu("UpdateEmployee")}
 									to='/store/admin/employees?update-employee'
 								>
-									<i className='fa-solid fa-pen mr-1'></i> Employees' List
+									<i className='fa-solid fa-pen mr-1'></i>{" "}
+									{language === "Arabic" ? "قائمة الموظفين" : "Employees' List"}
 								</Link>
 							</div>
 						</div>
 					</div>
-					{clickedMenu === "AddEmployee" ? <AddEmployee /> : null}
-					{clickedMenu === "UpdateEmployee" ? <UpdateEmployee /> : null}
+					{clickedMenu === "AddEmployee" ? (
+						<AddEmployee language={language} />
+					) : null}
+					{clickedMenu === "UpdateEmployee" ? (
+						<UpdateEmployee language={language} />
+					) : null}
 				</div>
 			</div>
 		</EmployeeMainWrapper>

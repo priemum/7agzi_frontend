@@ -17,6 +17,7 @@ const Adding2DaysClosed = ({
 	setActiveOnlineBooking,
 	setExtraData,
 	extraData,
+	language,
 }) => {
 	const pushToAllDates = (e) => {
 		e.preventDefault();
@@ -60,7 +61,9 @@ const Adding2DaysClosed = ({
 		<Adding2DaysClosedWrapper className='container'>
 			<div className='mb-3'>
 				<label className='mr-2' style={{ fontWeight: "bold" }}>
-					Activate Online Booking (Self Service Online Booking)?
+					{language === "Arabic"
+						? "تفعيل الحجز الإلكتروني (خدمة الحجز الذاتي عبر الإنترنت)؟"
+						: "Activate Online Booking (Self Service Online Booking)?"}
 				</label>
 
 				<label className='block'>
@@ -72,7 +75,7 @@ const Adding2DaysClosed = ({
 						className='my-3 mx-1'
 						checked={activeOnlineBooking}
 					/>
-					Yes
+					{language === "Arabic" ? "نعم" : "Yes"}
 				</label>
 				<label className='block ml-3 '>
 					<input
@@ -83,11 +86,16 @@ const Adding2DaysClosed = ({
 						className='my-3 mx-1'
 						checked={!activeOnlineBooking}
 					/>
-					No
+					{language === "Arabic" ? "لا" : "No"}
 				</label>
 			</div>
+
 			<div className='w-100 mb-5'>
-				<label>Store Closed on days:</label>
+				<label>
+					{language === "Arabic"
+						? "أيام إغلاق المتجر:"
+						: "Store Closed on days:"}
+				</label>
 				<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>
 					<label htmlFor='one' className='block '>
 						<input
@@ -98,7 +106,7 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Saturday") > -1}
 						/>
-						Saturday
+						{language === "Arabic" ? "السبت" : "Saturday"}
 					</label>
 					<label htmlFor='two' className='block'>
 						<input
@@ -109,7 +117,7 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Sunday") > -1}
 						/>
-						Sunday
+						{language === "Arabic" ? "الأحد" : "Sunday"}
 					</label>
 					<label htmlFor='three' className='block'>
 						<input
@@ -120,7 +128,7 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Monday") > -1}
 						/>
-						Monday
+						{language === "Arabic" ? "الاثنين" : "Monday"}
 					</label>
 					<label htmlFor='four' className='block'>
 						<input
@@ -131,7 +139,7 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Tuesday") > -1}
 						/>
-						Tuesday
+						{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
 					</label>
 					<label htmlFor='five' className='block'>
 						<input
@@ -144,7 +152,7 @@ const Adding2DaysClosed = ({
 								daysStoreClosed.daysStoreClosed.indexOf("Wednesday") > -1
 							}
 						/>
-						Wednesday
+						{language === "Arabic" ? "الأربعاء" : "Wednesday"}
 					</label>
 					<label htmlFor='six' className='block'>
 						<input
@@ -155,7 +163,7 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Thursday") > -1}
 						/>
-						Thursday
+						{language === "Arabic" ? "الخميس" : "Thursday"}
 					</label>
 					<label htmlFor='seven' className='block'>
 						<input
@@ -166,18 +174,20 @@ const Adding2DaysClosed = ({
 							className='m-3'
 							checked={daysStoreClosed.daysStoreClosed.indexOf("Friday") > -1}
 						/>
-						Friday
+						{language === "Arabic" ? "الجمعة" : "Friday"}
 					</label>
 				</div>
 			</div>
 
 			<div className='my-3'>
-				<h4 style={{ fontWeight: "bolder" }}>General Data</h4>
+				<h4 style={{ fontWeight: "bolder" }}>
+					{language === "Arabic" ? "البيانات العامة" : "General Data"}
+				</h4>
 
 				<div className='row'>
 					<div className='mb-3 col-md-3'>
 						<label className='mr-1' style={{ fontWeight: "bold" }}>
-							Accept Cash?
+							{language === "Arabic" ? "قبول النقد؟" : "Accept Cash?"}
 						</label>
 
 						<label className='block'>
@@ -191,7 +201,7 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={extraData.cashPayment}
 							/>
-							Yes
+							{language === "Arabic" ? "نعم" : "Yes"}
 						</label>
 						<label className='block ml-1 '>
 							<input
@@ -204,13 +214,13 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={!extraData.cashPayment}
 							/>
-							No
+							{language === "Arabic" ? "لا" : "No"}
 						</label>
 					</div>
 
 					<div className='mb-3 col-md-3'>
 						<label className='mr-1' style={{ fontWeight: "bold" }}>
-							Accept Cards?
+							{language === "Arabic" ? "قبول البطاقات؟" : "Accept Cards?"}
 						</label>
 
 						<label className='block'>
@@ -224,7 +234,7 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={extraData.visaPayment}
 							/>
-							Yes
+							{language === "Arabic" ? "نعم" : "Yes"}
 						</label>
 						<label className='block ml-1 '>
 							<input
@@ -237,13 +247,13 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={!extraData.visaPayment}
 							/>
-							No
+							{language === "Arabic" ? "لا" : "No"}
 						</label>
 					</div>
 
 					<div className='mb-3 col-md-3'>
 						<label className='mr-1' style={{ fontWeight: "bold" }}>
-							Parking Lot?
+							{language === "Arabic" ? "موقف سيارات؟" : "Parking Lot?"}
 						</label>
 
 						<label className='block'>
@@ -255,7 +265,7 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={extraData.parking}
 							/>
-							Yes
+							{language === "Arabic" ? "نعم" : "Yes"}
 						</label>
 						<label className='block ml-1 '>
 							<input
@@ -266,13 +276,13 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={!extraData.parking}
 							/>
-							No
+							{language === "Arabic" ? "لا" : "No"}
 						</label>
 					</div>
 
 					<div className='mb-3 col-md-3'>
 						<label className='mr-1' style={{ fontWeight: "bold" }}>
-							Air Condition?
+							{language === "Arabic" ? "تكييف الهواء؟" : "Air Condition?"}
 						</label>
 
 						<label className='block'>
@@ -286,7 +296,7 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={extraData.airConditioned}
 							/>
-							Yes
+							{language === "Arabic" ? "نعم" : "Yes"}
 						</label>
 						<label className='block ml-1 '>
 							<input
@@ -299,13 +309,17 @@ const Adding2DaysClosed = ({
 								className='my-3 mx-1'
 								checked={!extraData.airConditioned}
 							/>
-							No
+							{language === "Arabic" ? "لا" : "No"}
 						</label>
 					</div>
 
 					<div className='col-md-4 mx-auto'>
 						<div className='form-group'>
-							<label className='text-muted'>How Many Branches?</label>
+							<label className='text-muted'>
+								{language === "Arabic"
+									? "كم عدد الفروع؟"
+									: "How Many Branches?"}
+							</label>
 							<input
 								type='number'
 								className='form-control'
@@ -313,14 +327,20 @@ const Adding2DaysClosed = ({
 									setExtraData({ ...extraData, branchesCount: e.target.value })
 								}
 								value={extraData.branchesCount}
-								placeholder='How Many Branches'
+								placeholder={
+									language === "Arabic" ? "عدد الفروع" : "How Many Branches"
+								}
 							/>
 						</div>
 					</div>
 
 					<div className='col-md-4 mx-auto'>
 						<div className='form-group'>
-							<label className='text-muted'>How Many Employees?</label>
+							<label className='text-muted'>
+								{language === "Arabic"
+									? "كم عدد الموظفين؟"
+									: "How Many Employees?"}
+							</label>
 							<input
 								type='number'
 								className='form-control'
@@ -328,14 +348,18 @@ const Adding2DaysClosed = ({
 									setExtraData({ ...extraData, stylistsCount: e.target.value })
 								}
 								value={extraData.stylistsCount}
-								placeholder='Stylists Count'
+								placeholder={
+									language === "Arabic" ? "عدد الموظفين" : "How Many Employees"
+								}
 							/>
 						</div>
 					</div>
 
 					<div className='col-md-4 mx-auto'>
 						<div className='form-group'>
-							<label className='text-muted'>How Many Chairs?</label>
+							<label className='text-muted'>
+								{language === "Arabic" ? "كم عدد الكراسي؟" : "How Many Chairs?"}
+							</label>
 							<input
 								type='number'
 								className='form-control'
@@ -352,7 +376,9 @@ const Adding2DaysClosed = ({
 
 			<div className='form-group'>
 				<label className='text-muted'>
-					Add dates your store is closed (e.g. Holidays, labor day, etc...)
+					{language === "Arabic"
+						? "أضف التواريخ التي تكون فيها المتجر مغلقًا (مثل العطلات، يوم العمل، وما إلى ذلك)؟"
+						: "Add dates your store is closed (e.g. Holidays, labor day, etc...)"}
 				</label>
 				<br />
 				<DatePicker
@@ -371,16 +397,20 @@ const Adding2DaysClosed = ({
 						onClick={pushToAllDates}
 						className='btn btn-outline-info mb-3  ml-5'
 					>
-						Add Date
+						{language === "Arabic" ? "إضافة التاريخ" : "Add Date"}
 					</button>
 				</div>
 			</div>
 
 			<div>
 				{datesStoreClosed && datesStoreClosed.length > 0 ? (
-					<strong>Added Dates:</strong>
+					<strong>
+						{language === "Arabic" ? "التواريخ المضافة:" : "Added Dates:"}
+					</strong>
 				) : (
-					<strong>No Dates Added</strong>
+					<strong>
+						{language === "Arabic" ? "لا يوجد تواريخ مضافة" : "No Dates Added"}
+					</strong>
 				)}
 				<ul>
 					{datesStoreClosed &&
@@ -413,7 +443,7 @@ const Adding2DaysClosed = ({
 					onClick={() => setClickedMenu("Awards")}
 					className='btn btn-primary btn-block mb-3 '
 				>
-					Add Awards
+					{language === "Arabic" ? "إضافة الجوائز" : "Add Awards"}
 				</button>
 			</div>
 		</Adding2DaysClosedWrapper>

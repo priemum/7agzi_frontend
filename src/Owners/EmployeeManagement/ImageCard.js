@@ -9,14 +9,17 @@ const ImageCard = ({
 	handleImageRemove,
 	addThumbnail,
 	fileUploadAndResizeThumbNail,
+	language,
 }) => {
 	return (
 		<ImageCardWrapper>
 			<div className='card card-flush py-4'>
 				<div className=''>
 					<div className=' p-2'>
-						<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
-							Employee Working Photos
+						<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
+							{language === "Arabic"
+								? "صور عمل الموظفين"
+								: "Employee Working Photos"}
 						</h5>
 					</div>
 				</div>
@@ -68,7 +71,7 @@ const ImageCard = ({
 						{!addThumbnail.images || addThumbnail.images.length <= 0 ? (
 							<label
 								className=''
-								style={{cursor: "pointer", fontSize: "0.95rem"}}
+								style={{ cursor: "pointer", fontSize: "0.95rem" }}
 							>
 								<img
 									src={imageImage}
@@ -91,11 +94,11 @@ const ImageCard = ({
 					</div>
 					<div className='text-muted fs-7'>
 						Width: 800px, Height: 954px;{" "}
-						<span style={{fontWeight: "bolder", textTransform: "uppercase"}}>
+						<span style={{ fontWeight: "bolder", textTransform: "uppercase" }}>
 							Up to 10 photos.
 						</span>
 						<br />
-						<strong style={{color: "black"}}>
+						<strong style={{ color: "black" }}>
 							Image Should be 300 kb or less...
 						</strong>
 						<br />
