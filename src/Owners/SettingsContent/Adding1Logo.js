@@ -48,6 +48,7 @@ const Adding1Logo = ({
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 300 * 1024) {
+					setLoading2(false);
 					// file size is in bytes
 					alert("File size should be less than 300kb");
 					continue; // skip this file
@@ -111,6 +112,7 @@ const Adding1Logo = ({
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
+					setLoading(false);
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -177,6 +179,7 @@ const Adding1Logo = ({
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
+					setLoading3(false);
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file

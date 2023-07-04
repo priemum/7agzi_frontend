@@ -151,6 +151,7 @@ const SignupForm = ({ language }) => {
 			if (data1.error) {
 				console.log(data1.error, "data1.error");
 				setValues({ ...values, success: false });
+				return toast.info(data1.error);
 			} else
 				signin({ email, password }).then((data) => {
 					if (data.error) {

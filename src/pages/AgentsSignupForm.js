@@ -71,10 +71,15 @@ const AgentsSignupForm = ({ language }) => {
 
 	const { user } = isAuthenticated();
 	const handleChange = (name) => (event) => {
+		let value = event.target.value;
+		if (name === "phone") {
+			value = value.replace(/\s/g, ""); // Remove spaces only for the phone field
+		}
+
 		setValues({
 			...values,
 			error: false,
-			[name]: event.target.value,
+			[name]: value,
 		});
 	};
 
@@ -148,6 +153,7 @@ const AgentsSignupForm = ({ language }) => {
 			if (data1.error) {
 				console.log(data1.error, "data1.error");
 				setValues({ ...values, success: false });
+				return toast.error(data1.error);
 			} else
 				signin({ email, password }).then((data) => {
 					if (data.error) {
@@ -193,6 +199,7 @@ const AgentsSignupForm = ({ language }) => {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
 					// file size is in bytes
+					setValues({ ...values, loading: false });
 					alert("File size should be less than 500kb");
 					continue; // skip this file
 				}
@@ -223,7 +230,7 @@ const AgentsSignupForm = ({ language }) => {
 					"base64"
 				);
 			}
-			setValues({ ...values, loading: true });
+			// setValues({ ...values, loading: false });
 		}
 	};
 
@@ -267,7 +274,9 @@ const AgentsSignupForm = ({ language }) => {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
 					// file size is in bytes
+					setValues({ ...values, loading2: false });
 					alert("File size should be less than 500kb");
+
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
