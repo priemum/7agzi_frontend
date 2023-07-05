@@ -30,7 +30,6 @@ const FormStep1 = ({
 
 	return (
 		<FormStep1Wrapper>
-			hello
 			<div>
 				{storeClosed_NotClosed && (
 					<div

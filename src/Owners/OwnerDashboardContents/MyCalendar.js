@@ -98,7 +98,7 @@ const MyCalendar = ({ language }) => {
 				start: startDateTime.toISOString(),
 				end: endDateTime.toISOString(),
 				employeeId: i.employees && i.employees[0] && i.employees[0]._id,
-				scheduledDate: i.scheduledDate,
+				scheduledDate: new Date(i.scheduledDate).toLocaleDateString(),
 				BookedFrom: i.BookedFrom,
 				color:
 					i.status === "Cancelled"

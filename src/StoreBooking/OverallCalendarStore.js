@@ -1,13 +1,13 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // eslint-disable-next-line
-import FullCalendar, {formatDate} from "@fullcalendar/react";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
-import {isAuthenticated} from "../auth";
+import { isAuthenticated } from "../auth";
 import {
 	listScheduledOrdersStore,
 	listScheduledOrders2,
@@ -21,7 +21,7 @@ const OverallCalendarStore = () => {
 
 	const [orders, setOrders] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
@@ -100,6 +100,13 @@ const OverallCalendarStore = () => {
 	const events =
 		orders &&
 		orders.map((i) => {
+			// Start datetime
+			const startDateTime = new Date(i.scheduledDate + " " + i.scheduledTime);
+			// End datetime
+			const endDateTime = new Date(
+				startDateTime.getTime() + i.serviceDuration * 60000
+			); // serviceDuration is assumed to be in minutes
+
 			return {
 				id: i._id,
 				title: i.employees[0].employeeName.substring(0, 9),
@@ -107,10 +114,10 @@ const OverallCalendarStore = () => {
 				// " =>" +
 				// " " +
 				// i.scheduledByUserName.substring(0, 6)
-				start: new Date(i.scheduleStartsAt).toISOString(),
-				end: new Date(i.scheduleEndsAt).toISOString(),
+				start: startDateTime.toISOString(),
+				end: endDateTime.toISOString(),
 				employeeId: i.employees && i.employees[0] && i.employees[0]._id,
-				scheduledDate: i.scheduledDate,
+				scheduledDate: new Date(i.scheduledDate).toLocaleDateString(),
 				BookedFrom: i.BookedFrom,
 				color:
 					i.status === "Cancelled"
@@ -281,7 +288,7 @@ const OverallCalendarStore = () => {
 	};
 
 	const handleWeekendsToggle = () => {
-		setState({...state, weekendsVisible: !state.weekendsVisible});
+		setState({ ...state, weekendsVisible: !state.weekendsVisible });
 	};
 	const handleDateSelect = (selectInfo) => {
 		let title = prompt("Please enter a new title for your event");
@@ -305,7 +312,7 @@ const OverallCalendarStore = () => {
 	};
 
 	const handleEvents = (events) => {
-		setState({...state, currentEvents: events && events});
+		setState({ ...state, currentEvents: events && events });
 	};
 
 	function renderEventContent(eventInfo) {

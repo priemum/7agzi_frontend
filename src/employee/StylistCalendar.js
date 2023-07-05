@@ -1,15 +1,15 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // eslint-disable-next-line
-import FullCalendar, {formatDate} from "@fullcalendar/react";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
-import {listScheduledOrders3} from "./apiStylist";
-import {isAuthenticated} from "../auth";
-import {readByPhone} from "../apiCore";
+import { listScheduledOrders3 } from "./apiStylist";
+import { isAuthenticated } from "../auth";
+import { readByPhone } from "../apiCore";
 
 const StylistCalendar = () => {
 	const [state, setState] = useState({
@@ -22,7 +22,7 @@ const StylistCalendar = () => {
 
 	// eslint-disable-next-line
 	const [employee, setEmployee] = useState("");
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const loadOrders = () => {
 		setLoading(true);
@@ -99,18 +99,25 @@ const StylistCalendar = () => {
 	const events =
 		orders &&
 		orders.map((i) => {
+			// Start datetime
+			const startDateTime = new Date(i.scheduledDate + " " + i.scheduledTime);
+			// End datetime
+			const endDateTime = new Date(
+				startDateTime.getTime() + i.serviceDuration * 60000
+			); // serviceDuration is assumed to be in minutes
+
 			return {
 				id: i._id,
-				title: i.employees[0].employeeName.substring(0, 10),
+				title: i.employees[0].employeeName.substring(0, 9),
 				// +
 				// " =>" +
 				// " " +
 				// i.scheduledByUserName.substring(0, 6)
-				start: i.scheduleStartsAt,
-				BookedFrom: i.BookedFrom,
-				end: i.scheduleEndsAt,
+				start: startDateTime.toISOString(),
+				end: endDateTime.toISOString(),
 				employeeId: i.employees && i.employees[0] && i.employees[0]._id,
-				scheduledDate: i.scheduledDate,
+				scheduledDate: new Date(i.scheduledDate).toLocaleDateString(),
+				BookedFrom: i.BookedFrom,
 				color:
 					i.status === "Cancelled"
 						? "#ff9595"
@@ -279,7 +286,7 @@ const StylistCalendar = () => {
 	};
 
 	const handleWeekendsToggle = () => {
-		setState({...state, weekendsVisible: !state.weekendsVisible});
+		setState({ ...state, weekendsVisible: !state.weekendsVisible });
 	};
 	const handleDateSelect = (selectInfo) => {
 		let title = prompt("Please enter a new title for your event");
@@ -303,7 +310,7 @@ const StylistCalendar = () => {
 	};
 
 	const handleEvents = (events) => {
-		setState({...state, currentEvents: events && events});
+		setState({ ...state, currentEvents: events && events });
 	};
 
 	function renderEventContent(eventInfo) {
