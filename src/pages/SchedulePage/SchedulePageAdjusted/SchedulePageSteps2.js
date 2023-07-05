@@ -810,29 +810,23 @@ const SchedulePageSteps2 = () => {
 		}
 	};
 
-	var getLocaleTimeZone = () => {
-		return moment.tz.guess();
-	};
-
 	var ScheduleStartsAt = () => {
-		var helper = chosenDate && moment(chosenDate).format("YYYY-MM-DD");
-		return (
-			chosenTime && moment.tz(helper + " " + chosenTime, getLocaleTimeZone())
-		);
+		var helper = chosenDate && new Date(chosenDate).toLocaleDateString();
+
+		return chosenTime && new Date(helper + " " + chosenTime);
 	};
 
 	var ScheduleEndsAt = () => {
-		var helper = chosenDate && moment(chosenDate).format("YYYY-MM-DD");
+		var helper = chosenDate && new Date(chosenDate).toLocaleDateString();
 		var serviceTimeDuration = ServiceTime_Duration
 			? ServiceTime_Duration.serviceTime
 			: 0;
-		var scheduledStart =
-			chosenTime && moment.tz(helper + " " + chosenTime, getLocaleTimeZone());
-		var scheduledEnd = moment(scheduledStart).add(
-			serviceTimeDuration,
-			"minutes"
+		return (
+			chosenTime &&
+			new Date(helper + " " + chosenTime).setMinutes(
+				new Date(helper + " " + chosenTime).getMinutes() + serviceTimeDuration
+			)
 		);
-		return scheduledEnd;
 	};
 
 	// console.log(
