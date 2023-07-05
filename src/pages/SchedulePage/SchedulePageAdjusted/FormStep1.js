@@ -1,4 +1,4 @@
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import moment from "moment";
 import React from "react";
 import styled from "styled-components";
@@ -30,6 +30,7 @@ const FormStep1 = ({
 
 	return (
 		<FormStep1Wrapper>
+			hello
 			<div>
 				{storeClosed_NotClosed && (
 					<div
@@ -57,7 +58,7 @@ const FormStep1 = ({
 				<div className='float-left ml-5 '>
 					<span
 						className='dataPointsReview'
-						style={{fontSize: "1.1rem", color: "black"}}
+						style={{ fontSize: "1.1rem", color: "black" }}
 					>
 						{" "}
 						<strong> Stylist Name:</strong>{" "}
@@ -90,7 +91,7 @@ const FormStep1 = ({
 						<React.Fragment>
 							<span
 								className='textResizeMessages'
-								style={{fontSize: "0.75rem", color: "red"}}
+								style={{ fontSize: "0.75rem", color: "red" }}
 							>
 								{" "}
 								Please note that {pickedEmployee.employeeName} is fully booked
@@ -107,7 +108,7 @@ const FormStep1 = ({
 							<React.Fragment>
 								<span
 									className='textResizeMessages'
-									style={{fontSize: "0.75rem", color: "red"}}
+									style={{ fontSize: "0.75rem", color: "red" }}
 								>
 									{" "}
 									Please note that {pickedEmployee.employeeName} is off on the
