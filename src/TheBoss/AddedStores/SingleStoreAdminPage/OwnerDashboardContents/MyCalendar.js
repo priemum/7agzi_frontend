@@ -1,16 +1,16 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // eslint-disable-next-line
-import FullCalendar, {formatDate} from "@fullcalendar/react";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
-import {listScheduledOrders2} from "../apiOwner";
-import {isAuthenticated} from "../../../../auth";
+import { listScheduledOrders2 } from "../apiOwner";
+import { isAuthenticated } from "../../../../auth";
 
-const MyCalendar = ({language, ownerId}) => {
+const MyCalendar = ({ language, ownerId }) => {
 	const [state, setState] = useState({
 		weekendsVisible: true,
 		currentEvents: [],
@@ -18,7 +18,7 @@ const MyCalendar = ({language, ownerId}) => {
 
 	const [orders, setOrders] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const {token} = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const loadOrders = () => {
 		function compareTotalAppointments(a, b) {
@@ -81,6 +81,13 @@ const MyCalendar = ({language, ownerId}) => {
 	const events =
 		orders &&
 		orders.map((i) => {
+			// Start datetime
+			const startDateTime = new Date(i.scheduledDate + " " + i.scheduledTime);
+			// End datetime
+			const endDateTime = new Date(
+				startDateTime.getTime() + i.serviceDuration * 60000
+			); // serviceDuration is assumed to be in minutes
+
 			return {
 				id: i._id,
 				title: i.employees[0].employeeName.substring(0, 9),
@@ -88,8 +95,8 @@ const MyCalendar = ({language, ownerId}) => {
 				// " =>" +
 				// " " +
 				// i.scheduledByUserName.substring(0, 6)
-				start: new Date(i.scheduleStartsAt).toISOString(),
-				end: new Date(i.scheduleEndsAt).toISOString(),
+				start: startDateTime.toISOString(),
+				end: endDateTime.toISOString(),
 				employeeId: i.employees && i.employees[0] && i.employees[0]._id,
 				scheduledDate: i.scheduledDate,
 				BookedFrom: i.BookedFrom,
@@ -262,7 +269,7 @@ const MyCalendar = ({language, ownerId}) => {
 	};
 
 	const handleWeekendsToggle = () => {
-		setState({...state, weekendsVisible: !state.weekendsVisible});
+		setState({ ...state, weekendsVisible: !state.weekendsVisible });
 	};
 	const handleDateSelect = (selectInfo) => {
 		let title = prompt("Please enter a new title for your event");
@@ -286,7 +293,7 @@ const MyCalendar = ({language, ownerId}) => {
 	};
 
 	const handleEvents = (events) => {
-		setState({...state, currentEvents: events && events});
+		setState({ ...state, currentEvents: events && events });
 	};
 
 	function renderEventContent(eventInfo) {

@@ -122,7 +122,26 @@ const MyCalendar = ({ language }) => {
 						: "white",
 			};
 		});
-	// console.log(events, "eventssssssssssss");
+	// console.log(
+	// 	events.map((i) => {
+	// 		// Start datetime
+	// 		const startDateTime = new Date(i.scheduledDate + " " + i.scheduledTime);
+	// 		// End datetime
+	// 		const endDateTime = new Date(
+	// 			startDateTime.getTime() + i.serviceDuration * 60000
+	// 		); // serviceDuration is assumed to be in minutes
+	// 		return {
+	// 			title: i.employees[0].employeeName.substring(0, 9),
+	// 			// +
+	// 			// " =>" +
+	// 			// " " +
+	// 			// i.scheduledByUserName.substring(0, 6)
+	// 			start: startDateTime.toISOString(),
+	// 			end: endDateTime.toISOString(),
+	// 		};
+	// 	}),
+	// 	"eventssssssssssss"
+	// );
 	// eslint-disable-next-line
 	const renderSidebar = () => {
 		return (
