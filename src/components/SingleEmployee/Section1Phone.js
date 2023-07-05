@@ -156,7 +156,7 @@ const Section1Phone = ({
 					<Carousel
 						autoPlay
 						infiniteLoop
-						interval={5000}
+						interval={3000}
 						showStatus={false}
 						showThumbs={false}
 						autoFocus={true}

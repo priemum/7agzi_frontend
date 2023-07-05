@@ -164,8 +164,16 @@ function App() {
 						exact
 						component={() => <SignupForm language={language} />}
 					/>
-					<Route path='/about' exact component={About} />
-					<Route path='/contact' exact component={Contact} />
+					<Route
+						path='/about'
+						exact
+						component={() => <About language={language} />}
+					/>
+					<Route
+						path='/contact'
+						exact
+						component={() => <Contact language={language} />}
+					/>
 
 					<Route
 						path='/schedule/:storeName/:phone'

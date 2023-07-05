@@ -172,7 +172,7 @@ const AgentsSignupForm = ({ language }) => {
 
 	const redirectUser = () => {
 		if (redirectToReferrer) {
-			if (user && user.role === 1) {
+			if (user && user.role === 10000) {
 				return <Redirect to='/admin/dashboard' />;
 			} else if (user && user.role === 1000) {
 				return <Redirect to='/store/admin/dashboard' />;

@@ -816,6 +816,26 @@ const AgentsSignupFormComp = ({
 
 							<hr />
 						</div>
+						<div className='col-md-4 mx-auto text-center'>
+							<div
+								className='btn-info p-2 btn-block'
+								style={{
+									color: "white",
+									background: "#a9082a",
+									border: "1px solid #a9082a",
+									fontSize: "1.2rem",
+									fontWeight: "bolder",
+									borderRadius: "5px",
+								}}
+							>
+								<Link
+									style={{ color: "white", background: "#a9082a" }}
+									to='/about'
+								>
+									<strong>CHECK WHO WE ARE?</strong>
+								</Link>
+							</div>
+						</div>
 					</div>
 				</div>
 			</FormSignup>

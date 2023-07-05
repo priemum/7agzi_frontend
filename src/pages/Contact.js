@@ -1,13 +1,13 @@
 /** @format */
 
-import React, {Fragment, useEffect, useState} from "react";
-import {contactUs} from "../auth/index";
-import {ToastContainer, toast} from "react-toastify";
-import {Helmet} from "react-helmet";
+import React, { Fragment, useEffect, useState } from "react";
+import { contactUs } from "../auth/index";
+import { ToastContainer, toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 // import ReactGA from "react-ga";
 
-const Contact = () => {
+const Contact = ({ language }) => {
 	useEffect(() => {
 		if (window !== "undefined") {
 			localStorage.removeItem("reservationData");
@@ -22,7 +22,7 @@ const Contact = () => {
 		loading: false,
 	});
 
-	const {name, email, subject, text, loading} = values;
+	const { name, email, subject, text, loading } = values;
 
 	const handleChange = (name) => (event) => {
 		setValues({
@@ -35,11 +35,11 @@ const Contact = () => {
 	const clickSubmit = (event) => {
 		event.preventDefault();
 		console.log("Form was submitted");
-		window.scrollTo({top: 0, behavior: "smooth"});
+		window.scrollTo({ top: 0, behavior: "smooth" });
 
-		contactUs({name, email, subject, text, loading: true}).then((data) => {
+		contactUs({ name, email, subject, text, loading: true }).then((data) => {
 			if (data.error) {
-				setValues({...values, error: data.error, success: false});
+				setValues({ ...values, error: data.error, success: false });
 				toast.error(data.error);
 			} else {
 				toast.success(SuccessfullySubmitted);
@@ -66,14 +66,38 @@ const Contact = () => {
 
 	return (
 		<ContactUsWrapper dir='ltr'>
-			<Helmet>
+			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				<title>Infinite Apps| Contact Us</title>
+				{language === "Arabic" ? (
+					<title dir='rtl'>إكس لوك | اتصل بنا</title>
+				) : (
+					<title>XLOOK | CONTACT US</title>
+				)}
 				<meta
 					name='description'
-					content={`Hair Brush Booking Software Developed By Infinite-Apps.com`}
+					content={
+						language === "Arabic"
+							? ` XLOOK بدإخل مرص.
+					ىه منصة تضم جميع صالونات إلحالقة ومحالت إلكوإفريإلحريىم و إلبيوت ى
+					إلمنصة تقدم إلخدمات لكل أفرإد إالرسة سوإء سيدإت, آنسات, رجال أو أوالد فللجميع مكان وخدمات مقدمة.
+					سني ى تستخدم منصة XLOOK مع
+					ى
+					الختيار وحجز موعد صالون حالقة إو بيوت عرض إالقرب لالبعد حسب مكانك.
+					ىت ىت يقوم إلزإئرين بحجز إلخدمات إل
+					أوطال
+					تقدمها إلمنصة من خالل أبليكيشن خاص لتسجيل وحجز إلمستخدمرين
+					إلخدمات إلتجميلية. Powered By https://infinite-apps.com`
+							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers
+					located in Egypt.
+					The platform offers services for all family members, including women, girls, men, and
+					children, with a variety of services provided.
+					The XLOOK platform is used to choose and book a barbershop or beauty center appointment
+					with the closest to the farthest offer according to your location. Visitors can book the services
+					offered by the platform through a special application designed for user registration and booking
+					beauty services. Powered By https://infinite-apps.com`
+					}
 				/>
-				<link rel='canonical' href='https://infinite-apps.com' />
+				<link rel='canonical' href='https://www.xlookpro.com/about' />
 			</Helmet>
 			{/* <div className='ad-class my-3 text-center mx-auto'> */}
 			{/* add your slot id  */}
@@ -82,7 +106,10 @@ const Contact = () => {
 			<div>
 				<div className='row mt-5 ml-3'>
 					<div className='col-md-4 my-3'>
-						<h3 style={{color: "var(--orangePrimary)"}} className='text-center'>
+						<h3
+							style={{ color: "var(--orangePrimary)" }}
+							className='text-center'
+						>
 							Do you have any inquiries...?
 						</h3>
 						<p className='Contact-us-paragraph mt-5'>
@@ -92,23 +119,23 @@ const Contact = () => {
 
 						<p className='Contact-us-paragraph'>
 							<div className='mt-3'>
-								<strong style={{color: "var(--orangePrimary)"}}>
+								<strong style={{ color: "var(--orangePrimary)" }}>
 									Business Hour:
 								</strong>{" "}
 								8:00 am to 7:00 PM.
 							</div>
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Address:
 							</strong>{" "}
 							PO Box 322, Crestline, CA, USA 92325
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Phone #:
 							</strong>{" "}
 							+19099914368.
 							<br />
-							<strong style={{color: "var(--orangePrimary)"}}>
+							<strong style={{ color: "var(--orangePrimary)" }}>
 								Email:
 							</strong>{" "}
 							helpdesk@infinite-apps.com.
@@ -117,42 +144,26 @@ const Contact = () => {
 
 						<div className='mt-5'>
 							<h3
-								style={{color: "var(--orangePrimary)"}}
+								style={{ color: "var(--orangePrimary)" }}
 								className='text-center'
 							>
 								We Are Happy To Help
 							</h3>
 
 							<p>
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-								Impedit error culpa consequuntur modi odio aspernatur dolores
-								fugiat praesentium nisi perferendis fugit quasi perspiciatis
-								magnam, ex exercitationem cumque sequi sint deserunt enim. Id,
-								tempore. Dolorem deleniti saepe soluta nulla minus culpa labore
-								quaerat eius rerum dolor natus, illo assumenda libero tempore
-								consequuntur est repudiandae pariatur praesentium! Magnam odit
-								voluptatem debitis fugit, qui dolore! Possimus ipsa sit pariatur
-								similique ut sint, exercitationem voluptas velit nostrum
-								quisquam doloribus ipsum laborum. Facere vero id odit incidunt
-								architecto? Explicabo nesciunt dolor quod impedit iste provident
-								recusandae quam voluptatem. Fuga quo corporis praesentium,
-								incidunt possimus optio est nostrum beatae quam deleniti iusto.
-								Exercitationem possimus animi illum, nihil, asperiores quaerat
-								sunt maiores iure cumque quo amet magnam accusantium, sit ea
-								dolorum. Iusto qui nostrum animi sapiente velit veritatis atque
-								architecto suscipit hic nisi aliquid, quaerat sint magnam nam
-								molestiae accusamus temporibus magni vitae delectus adipisci
-								repellat porro saepe aut reprehenderit! Ipsam vitae cumque
-								perspiciatis iusto, commodi debitis officiis asperiores. Nam
-								alias, impedit molestiae libero dolor rerum expedita! Temporibus
-								officiis consequuntur placeat porro, deleniti maiores
-								voluptatum, ad molestias numquam ab rem? Voluptates, minima id,
-								similique voluptatibus vitae maiores, illum voluptate nulla
-								explicabo veritatis dolorem consequatur minus sint tempora.
+								XLOOK is a platform that includes all barbershops, ladies'
+								beauty salons, and beauty centers located in Egypt. The platform
+								offers services for all family members, including women, girls,
+								men, and children, with a variety of services provided. The
+								XLOOK platform is used to choose and book a barbershop or beauty
+								center appointment with the closest to the farthest offer
+								according to your location. Visitors can book the services
+								offered by the platform through a special application designed
+								for user registration and booking beauty services.
 							</p>
 						</div>
 					</div>
-					<Fragment left>
+					<Fragment>
 						<div
 							className='col-md-7 my-3 mx-auto'
 							style={
@@ -161,8 +172,11 @@ const Contact = () => {
 								}
 							}
 						>
-							<Fragment duration={5000}>
-								<h2 style={{color: "var(--mainBlue)"}} className='text-center'>
+							<Fragment>
+								<h2
+									style={{ color: "var(--mainBlue)" }}
+									className='text-center'
+								>
 									Contact Us
 								</h2>
 							</Fragment>
@@ -196,7 +210,7 @@ const Contact = () => {
 									<div className='form-group'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Email Address:
 										</label>
@@ -215,7 +229,7 @@ const Contact = () => {
 									<div className='form-group'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Subject:
 										</label>
@@ -233,7 +247,7 @@ const Contact = () => {
 									<div className='form'>
 										<label
 											className='text-center labelStyle'
-											style={{fontWeight: "bold", fontSize: "1.1rem"}}
+											style={{ fontWeight: "bold", fontSize: "1.1rem" }}
 										>
 											Your Inquiry / Complaint:
 										</label>

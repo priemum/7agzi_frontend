@@ -6,9 +6,8 @@ import styled from "styled-components";
 // import AboutPhoto from "../Navbar/RCHDIGIMP_Logo.jpg";
 // import ReactGA from "react-ga";
 import Helmet from "react-helmet";
-import AboutHeroComp from "../components/OtherHeroComp/AboutHeroComp";
 
-const About = ({ language }) => {
+const About2 = ({ language }) => {
 	// useEffect(() => {
 	// 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
 	// 	// To Report Page View
@@ -51,8 +50,8 @@ const About = ({ language }) => {
 				/>
 				<link rel='canonical' href='https://www.xlookpro.com/about' />
 			</Helmet>
-			<div className='mb-5'>
-				<AboutHeroComp language={language} />
+			<div className='col-md-12' dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<img src='' className='img-fluid' alt='Infinite-Apps' />
 			</div>
 			<div
 				className='container'
@@ -268,14 +267,14 @@ const About = ({ language }) => {
 	);
 };
 
-export default About;
+export default About2;
 
 const AboutPageWrapper = styled.section`
-	background: black;
+	background: #f8f9fa;
 	padding-bottom: 100px;
+	padding-top: 50px;
 	overflow: hidden;
 	min-height: 1000px;
-	color: white;
 
 	.horizLine {
 		border-bottom: var(--primaryColor) solid 5px !important;
@@ -284,23 +283,19 @@ const AboutPageWrapper = styled.section`
 	h1 {
 		font-weight: bolder;
 		font-size: 1.7rem;
-		color: white;
 	}
 
 	h2 {
 		font-weight: bolder;
 		font-size: 1.3rem;
-		color: white;
 	}
 
 	p {
 		font-size: 1rem;
-		color: white;
 	}
 
 	li {
 		font-size: 1rem;
-		color: white;
 	}
 
 	@media (max-width: 1000px) {
