@@ -241,6 +241,23 @@ const AgentMoreDetails = ({
 						</div>
 
 						<div className='col-md-3 my-2'>
+							<label style={{ fontWeight: "bold" }}>Agent Email</label>
+							<input
+								type='text'
+								name='storeAddress'
+								value={values.email}
+								onChange={(e) => {
+									setValues({
+										...values,
+										email: e.target.value,
+									});
+								}}
+								required
+								placeholder='Agent Email Address'
+							/>
+						</div>
+
+						<div className='col-md-3 my-2'>
 							<label style={{ fontWeight: "bold" }}>
 								Facebook Link (Optional)
 							</label>

@@ -74,6 +74,9 @@ import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
 import AgentDashboard from "./PlatformAgent/AgentDashboard";
+import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsContent/SettingsMain";
+import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
+import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -315,6 +318,23 @@ function App() {
 						exact
 						component={() => <AgentDashboard language={language} />}
 					/>
+
+					<AgentsRoute
+						path='/store/admin/settings/agent/help/:ownerId'
+						exact
+						component={() => <SettingsMainAgent language={language} />}
+					/>
+					<AgentsRoute
+						path='/store/admin/services/agent/help/:ownerId'
+						exact
+						component={() => <ServicesMainAgent language={language} />}
+					/>
+					<AgentsRoute
+						path='/store/admin/employees/agent/help/:ownerId'
+						exact
+						component={() => <EmployeeMainAgent language={language} />}
+					/>
+
 					{/*End Of Platform Agents Routes */}
 
 					{/* Platform Admin Routes */}

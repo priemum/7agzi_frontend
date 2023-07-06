@@ -864,6 +864,8 @@ const SchedulePageSteps2 = () => {
 			return toast.error("Hair Salon is closed on the chosen date");
 		}
 
+		var phoneNoSpace = phone.replace(/\s/g, "");
+
 		const createOrderData = {
 			employees: [pickedEmployee],
 			scheduledByUserName:
@@ -906,7 +908,7 @@ const SchedulePageSteps2 = () => {
 				alreadySetLoyaltyPointsManagement &&
 				alreadySetLoyaltyPointsManagement.loyaltyPointsAward,
 			onlineServicesFees: alreadySetLoyaltyPointsManagement.onlineServicesFees,
-			phone: phone,
+			phone: phoneNoSpace,
 			scheduleAppointmentPhoto: scheduleAppointmentPhoto,
 			appointmentComment: scheduleComment,
 			discountedAmount: applyPoints

@@ -4,6 +4,7 @@ import { isAuthenticated } from "../auth";
 import { readUser, storesListForAgents } from "./apiAgent";
 import CountUp from "react-countup";
 import { allLoyaltyPointsAndStoreStatus } from "../TheBoss/apiBoss";
+import { Link } from "react-router-dom";
 
 const AgentDashboard = ({ language }) => {
 	//Read Single User for the agent
@@ -315,6 +316,7 @@ const AgentDashboard = ({ language }) => {
 											? "الوكيل قام بدفع Pro؟"
 											: "Agent Paid Pro?"}
 									</th>
+									<th>HELP!</th>
 								</tr>
 							</thead>
 
@@ -407,6 +409,18 @@ const AgentDashboard = ({ language }) => {
 													}}
 												>
 													{o.agentPaidPro ? "Paid" : "Not Paid"}
+												</td>
+												<td
+													style={{
+														fontWeight: "bolder",
+														textDecoration: "underline",
+													}}
+												>
+													<Link
+														to={`/store/admin/settings/agent/help/${o._id}`}
+													>
+														HELP ACCOUNT
+													</Link>
 												</td>
 											</tr>
 										);

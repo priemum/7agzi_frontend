@@ -9,11 +9,12 @@ import {
 	allLoyaltyPointsAndStoreStatus,
 	getServices,
 } from "../apiOwner";
+import { isAuthenticated } from "../../../auth";
 import AddingWorkingHours from "./AddingWorkingHours";
-import { useParams, useLocation } from "react-router-dom";
-import { isAuthenticated } from "../../../../auth";
-import { readUser } from "../../../apiBoss";
 import { toast } from "react-toastify";
+import { useLocation, useParams } from "react-router-dom";
+import { readUser } from "../../../TheBoss/apiBoss";
+// import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -43,7 +44,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const SettingsMainBoss = () => {
+const SettingsMainAgent = ({ language }) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
 
@@ -63,7 +64,6 @@ const SettingsMainBoss = () => {
 		alreadySetLoyaltyPointsManagement,
 		setAlreadySetLoyaltyPointsManagement,
 	] = useState("");
-	const [currentOwner, setCurrentOwner] = useState("");
 
 	//StoreManagement Main Fields
 	const [loyaltyPointsAward, setLoyaltyPointsAward] = useState("");
@@ -76,10 +76,10 @@ const SettingsMainBoss = () => {
 	const [addStoreNameArabic, setAddStoreNameArabic] = useState("");
 	const [daysStoreClosed, setDaysStoreClosed] = useState("");
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
-	const [longitude, setLongitude] = useState("");
-	const [latitude, setLatitude] = useState("");
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
+	const [longitude, setLongitude] = useState("");
+	const [latitude, setLatitude] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
 	const [extraData, setExtraData] = useState({
 		branchesCount: 1,
@@ -93,12 +93,30 @@ const SettingsMainBoss = () => {
 	const [activeWhatsAppNotification, setActiveWhatsAppNotification] =
 		useState(true);
 	const [loading, setLoading] = useState(false);
+	const [currentOwner, setCurrentOwner] = useState("");
 
 	//Checking whether services were added or not
 	const [allServices, setAllServices] = useState([]);
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
+
+	const gettingCurrentUser = () => {
+		readUser(ownerId, token).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				setCurrentOwner(data);
+			}
+		});
+	};
+
+	useEffect(() => {
+		gettingCurrentUser();
+		// eslint-disable-next-line
+	}, []);
+
+	console.log(currentOwner, "currentOwner");
 
 	const gettingPreviousLoyaltyPointsManagement = () => {
 		allLoyaltyPointsAndStoreStatus(token, ownerId).then((data) => {
@@ -118,9 +136,7 @@ const SettingsMainBoss = () => {
 					setLoyaltyPointsAward(
 						lastAddedSettings && lastAddedSettings.loyaltyPointsAward
 					);
-					setDiscountPercentage(
-						lastAddedSettings && lastAddedSettings.discountPercentage
-					);
+
 					setExtraData({
 						...extraData,
 						branchesCount: lastAddedSettings && lastAddedSettings.branchesCount,
@@ -132,6 +148,9 @@ const SettingsMainBoss = () => {
 							lastAddedSettings && lastAddedSettings.airConditioned,
 						parking: lastAddedSettings && lastAddedSettings.parking,
 					});
+					setDiscountPercentage(
+						lastAddedSettings && lastAddedSettings.discountPercentage
+					);
 					setOnlineServicesFees(
 						lastAddedSettings && lastAddedSettings.onlineServicesFees
 					);
@@ -143,8 +162,6 @@ const SettingsMainBoss = () => {
 					setActiveWhatsAppNotification(
 						lastAddedSettings && lastAddedSettings.activeWhatsAppNotification
 					);
-					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
-					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
@@ -165,6 +182,7 @@ const SettingsMainBoss = () => {
 							? { images: lastAddedSettings.storeThumbnail }
 							: []
 					);
+
 					setOwnerIdPhoto(
 						lastAddedSettings &&
 							lastAddedSettings.ownerIdPhoto &&
@@ -177,6 +195,8 @@ const SettingsMainBoss = () => {
 					setAddStoreNameArabic(
 						lastAddedSettings && lastAddedSettings.addStoreNameArabic
 					);
+					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
+					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
 					);
@@ -238,11 +258,10 @@ const SettingsMainBoss = () => {
 			ownerIdPhoto: ownerIdPhoto.images,
 			addStoreName: addStoreName,
 			addStoreNameArabic: addStoreNameArabic,
-			activeOnlineBooking: activeOnlineBooking,
-			activeWhatsAppNotification: activeWhatsAppNotification,
-			belongsTo: ownerId,
 			longitude: longitude,
 			latitude: latitude,
+			activeOnlineBooking: activeOnlineBooking,
+			activeWhatsAppNotification: activeWhatsAppNotification,
 			storePhone: currentOwner.phone,
 			branchesCount: extraData.branchesCount,
 			stylistsCount: extraData.stylistsCount,
@@ -251,6 +270,7 @@ const SettingsMainBoss = () => {
 			visaPayment: extraData.visaPayment,
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
+			belongsTo: ownerId,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -278,24 +298,14 @@ const SettingsMainBoss = () => {
 		});
 	};
 
-	const gettingCurrentUser = () => {
-		readUser(ownerId, token).then((data) => {
-			if (data.error) {
-				console.log(data.error);
-			} else {
-				setCurrentOwner(data);
-			}
-		});
-	};
-
 	useEffect(() => {
-		gettingCurrentUser();
 		gettingAllServices();
+
 		// eslint-disable-next-line
 	}, []);
 
 	return (
-		<SettingsMainBossWrapper>
+		<SettingsMainWrapper>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -306,6 +316,7 @@ const SettingsMainBoss = () => {
 						setCollapsed={setCollapsed}
 					/>
 				</div>
+
 				<div>
 					<div className='container'>
 						<div className='row mx-auto'>
@@ -314,29 +325,32 @@ const SettingsMainBoss = () => {
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("AddLogo")}
 							>
-								<i className='fa-brands fa-html5 mr-1'></i> Add Logo
+								<i className='fa-brands fa-html5 mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف شعار" : "Add Logo"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingDays")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingDays")}
 							>
-								<i className='fa-solid fa-calendar-days mr-1'></i> Add Working
-								Days
+								<i className='fa-solid fa-calendar-days mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف أيام عمل" : "Add Working Days"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("Awards")}
 							>
-								<i className='fa-solid fa-award mr-1'></i> Add Awards
+								<i className='fa-solid fa-award mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف جوائز" : "Add Awards"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingHours")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingHours")}
 							>
-								<i className='fa-solid fa-clock mr-1'></i> Add Working Hours
+								<i className='fa-solid fa-clock mr-1'></i>{" "}
+								{language === "Arabic" ? "أضف ساعات عمل" : "Add Working Hours"}
 							</div>
 						</div>
 					</div>
@@ -356,14 +370,15 @@ const SettingsMainBoss = () => {
 							allServices={allServices}
 							storeThumbnail={storeThumbnail}
 							setStoreThumbnail={setStoreThumbnail}
-							longitude={longitude}
-							setLongitude={setLongitude}
 							latitude={latitude}
 							setLatitude={setLatitude}
+							setLongitude={setLongitude}
+							longitude={longitude}
 							loading={loading}
 							setLoading={setLoading}
 							ownerIdPhoto={ownerIdPhoto}
 							setOwnerIdPhoto={setOwnerIdPhoto}
+							language={language}
 						/>
 					) : null}
 
@@ -385,6 +400,7 @@ const SettingsMainBoss = () => {
 							setActiveOnlineBooking={setActiveOnlineBooking}
 							setExtraData={setExtraData}
 							extraData={extraData}
+							language={language}
 						/>
 					) : null}
 
@@ -403,6 +419,7 @@ const SettingsMainBoss = () => {
 							setClickedMenu={setClickedMenu}
 							activeWhatsAppNotification={activeWhatsAppNotification}
 							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
+							language={language}
 						/>
 					) : null}
 
@@ -418,19 +435,22 @@ const SettingsMainBoss = () => {
 								alreadySetLoyaltyPointsManagement
 							}
 							clickSubmit2={clickSubmit}
+							storeThumbnail={storeThumbnail}
 							addStoreName={addStoreName}
 							addStoreNameArabic={addStoreNameArabic}
+							language={language}
+							ownerId={ownerId}
 						/>
 					) : null}
 				</div>
 			</div>
-		</SettingsMainBossWrapper>
+		</SettingsMainWrapper>
 	);
 };
 
-export default SettingsMainBoss;
+export default SettingsMainAgent;
 
-const SettingsMainBossWrapper = styled.div`
+const SettingsMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;

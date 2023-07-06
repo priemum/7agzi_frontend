@@ -65,7 +65,8 @@ const UpdateAgent = () => {
 								console.log(agent.activeAgent, "agent");
 								return (
 									<div
-										className='col-md-4 mx-auto agentName'
+										style={{ textTransform: "capitalize" }}
+										className='col-md-4 mx-auto agentName mt-2'
 										key={i}
 										onClick={() => {
 											setSelectedAgent(agent);
