@@ -356,7 +356,7 @@ const AboutPageWrapper = styled.section`
 	overflow: hidden;
 	min-height: 1000px;
 	color: black;
-	background-color: #ffd9d9;
+	background-color: white;
 
 	.horizLine {
 		border-bottom: #ffb2b2 solid 5px !important;
