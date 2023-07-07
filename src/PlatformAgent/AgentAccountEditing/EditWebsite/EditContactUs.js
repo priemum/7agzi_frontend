@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {createContact, getContacts} from "../apiOwner";
-import {isAuthenticated} from "../../auth";
-import {toast} from "react-toastify";
+import { createContact, getContacts } from "../apiOwner";
+import { isAuthenticated } from "../../../auth";
+import { toast } from "react-toastify";
 
-const EditContactUs = () => {
+const EditContactUs = ({ ownerId }) => {
 	//Adding Variables
 	const [business_hours, setBusinessHours] = useState("");
 	const [business_hours_Arabic, setBusinessHours_Arabic] = useState("");
@@ -21,10 +21,10 @@ const EditContactUs = () => {
 	const [allContacts, setAllContacts] = useState([]);
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllContacts = () => {
-		getContacts(token, user._id).then((data) => {
+		getContacts(token, ownerId).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
@@ -64,7 +64,7 @@ const EditContactUs = () => {
 	const clickSubmit = (e) => {
 		e.preventDefault();
 
-		createContact(user._id, token, {
+		createContact(ownerId, token, {
 			address,
 			address_Arabic,
 			email,
@@ -75,7 +75,7 @@ const EditContactUs = () => {
 			header_1_Arabic,
 			description_1,
 			description_1_Arabic,
-			belongsTo: user._id,
+			belongsTo: ownerId,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);

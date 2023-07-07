@@ -77,6 +77,7 @@ import AgentDashboard from "./PlatformAgent/AgentDashboard";
 import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsContent/SettingsMain";
 import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
+import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -161,7 +162,11 @@ function App() {
 							<Home language={language} setLanguage={setLanguage} />
 						)}
 					/>
-					<Route path='/signin' exact component={SigninForm} />
+					<Route
+						path='/signin'
+						exact
+						component={() => <SigninForm language={language} />}
+					/>
 					<Route
 						path='/signup'
 						exact
@@ -322,7 +327,9 @@ function App() {
 					<AgentsRoute
 						path='/store/admin/settings/agent/help/:ownerId'
 						exact
-						component={() => <SettingsMainAgent language={language} />}
+						component={() => (
+							<SettingsMainAgent language={language} setLanuage={setLanguage} />
+						)}
 					/>
 					<AgentsRoute
 						path='/store/admin/services/agent/help/:ownerId'
@@ -333,6 +340,12 @@ function App() {
 						path='/store/admin/employees/agent/help/:ownerId'
 						exact
 						component={() => <EmployeeMainAgent language={language} />}
+					/>
+
+					<AgentsRoute
+						path='/store/admin/edit-website/agent/help/:ownerId'
+						exact
+						component={() => <EditWebsiteMainAgent language={language} />}
 					/>
 
 					{/*End Of Platform Agents Routes */}

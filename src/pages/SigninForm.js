@@ -1,15 +1,16 @@
 /** @format */
 
-import React, {useState} from "react";
-import {Link, Redirect} from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 // eslint-disable-next-line
-import {authenticate, isAuthenticated, signin, authenticate2} from "../auth";
+import { authenticate, isAuthenticated, signin, authenticate2 } from "../auth";
 // import Google from "../auth/Google";
-import {ToastContainer, toast} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { Helmet } from "react-helmet";
 
-const SigninForm = ({history}) => {
+const SigninForm = ({ history, language }) => {
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
@@ -17,11 +18,11 @@ const SigninForm = ({history}) => {
 		redirectToReferrer: false,
 	});
 
-	const {email, password, loading, redirectToReferrer} = values;
-	const {user} = isAuthenticated();
+	const { email, password, loading, redirectToReferrer } = values;
+	const { user } = isAuthenticated();
 
 	const handleChange = (name) => (event) => {
-		setValues({...values, error: false, [name]: event.target.value});
+		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 
 	// const informParent = (response) => {
@@ -41,13 +42,13 @@ const SigninForm = ({history}) => {
 
 	const clickSubmit = (event) => {
 		event.preventDefault();
-		setValues({...values, error: false, loading: true});
-		signin({email, password}).then((data) => {
+		setValues({ ...values, error: false, loading: true });
+		signin({ email, password }).then((data) => {
 			if (data.error) {
-				setValues({...values, error: data.error, loading: false});
+				setValues({ ...values, error: data.error, loading: false });
 				toast.error(data.error);
 			} else if (data.user.activeUser === false) {
-				setValues({...values, error: data.error, loading: false});
+				setValues({ ...values, error: data.error, loading: false });
 				return toast.error(
 					"User was deactivated, Please reach out to the admin site"
 				);
@@ -110,8 +111,8 @@ const SigninForm = ({history}) => {
 						{/* <Google informParent={informParent} /> */}
 
 						<form onSubmit={clickSubmit}>
-							<div className='form-group' style={{marginTop: "25px"}}>
-								<label style={{fontWeight: "bold"}}>Phone/ Email</label>
+							<div className='form-group' style={{ marginTop: "25px" }}>
+								<label style={{ fontWeight: "bold" }}>Phone/ Email</label>
 								<input
 									type='text'
 									name='email'
@@ -119,8 +120,8 @@ const SigninForm = ({history}) => {
 									onChange={handleChange("email")}
 								/>
 							</div>
-							<div className='form-group ' style={{marginTop: "25px"}}>
-								<label htmlFor='password' style={{fontWeight: "bold"}}>
+							<div className='form-group ' style={{ marginTop: "25px" }}>
+								<label htmlFor='password' style={{ fontWeight: "bold" }}>
 									Password
 								</label>
 								<input
@@ -188,6 +189,37 @@ const SigninForm = ({history}) => {
 
 	return (
 		<WholeSignin>
+			<Helmet>
+				<meta charSet='utf-8' />
+				{language === "Arabic" ? (
+					<title dir='rtl'>إكس لوك | تسجيل الدخول</title>
+				) : (
+					<title>XLOOK | Signin</title>
+				)}
+
+				{language === "Arabic" ? (
+					<meta
+						name='description'
+						content='أفضل برنامج حجز في مصر، خاص بصالونات الحلاقة، صالونات الشعر، مراكز التجميل، وصالونات المساج.'
+					/>
+				) : (
+					<meta
+						name='description'
+						content='The best booking software in Egypt, specially designed for barber shops, hair salons, beauty centers, and massage salons.'
+					/>
+				)}
+
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? "برنامج حجز، صالونات الحلاقة، صالونات الشعر، مراكز التجميل، صالونات المساج"
+							: "booking software, barber shops, hair salons, beauty centers, massage salons"
+					}
+				/>
+
+				<link rel='canonical' href='https://xlookpro.com/signin' />
+			</Helmet>
 			<ToastContainer />
 			{showLoading()}
 			{signinForm()}

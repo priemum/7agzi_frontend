@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import imageImage from "../../Images/UploadImageImage.jpg";
+import imageImage from "../../../Images/UploadImageImage.jpg";
 
 const ImageCardHero = ({
 	thumbnail,
@@ -37,7 +37,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 1
 								</h5>
 							</div>
@@ -87,7 +87,7 @@ const ImageCardHero = ({
 								{!thumbnail.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -102,11 +102,11 @@ const ImageCardHero = ({
 							</div>
 							<div className='text-muted fs-7'>
 								Image Size should be{" "}
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 1920px ; Height: 809px.
 								</strong>{" "}
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
 								Set the Home Page Main thumbnail image 1. Only *.png, *.jpg and
@@ -120,7 +120,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 2
 								</h5>
 							</div>
@@ -170,7 +170,7 @@ const ImageCardHero = ({
 								{!thumbnail2.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -185,11 +185,11 @@ const ImageCardHero = ({
 							</div>
 							<div className='text-muted fs-7'>
 								Image Size should be{" "}
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 1920px ; Height: 809px.
 								</strong>{" "}
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
 								Set the Home Page Main thumbnail image 1. Only *.png, *.jpg and
@@ -203,7 +203,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 3
 								</h5>
 							</div>
@@ -253,7 +253,7 @@ const ImageCardHero = ({
 								{!thumbnail3.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -268,11 +268,11 @@ const ImageCardHero = ({
 							</div>
 							<div className='text-muted fs-7'>
 								Set the Home Page Main thumbnail image 3{" "}
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 1920px ; Height: 809px.
 								</strong>{" "}
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
 								Only *.png, *.jpg and *.jpeg image files are accepted
@@ -287,7 +287,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 1 (PHONE)
 								</h5>
 							</div>
@@ -337,7 +337,7 @@ const ImageCardHero = ({
 								{!thumbnail_Phone.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -354,10 +354,10 @@ const ImageCardHero = ({
 								image 1. Only *.png, *.jpg and *.jpeg image files are accepted
 								<br />
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 408px Height: 408px;
 								</strong>{" "}
 							</div>
@@ -369,7 +369,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 2 (PHONE)
 								</h5>
 							</div>
@@ -419,7 +419,7 @@ const ImageCardHero = ({
 								{!thumbnail2_Phone.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -435,10 +435,10 @@ const ImageCardHero = ({
 							<div className='text-muted fs-7'>
 								image 1. Only *.png, *.jpg and *.jpeg image files are accepted
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 408px Height: 408px;
 								</strong>{" "}
 							</div>
@@ -450,7 +450,7 @@ const ImageCardHero = ({
 					<div className='card card-flush py-4'>
 						<div className=''>
 							<div className=' p-3'>
-								<h5 style={{fontWeight: "bold", fontSize: "1.05rem"}}>
+								<h5 style={{ fontWeight: "bold", fontSize: "1.05rem" }}>
 									Home Page Banner 3 (PHONE)
 								</h5>
 							</div>
@@ -500,7 +500,7 @@ const ImageCardHero = ({
 								{!thumbnail3_Phone.images ? (
 									<label
 										className=''
-										style={{cursor: "pointer", fontSize: "0.95rem"}}
+										style={{ cursor: "pointer", fontSize: "0.95rem" }}
 									>
 										<img src={imageImage} alt='imageUpload' />
 										<input
@@ -517,10 +517,10 @@ const ImageCardHero = ({
 								Set the Home Page Main thumbnail image 3. Only *.png, *.jpg and
 								*.jpeg image files are accepted
 								<br />
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Image Should be 300 kb or less...
 								</strong>
-								<strong style={{color: "black"}}>
+								<strong style={{ color: "black" }}>
 									Width: 408px Height: 408px;
 								</strong>{" "}
 							</div>

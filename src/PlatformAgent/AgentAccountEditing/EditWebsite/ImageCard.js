@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import imageImage from "../../Images/UploadImageImage.jpg";
+import imageImage from "../../../Images/UploadImageImage.jpg";
 
 const ImageCard = ({
 	setAddThumbnail,
@@ -15,7 +15,7 @@ const ImageCard = ({
 			<div className='card card-flush  mx-auto'>
 				<div className=''>
 					<div className=' p-2'>
-						<h5 style={{fontWeight: "bold", fontSize: "1.2rem"}}>
+						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
 							"About us" Thumbnail
 						</h5>
 					</div>
@@ -65,7 +65,7 @@ const ImageCard = ({
 						{!addThumbnail.images ? (
 							<label
 								className=''
-								style={{cursor: "pointer", fontSize: "0.95rem"}}
+								style={{ cursor: "pointer", fontSize: "0.95rem" }}
 							>
 								<img src={imageImage} alt='imageUpload' />
 								<input

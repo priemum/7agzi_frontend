@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import MyCalendar from "./MyCalendar";
-import {Link, useParams, useLocation} from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import EmployeeAppointments from "./EmployeeAppointments";
 import TableView from "./TableView";
 import ShopReports from "./ShopReports";
@@ -13,7 +13,7 @@ import {
 	getEmployees,
 } from "../apiOwner";
 import Countdown from "./Countdown";
-import {isAuthenticated} from "../../../../auth";
+import { isAuthenticated } from "../../../../auth";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -44,8 +44,8 @@ const isActive = (history, path) => {
 	}
 };
 
-const OwnerDashboardBoss = ({language}) => {
-	let {ownerId} = useParams();
+const OwnerDashboardBoss = ({ language }) => {
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {
@@ -65,7 +65,7 @@ const OwnerDashboardBoss = ({language}) => {
 	const [allEmployees, setAllEmployees] = useState([]);
 
 	// eslint-disable-next-line
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		allLoyaltyPointsAndStoreStatus(token, ownerId).then((data) => {
@@ -93,7 +93,7 @@ const OwnerDashboardBoss = ({language}) => {
 		} else {
 			setCollapsed(false);
 		}
-		window.scrollTo({top: 78, behavior: "smooth"});
+		window.scrollTo({ top: 78, behavior: "smooth" });
 	}, []);
 
 	useEffect(() => {
@@ -178,10 +178,17 @@ const OwnerDashboardBoss = ({language}) => {
 					</div>
 					<div
 						className=''
-						style={{top: "70px", right: "2%", position: "absolute"}}
+						style={{ top: "70px", right: "2%", position: "absolute" }}
 					>
 						{currentUser && currentUser.createdAt ? (
-							<Countdown theDate={currentUser.createdAt} />
+							<Countdown
+								theDate={currentUser.createdAt}
+								hasAgent={
+									currentUser &&
+									currentUser.agent &&
+									currentUser.agent.name !== "No Agent"
+								}
+							/>
 						) : null}
 					</div>
 					<div className='container-fluid col-lg-12 mx-auto text-center'>
@@ -232,7 +239,7 @@ const OwnerDashboardBoss = ({language}) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("ShopReports");
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -248,7 +255,7 @@ const OwnerDashboardBoss = ({language}) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("CustomerReports");
-									window.scrollTo({top: 100, behavior: "smooth"});
+									window.scrollTo({ top: 100, behavior: "smooth" });
 								}}
 							>
 								<Link

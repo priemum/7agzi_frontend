@@ -418,6 +418,7 @@ const SignupForm = ({ language }) => {
 			setNextClicked={setNextClicked}
 			language={language}
 			allAgents={allAgents}
+			setAllAgents={setAllAgents}
 		/>
 	);
 

@@ -1,15 +1,15 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {cloudinaryUpload1, createHero, getAllHeros} from "../apiOwner";
+import { cloudinaryUpload1, createHero, getAllHeros } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import ImageCardHero from "./ImageCardHero";
-import {toast} from "react-toastify";
-import {isAuthenticated} from "../../auth";
+import { toast } from "react-toastify";
+import { isAuthenticated } from "../../../auth";
 
-const EditHomePageBanner = () => {
+const EditHomePageBanner = ({ ownerId }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(false);
 	const [thumbnail, setThumbnail] = useState([]);
@@ -24,10 +24,11 @@ const EditHomePageBanner = () => {
 	const [hyper_link2, setHyperLink2] = useState("");
 	const [hyper_link3, setHyperLink3] = useState("");
 
-	const {user, token} = isAuthenticated();
+	// eslint-disable-next-line
+	const { user, token } = isAuthenticated();
 
 	const gettingAllHeroes = () => {
-		getAllHeros(token, user._id).then((data) => {
+		getAllHeros(token, ownerId).then((data) => {
 			if (data.error) {
 			} else {
 				var lastHeroComp = data[data.length - 1];
@@ -102,11 +103,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail({...thumbnail, images: allUploadedFiles});
+								setThumbnail({ ...thumbnail, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -137,11 +138,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail2({...thumbnail2, images: allUploadedFiles});
+								setThumbnail2({ ...thumbnail2, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -172,11 +173,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail3({...thumbnail3, images: allUploadedFiles});
+								setThumbnail3({ ...thumbnail3, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -207,7 +208,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -245,7 +246,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -283,7 +284,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -346,8 +347,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -357,7 +358,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail;
+				const { images } = thumbnail;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -376,8 +377,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -387,7 +388,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail2;
+				const { images } = thumbnail2;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -408,8 +409,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -419,7 +420,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail3;
+				const { images } = thumbnail3;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -440,8 +441,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -451,7 +452,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail_Phone;
+				const { images } = thumbnail_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -470,8 +471,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -481,7 +482,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail2_Phone;
+				const { images } = thumbnail2_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -502,8 +503,8 @@ const EditHomePageBanner = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -513,7 +514,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail3_Phone;
+				const { images } = thumbnail3_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -533,7 +534,7 @@ const EditHomePageBanner = () => {
 		e.preventDefault();
 
 		// make request to api to create Hero Comp
-		createHero(user._id, token, {
+		createHero(ownerId, token, {
 			thumbnail,
 			thumbnail2,
 			thumbnail3,
@@ -544,7 +545,7 @@ const EditHomePageBanner = () => {
 			hyper_link2,
 			hyper_link3,
 			heroComponentStatus: true,
-			belongsTo: user._id,
+			belongsTo: ownerId,
 		}).then((data) => {
 			if (data.error) {
 				setTimeout(function () {
@@ -567,7 +568,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 1
 						</label>
@@ -585,7 +586,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 2
 						</label>
@@ -603,7 +604,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 3
 						</label>

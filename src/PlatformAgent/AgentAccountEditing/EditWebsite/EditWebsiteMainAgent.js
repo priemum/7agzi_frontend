@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import EditAboutUs from "./EditAboutUs";
 import EditContactUs from "./EditContactUs";
 import EditHomePageBanner from "./EditHomePageBanner";
-import {Link} from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -35,7 +35,17 @@ const isActive = (history, path) => {
 	}
 };
 
-const EditWebsiteMain = () => {
+const EditWebsiteMainAgent = () => {
+	let { ownerId } = useParams();
+	let location = useLocation();
+
+	useEffect(() => {
+		// Log the path of the current URL
+		console.log(location.pathname);
+		// Log the ownerId
+		console.log(ownerId);
+	}, [location, ownerId]);
+
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -77,7 +87,7 @@ const EditWebsiteMain = () => {
 							>
 								<Link
 									style={isActive(clickedMenu, "AboutUs")}
-									to='/store/admin/edit-website?edit-about-us'
+									to={`/store/admin/edit-website/agent/help/${ownerId}?edit-about-us`}
 								>
 									<i className='fa-brands fa-servicestack mr-1'></i> Edit About
 									Us Page
@@ -90,7 +100,7 @@ const EditWebsiteMain = () => {
 							>
 								<Link
 									style={isActive(clickedMenu, "ContactUs")}
-									to='/store/admin/edit-website?edit-contact-us'
+									to={`/store/admin/edit-website/agent/help/${ownerId}?edit-contact-us`}
 								>
 									<i className='fa-solid fa-pen mr-1'></i> Edit Contact Us Page
 								</Link>
@@ -102,7 +112,7 @@ const EditWebsiteMain = () => {
 							>
 								<Link
 									style={isActive(clickedMenu, "HomePage")}
-									to='/store/admin/edit-website?edit-hero-comp'
+									to={`/store/admin/edit-website/agent/help/${ownerId}?edit-hero-comp`}
 								>
 									<i className='fa-sharp fa-solid fa-house'></i> Edit Home Page
 									Banners
@@ -110,16 +120,20 @@ const EditWebsiteMain = () => {
 							</div>
 						</div>
 					</div>
-					{clickedMenu === "AboutUs" ? <EditAboutUs /> : null}
-					{clickedMenu === "ContactUs" ? <EditContactUs /> : null}
-					{clickedMenu === "HomePage" ? <EditHomePageBanner /> : null}
+					{clickedMenu === "AboutUs" ? <EditAboutUs ownerId={ownerId} /> : null}
+					{clickedMenu === "ContactUs" ? (
+						<EditContactUs ownerId={ownerId} />
+					) : null}
+					{clickedMenu === "HomePage" ? (
+						<EditHomePageBanner ownerId={ownerId} />
+					) : null}
 				</div>
 			</div>
 		</EditWebsiteMainWrapper>
 	);
 };
 
-export default EditWebsiteMain;
+export default EditWebsiteMainAgent;
 
 const EditWebsiteMainWrapper = styled.div`
 	min-height: 1000px;

@@ -271,11 +271,10 @@ const About = ({ language }) => {
 export default About;
 
 const AboutPageWrapper = styled.section`
-	background: black;
 	padding-bottom: 100px;
 	overflow: hidden;
 	min-height: 1000px;
-	color: white;
+	color: black;
 
 	.horizLine {
 		border-bottom: var(--primaryColor) solid 5px !important;
@@ -284,23 +283,23 @@ const AboutPageWrapper = styled.section`
 	h1 {
 		font-weight: bolder;
 		font-size: 1.7rem;
-		color: white;
+		color: black;
 	}
 
 	h2 {
 		font-weight: bolder;
 		font-size: 1.3rem;
-		color: white;
+		color: black;
 	}
 
 	p {
 		font-size: 1rem;
-		color: white;
+		color: black;
 	}
 
 	li {
 		font-size: 1rem;
-		color: white;
+		color: black;
 	}
 
 	@media (max-width: 1000px) {

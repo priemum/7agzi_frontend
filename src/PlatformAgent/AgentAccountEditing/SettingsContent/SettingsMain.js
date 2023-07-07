@@ -44,7 +44,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const SettingsMainAgent = ({ language }) => {
+const SettingsMainAgent = ({ language, setLanuage }) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
 
@@ -113,10 +113,9 @@ const SettingsMainAgent = ({ language }) => {
 
 	useEffect(() => {
 		gettingCurrentUser();
+
 		// eslint-disable-next-line
 	}, []);
-
-	console.log(currentOwner, "currentOwner");
 
 	const gettingPreviousLoyaltyPointsManagement = () => {
 		allLoyaltyPointsAndStoreStatus(token, ownerId).then((data) => {

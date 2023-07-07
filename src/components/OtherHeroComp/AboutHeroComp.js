@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Animated } from "react-animated-css";
-import myBackGroundImage from "../../Images/HeroImage1.jpg";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import myBackGroundImage from "../../Images/WhyUsMain.png";
+import { Link } from "react-router-dom";
 
 const AboutHeroComp = ({ language }) => {
 	const [offsetY, setOffsetY] = useState(0);
@@ -20,10 +20,11 @@ const AboutHeroComp = ({ language }) => {
                 ${myBackGroundImage}
             )`,
 				backgroundRepeat: "no-repeat",
+				width: window.innerWidth < 768 ? "100%" : "1380px",
 				backgroundSize: "cover",
 				position: "relative",
-				height: "540px",
-				width: "100%",
+				height: window.innerWidth < 768 ? "480px" : "650px",
+				margin: "auto",
 				objectFit: "cover",
 				backgroundPosition: `center ${offsetY * 0.5}px`,
 			}}
@@ -135,13 +136,14 @@ const AboutHeroCompWrapper = styled.div`
 
 	.content > h1 {
 		position: absolute;
-		margin-top: 200px;
+		margin-top: 300px;
+		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
 		/* border: 1px solid black; */
-		width: 30%;
+		width: 40%;
 		left: 60%;
-		background-color: black;
+		background-color: rgba(0, 0, 0, 0.65) !important;
 		padding: 20px;
 		font-size: 1.5rem;
 		/* transform: translate(-30%, -30%); */
@@ -149,39 +151,39 @@ const AboutHeroCompWrapper = styled.div`
 
 	.content > h2 {
 		position: absolute;
-		margin-top: 270px;
+		margin-top: 370px;
+		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
-		font-size: 1.2rem;
-		top: 50%;
-		padding: 10px;
-		left: 60%;
-		width: 30%;
-		background-color: black;
-		font-size: 1.15rem;
+		padding: 8px 5px;
+		left: 60.75%;
+		width: 38.5%;
+		background-color: rgba(0, 0, 0, 0.65);
+		font-size: 1.1rem;
 	}
 
 	.content > h3 {
 		position: absolute;
-		margin-top: 310px;
+		margin-top: 408px;
+		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
 		font-size: 0.9rem;
 		text-decoration: underline;
-		padding: 10px;
-		left: 60%;
-		width: 30%;
-		background-color: black;
+		padding: 5px;
+		left: 60.75%;
+		width: 38.5%;
+		background-color: rgba(0, 0, 0, 0.65);
 	}
 
 	.content > .btn {
 		position: absolute;
-		margin-top: 390px;
+		margin-top: 470px;
 		color: white;
 		font-weight: bolder;
 		font-size: 1.5rem;
 		top: 20%;
-		left: 60%;
+		left: 62%;
 	}
 
 	.content > .scheduleNowButton {
@@ -207,52 +209,51 @@ const AboutHeroCompWrapper = styled.div`
 	@media (max-width: 1300px) {
 		.content > h1 {
 			position: absolute;
-			margin-top: 261px;
+			margin-top: 230px;
 			color: white;
 			font-weight: bolder;
 			/* border: 1px solid black; */
 			width: 105%;
 			left: -2.5%;
-			background-color: black;
-			padding: 20px 2px;
-			font-size: 1.2rem;
+			background-color: rgba(0, 0, 0, 0.65);
+			padding: 10px 2px;
+			font-size: 1.1rem;
 			/* transform: translate(-30%, -30%); */
 		}
 
 		.content > h2 {
 			position: absolute;
-			margin-top: 325px;
+			margin-top: 272px;
 			color: white;
 			font-weight: bolder;
 			font-size: 1.2rem;
 			width: 105%;
 			left: -2.5%;
-			background-color: black;
-			padding: 20px 2px;
+			background-color: rgba(0, 0, 0, 0.65);
+			padding: 10px 2px;
 			font-size: 1rem;
 		}
 
 		.content > h3 {
 			position: absolute;
-			margin-top: 385px;
+			margin-top: 332px;
 			color: white;
 			font-weight: bolder;
 			font-size: 0.9rem;
 			text-decoration: underline;
 			width: 105%;
 			left: -2.5%;
-			background-color: black;
-			padding: 20px 2px;
+			background-color: rgba(0, 0, 0, 0.65);
+			padding: 10px 2px;
 			font-size: 0.9rem !important;
 		}
 
 		.content > .btn {
 			position: absolute;
-			margin-top: 480px;
+			margin-top: 420px;
 			color: white;
 			font-weight: bolder;
 			font-size: 1.5rem;
-
 			left: 0%;
 		}
 

@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../../auth";
-import {cloudinaryUpload1, createAbout, getAbouts} from "../apiOwner";
+import { isAuthenticated } from "../../../auth";
+import { cloudinaryUpload1, createAbout, getAbouts } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import ImageCard from "./ImageCard";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const toolbarOptions = [
-	[{header: [1, 2, 3, 4, 5, 6, false]}],
-	["bold", "italic", "underline", "strike", {color: []}],
-	[{list: "ordered"}, {list: "bullet"}, {indent: "-1"}, {indent: "+1"}],
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
 	["link", "image", "video"],
 	["clean"],
 ];
 
-const EditAboutUs = () => {
+const EditAboutUs = ({ ownerId }) => {
 	//Adding Variables
 	const [header_1, setHeader1] = useState("");
 	const [header_1_OtherLanguage, setHeader1_OtherLanguage] = useState("");
@@ -27,10 +27,11 @@ const EditAboutUs = () => {
 	const [allAbouts, setAllAbouts] = useState([]);
 	const [addThumbnail, setAddThumbnail] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	// eslint-disable-next-line
+	const { user, token } = isAuthenticated();
 
 	const gettingAllAbouts = () => {
-		getAbouts(token, user._id).then((data) => {
+		getAbouts(token, ownerId).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
@@ -78,11 +79,11 @@ const EditAboutUs = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setAddThumbnail({...addThumbnail, images: allUploadedFiles});
+								setAddThumbnail({ ...addThumbnail, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -98,8 +99,8 @@ const EditAboutUs = () => {
 		// console.log("remove image", public_id);
 		axios
 			.post(
-				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -108,7 +109,7 @@ const EditAboutUs = () => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {images} = addThumbnail;
+				const { images } = addThumbnail;
 				setAddThumbnail([]);
 			})
 			.catch((err) => {
@@ -134,7 +135,7 @@ const EditAboutUs = () => {
 			return toast.error("Please add a thumbnail image");
 		}
 
-		createAbout(user._id, token, {
+		createAbout(ownerId, token, {
 			header_1,
 			header_1_OtherLanguage,
 			description_1,
@@ -144,7 +145,7 @@ const EditAboutUs = () => {
 					? addThumbnail && addThumbnail.images
 					: allAbouts && allAbouts.thumbnail,
 
-			belongsTo: user._id,
+			belongsTo: ownerId,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -211,8 +212,8 @@ const EditAboutUs = () => {
 							placeholder='Fill in a description about your business'
 							onChange={handleEditorChange}
 							modules={{
-								toolbar: {container: toolbarOptions},
-								clipboard: {matchVisual: false},
+								toolbar: { container: toolbarOptions },
+								clipboard: { matchVisual: false },
 							}}
 							onPaste={handlePaste}
 						/>
@@ -222,7 +223,7 @@ const EditAboutUs = () => {
 					<button
 						className='btn btn-outline-success my-3 btn-block'
 						onClick={clickSubmit}
-						style={{fontWeight: "bold", fontSize: "1.2rem"}}
+						style={{ fontWeight: "bold", fontSize: "1.2rem" }}
 					>
 						Submit About us changes
 					</button>

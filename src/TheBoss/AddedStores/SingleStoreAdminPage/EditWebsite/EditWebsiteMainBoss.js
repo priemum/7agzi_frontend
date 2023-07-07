@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import EditHomePageBanner from "./EditHomePageBanner";
-import {Link, useParams, useLocation} from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import EditContactUsBoss from "./EditContactUsBoss";
 import EditAboutUsBoss from "./EditAboutUsBoss";
 
@@ -36,7 +36,7 @@ const isActive = (history, path) => {
 };
 
 const EditWebsiteMainBoss = () => {
-	let {ownerId} = useParams();
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {

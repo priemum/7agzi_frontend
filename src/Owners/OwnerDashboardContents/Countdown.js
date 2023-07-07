@@ -12,8 +12,8 @@ const Countdown = ({ theDate, hasAgent }) => {
 	const diffTime = Math.abs(endDate - now);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-	const remainingDays = hasAgent ? 30 - diffDays : 15 - diffDays;
-	const percentage = (remainingDays / 30) * 100;
+	const remainingDays = hasAgent ? 60 - diffDays : 30 - diffDays;
+	const percentage = (remainingDays / 60) * 100;
 
 	return (
 		<CountdownWrapper>

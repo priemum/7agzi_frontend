@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { Select } from "antd";
+import AgentChoiceModal from "./AgentChoiceModal";
+const { Option } = Select;
 
 const SignupFormComp = ({
 	values,
@@ -24,9 +27,14 @@ const SignupFormComp = ({
 	setNextClicked,
 	language,
 	allAgents,
+	setAllAgents,
 }) => {
 	const [animationDirection, setAnimationDirection] = useState("");
+	const [modalVisible, setModalVisible] = useState(false);
 
+	const handleModalOpen = () => {
+		setModalVisible(true);
+	};
 	const handleNextClick = () => {
 		setNextClicked(nextClicked + 1);
 		setAnimationDirection("slide-left");
@@ -42,23 +50,44 @@ const SignupFormComp = ({
 			<Helmet>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
-					<title>برنامج الحجز الرسمي لفرشاة الشعر</title>
+					<title dir='rtl'>إكس لوك | تسجيل شركاء العمل الرسميين</title>
 				) : (
-					<title>Official Business Partners Signup Form</title>
+					<title>XLOOK | Official Business Partners' Registration</title>
 				)}
 
 				{language === "Arabic" ? (
-					<meta name='description' content='افضل برنامج حجز فى مصر' />
+					<meta
+						name='description'
+						content='أفضل برنامج حجز في مصر، خاص بصالونات الحلاقة، صالونات الشعر، مراكز التجميل، وصالونات المساج.'
+					/>
 				) : (
 					<meta
 						name='description'
-						content='The best booking software in Egypt'
+						content='The best booking software in Egypt, specially designed for barber shops, hair salons, beauty centers, and massage salons.'
 					/>
 				)}
 
-				<link rel='canonical' href='https://infinite-apps.com' />
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? "برنامج حجز، صالونات الحلاقة، صالونات الشعر، مراكز التجميل، صالونات المساج"
+							: "booking software, barber shops, hair salons, beauty centers, massage salons"
+					}
+				/>
+
+				<link rel='canonical' href='https://xlookpro.com/signup' />
 			</Helmet>
 			<FormSignup>
+				<AgentChoiceModal
+					allAgents={allAgents}
+					language={language}
+					setModalVisible={setModalVisible}
+					modalVisible={modalVisible}
+					setAllAgents={setAllAgents}
+					values={values}
+					setValues={setValues}
+				/>
 				<div className='row justify-content-md-center mt-5'>
 					<div className='col-md-9 col-sm-12 '>
 						<div className='form-container text-center'>
@@ -667,7 +696,7 @@ const SignupFormComp = ({
 													}}
 												>
 													يرجى ملاحظة أن وجود وكيل يمنحك فترة تجريبية مجانية
-													لمدة 30 يومًا بدلاً من 15 يومًا. إذا كان لديك وكيل،
+													لمدة 60 يومًا بدلاً من 30 يومًا. إذا كان لديك وكيل،
 													يرجى إضافة معلوماته أدناه.
 												</div>
 											) : (
@@ -676,7 +705,7 @@ const SignupFormComp = ({
 													style={{ color: "darkred", fontWeight: "bolder" }}
 												>
 													Please note that having an agent entitles you to a
-													30-day free trial instead of the standard 15 days. If
+													60-day free trial instead of the standard 30 days. If
 													you have an agent, please add their information below.
 												</div>
 											)}
@@ -684,34 +713,77 @@ const SignupFormComp = ({
 											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "وكيلك" : "Your Agent"}
 											</label>
-											<select
+											<Select
 												className='form-control'
-												onChange={(e) => {
-													var chosenIndex =
-														allAgents &&
-														allAgents.map((i) => i._id).indexOf(e.target.value);
+												placeholder='Please choose an agent...'
+												style={{
+													textAlign: "left",
+													textTransform: "capitalize",
+												}}
+												onChange={(value) => {
+													const chosenAgent =
+														value === "No Agent" || value === "Please Select"
+															? { name: "No Agent" }
+															: allAgents.find((agent) => agent._id === value);
 													setValues({
 														...values,
-														agent:
-															e.target.value === "No Agent" ||
-															e.target.value === "Please Select"
-																? { name: "No Agent" }
-																: allAgents[chosenIndex],
+														agent: chosenAgent,
 													});
 												}}
+												showSearch
+												optionFilterProp='children'
+												filterOption={(input, option) =>
+													option.children
+														.toLowerCase()
+														.indexOf(input.toLowerCase()) >= 0
+												}
+												value={values.agent.name}
 											>
-												<option value='Please Select'>Please Select</option>
-												<option value='No Agent'>No Agent</option>
-
+												<Option value='Please Select'>Please Select</Option>
+												<Option value='No Agent'>No Agent</Option>
 												{allAgents &&
-													allAgents.map((agent, i) => {
-														return (
-															<option key={i} value={agent._id}>
-																{agent.name}
-															</option>
-														);
-													})}
-											</select>
+													allAgents.map((agent) => (
+														<Option key={agent._id} value={agent._id}>
+															{agent.name}
+														</Option>
+													))}
+											</Select>
+											<div
+												className='mt-3'
+												style={{ fontWeight: "bolder", fontSize: "1rem" }}
+											>
+												{language === "Arabic" ? (
+													<>
+														إذا كنت لا تملك وكيلاً،{" "}
+														<strong
+															style={{
+																fontWeight: "bolder",
+																cursor: "pointer",
+																textDecoration: "underline",
+															}}
+															onClick={handleModalOpen}
+														>
+															انقر هنا
+														</strong>{" "}
+														واحصل على أقرب وكيل في منطقتك
+													</>
+												) : (
+													<>
+														If you don't have an agent,{" "}
+														<strong
+															style={{
+																fontWeight: "bolder",
+																cursor: "pointer",
+																textDecoration: "underline",
+															}}
+															onClick={handleModalOpen}
+														>
+															CLICK HERE
+														</strong>{" "}
+														and get the closest agent in your area
+													</>
+												)}
+											</div>
 										</div>
 
 										<div className='mt-3 mx-auto text-center'>
@@ -952,8 +1024,8 @@ const FormSignup = styled.div`
 
 	@media (max-width: 900px) {
 		.form-container {
-			margin-left: 5px;
-			margin-right: 5px;
+			margin-left: 1px;
+			margin-right: 1px;
 		}
 
 		button {
