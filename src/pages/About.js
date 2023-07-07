@@ -7,6 +7,11 @@ import styled from "styled-components";
 // import ReactGA from "react-ga";
 import Helmet from "react-helmet";
 import AboutHeroComp from "../components/OtherHeroComp/AboutHeroComp";
+import Icon1 from "../Images/Icon1.png";
+import Icon2 from "../Images/Icon2.png";
+import Icon3 from "../Images/Icon3.png";
+import Icon4 from "../Images/Icon4.png";
+import Icon5 from "../Images/Icon5.png";
 
 const About = ({ language }) => {
 	// useEffect(() => {
@@ -59,14 +64,32 @@ const About = ({ language }) => {
 				dir={language === "Arabic" ? "rtl" : "ltr"}
 				style={{ textAlign: language === "Arabic" ? "right" : "" }}
 			>
-				<div className=''>
-					<h1 dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<div
+					className=''
+					style={{
+						backgroundColor: "#be0000",
+						padding: "10px",
+						borderRadius: "3px",
+						color: "white",
+					}}
+				>
+					<h1
+						style={{
+							color: "white",
+						}}
+						dir={language === "Arabic" ? "rtl" : "ltr"}
+					>
 						{" "}
 						<strong>
 							{language === "Arabic" ? "ما هو إكس لوك؟" : "What is XLOOK?"}
 						</strong>{" "}
 					</h1>
-					<p dir={language === "Arabic" ? "rtl" : "ltr"}>
+					<p
+						style={{
+							color: "white",
+						}}
+						dir={language === "Arabic" ? "rtl" : "ltr"}
+					>
 						{language === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل.`
 							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers located in Egypt. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services.`}
@@ -85,6 +108,7 @@ const About = ({ language }) => {
 							{language === "Arabic" ? "لماذا إكس لوك؟" : "Why XLOOK?"}
 						</strong>{" "}
 					</h1>
+
 					<h2>
 						{language === "Arabic"
 							? "عملاء جدد، حجوزات أكثر."
@@ -97,85 +121,142 @@ const About = ({ language }) => {
 					</p>
 				</div>
 
-				<div className='col-md-10 mx-auto mt-5 mb-3'>
-					<h2>
-						{" "}
-						<strong>
+				<div className='row'>
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<div className='mb-2 imageWrapper'>
+							<img
+								className='iconImage'
+								src={Icon4}
+								alt={
+									language === "Arabic"
+										? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
+										: "You'll be discovered even if your location is not on the main street."
+								}
+							/>
+						</div>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic"
+									? "زيادة مصادر الدخل."
+									: "Increase sources of income."}
+							</strong>{" "}
+						</h2>
+						<p>
 							{language === "Arabic"
-								? "زيادة مصادر الدخل."
-								: "Increase sources of income."}
-						</strong>{" "}
-					</h2>
-					<p>
-						{language === "Arabic"
-							? "سيكون الفرق واضحًا جدًا عند مقارنة دخلك قبل الانضمام إلينا كشريك وبعد الانضمام. ستترك التسويق لنا وتقلل من النفقات على الإعلانات، وستحصل على المزيد من الحجوزات. هنا، ستكون التوفيرات من كلا الجانبين."
-							: "The difference will be very clear when comparing your income before joining us as a partner and after joining. You will leave the marketing to us and reduce expenses on advertisements, and you will receive more bookings. Here, the savings will be from both sides."}
-					</p>
-				</div>
+								? "سيكون الفرق واضحًا جدًا عند مقارنة دخلك قبل الانضمام إلينا كشريك وبعد الانضمام. ستترك التسويق لنا وتقلل من النفقات على الإعلانات، وستحصل على المزيد من الحجوزات. هنا، ستكون التوفيرات من كلا الجانبين."
+								: "The difference will be very clear when comparing your income before joining us as a partner and after joining. You will leave the marketing to us and reduce expenses on advertisements, and you will receive more bookings. Here, the savings will be from both sides."}
+						</p>
+					</div>
 
-				<div className='col-md-10 mx-auto mt-5 mb-3'>
-					<h2>
-						{" "}
-						<strong>
-							{language === "Arabic" ? "موقع حصري." : "Exclusive website."}
-						</strong>{" "}
-					</h2>
-					<p>
-						{language === "Arabic"
-							? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
-							: "Finally, your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
-					</p>
-				</div>
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<div className='mb-2 imageWrapper'>
+							<img
+								className='iconImage'
+								src={Icon5}
+								alt={
+									language === "Arabic"
+										? "تسويق محترف."
+										: "Professional marketing."
+								}
+							/>
+						</div>
 
-				<div className='col-md-10 mx-auto mt-5 mb-3'>
-					<h2>
-						{" "}
-						<strong>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic" ? "موقع حصري." : "Exclusive website."}
+							</strong>{" "}
+						</h2>
+						<p>
 							{language === "Arabic"
-								? "معنا ستزداد توسعاتك وفروعك."
-								: "With us, your expansions and branches will increase."}
-						</strong>{" "}
-					</h2>
-					<p>
-						{language === "Arabic"
-							? "نحرص دائمًا على تأمين حجوزات لك، وذلك سيزيد من حجوزاتك وعدد عملائك من خلال التركيز على تطوير الخدمة المستمر. ونتيجة لذلك، ستزداد قدراتك وفرص توسعك."
-							: "We always ensure that you have bookings, which will increase your bookings and customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
-					</p>
-				</div>
+								? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
+								: "Finally, your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
+						</p>
+					</div>
 
-				<div className='col-md-10 mx-auto mt-5 mb-3'>
-					<h2>
-						{" "}
-						<strong>
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<div className='mb-2 imageWrapper'>
+							<img
+								className='iconImage'
+								src={Icon2}
+								alt={
+									language === "Arabic" ? "موقع حصري." : "Exclusive website."
+								}
+							/>
+						</div>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic"
+									? "معنا ستزداد توسعاتك وفروعك."
+									: "With us, your expansions and branches will increase."}
+							</strong>{" "}
+						</h2>
+						<p>
 							{language === "Arabic"
-								? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
-								: "You'll be discovered even if your location is not on the main street."}
-						</strong>{" "}
-					</h2>
-					<p>
-						{language === "Arabic"
-							? "مع منصة XLOOK ، ستكتشف حتى إذا كان موقعك مخفيًا عن الشارع الرئيسي. بمجرد تفعيل حسابك ، ستكون حقًا جزءًا من المنافسة وسيتم اكتشافك من قبل الجميع في منطقتك."
-							: "With XLOOK platform, you'll be discovered even if your location is hidden from the street. Once you activate your account, you will truly be part of the competition and will be discovered by everyone in your area."}
-					</p>
+								? "نحرص دائمًا على تأمين حجوزات لك، وذلك سيزيد من حجوزاتك وعدد عملائك من خلال التركيز على تطوير الخدمة المستمر. ونتيجة لذلك، ستزداد قدراتك وفرص توسعك."
+								: "We always ensure that you have bookings, which will increase your bookings and customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
+						</p>
+					</div>
+
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<div className='mb-2 imageWrapper'>
+							<img
+								className='iconImage'
+								src={Icon3}
+								alt={
+									language === "Arabic"
+										? "معنا ستزداد توسعاتك وفروعك."
+										: "With us, your expansions and branches will increase."
+								}
+							/>
+						</div>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic"
+									? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
+									: "You'll be discovered even if your location is not on the main street."}
+							</strong>{" "}
+						</h2>
+						<p>
+							{language === "Arabic"
+								? "مع منصة XLOOK ، ستكتشف حتى إذا كان موقعك مخفيًا عن الشارع الرئيسي. بمجرد تفعيل حسابك ، ستكون حقًا جزءًا من المنافسة وسيتم اكتشافك من قبل الجميع في منطقتك."
+								: "With XLOOK platform, you'll be discovered even if your location is hidden from the street. Once you activate your account, you will truly be part of the competition and will be discovered by everyone in your area."}
+						</p>
+					</div>
+
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<div className='mb-2 imageWrapper'>
+							<img
+								className='iconImage'
+								src={Icon1}
+								alt={
+									language === "Arabic"
+										? "زيادة مصادر الدخل."
+										: "Increase sources of income."
+								}
+							/>
+						</div>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic"
+									? "تسويق محترف."
+									: "Professional marketing."}
+							</strong>{" "}
+						</h2>
+						<p>
+							{language === "Arabic"
+								? "قررنا أن نخفف عنك الجهد والتكاليف في التسويق مقابل تقديم خدمات عالية الجودة وتركيز قوي على رضا العملاء ، وهو أمر يعد دائمًا أولوية. تحتاج فقط إلى الحفاظ على تقييمات العملاء الخاصة بك ، وهذا هو نهاية دورك في التسويق. لدينا حجوزات حصرية محجوزة لك لأيام."
+								: "We have decided to relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
+						</p>
+					</div>
 				</div>
 
 				<div className='col-md-5 mx-auto mt-5 mb-3'>
 					<div className='horizLine'></div>
-				</div>
-				<div className='col-md-10 mx-auto'>
-					<h2>
-						{" "}
-						<strong>
-							{language === "Arabic"
-								? "تسويق محترف."
-								: "Professional marketing."}
-						</strong>{" "}
-					</h2>
-					<p>
-						{language === "Arabic"
-							? "قررنا أن نخفف عنك الجهد والتكاليف في التسويق مقابل تقديم خدمات عالية الجودة وتركيز قوي على رضا العملاء ، وهو أمر يعد دائمًا أولوية. تحتاج فقط إلى الحفاظ على تقييمات العملاء الخاصة بك ، وهذا هو نهاية دورك في التسويق. لدينا حجوزات حصرية محجوزة لك لأيام."
-							: "We have decided to relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
-					</p>
 				</div>
 
 				<div className='col-md-10 mx-auto mt-5 mb-3'>
@@ -275,9 +356,10 @@ const AboutPageWrapper = styled.section`
 	overflow: hidden;
 	min-height: 1000px;
 	color: black;
+	background-color: #ffd9d9;
 
 	.horizLine {
-		border-bottom: var(--primaryColor) solid 5px !important;
+		border-bottom: #ffb2b2 solid 5px !important;
 	}
 
 	h1 {
@@ -289,7 +371,8 @@ const AboutPageWrapper = styled.section`
 	h2 {
 		font-weight: bolder;
 		font-size: 1.3rem;
-		color: black;
+		color: #8b0000;
+		text-align: center;
 	}
 
 	p {
@@ -302,6 +385,18 @@ const AboutPageWrapper = styled.section`
 		color: black;
 	}
 
+	.imageWrapper {
+		text-align: center;
+		margin: auto;
+	}
+
+	.iconImage {
+		width: 50%;
+	}
+
 	@media (max-width: 1000px) {
+		.iconImage {
+			width: 60%;
+		}
 	}
 `;
