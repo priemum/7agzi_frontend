@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 import {
+	AreaChartOutlined,
+	BarChartOutlined,
 	// eslint-disable-next-line
 	BranchesOutlined,
 	// eslint-disable-next-line
@@ -67,6 +69,20 @@ const items = [
 		<Link to='/boss/admin/agent-management'>Agents Management</Link>,
 		"sub4",
 		<TeamOutlined />
+	),
+
+	getItem(
+		<Link to='/boss/admin/business-partners-reports'>
+			Business Partners Reports
+		</Link>,
+		"sub5",
+		<AreaChartOutlined />
+	),
+
+	getItem(
+		<Link to='/boss/admin/users-reports'>Users Reports</Link>,
+		"sub6",
+		<BarChartOutlined />
 	),
 
 	getItem(

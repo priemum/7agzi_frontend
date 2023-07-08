@@ -13,6 +13,7 @@ const AgentsReport = () => {
 	const [storeProperties, setStoreProperties] = useState([]);
 	const [ownerAccounts, setOwnerAccounts] = useState([]);
 	const [ownersOverallData, setOwnerOverallData] = useState([]);
+	const [inactiveAgents, setInactiveAgents] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const { token, user } = isAuthenticated();
@@ -61,18 +62,31 @@ const AgentsReport = () => {
 				console.log(data.error);
 			} else {
 				var allOwnerAccounts = data.filter((i) => i.role === 1000);
+				var allAgentAccounts = data.filter(
+					(i) => i.role === 2000 && i.activeAgent === true
+				);
+
+				var inActiveUsers =
+					allAgentAccounts &&
+					allAgentAccounts.filter(
+						(i) =>
+							allOwnerAccounts.map((ii) => ii.agent._id).indexOf(i._id) === -1
+					);
 
 				setOwnerAccounts(allOwnerAccounts);
+				setInactiveAgents(inActiveUsers);
 			}
 		});
 	};
+
+	console.log(inactiveAgents, "inactive Agents");
 
 	const gettingOverallOwnersData = () => {
 		gettingOverallSalonOwners(user._id, token).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
-				console.log(data, "data");
+				// console.log(data, "data");
 				setOwnerOverallData(data);
 			}
 		});
@@ -87,7 +101,7 @@ const AgentsReport = () => {
 	}, []);
 
 	const updatingAgentStatus1 = (values) => {
-		console.log(values.agentPaid, "el send");
+		// console.log(values.agentPaid, "el send");
 		if (
 			window.confirm(
 				"Are You Sure This Agent Was Paid Initial Payment Of 1 Dollar?"
@@ -257,6 +271,7 @@ const AgentsReport = () => {
 					</tbody>
 				</table>
 			</div>
+
 			<div
 				className='mt-5'
 				style={{
@@ -264,7 +279,82 @@ const AgentsReport = () => {
 					overflow: "auto",
 				}}
 			>
-				<h3 style={{ fontWeight: "bolder" }}>Registered Owners With Agents</h3>
+				<h3 style={{ fontWeight: "bolder" }}>
+					AGENTS WHO NEVER ADDED A BUSINESS PARTNER
+				</h3>
+				<table
+					className='table table-bordered table-md-responsive table-hover table-striped'
+					style={{ fontSize: "0.75rem" }}
+				>
+					<thead
+					// className='thead-light'
+					// style={{border: "2px black solid"}}
+					>
+						<tr style={{ background: "darkred", color: "white" }}>
+							<th scope='col'>#</th>
+							<th scope='col'>Agent Name</th>
+							<th scope='col'>Agent Phone</th>
+							<th scope='col'>Agent Email</th>
+							<th scope='col'>Agent Address</th>
+							<th scope='col'>Agent Governorate</th>
+							<th scope='col'>Agent District</th>
+							<th scope='col'>Registeration Date</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{inactiveAgents &&
+							inactiveAgents.map((o, i) => {
+								const now = new Date();
+								const endDate = new Date(o.createdAt);
+								const diffTime = Math.abs(endDate - now);
+								const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+								return (
+									<tr key={i}>
+										<td>{i + 1}</td>
+										<td>{o.name}</td>
+										<td>
+											<strong>{o.phone}</strong>{" "}
+										</td>
+										<td>
+											<strong>{o.email}</strong>{" "}
+										</td>
+										<td>
+											<strong>
+												{o.agentOtherData && o.agentOtherData.agentAddress}
+											</strong>{" "}
+										</td>
+										<td>
+											<strong>
+												{o.agentOtherData && o.agentOtherData.agentGovernorate}
+											</strong>{" "}
+										</td>
+										<td>
+											<strong>
+												{o.agentOtherData && o.agentOtherData.agentDistrict}
+											</strong>{" "}
+										</td>
+										<td>
+											{diffDays}{" "}
+											{Number(diffDays) <= 1 ? "Day Ago" : "Days Ago"}
+										</td>
+									</tr>
+								);
+							})}
+					</tbody>
+				</table>
+			</div>
+
+			<div
+				className='mt-5'
+				style={{
+					maxHeight: "800px",
+					overflow: "auto",
+				}}
+			>
+				<h3 style={{ fontWeight: "bolder", textTransform: "uppercase" }}>
+					Registered Owners With Agents
+				</h3>
 				<div className='text-center col-md-5 mx-auto'>
 					<label>
 						{" "}

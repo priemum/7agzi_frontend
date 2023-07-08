@@ -24,6 +24,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleStorePage from "./pages/SingleStorePage";
 import AgentsSignupForm from "./pages/AgentsSignupForm";
+import RegisterSteps from "./pages/RegisterSteps";
 
 //Owner Route
 import OwnerRoute from "./auth/OwnerRoute";
@@ -176,6 +177,11 @@ function App() {
 						path='/about'
 						exact
 						component={() => <About language={language} />}
+					/>
+					<Route
+						path='/steps'
+						exact
+						component={() => <RegisterSteps language={language} />}
 					/>
 					<Route
 						path='/contact'
