@@ -1,19 +1,21 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Animated } from "react-animated-css";
-import myBackGroundImage from "../../Images/Steps1.jpg";
+import myBackGroundImage from "../../Images/Banner2Steps.jpg";
 // import { Link } from "react-router-dom";
 
-const StepsHeroComp = ({ language }) => {
+const StepsHeroFooter = ({ language }) => {
 	const [offsetY, setOffsetY] = useState(0);
 
+	// eslint-disable-next-line
 	const handleScroll = () => setOffsetY(window.scrollY);
 
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+	// useEffect(() => {
+	// 	window.addEventListener("scroll", handleScroll);
 
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	// 	return () => window.removeEventListener("scroll", handleScroll);
+	// }, []);
 	return (
 		<AboutHeroCompWrapper
 			style={{
@@ -71,11 +73,11 @@ const StepsHeroComp = ({ language }) => {
 	);
 };
 
-export default StepsHeroComp;
+export default StepsHeroFooter;
 
 const AboutHeroCompWrapper = styled.div`
 	::before {
-		background-color: rgba(22, 25, 56, 0.7);
+		background-color: rgba(22, 25, 56, 0.2);
 		content: "";
 		display: block;
 		height: 100%;
@@ -85,7 +87,7 @@ const AboutHeroCompWrapper = styled.div`
 
 	strong {
 		position: absolute;
-		margin-top: 310px;
+		margin-top: 410px;
 		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
@@ -97,7 +99,7 @@ const AboutHeroCompWrapper = styled.div`
 
 	h1 {
 		position: absolute;
-		margin-top: 350px;
+		margin-top: 450px;
 		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
@@ -113,7 +115,7 @@ const AboutHeroCompWrapper = styled.div`
 	@media (max-width: 1300px) {
 		strong {
 			position: absolute;
-			margin-top: 110px;
+			margin-top: 210px;
 			border-radius: 5px;
 			color: white;
 			font-weight: bolder;
@@ -125,7 +127,7 @@ const AboutHeroCompWrapper = styled.div`
 
 		h1 {
 			position: absolute;
-			margin-top: 150px;
+			margin-top: 250px;
 			border-radius: 5px;
 			color: white;
 			font-weight: bolder;

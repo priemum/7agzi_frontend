@@ -12,6 +12,7 @@ import Icon2 from "../Images/Icon2.png";
 import Icon3 from "../Images/Icon3.png";
 import Icon4 from "../Images/Icon4.png";
 import Icon5 from "../Images/Icon5.png";
+import AboutHeroFooter from "../components/OtherHeroComp/AboutHeroFooter";
 
 const About = ({ language }) => {
 	// useEffect(() => {
@@ -344,6 +345,44 @@ const About = ({ language }) => {
 						</ul>
 					)}
 				</div>
+				{language === "Arabic" ? (
+					<div className='mt-5 text-center'>
+						<strong
+							style={{
+								fontWeight: "bolder",
+								fontSize: "2.3rem",
+								color: "darkred",
+							}}
+						>
+							مجانًا!
+						</strong>
+						<div>
+							<strong style={{ fontWeight: "bolder", fontSize: "2rem" }}>
+								موقعك الشخصي
+							</strong>
+						</div>
+					</div>
+				) : (
+					<div className='mt-5 text-center'>
+						<strong
+							style={{
+								fontWeight: "bolder",
+								fontSize: "1.8rem",
+								color: "darkred",
+							}}
+						>
+							FOR FREE!
+						</strong>
+						<div>
+							<strong style={{ fontWeight: "bolder", fontSize: "1.3rem" }}>
+								YOUR PRIVATE WEBSITE!
+							</strong>
+						</div>
+					</div>
+				)}
+			</div>
+			<div className='mb-5 mt-1 heroFooterWrapper'>
+				<AboutHeroFooter language={language} />
 			</div>
 		</AboutPageWrapper>
 	);
@@ -394,9 +433,17 @@ const AboutPageWrapper = styled.section`
 		width: 50%;
 	}
 
-	@media (max-width: 1000px) {
+	.heroFooterWrapper {
+		display: none;
+	}
+
+	@media (max-width: 1200px) {
 		.iconImage {
 			width: 60%;
+		}
+
+		.heroFooterWrapper {
+			display: block;
 		}
 	}
 `;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 // import ReactGA from "react-ga";
 import Helmet from "react-helmet";
 import StepsHeroComp from "../components/OtherHeroComp/StepsHeroComp";
+import StepsHeroFooter from "../components/OtherHeroComp/StepsHeroFooter";
 
 const RegisterSteps = ({ language }) => {
 	// useEffect(() => {
@@ -65,13 +66,13 @@ const RegisterSteps = ({ language }) => {
 			>
 				<h2 className='beforeRegis'>
 					{language === "Arabic"
-						? "أولاً، قبل التسجيل"
-						: "Firstly, Before Registeration"}
+						? "أولا ما قبل التسجيل"
+						: "First, what is required before registration"}
 				</h2>
 				<p>
 					{language === "Arabic" ? (
 						<p>
-							طبعًا بيشرفنا وجودك كشريك في منصة XLOOK كعضو نشط.
+							طبعًا بيشرفنا وجودك كشريك في منصة <strong>XLOOK</strong> كعضو نشط.
 							<ul className='mr-4'>
 								<li>
 									من أهم مراحل الشراكة هي مرحلة التسجيل والتي تحتاج إلى بعض
@@ -79,16 +80,16 @@ const RegisterSteps = ({ language }) => {
 									الدعم أثناء مرحلة التسجيل
 								</li>
 								<li>
-									وعشان نضمن إنك بتدير حسابك بأحسن طريقة، خصصنالك مدير عملاء من
-									XLOOK بحيث يقدر يوجهك أثناء عملية تسجيل وإعداد حسابك بأحسن
-									طريقة.
+									وعشان نضمن إنك بتدير حسابك بأحسن طريقة، خصصنالك مدير عملاء من{" "}
+									<strong>XLOOK</strong> بحيث يقدر يوجهك أثناء عملية تسجيل
+									وإعداد حسابك بأحسن طريقة.
 								</li>
 							</ul>
 						</p>
 					) : (
 						<p>
-							Of course, we are delighted to have you as a partner on the XLOOK
-							platform as an active member.
+							Of course, we are delighted to have you as a partner on the{" "}
+							<strong>XLOOK</strong> platform as an active member.
 							<ul className='ml-4'>
 								<li>
 									One of the most important stages of the partnership is the
@@ -98,9 +99,9 @@ const RegisterSteps = ({ language }) => {
 								</li>
 								<li>
 									To ensure that you manage your account in the best way
-									possible, we have assigned a customer manager from XLOOK who
-									can guide you during the registration and account setup
-									process.
+									possible, we have assigned a customer manager from{" "}
+									<strong>XLOOK</strong> who can guide you during the
+									registration and account setup process.
 								</li>
 							</ul>
 						</p>
@@ -112,23 +113,28 @@ const RegisterSteps = ({ language }) => {
 							<h3 style={{ color: "white" }}>من هو مدير العملاء؟</h3>
 
 							<p style={{ color: "white" }}>
-								مدير العملاء هو شخص مدرب و على دراية بكل خبايا و تقنيات
-								الابليكيشن و قد تم إعداد الاكونت مانجر ليكون عونا و رفيق عمل
-								لاصحاب حسابات
+								مدير العملاء هو الشخص المسؤول والمدرب الذي يتمتع بخبرة ومعرفة
+								تامة بجميع جوانب وتقنيات التطبيق. و قد تم إعداد مدير العملاء
+								ليكون رفيق العمل والمساعد لأصحاب الحسابات في الصالونات و البيوتى
+								سنتر.
 							</p>
 							<p style={{ color: "white" }}>
-								من أهم ما يميز XLOOK هو خاصية التسويق المقدمة كهدية مجانية لجميع
-								حسابات الصالونات و مراكز التجميل المفعلة على المنصة. سيقوم مدير
-								العملاء بمتابعة حسابك لابقائك دائما على خط المنافسة و التاكد من
-								ظهورك للالاف من هم فى منطقتك يوميا.
+								سيقوم مدير العملاء بمتابعة حسابك لابقائك دائما على خط المنافسة و
+								التاكد من ظهورك للالاف من هم فى منطقتك يوميا.
 							</p>
 							<p style={{ color: "white" }}>
 								يكون مدير العملاء دائما فى جانب صاحب الحساب و من اهم مهماته هى
 								الاعتناء بحسابك و التاكد من تطوره الدائم و نجاحه.
 							</p>
 							<p style={{ color: "white" }}>
-								يمكنكم إيجاد قائمة بمدراء الحسابات المعتمدين لدينا. قم بإختيار
-								الاقرب اليك أثناء عملية التسجيل.
+								من أهم ما يميز <strong>XLOOK</strong> هو خاصية التسويق المقدمة
+								كهدية مجانية لجميع حسابات الصالونات و مراكز التجميل المفعلة على
+								المنصة.
+							</p>
+							<p style={{ color: "white" }}>
+								{" "}
+								يمكنك العثور على قائمة بمديري الحسابات المعتمدين لدينا، حيث
+								يمكنك اختيار المدير الأقرب إليك أثناء عملية التسجيل.
 							</p>
 						</>
 					) : (
@@ -141,11 +147,12 @@ const RegisterSteps = ({ language }) => {
 								Manager is there to assist and support account owners.
 							</p>
 							<p style={{ color: "white" }}>
-								One of the key features of XLOOK is the marketing feature
-								provided as a free gift to all activated salon and beauty center
-								accounts on the platform. The Account Manager will monitor your
-								account to keep you competitive and ensure your visibility to
-								thousands of people in your area on a daily basis.
+								One of the key features of <strong>XLOOK</strong> is the
+								marketing feature provided as a free gift to all activated salon
+								and beauty center accounts on the platform. The Account Manager
+								will monitor your account to keep you competitive and ensure
+								your visibility to thousands of people in your area on a daily
+								basis.
 							</p>
 							<p style={{ color: "white" }}>
 								The Account Manager is always by your side, and their main tasks
@@ -163,108 +170,119 @@ const RegisterSteps = ({ language }) => {
 				<div className='mt-5'>
 					{language === "Arabic" ? (
 						<>
-							<h3>خطوات التسجيل </h3>
+							<h3 style={{ fontWeight: "bolder", textAlign: "center" }}>
+								خطوات التسجيل{" "}
+							</h3>
+							<div style={{ fontWeight: "bolder" }} className='mt-4'>
+								<h4>ملئ طلب التسجيل</h4>
+								<p>
+									مع <strong>XLOOK</strong> يقوم صاحب الصالون او مركز التجميل
+									بملىء طلب” فتح حساب” صالون جديد على <strong>XLOOK</strong> من
+									خلال ملىء “نموذج التسجيل الشركاء”, مع التاكد من ان كل البيانات
+									صحيحة مع العلم ان اى اختلاف فى البيانات المدخلة عن البيانات
+									الصحيحة سوف تحدث مشكلة فى مرحلة التحويلات المالية.
+								</p>
+							</div>
+							<div>
+								<h4 style={{ fontWeight: "bolder" }}>تجهيز الحساب</h4>
+								<p>
+									بعد ملىء طلب التسجيل سيتم التواصل معاك من خلال الهاتف فى فترة
+									لن تتعدى ال24 ساعة لإكمال باقى البيانات المطلوبة. و إن لم يتم
+									التواصل معك, يرجى التواصل مع رقم خدمة العملاء ما بعد التسجيل
+									على رقم 01098168674 من خلال الواتس أب.
+									<ul className='mr-4'>
+										<li>
+											- يجب ان تكون لديك البيانات الأتية للتاكد من تسجيل سريع.
+										</li>
+										<li>لوجو الصالون او صورة للمحل باليافطة.</li>
+										<li>
+											صورة بطاقة الرقم القومى صاحب الصالون او البيوتى سنتر.
+										</li>
+										<li>بريد اليكترونى للتسجيل و رقم موبايل عليه واتس أب.</li>
+									</ul>
+								</p>
+							</div>
 
-							<p>
-								مع XLOOK يقوم صاحب الصالون او مركز التجميل بملىء طلب فتح حساب
-								صالون جديد على XLOOK من خلال ملىء نموذج التسجيل الشركاء, مع
-								التاكد من ان كل البيانات صحيحة مع العلم ان اى اختلاف فى البيانات
-								المدخلة عن البيانات الصحيحة هتكون مشكلة فى مرحلة التحويلات
-								المالية.
-							</p>
+							<div>
+								<h4 style={{ fontWeight: "bolder" }}>مراجعة و تفعيل الحساب</h4>
+								<div>
+									بعد إنهاء إدخال كافة البيانات المطلوبة, سيقوم فريق العمل
+									بمراجعة بياناتكم و سيتم تفعيل حسابكم خلال يومين عمل.
+									<br />
+									وفى حالة وجود اى اعادة ادخال لبعض البيانات سيتم اخباركم من
+									خلال مدير العملاء المسؤول عن حسابكم.
+								</div>
+							</div>
 						</>
 					) : (
 						<>
-							<h3>Registration Steps</h3>
+							<h3 style={{ fontWeight: "bolder", textAlign: "center" }}>
+								The Registration Steps
+							</h3>
+							<div className='mt-4'>
+								<h4 style={{ fontWeight: "bolder" }}>
+									Filling out the registration form
+								</h4>
+								<p>
+									With <strong>XLOOK</strong> , salon owners or beauty center
+									owners can fill out a "New Salon Account" request on{" "}
+									<strong>XLOOK</strong> by completing the "Business Partner
+									Registration Form."
+									<br />
+									<strong style={{ fontSize: "13px" }}>
+										It is important to ensure that all the data entered is
+										correct, as any discrepancy between the entered data and the
+										correct data can cause issues during the financial
+										transactions phase.
+									</strong>
+								</p>
+							</div>
+							<div>
+								<h4 style={{ fontWeight: "bolder" }}>Account Preparation</h4>
+								<p>
+									After filling out the registration form, we will contact you
+									by phone within 24 hours to complete the rest of the required
+									information. If you are not contacted, please contact customer
+									service after registration at the following WhatsApp number:
+									01098168674.
+									<ul className='ml-4'>
+										<li>
+											You must have the following data to ensure quick
+											registration.
+										</li>
+										<li>Salon logo or a picture of the store sign.</li>
+										<li>
+											Copy of the national ID of the salon owner or beauty
+											center.
+										</li>
+										<li>
+											An email address for registration and a mobile number with
+											WhatsApp.
+										</li>
+									</ul>
+								</p>
+							</div>
 
-							<p>
-								With XLOOK, salon owners and beauty center owners fill out a
-								request to open a new salon account on XLOOK by completing the
-								partner registration form, ensuring that all the data entered is
-								accurate. It is important to note that any discrepancy in the
-								entered data from the correct data may cause issues in the
-								financial transfer stage.
-							</p>
+							<div>
+								<h4 style={{ fontWeight: "bolder" }}>
+									Account Review and Activation
+								</h4>
+								<div>
+									After entering all the required information, our team will
+									review your data and your account will be activated within two
+									working days.
+									<br />
+									If any information needs to be re-entered, you will be
+									informed by your account manager responsible for your account.
+								</div>
+							</div>
 						</>
 					)}
 				</div>
+			</div>
 
-				<div className='mt-5'>
-					{language === "Arabic" ? (
-						<>
-							<h3>تجهيز الحساب</h3>
-
-							<p>
-								بعد ملىء طلب التسجيل سيتم التواصل معاك من خلال الهاتف فى فترة لن
-								تتعدى ال24 ساعة لإكمال باقى البيانات المطلوبة. و إن لم يتم
-								التواصل معك, يرجى التواصل مع رقم خدمة ما بعد التسجيل على رقم
-								0108768686 من خلال الواتس أب.
-							</p>
-							<p>
-								يجب ان تكون لديك البيانات الأتية للتاكد من تسجيل سريع.
-								<ul className='mr-4'>
-									<li>لوجو الصالون او صورة للمحل باليافطة</li>
-
-									<li>صورة بطاقة رقم قومى صاحب الصالون او البيوتى سنتر.</li>
-									<li>إيميل للتسجيل و رقم موبايل عليه واتس أب.</li>
-								</ul>
-							</p>
-						</>
-					) : (
-						<>
-							<h3>Account Setup</h3>
-
-							<p>
-								After submitting the registration request, we will contact you
-								via phone within 24 hours to complete the remaining required
-								information. If you don't receive any communication, please
-								contact our post-registration support number on 0108768686 via
-								WhatsApp.
-							</p>
-							<p>
-								To ensure a quick registration process, please have the
-								following information ready:
-								<ul className='ml-4'>
-									<li>Salon logo or a picture of the salon with a signboard</li>
-									<li>
-										Copy of the national ID card for the salon owner or beauty
-										center owner
-									</li>
-									<li>
-										Email address for registration and a mobile number with
-										WhatsApp
-									</li>
-								</ul>
-							</p>
-						</>
-					)}
-				</div>
-
-				<div className='mt-5'>
-					{language === "Arabic" ? (
-						<>
-							<h3>مراجعة و تفعيل</h3>
-
-							<p>
-								بعد إنهاء إدخال كافة البيانات المطلوبة, سيقوم فريق العمل بمراجعة
-								بياناتكم و سيتم تفعيل حسابكم خلال يومين عمل . وفى حالة وجود اى
-								اعادة ادخال لبعض البيانات هيتم اخباركم من خلال مدير العملاء
-								المسؤل عن حسابكم.
-							</p>
-						</>
-					) : (
-						<>
-							<h3>Review and Activation</h3>
-
-							<p>
-								After completing the entry of all required information, our team
-								will review your data and activate your account within two
-								business days. If any data needs to be re-entered, you will be
-								informed by the account manager responsible for your account.
-							</p>
-						</>
-					)}
-				</div>
+			<div className='mb-5 mt-3'>
+				<StepsHeroFooter language={language} />
 			</div>
 		</RegisterStepsWrapper>
 	);
@@ -332,11 +350,6 @@ const RegisterStepsWrapper = styled.section`
 	@media (max-width: 1000px) {
 		.iconImage {
 			width: 60%;
-		}
-
-		ul {
-			margin-right: 0px !important;
-			margin-left: 0px !important;
 		}
 	}
 `;
