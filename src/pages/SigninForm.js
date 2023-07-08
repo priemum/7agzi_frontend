@@ -72,7 +72,8 @@ const SigninForm = ({ history, language }) => {
 		);
 
 	const redirectUser = () => {
-		let intendedDestination = history.location.state;
+		let intendedDestination =
+			history && history.location && history.location.state;
 		if (intendedDestination && redirectToReferrer) {
 			return <Redirect to={intendedDestination.from} />;
 		} else {
