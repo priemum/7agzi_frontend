@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Animated } from "react-animated-css";
 import myBackGroundImage from "../../Images/Banner2Steps.jpg";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const StepsHeroFooter = ({ language }) => {
@@ -56,6 +57,11 @@ const StepsHeroFooter = ({ language }) => {
 									خطوات للظهور أمام الملايين
 								</h1>
 							</div>
+							<div className='btnWrapperArabic'>
+								<Link to='/signup' className='btn btn-danger'>
+									سجل صالونك الآن
+								</Link>
+							</div>
 						</div>
 					) : (
 						<div className='row'>
@@ -64,6 +70,11 @@ const StepsHeroFooter = ({ language }) => {
 							</div>
 							<div className='col-10'>
 								<h1 style={{ color: "white" }}>STEPS TO BE SEEN BY MILLIONS</h1>
+							</div>
+							<div className='btnWrapperEnglish'>
+								<Link to='/signup' className='btn btn-danger'>
+									REGISTER NOW
+								</Link>
 							</div>
 						</div>
 					)}
@@ -87,7 +98,7 @@ const AboutHeroCompWrapper = styled.div`
 
 	strong {
 		position: absolute;
-		margin-top: 410px;
+		margin-top: 330px;
 		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
@@ -99,7 +110,7 @@ const AboutHeroCompWrapper = styled.div`
 
 	h1 {
 		position: absolute;
-		margin-top: 450px;
+		margin-top: 370px;
 		border-radius: 5px;
 		color: white;
 		font-weight: bolder;
@@ -112,10 +123,28 @@ const AboutHeroCompWrapper = styled.div`
 		/* transform: translate(-30%, -30%); */
 	}
 
+	.btnWrapperArabic > a {
+		margin-top: 470px;
+		position: absolute;
+		right: 20%;
+		padding: 20px;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+
+	.btnWrapperEnglish > a {
+		margin-top: 450px;
+		position: absolute;
+		left: 20%;
+		padding: 20px;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+
 	@media (max-width: 1300px) {
 		strong {
 			position: absolute;
-			margin-top: 210px;
+			margin-top: 120px;
 			border-radius: 5px;
 			color: white;
 			font-weight: bolder;
@@ -127,7 +156,7 @@ const AboutHeroCompWrapper = styled.div`
 
 		h1 {
 			position: absolute;
-			margin-top: 250px;
+			margin-top: 150px;
 			border-radius: 5px;
 			color: white;
 			font-weight: bolder;
@@ -138,6 +167,24 @@ const AboutHeroCompWrapper = styled.div`
 			padding: 7px 0px;
 			font-size: 1.3rem;
 			/* transform: translate(-30%, -30%); */
+		}
+
+		.btnWrapperArabic > a {
+			margin-top: 280px;
+			position: absolute;
+			right: 30%;
+			padding: 10px;
+			font-size: 1.5rem;
+			font-weight: bolder;
+		}
+
+		.btnWrapperEnglish > a {
+			margin-top: 240px;
+			position: absolute;
+			left: 30%;
+			padding: 10px;
+			font-size: 1.5rem;
+			font-weight: bolder;
 		}
 	}
 `;

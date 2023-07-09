@@ -6,6 +6,9 @@ import styled from "styled-components";
 import Helmet from "react-helmet";
 import StepsHeroComp from "../components/OtherHeroComp/StepsHeroComp";
 import StepsHeroFooter from "../components/OtherHeroComp/StepsHeroFooter";
+import IconStep1 from "../Images/IconStep1.png";
+import IconStep2 from "../Images/IconStep2.png";
+import IconStep3 from "../Images/IconStep3.png";
 
 const RegisterSteps = ({ language }) => {
 	// useEffect(() => {
@@ -174,7 +177,21 @@ const RegisterSteps = ({ language }) => {
 								خطوات التسجيل{" "}
 							</h3>
 							<div style={{ fontWeight: "bolder" }} className='mt-4'>
-								<h4>ملئ طلب التسجيل</h4>
+								<h4
+									dir='rtl'
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep1})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "130px",
+										backgroundPosition: "right bottom",
+									}}
+								>
+									<div className='longH4Arabic mt-5 mr-5'>ملئ طلب التسجيل </div>
+								</h4>
 								<p>
 									مع <strong>XLOOK</strong> يقوم صاحب الصالون او مركز التجميل
 									بملىء طلب” فتح حساب” صالون جديد على <strong>XLOOK</strong> من
@@ -184,7 +201,24 @@ const RegisterSteps = ({ language }) => {
 								</p>
 							</div>
 							<div>
-								<h4 style={{ fontWeight: "bolder" }}>تجهيز الحساب</h4>
+								<h4
+									dir='rtl'
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep2})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "130px",
+										backgroundPosition: "right bottom",
+									}}
+								>
+									{" "}
+									<div className='longH4Arabic mt-5 mr-5'>
+										تجهيز الحساب{" "}
+									</div>{" "}
+								</h4>
 								<p>
 									بعد ملىء طلب التسجيل سيتم التواصل معاك من خلال الهاتف فى فترة
 									لن تتعدى ال24 ساعة لإكمال باقى البيانات المطلوبة. و إن لم يتم
@@ -204,7 +238,23 @@ const RegisterSteps = ({ language }) => {
 							</div>
 
 							<div>
-								<h4 style={{ fontWeight: "bolder" }}>مراجعة و تفعيل الحساب</h4>
+								<h4
+									dir='rtl'
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep3})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "130px",
+										backgroundPosition: "right bottom",
+									}}
+								>
+									<div className='longH4Arabic mt-5 mr-5'>
+										مراجعة و تفعيل الحساب
+									</div>
+								</h4>
 								<div>
 									بعد إنهاء إدخال كافة البيانات المطلوبة, سيقوم فريق العمل
 									بمراجعة بياناتكم و سيتم تفعيل حسابكم خلال يومين عمل.
@@ -220,8 +270,20 @@ const RegisterSteps = ({ language }) => {
 								The Registration Steps
 							</h3>
 							<div className='mt-4'>
-								<h4 style={{ fontWeight: "bolder" }}>
-									Filling out the registration form
+								<h4
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep1})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "130px",
+									}}
+								>
+									<div className='longH4 mt-5 ml-5'>
+										Filling out the registration form
+									</div>
 								</h4>
 								<p>
 									With <strong>XLOOK</strong> , salon owners or beauty center
@@ -238,7 +300,22 @@ const RegisterSteps = ({ language }) => {
 								</p>
 							</div>
 							<div>
-								<h4 style={{ fontWeight: "bolder" }}>Account Preparation</h4>
+								<h4
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep2})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "140px",
+									}}
+								>
+									{" "}
+									<div className='mt-5 ml-5 longH4'>
+										Account Preparation
+									</div>{" "}
+								</h4>
 								<p>
 									After filling out the registration form, we will contact you
 									by phone within 24 hours to complete the rest of the required
@@ -264,8 +341,21 @@ const RegisterSteps = ({ language }) => {
 							</div>
 
 							<div>
-								<h4 style={{ fontWeight: "bolder" }}>
-									Account Review and Activation
+								<h4
+									style={{
+										fontWeight: "bolder",
+										backgroundImage: `url(${IconStep3})`,
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "contain",
+										padding: "20px",
+										color: "black",
+										minHeight: "130px",
+									}}
+								>
+									<div className='mt-5 ml-5 longH4'>
+										{" "}
+										Account Review and Activation
+									</div>
 								</h4>
 								<div>
 									After entering all the required information, our team will
@@ -350,6 +440,18 @@ const RegisterStepsWrapper = styled.section`
 	@media (max-width: 1000px) {
 		.iconImage {
 			width: 60%;
+		}
+
+		.longH4 {
+			font-size: 1.3rem !important;
+			margin-top: 60px !important;
+			margin-left: 70px !important;
+		}
+
+		.longH4Arabic {
+			font-size: 1.5rem !important;
+			margin-top: 60px !important;
+			margin-right: 70px !important;
 		}
 	}
 `;

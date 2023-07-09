@@ -381,7 +381,7 @@ const About = ({ language }) => {
 					</div>
 				)}
 			</div>
-			<div className='mb-5 mt-1 heroFooterWrapper'>
+			<div className='mb-5 mt-1 '>
 				<AboutHeroFooter language={language} />
 			</div>
 		</AboutPageWrapper>

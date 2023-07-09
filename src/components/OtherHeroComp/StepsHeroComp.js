@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Animated } from "react-animated-css";
 import myBackGroundImage from "../../Images/Steps1.jpg";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const StepsHeroComp = ({ language }) => {
@@ -54,6 +55,11 @@ const StepsHeroComp = ({ language }) => {
 									خطوات للظهور أمام الملايين
 								</h1>
 							</div>
+							<div className='btnWrapperArabic'>
+								<Link to='/signup' className='btn btn-danger'>
+									سجل صالونك الآن
+								</Link>
+							</div>
 						</div>
 					) : (
 						<div className='row'>
@@ -62,6 +68,11 @@ const StepsHeroComp = ({ language }) => {
 							</div>
 							<div className='col-10'>
 								<h1 style={{ color: "white" }}>STEPS TO BE SEEN BY MILLIONS</h1>
+							</div>
+							<div className='btnWrapperEnglish'>
+								<Link to='/signup' className='btn btn-danger'>
+									REGISTER NOW
+								</Link>
 							</div>
 						</div>
 					)}
@@ -110,6 +121,24 @@ const AboutHeroCompWrapper = styled.div`
 		/* transform: translate(-30%, -30%); */
 	}
 
+	.btnWrapperArabic > a {
+		margin-top: 460px;
+		position: absolute;
+		right: 20%;
+		padding: 20px;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+
+	.btnWrapperEnglish > a {
+		margin-top: 450px;
+		position: absolute;
+		left: 20%;
+		padding: 20px;
+		font-size: 1.5rem;
+		font-weight: bolder;
+	}
+
 	@media (max-width: 1300px) {
 		strong {
 			position: absolute;
@@ -136,6 +165,24 @@ const AboutHeroCompWrapper = styled.div`
 			padding: 7px 0px;
 			font-size: 1.3rem;
 			/* transform: translate(-30%, -30%); */
+		}
+
+		.btnWrapperArabic > a {
+			margin-top: 280px;
+			position: absolute;
+			right: 30%;
+			padding: 10px;
+			font-size: 1.5rem;
+			font-weight: bolder;
+		}
+
+		.btnWrapperEnglish > a {
+			margin-top: 240px;
+			position: absolute;
+			left: 30%;
+			padding: 10px;
+			font-size: 1.5rem;
+			font-weight: bolder;
 		}
 	}
 `;

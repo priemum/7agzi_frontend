@@ -19,18 +19,19 @@ const AboutHeroFooter = ({ language }) => {
 	// }, []);
 	return (
 		<AboutHeroCompWrapper
+			className='col-md-6 mx-auto'
 			style={{
 				background: `url(
                 ${myBackGroundImage}
             )`,
 				backgroundRepeat: "no-repeat",
-				width: window.innerWidth < 768 ? "100%" : "1580px",
+				width: window.innerWidth < 768 ? "100%" : "100%",
 				backgroundSize: "cover",
 				position: "relative",
-				height: window.innerWidth < 768 ? "570px" : "1050px",
+				height: window.innerWidth < 768 ? "570px" : "155vh",
 				margin: "auto",
 				objectFit: "cover",
-				backgroundPosition: `center`,
+				backgroundPosition: `center ${offsetY * 0.5}px`,
 			}}
 		>
 			<div className='col-12 mx-auto text-center'>
@@ -67,7 +68,13 @@ const AboutHeroFooter = ({ language }) => {
 						<Link className='link3' to='/signup'>
 							سجّل الآن
 						</Link>
-						<Link className='link4' to='/steps'>
+						<Link
+							className='link4'
+							to='/steps'
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+						>
 							تحقق من خطوات التسجيل
 						</Link>
 					</div>
@@ -76,7 +83,13 @@ const AboutHeroFooter = ({ language }) => {
 						<Link className='link1' to='/signup'>
 							REGISTER NOW
 						</Link>
-						<Link to='/steps' className='link2'>
+						<Link
+							to='/steps'
+							className='link2'
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+						>
 							CHECK REGISTERATION STEPS
 						</Link>
 					</div>
@@ -89,30 +102,30 @@ const AboutHeroFooter = ({ language }) => {
 export default AboutHeroFooter;
 
 const AboutHeroCompWrapper = styled.div`
-	margin: 0px !important;
 	::before {
 		background-color: rgba(22, 25, 56, 0);
 		content: "";
 		display: block;
-		height: 110%;
+		height: 100%;
 		position: absolute;
 		width: 100%;
 	}
 
 	.content > h1 {
 		position: absolute;
-		margin-top: 12px;
-		left: 25%;
+		margin-top: 40px;
+		left: 35%;
 		color: white;
 		font-weight: bolder;
+		font-size: 3rem;
 	}
 
 	.content > .header2 {
-		margin-top: 55px;
+		margin-top: 150px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
-		font-size: 1.1rem;
+		font-size: 1.7rem;
 		line-height: 1.2;
 	}
 
@@ -121,47 +134,47 @@ const AboutHeroCompWrapper = styled.div`
 	}
 
 	.pageLinks > .link1 {
-		margin-top: 529px;
-		margin-left: 10px;
+		margin-top: 1300px;
+		margin-left: 20px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
-		font-size: 13px;
+		font-size: 1.5rem;
 		width: 200px;
 		text-align: left;
 	}
 
 	.pageLinks > .link2 {
-		margin-top: 529px;
-		margin-left: 190px;
+		margin-top: 1300px;
+		margin-left: 550px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
 		text-decoration: underline;
-		font-size: 11px;
-		width: 210px;
+		font-size: 1.3rem;
+		width: 340px;
 		text-align: left;
 	}
 
 	.pageLinks > .link3 {
-		margin-top: 525px;
-		margin-right: 200px;
+		margin-top: 1300px;
+		margin-right: 550px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
-		font-size: 1.2rem;
-		width: 200px;
+		font-size: 1.5rem;
+		width: 340px;
 		text-align: right;
 	}
 
 	.pageLinks > .link4 {
-		margin-top: 525px;
-		margin-right: 10px;
+		margin-top: 1300px;
+		margin-right: 20px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
 		text-decoration: underline;
-		font-size: 1.1rem;
+		font-size: 1.5rem;
 		width: 210px;
 		text-align: right;
 	}
@@ -169,10 +182,12 @@ const AboutHeroCompWrapper = styled.div`
 	@media (max-width: 1300px) {
 		.content > h1 {
 			position: absolute;
-			margin-top: 12px;
-			left: 25%;
+			margin-top: 8px;
+			left: -25%;
+			width: 500px;
 			color: white;
 			font-weight: bolder;
+			font-size: 2.3rem;
 		}
 
 		.content > .header2 {
@@ -201,7 +216,7 @@ const AboutHeroCompWrapper = styled.div`
 
 		.pageLinks > .link2 {
 			margin-top: 529px;
-			margin-left: 190px;
+			margin-left: 180px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
