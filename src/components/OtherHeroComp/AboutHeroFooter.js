@@ -25,10 +25,10 @@ const AboutHeroFooter = ({ language }) => {
                 ${myBackGroundImage}
             )`,
 				backgroundRepeat: "no-repeat",
-				width: window.innerWidth < 768 ? "100%" : "100%",
+				width: window.innerWidth < 1200 ? "100%" : "100%",
 				backgroundSize: "cover",
 				position: "relative",
-				height: window.innerWidth < 768 ? "570px" : "155vh",
+				height: window.innerWidth < 1200 ? "570px" : "155vh",
 				margin: "auto",
 				objectFit: "cover",
 				backgroundPosition: `center ${offsetY * 0.5}px`,
@@ -90,7 +90,7 @@ const AboutHeroFooter = ({ language }) => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
-							CHECK REGISTERATION STEPS
+							CHECK REGISTRATION STEPS
 						</Link>
 					</div>
 				)}
@@ -134,7 +134,7 @@ const AboutHeroCompWrapper = styled.div`
 	}
 
 	.pageLinks > .link1 {
-		margin-top: 1300px;
+		margin-top: 1390px;
 		margin-left: 20px;
 		position: absolute;
 		color: white;
@@ -145,7 +145,7 @@ const AboutHeroCompWrapper = styled.div`
 	}
 
 	.pageLinks > .link2 {
-		margin-top: 1300px;
+		margin-top: 1390px;
 		margin-left: 550px;
 		position: absolute;
 		color: white;
@@ -157,18 +157,18 @@ const AboutHeroCompWrapper = styled.div`
 	}
 
 	.pageLinks > .link3 {
-		margin-top: 1300px;
+		margin-top: 1380px;
 		margin-right: 550px;
 		position: absolute;
 		color: white;
 		font-weight: bolder;
-		font-size: 1.5rem;
+		font-size: 2rem;
 		width: 340px;
 		text-align: right;
 	}
 
 	.pageLinks > .link4 {
-		margin-top: 1300px;
+		margin-top: 1390px;
 		margin-right: 20px;
 		position: absolute;
 		color: white;
@@ -204,7 +204,7 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link1 {
-			margin-top: 529px;
+			margin-top: 546px;
 			margin-left: 10px;
 			position: absolute;
 			color: white;
@@ -215,7 +215,7 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link2 {
-			margin-top: 529px;
+			margin-top: 546px;
 			margin-left: 180px;
 			position: absolute;
 			color: white;
@@ -227,24 +227,24 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link3 {
-			margin-top: 525px;
+			margin-top: 546px;
 			margin-right: 200px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
-			font-size: 1.2rem;
+			font-size: 1rem;
 			width: 200px;
 			text-align: right;
 		}
 
 		.pageLinks > .link4 {
-			margin-top: 525px;
+			margin-top: 546px;
 			margin-right: 10px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
 			text-decoration: underline;
-			font-size: 1.1rem;
+			font-size: 1rem;
 			width: 210px;
 			text-align: right;
 		}

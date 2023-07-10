@@ -25,6 +25,7 @@ import Contact from "./pages/Contact";
 import SingleStorePage from "./pages/SingleStorePage";
 import AgentsSignupForm from "./pages/AgentsSignupForm";
 import RegisterSteps from "./pages/RegisterSteps";
+import AgentGuide from "./pages/AgentGuide";
 
 //Owner Route
 import OwnerRoute from "./auth/OwnerRoute";
@@ -182,6 +183,11 @@ function App() {
 						path='/steps'
 						exact
 						component={() => <RegisterSteps language={language} />}
+					/>
+					<Route
+						path='/agent-guide'
+						exact
+						component={() => <AgentGuide language={language} />}
 					/>
 					<Route
 						path='/contact'

@@ -49,7 +49,7 @@ const RegisterSteps = ({ language }) => {
 					<strong>
 						{language === "Arabic" ? (
 							<div style={{ color: "darkred" }}>
-								لأصحاب صالونات التجميل ومراكز الجمال
+								لأصحاب الصالونات ومراكز التجميل
 							</div>
 						) : (
 							<div style={{ color: "darkred" }}>
@@ -91,20 +91,19 @@ const RegisterSteps = ({ language }) => {
 						</p>
 					) : (
 						<p>
-							Of course, we are delighted to have you as a partner on the{" "}
-							<strong>XLOOK</strong> platform as an active member.
+							We are delighted to have you as a partner on the{" "}
+							<strong>XLOOK</strong> platform as an active member!
 							<ul className='ml-4'>
 								<li>
 									One of the most important stages of the partnership is the
-									registration phase, which requires precision and patience in
-									entering the account information. The account owner may need
-									support during the registration process.
+									registration phase, which requires precision when entering the
+									account setup information. The account owner may need support
+									during the registration process.
 								</li>
 								<li>
-									To ensure that you manage your account in the best way
-									possible, we have assigned a customer manager from{" "}
-									<strong>XLOOK</strong> who can guide you during the
-									registration and account setup process.
+									To ensure you manage your account in the best way possible, we
+									assign an <strong>XLOOK</strong> Account Manager who can guide
+									you during the registration and account setup process.
 								</li>
 							</ul>
 						</p>
@@ -286,14 +285,14 @@ const RegisterSteps = ({ language }) => {
 									</div>
 								</h4>
 								<p>
-									With <strong>XLOOK</strong> , salon owners or beauty center
+									With <strong>XLOOK</strong>, salon owners or beauty center
 									owners can fill out a "New Salon Account" request on{" "}
 									<strong>XLOOK</strong> by completing the "Business Partner
 									Registration Form."
 									<br />
 									<strong style={{ fontSize: "13px" }}>
-										It is important to ensure that all the data entered is
-										correct, as any discrepancy between the entered data and the
+										It is important to ensure all information is entered
+										correctly. Discrepancies between the entered data and the
 										correct data can cause issues during the financial
 										transactions phase.
 									</strong>
@@ -317,9 +316,9 @@ const RegisterSteps = ({ language }) => {
 									</div>{" "}
 								</h4>
 								<p>
-									After filling out the registration form, we will contact you
-									by phone within 24 hours to complete the rest of the required
-									information. If you are not contacted, please contact customer
+									After completing the registration form, we will contact you by
+									phone within 24 hours to finish the remaining information that
+									is required. If you are not contacted, please contact customer
 									service after registration at the following WhatsApp number:
 									01098168674.
 									<ul className='ml-4'>
@@ -329,8 +328,8 @@ const RegisterSteps = ({ language }) => {
 										</li>
 										<li>Salon logo or a picture of the store sign.</li>
 										<li>
-											Copy of the national ID of the salon owner or beauty
-											center.
+											Copy of the National ID of the salon owner or beauty
+											center. This information is not shared.
 										</li>
 										<li>
 											An email address for registration and a mobile number with
@@ -359,11 +358,13 @@ const RegisterSteps = ({ language }) => {
 								</h4>
 								<div>
 									After entering all the required information, our team will
-									review your data and your account will be activated within two
-									working days.
+									review and confirm your data. Your account will be activated
+									within two working days.
 									<br />
-									If any information needs to be re-entered, you will be
-									informed by your account manager responsible for your account.
+									If any information needs to be re-entered, this may delay to
+									activation of your account. You will be informed by your
+									account manager responsible for your account to make any
+									corrections needed.
 								</div>
 							</div>
 						</>

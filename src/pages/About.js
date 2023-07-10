@@ -45,7 +45,7 @@ const About = ({ language }) => {
 					أوطال
 					تقدمها إلمنصة من خالل أبليكيشن خاص لتسجيل وحجز إلمستخدمرين
 					إلخدمات إلتجميلية. Powered By https://infinite-apps.com`
-							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers
+							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers
 					located in Egypt.
 					The platform offers services for all family members, including women, girls, men, and
 					children, with a variety of services provided.
@@ -93,7 +93,7 @@ const About = ({ language }) => {
 					>
 						{language === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل.`
-							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers located in Egypt. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services.`}
+							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers located in Egypt. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book services offered by the platform through a special application designed for user registration and booking beauty services.`}
 					</p>
 				</div>
 				<div className='col-md-5 mx-auto mt-5 mb-3'>
@@ -113,12 +113,12 @@ const About = ({ language }) => {
 					<h2>
 						{language === "Arabic"
 							? "عملاء جدد، حجوزات أكثر."
-							: "New customers, more bookings."}
+							: "New customers, more bookings"}
 					</h2>
 					<p>
 						{language === "Arabic"
 							? "لدينا آلاف العملاء في منطقتك ينتظرون لحجز موعد في صالونك أو مركز التجميل الخاص بك، فهو مناسب جدًا لهم. لا تتردد في الانضمام الآن."
-							: "We have thousands of customers in your area waiting to make a reservation, and your salon or beauty center is very suitable for them. Do not hesitate to join now."}
+							: "We have thousands of customers in your area waiting to make a reservation, and your salon or beauty center suitable for them. Do not hesitate to join now."}
 					</p>
 				</div>
 
@@ -131,7 +131,7 @@ const About = ({ language }) => {
 								alt={
 									language === "Arabic"
 										? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
-										: "You'll be discovered even if your location is not on the main street."
+										: "You'll be discovered even if your location is not on the main street"
 								}
 							/>
 						</div>
@@ -140,7 +140,7 @@ const About = ({ language }) => {
 							<strong>
 								{language === "Arabic"
 									? "زيادة مصادر الدخل."
-									: "Increase sources of income."}
+									: "Increase sources of income"}
 							</strong>{" "}
 						</h2>
 						<p>
@@ -158,7 +158,7 @@ const About = ({ language }) => {
 								alt={
 									language === "Arabic"
 										? "تسويق محترف."
-										: "Professional marketing."
+										: "Professional marketing"
 								}
 							/>
 						</div>
@@ -166,13 +166,13 @@ const About = ({ language }) => {
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic" ? "موقع حصري." : "Exclusive website."}
+								{language === "Arabic" ? "موقع حصري." : "Exclusive website"}
 							</strong>{" "}
 						</h2>
 						<p>
 							{language === "Arabic"
 								? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
-								: "Finally, your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
+								: "Your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
 						</p>
 					</div>
 
@@ -191,13 +191,13 @@ const About = ({ language }) => {
 							<strong>
 								{language === "Arabic"
 									? "معنا ستزداد توسعاتك وفروعك."
-									: "With us, your expansions and branches will increase."}
+									: "With us, your expansions and branches will increase"}
 							</strong>{" "}
 						</h2>
 						<p>
 							{language === "Arabic"
 								? "نحرص دائمًا على تأمين حجوزات لك، وذلك سيزيد من حجوزاتك وعدد عملائك من خلال التركيز على تطوير الخدمة المستمر. ونتيجة لذلك، ستزداد قدراتك وفرص توسعك."
-								: "We always ensure that you have bookings, which will increase your bookings and customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
+								: "We ensure that you have increased bookings, which will increase your customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
 						</p>
 					</div>
 
@@ -218,7 +218,7 @@ const About = ({ language }) => {
 							<strong>
 								{language === "Arabic"
 									? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
-									: "You'll be discovered even if your location is not on the main street."}
+									: "You'll be discovered even if your location is not on a main street"}
 							</strong>{" "}
 						</h2>
 						<p>
@@ -245,13 +245,13 @@ const About = ({ language }) => {
 							<strong>
 								{language === "Arabic"
 									? "تسويق محترف."
-									: "Professional marketing."}
+									: "Professional marketing"}
 							</strong>{" "}
 						</h2>
 						<p>
 							{language === "Arabic"
 								? "قررنا أن نخفف عنك الجهد والتكاليف في التسويق مقابل تقديم خدمات عالية الجودة وتركيز قوي على رضا العملاء ، وهو أمر يعد دائمًا أولوية. تحتاج فقط إلى الحفاظ على تقييمات العملاء الخاصة بك ، وهذا هو نهاية دورك في التسويق. لدينا حجوزات حصرية محجوزة لك لأيام."
-								: "We have decided to relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
+								: "We relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
 						</p>
 					</div>
 				</div>
@@ -274,9 +274,9 @@ const About = ({ language }) => {
 						<h2>
 							{" "}
 							<strong>
-								Be a successful partner with us at XLOOK.
+								Be a successful partner with us at XLOOK!
 								<br />
-								One of the main advantages of joining the XLOOK platform is:
+								Advantages of joining the XLOOK platform are:
 							</strong>{" "}
 						</h2>
 					)}
