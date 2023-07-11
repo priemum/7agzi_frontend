@@ -9,7 +9,7 @@ const AgentGuide = ({ language }) => {
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
-					<title dir='rtl'>XLOOK | دليل الوكلاء ومديري الحسابات</title>
+					<title dir='rtl'>إكس لوك | دليل الوكلاء ومديري الحسابات</title>
 				) : (
 					<title>XLOOK | AGENTS & ACCOUNT MANAGERS GUIDE</title>
 				)}
@@ -17,12 +17,21 @@ const AgentGuide = ({ language }) => {
 					name='description'
 					content={
 						language === "Arabic"
-							? `منصة XLOOK هي منصة تجمع بين صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل. تستخدم منصة XLOOK لاختيار وحجز موعد في صالون الشعر أو مركز التجميل. يمكن للزوار التسجيل وحجز الخدمات المقدمة من خلال تطبيق مخصص للمستخدمين والباحثين عن خدمات التجميل. تقدم المنصة خدمات لجميع أفراد الأسرة بما في ذلك السيدات والفتيات والرجال والأطفال، بخدمات متخصصة ومحترفة. يجب أن يكون المتقدمون جادين ومهذبين ولديهم مظهر جيد. Powered By https://infinite-apps.com`
-							: `The XLOOK platform is a platform that brings together barbershop, women's beauty salons and beauty centers. The XLOOK platform is used to choose and book an appointment at a hair salon or beauty center. Visitors can register and book the services offered through a dedicated application for users and beauty service seekers. The platform provides services for all members of the family, including ladies, girls, men, and children, with specialized and professional services. Applicants should be serious, well-mannered, and have a good appearance. Powered By https://infinite-apps.com`
+							? `منصة إكس لوك هي منصة تجمع بين صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل. تُستخدم منصة إكس لوك لاختيار وحجز موعد في صالون الشعر أو مركز التجميل. يمكن للزوار التسجيل وحجز الخدمات المقدمة من خلال تطبيق مخصص للمستخدمين والباحثين عن خدمات التجميل. تقدم المنصة خدمات لجميع أفراد الأسرة بما في ذلك السيدات والفتيات والرجال والأطفال، بخدمات متخصصة ومحترفة. يجب أن يكون المتقدمون جادين ومهذبين ولديهم مظهر جيد. مدعوم بواسطة https://infinite-apps.com`
+							: `The XLOOK platform is a platform that brings together barbershops, women's beauty salons, and beauty centers. The XLOOK platform is used to choose and book an appointment at a hair salon or beauty center. Visitors can register and book the services offered through a dedicated application for users and beauty service seekers. The platform provides services for all members of the family, including ladies, girls, men, and children, with specialized and professional services. Applicants should be serious, well-mannered, and have a good appearance. Powered By https://infinite-apps.com`
+					}
+				/>
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? "إكس لوك، دليل الوكلاء، مديري الحسابات، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، خدمات التجميل"
+							: "XLOOK, AGENTS, ACCOUNT MANAGERS, barbershops, women's beauty salons, beauty centers, beauty services"
 					}
 				/>
 				<link rel='canonical' href='https://www.xlookpro.com/agent-guide' />
 			</Helmet>
+
 			<div className='mb-5'>
 				<AgentGuideComp language={language} />
 			</div>
@@ -30,122 +39,181 @@ const AgentGuide = ({ language }) => {
 			<div className='container my-5'>
 				{language === "Arabic" ? (
 					<div className='Arabic' dir='rtl'>
-						<h1 dir='rtl'>ما هى منصة XLOOK ؟</h1>
-						<p dir='rtl'>
-							منصة XLOOK هي عبارة عن منصة تجمع صالونات الحلاقة ومحلات الكوافير
-							النسائية ومراكز التجميل في مصر.
-						</p>
-
-						<p dir='rtl'>
-							تُستخدم منصة XLOOK لاختيار و حجز موعد صالون الحلاقة او البيوتى
-							سنتر.
-						</p>
-
-						<p dir='rtl'>
-							يُمكن للزوار بالتسجيل و حجز الخدمات المقدمة عبر تطبيق مخصص
-							للمستخدمين وطالبي الخدمات التجميلية.
-						</p>
-
-						<p dir='rtl'>
-							تُقدم المنصة الخدمات لكافة أفراد الاسرة سواء سيدات, آنسات, رجال أو
-							أولاد فللجميع خدمات مقدمة بكل تخصصية و إحترافية.
-						</p>
-
-						<p dir='rtl'>
-							يُشترط أن يكون للمتقدمين الجدية , اللباقة و حسن المظهر.
-						</p>
-						<p dir='rtl'>
-							وأن يكونوا في سن يتراوح بين 17 و35 عامًا.
-							<br />
-							كما يجب أن يتمتع المتقدمين بمهارات التسويق سواء أون لاين (إدخال
-							عملاء جدد من خلال الانترنت)أو أوفلاين عن طريق زيارة الصالونات
-							شخصيًا.
-						</p>
-
-						<p dir='rtl'>
-							يجب أن يكون لديهم وسائط اتصال مثل الهواتف الذكية ويُفضل وجود جهاز
-							لابتوب أثناء تسجيل وتأهيل العملاء الجدد.
-						</p>
-
-						<p dir='rtl'>
-							من أحد المهام الأساسية لمدير العملاء هى فتح و تسجيل حسابات صالونات
-							و بيوتى سنترز جديدة.
-						</p>
-
-						<p dir='rtl'>
-							يقوم مدير العملاء أيضًا بمتابعة تسجيل العملاء وتأهيل حساباتهم منذ
-							تقديم طلب التسجيل حتى تفعيل حساب الصالون أو بيوتي سنتر.
-						</p>
-
-						<p dir='rtl'>
-							يقوم مدير العملاء بمراقبة حسابات العملاء لديه و توجيههم إما من حيث
-							الاكثر حجوزات و إرشاده لزيادة أدائه أو من حيث الأقل و اخطاره
-							لاسباب قلة الحجوزات لديه و توجيهه للتطوير و تحسين الأداء عن طريق
-							البرامج المقدمةلتدريب مديرى العملاء و التسويق على منصة XLOOK على
-							أكثر من برنامج تطوير و تحسين للحسابات الضعيفة.
-						</p>
-
-						<p dir='rtl'>
-							فى حالة تثبيت مدير العملاء كأحد أفراد فريق العمل يقوم مدير العملاء
-							بمتابعة تطويرحسابات عملائه طالما هو مستمر فى الوظيفة على منصة
-							XLOOK.
-						</p>
-
-						<div dir='rtl'>
-							المبيعات و التسويق, موهبة او هبة يتميز بها الفرد عن الأخر, وقد
-							حرصنا فى XLOOK على إعطاء الفرصة لكل من يفضل مجال المبيعات و
-							التسويق لإبراز موهبتهم و إعطائهم الفرصة لتحقيق عائد مادى يقيم و
-							يقدر جدياً موهبتهم.
-						</div>
-
-						<div dir='rtl' className='mt-3'>
-							<h2 dir='rtl'>
-								يتم قبول معظم المتقدمين و إعطائهم الفرصة للتثبيت و الترقى و
-								تطوير دخلهم الشهرى. فلقد قمنا بتقسيم مديرين العملاء الى قسمين:
-							</h2>
-							<ol dir='rtl' className='arabicOl'>
-								<li>
-									<strong>مديرى عملاء فرى لانسر. Lvl 16:</strong> (وهو كل مدير
-									عملاء عدد عملائه أقل من100 صالون حلاقة و بيوتى سنتر). العمولة
-									عن كل عميل صالون او بيوتى سنتر جديد هى 30جنيه عن كل عميل جديد
-									مفعل.
-								</li>
-								<li>
-									<strong>مدير عملاء أساسى. Lvl 08:</strong> (وهو كل مدير عملاء
-									عدد عملائه أتعدى الــ100 صالون حلاقة و بيوتى سنتر). العمولة عن
-									كل عميل صالون او بيوتى سنتر جديد هى 35 جنيه مصرى.
-								</li>
-							</ol>
-						</div>
-						<div dir='rtl' className='mt-3'>
-							<h2 dir='rtl'>أولاً : مدير العملاء بنظام تعيين مؤقت.</h2>
+						<div className='section1Wrapper'>
+							<h1 dir='rtl'>ما هى منصة XLOOK ؟</h1>
 							<p dir='rtl'>
-								لا يوجد أى التزام بمواعيد محددة سوى التاكد من تلبية جميع مواعيد
-								فتح حسابات جديدة مع أصحاب صالونات الحلاقة و البيوتى سنتر.
+								منصة XLOOK هي عبارة عن منصة تجمع صالونات الحلاقة ومحلات الكوافير
+								النسائية ومراكز التجميل في مصر.
 							</p>
 
-							<h2 dir='rtl'>ثانياً: مدير العملاء بنظام تعيين دائم.</h2>
-							<ul dir='rtl' className='arabicUl'>
-								<li>
-									العمل يكون من المنزل و يتم ترتيب جدول عمل كل مدير عملاء من
-									خلال مدير مكتب التسويق الخاص بكل محافظة.
-								</li>
-								<li>
-									يقوم مديرى العملاء بمعرفة المبالغ المستحقة و ذلك من خلال
-									الأبليكشن من صفحة حسابى و يمكن طلب تحويل العمولات و المكافآت
-									من خلال جميع أنواع المحافظ الإليكترونية و الحسابات البنكية.
-								</li>
-								<li>أقل مبلغ للتحويل هو 200 جنيه.</li>
-								<li>
-									لا تحتاج سوى ملىء طلب الالتحاق بفريق عمل XLOOK و سيتم مراجعة
-									طلبكم خلال 24 ساعة على الأكثر.
-								</li>
+							<p dir='rtl'>
+								تُستخدم منصة XLOOK لاختيار و حجز موعد صالون الحلاقة او البيوتى
+								سنتر.
+							</p>
 
-								<li>
-									وعند تفعيل حسابك بنجاح سيمكنكم بدأ العمل و إدخال صالونات و
-									مراكز التجميل على المنصة.
-								</li>
-							</ul>
+							<p dir='rtl'>
+								يُمكن للزوار بالتسجيل و حجز الخدمات المقدمة عبر تطبيق مخصص
+								للمستخدمين وطالبي الخدمات التجميلية.
+							</p>
+
+							<p dir='rtl'>
+								تُقدم المنصة الخدمات لكافة أفراد الاسرة سواء سيدات, آنسات, رجال
+								أو أولاد فللجميع خدمات مقدمة بكل تخصصية و إحترافية.
+							</p>
+						</div>
+
+						<div className='section2Wrapper'>
+							<strong>
+								<h2>المؤهلات اللازمة للمتقدمين</h2>
+							</strong>
+							<p dir='rtl'>
+								يُشترط أن يكون للمتقدمين الجدية , اللباقة و حسن المظهر.
+							</p>
+							<p dir='rtl'>
+								وأن يكونوا في سن يتراوح بين 17 و35 عامًا.
+								<br />
+								كما يجب أن يتمتع المتقدمين بمهارات التسويق سواء أون لاين (إدخال
+								عملاء جدد من خلال الانترنت)أو أوفلاين عن طريق زيارة الصالونات
+								شخصيًا.
+							</p>
+
+							<p dir='rtl'>
+								يجب أن يكون لديهم وسائط اتصال مثل الهواتف الذكية ويُفضل وجود
+								جهاز لابتوب أثناء تسجيل وتأهيل العملاء الجدد.
+							</p>
+						</div>
+
+						<div className='section3Wrapper'>
+							<h2>مسؤوليات مدير الحسابات</h2>
+							<p dir='rtl'>
+								من أحد المهام الأساسية لمدير العملاء هى فتح و تسجيل حسابات
+								صالونات و بيوتى سنترز جديدة.
+							</p>
+
+							<p dir='rtl'>
+								يقوم مدير العملاء أيضًا بمتابعة تسجيل العملاء وتأهيل حساباتهم
+								منذ تقديم طلب التسجيل حتى تفعيل حساب الصالون أو بيوتي سنتر.
+							</p>
+
+							<p dir='rtl'>
+								يقوم مدير العملاء بمراقبة حسابات العملاء لديه و توجيههم إما من
+								حيث الاكثر حجوزات و إرشاده لزيادة أدائه أو من حيث الأقل و اخطاره
+								لاسباب قلة الحجوزات لديه و توجيهه للتطوير و تحسين الأداء عن طريق
+								البرامج المقدمةلتدريب مديرى العملاء و التسويق على منصة XLOOK على
+								أكثر من برنامج تطوير و تحسين للحسابات الضعيفة.
+							</p>
+
+							<p dir='rtl'>
+								فى حالة تثبيت مدير العملاء كأحد أفراد فريق العمل يقوم مدير
+								العملاء بمتابعة تطويرحسابات عملائه طالما هو مستمر فى الوظيفة على
+								منصة XLOOK.
+							</p>
+						</div>
+
+						<div className='section4Wrapper'>
+							<h2 className='text-center' style={{ fontWeight: "bolder" }}>
+								<strong>التوظيف</strong>
+							</h2>
+
+							<div dir='rtl'>
+								المبيعات و التسويق, موهبة او هبة يتميز بها الفرد عن الأخر, وقد
+								حرصنا فى XLOOK على إعطاء الفرصة لكل من يفضل مجال المبيعات و
+								التسويق لإبراز موهبتهم و إعطائهم الفرصة لتحقيق عائد مادى يقيم و
+								يقدر جدياً موهبتهم.
+							</div>
+
+							<div dir='rtl' className='mt-3'>
+								<h2 dir='rtl'>
+									يتم قبول معظم المتقدمين و إعطائهم الفرصة للتثبيت و الترقى و
+									تطوير دخلهم الشهرى. فلقد قمنا بتقسيم مديرين العملاء الى قسمين:
+								</h2>
+								<ol dir='rtl' className='arabicOl'>
+									<li>
+										<strong>مديرى عملاء فرى لانسر. Lvl 16:</strong> (وهو كل مدير
+										عملاء عدد عملائه أقل من100 صالون حلاقة و بيوتى سنتر).
+										العمولة عن كل عميل صالون او بيوتى سنتر جديد هى 30جنيه عن كل
+										عميل جديد مفعل.
+									</li>
+									<li>
+										<strong>مدير عملاء أساسى. Lvl 08:</strong> (وهو كل مدير
+										عملاء عدد عملائه أتعدى الــ100 صالون حلاقة و بيوتى سنتر).
+										العمولة عن كل عميل صالون او بيوتى سنتر جديد هى 35 جنيه مصرى.
+									</li>
+								</ol>
+							</div>
+						</div>
+
+						<div dir='rtr'>
+							<div className='table-responsive' dir='rtr'>
+								<table className='table'>
+									<thead>
+										<tr>
+											<th className='align-middle'> الحسابات</th>
+											<th className='align-middle'>المستوى</th>
+											<th className='align-middle'>حسابات نشطة جديدة</th>
+											<th className='align-middle'>الراتب الأساسي الشهري</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0-99</td>
+											<td>16</td>
+											<td>$1</td>
+											<td>NON</td>
+										</tr>
+										<tr>
+											<td>100-149</td>
+											<td>8</td>
+											<td>EGP 35</td>
+											<td>EGP 3,000</td>
+										</tr>
+										<tr>
+											<td>150-250</td>
+											<td>4</td>
+											<td>EGP 50</td>
+											<td>EGP 4,000</td>
+										</tr>
+										{/* Repeat <tr> for more rows */}
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div className='section5Wrapper'>
+							<h2 className='text-center' style={{ fontWeight: "bolder" }}>
+								<strong>أوقات العمل</strong>
+							</h2>
+							<div dir='rtl' className='mt-3'>
+								<h2 dir='rtl'>أولاً : مدير العملاء بنظام تعيين مؤقت.</h2>
+								<p dir='rtl'>
+									لا يوجد أى التزام بمواعيد محددة سوى التاكد من تلبية جميع
+									مواعيد فتح حسابات جديدة مع أصحاب صالونات الحلاقة و البيوتى
+									سنتر.
+								</p>
+
+								<h2 dir='rtl'>ثانياً: مدير العملاء بنظام تعيين دائم.</h2>
+								<ul dir='rtl' className='arabicUl'>
+									<li>
+										العمل يكون من المنزل و يتم ترتيب جدول عمل كل مدير عملاء من
+										خلال مدير مكتب التسويق الخاص بكل محافظة.
+									</li>
+									<li>
+										يقوم مديرى العملاء بمعرفة المبالغ المستحقة و ذلك من خلال
+										الأبليكشن من صفحة حسابى و يمكن طلب تحويل العمولات و المكافآت
+										من خلال جميع أنواع المحافظ الإليكترونية و الحسابات البنكية.
+									</li>
+									<li>أقل مبلغ للتحويل هو 200 جنيه.</li>
+									<li>
+										لا تحتاج سوى ملىء طلب الالتحاق بفريق عمل XLOOK و سيتم مراجعة
+										طلبكم خلال 24 ساعة على الأكثر.
+									</li>
+
+									<li>
+										وعند تفعيل حسابك بنجاح سيمكنكم بدأ العمل و إدخال صالونات و
+										مراكز التجميل على المنصة.
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				) : (
@@ -262,6 +330,41 @@ const AgentGuide = ({ language }) => {
 										beauty center client is 35 EGP.
 									</li>
 								</ol>
+							</div>
+						</div>
+						<div dir='ltr'>
+							<div className='table-responsive' dir='ltr'>
+								<table className='table'>
+									<thead>
+										<tr>
+											<th className='align-middle'>Accounts</th>
+											<th className='align-middle'>Level</th>
+											<th className='align-middle'>New Active Accounts</th>
+											<th className='align-middle'>Monthly Basic Salary</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0-99</td>
+											<td>16</td>
+											<td>$1</td>
+											<td>NON</td>
+										</tr>
+										<tr>
+											<td>100-149</td>
+											<td>8</td>
+											<td>EGP 35</td>
+											<td>EGP 3,000</td>
+										</tr>
+										<tr>
+											<td>150-250</td>
+											<td>4</td>
+											<td>EGP 50</td>
+											<td>EGP 4,000</td>
+										</tr>
+										{/* Repeat <tr> for more rows */}
+									</tbody>
+								</table>
 							</div>
 						</div>
 
@@ -403,6 +506,16 @@ const AgentGuideWrapper = styled.div`
 		}
 	}
 
+	th {
+		background-color: darkred;
+		color: white;
+	}
+
+	tr > td {
+		border: 2px solid black;
+		font-weight: bold;
+	}
+
 	@media (max-width: 1200px) {
 		h1 {
 			font-size: 1.5rem;
@@ -410,6 +523,16 @@ const AgentGuideWrapper = styled.div`
 
 		h2 {
 			font-size: 1.2rem;
+		}
+
+		th {
+			font-size: 13px;
+			background-color: darkred;
+			color: white;
+		}
+
+		tr > td {
+			font-size: 13px;
 		}
 	}
 `;

@@ -16,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import SignupFormComp from "../components/SignupComp/SignupFormComp";
 import { getAllAgents } from "../apiCore";
+import { Helmet } from "react-helmet";
 
 const SignupForm = ({ language }) => {
 	const [nextClicked, setNextClicked] = useState(0);
@@ -424,6 +425,35 @@ const SignupForm = ({ language }) => {
 
 	return (
 		<WholeSignup>
+			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<meta charSet='utf-8' />
+				{language === "Arabic" ? (
+					<title dir='rtl'>إكس لوك | كن شريكنا في الأعمال</title>
+				) : (
+					<title>XLOOK | Be Our Business Partner</title>
+				)}
+				<meta
+					name='description'
+					content={
+						language === "Arabic"
+							? `سارع بالتسجيل الآن! لا تفوت الفرصة لعرض نفسك ببراعة أمام مئات الآلاف من الأفراد حول مركز التجميل الخاص بك. إكس لوك، خطوات التسجيل، حجز المواعيد، خدمات التجميل`
+							: `Hurry up and register now! Don't miss the opportunity to showcase yourself brilliantly in front of hundreds of thousands of individuals around your beauty center. XLOOK, Registration Steps, Appointment Booking, Beauty Services`
+					}
+				/>
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? `كن شريكنا ، إكس لوك، خطوات التسجيل، حجز المواعيد، خدمات التجميل، التسجيل في موقع إكس لوك`
+							: `XLOOK, Registration, Be Our Partner, Appointment Booking, Beauty Services, Register on XLOOK Website`
+					}
+				/>
+				<link rel='canonical' href='https://www.xlookpro.com/signup' />
+				{language === "Arabic" && (
+					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
+				)}
+			</Helmet>
+
 			<ToastContainer />
 			{signUpForm()}
 			{redirectUser()}

@@ -27,18 +27,28 @@ const RegisterSteps = ({ language }) => {
 				) : (
 					<title>XLOOK | Registration Steps</title>
 				)}
-
 				<meta
 					name='description'
 					content={
 						language === "Arabic"
-							? `سارع بالتسجيل الآن! لا تفوت الفرصة لعرض نفسك ببراعة أمام مئات الآلاف من الأفراد حول مركز التجميل الخاص بك. Powered By https://infinite-apps.com`
-							: `Hurry up and register now! Don't miss the opportunity to showcase yourself brilliantly in front of hundreds of thousands of individuals around your beauty center. Powered By https://infinite-apps.com`
+							? `سارع بالتسجيل الآن! لا تفوت الفرصة لعرض نفسك ببراعة أمام مئات الآلاف من الأفراد حول مركز التجميل الخاص بك. موقع XLOOK، خطوات التسجيل، حجز مواعيد، خدمات التجميل`
+							: `Hurry up and register now! Don't miss the opportunity to showcase yourself brilliantly in front of hundreds of thousands of individuals around your beauty center. XLOOK, Registration Steps, Appointment Booking, Beauty Services`
 					}
 				/>
-
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? `إكس لوك، خطوات التسجيل، حجز مواعيد، خدمات التجميل، التسجيل في موقع XLOOK`
+							: `XLOOK, Registration Steps, Appointment Booking, Beauty Services, Register on XLOOK Website`
+					}
+				/>
 				<link rel='canonical' href='https://www.xlookpro.com/steps' />
+				{language === "Arabic" && (
+					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
+				)}
 			</Helmet>
+
 			<div className='my-3 text-center'>
 				{language === "Arabic" ? (
 					<h1 className='m-0'>خطوات التسجيل</h1>

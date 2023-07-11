@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Select } from "antd";
 import AgentChoiceModal from "./AgentChoiceModal";
+import ReactGA from "react-ga4";
+
 const { Option } = Select;
 
 const SignupFormComp = ({
@@ -131,11 +133,15 @@ const SignupFormComp = ({
 												disabled={!name || name.length < 3}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("1st Next form promotion. FullName", {
-													// 	event_category: "Promotion Form",
-													// 	event_label: "FullName: ",
-													// 	value: 50, // Optional extra parameters
-													// });
+													ReactGA.event(
+														"First Next form business partner. Signup",
+														{
+															event_category:
+																"First Next form business partner. Signup",
+															event_label: "FullName: " + name,
+															value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='mx-auto text-center btn btn-primary w-50'
 											>
@@ -186,11 +192,15 @@ const SignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Second Next form business partner. Signup",
+														{
+															event_category:
+																"Second Next form business partner. Signup",
+															event_label: "Email: " + email,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -241,11 +251,15 @@ const SignupFormComp = ({
 												disabled={!/^\d{8,13}$/.test(phone)}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Third Next form business partner. Signup",
+														{
+															event_category:
+																"Third Next form business partner. Signup",
+															event_label: "Phone: " + phone,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -300,11 +314,15 @@ const SignupFormComp = ({
 												disabled={!values.storeType}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Forth Next form business partner. Signup",
+														{
+															event_category:
+																"Forth Next form business partner. Signup",
+															event_label: "Store Type: " + values.storeType,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -350,11 +368,15 @@ const SignupFormComp = ({
 												disabled={!storeName || storeName.length <= 2}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Fifth Next form business partner. Signup",
+														{
+															event_category:
+																"Fifth Next form business partner. Signup",
+															event_label: "Store Name: " + storeName,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -428,11 +450,16 @@ const SignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Sixth Next form business partner. Signup",
+														{
+															event_category:
+																"Sixth Next form business partner. Signup",
+															event_label:
+																"Store Country: " + values.storeCountry,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -510,11 +537,16 @@ const SignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Seventh Next form business partner. Signup",
+														{
+															event_category:
+																"Seventh Next form business partner. Signup",
+															event_label:
+																"Store Governorate: " + values.storeGovernorate,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -604,11 +636,16 @@ const SignupFormComp = ({
 												disabled={!values.storeDistrict}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Eighth Next form business partner. Signup",
+														{
+															event_category:
+																"Eighth Next form business partner. Signup",
+															event_label:
+																"Store District: " + values.storeDistrict,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -659,11 +696,15 @@ const SignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Ninth Next form business partner. Signup",
+														{
+															event_category:
+																"Ninth Next form business partner. Signup",
+															event_label: "Store Address: " + storeAddress,
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -797,11 +838,15 @@ const SignupFormComp = ({
 												disabled={!values.agent}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event(
+														"Tenth Next form business partner. Signup",
+														{
+															event_category:
+																"Tenth Next form business partner. Signup",
+															event_label: "Store Agent: ",
+															// value: 10, // Optional extra parameters
+														}
+													);
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -873,7 +918,14 @@ const SignupFormComp = ({
 									<Link
 										to='#'
 										className='btn btn-success w-75 btn-block mx-auto mt-5 mb-5'
-										onClick={clickSubmit}
+										onClick={() => {
+											clickSubmit();
+											ReactGA.event("Successful Registeration", {
+												event_category: "Successful Registeration",
+												event_label: "Successful Registeration",
+												value: 10, // Optional extra parameters
+											});
+										}}
 										disabled={
 											nextClicked !== 10 ||
 											!password ||

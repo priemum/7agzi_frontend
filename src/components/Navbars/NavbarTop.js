@@ -197,7 +197,7 @@ const Navbar1 = ({
 											setClick(false);
 										}}
 									>
-										Business Partner Dashboard
+										Be Our Partner
 									</Link>
 								</li>
 								{/* <li
@@ -283,30 +283,13 @@ const Navbar1 = ({
 										Stylist Dashboard
 									</Link>
 								</li>
-								{/* <li
-									className='nav-item ml-5 mt-3'
-									onClick={() => {
-										window.scrollTo({top: 0, behavior: "smooth"});
-									}}
-								>
-									<Link
-										className='nav-link'
-										to='/dashboard'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
-									>
-										Stylist Regular Account
-									</Link>
-								</li> */}
 							</React.Fragment>
 						)}
 
 						{!isAuthenticated() && (
 							<Fragment>
 								<li
-									className='nav-item ml-5 mt-3'
+									className='nav-item ml-4 mt-3'
 									onClick={() => {
 										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
@@ -324,20 +307,50 @@ const Navbar1 = ({
 								</li>
 
 								<li
-									className='nav-item ml-5 mt-3'
+									className='nav-item ml-4 mt-3'
 									onClick={() => {
 										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
 									<Link
 										className='nav-link'
+										style={{ color: "#b2d3f4" }}
 										to='/signup'
 										onClick={() => {
 											setClickMenu(false);
 											setClick(false);
 										}}
 									>
-										Business Register
+										{language === "Arabic" ? (
+											<span style={{ fontSize: "1.2rem" }}>كن شريكنا</span>
+										) : (
+											"Be Our Partner"
+										)}
+									</Link>
+								</li>
+
+								<li
+									className='nav-item ml-4 mt-3'
+									onClick={() => {
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
+									<Link
+										className='nav-link'
+										style={{ color: "#b2d3f4" }}
+										to='/agents-signup-form'
+										onClick={() => {
+											setClickMenu(false);
+											setClick(false);
+										}}
+									>
+										{language === "Arabic" ? (
+											<span style={{ fontSize: "1.2rem" }}>
+												قدّم للعمل معنا
+											</span>
+										) : (
+											"Apply To Work With Us!"
+										)}
 									</Link>
 								</li>
 							</Fragment>
@@ -381,6 +394,7 @@ const Navbar1 = ({
 	};
 	return (
 		<Nav
+			dir='ltr'
 			className=' navbar  navbar-expand-sm nav-center py-1'
 			style={{ backgroundColor: "#363636" }}
 		>
@@ -776,12 +790,14 @@ const SideWrapper = styled.nav`
 	left: 0;
 	width: 60%;
 	height: 100%;
-	background: var(--mainGrey);
+	/* background: var(--mainGrey); */
 	z-index: 300;
 	border-right: 3px solid var(--darkGrey);
 	transition: 0.5s;
 	transform: ${(props) => (props.show ? "translateX(0)" : "translateX(220%)")};
+	background-color: black;
 	/*transform: translateX(-100%);*/ /**this will hide the side bar */
+
 	ul {
 		list-style-type: none;
 		padding: 0 !important;
@@ -790,20 +806,23 @@ const SideWrapper = styled.nav`
 		display: block;
 		font-size: 1rem;
 		text-transform: capitalize;
-		color: var(--mainBlack);
+		color: lightgrey;
 		padding: 1.1rem 1.1rem;
-		background: transparent;
+		background-color: #2c2c2c;
 		transition: var(--mainTransition);
+		border-bottom: 1px black solid;
 	}
 
 	.sidebar-linkArabic {
 		display: block;
 		font-size: 1rem;
-		color: var(--mainBlack);
+		/* color: var(--mainBlack); */
+		color: lightgrey;
 		padding: 1.1rem 1.1rem;
+		background-color: #2c2c2c;
 		text-align: right;
-		background: transparent;
 		transition: var(--mainTransition);
+		border-bottom: 1px black solid;
 	}
 
 	.sidebar-link:hover {

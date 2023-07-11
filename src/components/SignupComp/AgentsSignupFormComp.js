@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import ImageCard2 from "./ImageCard";
 import ImageCardPersonal from "./ImageCardPersonal";
 import { Spin } from "antd";
+import ReactGA from "react-ga4";
 
 const AgentsSignupFormComp = ({
 	values,
@@ -105,11 +106,10 @@ const AgentsSignupFormComp = ({
 												disabled={!name || name.length < 3}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("1st Next form promotion. FullName", {
-													// 	event_category: "Promotion Form",
-													// 	event_label: "FullName: ",
-													// 	value: 50, // Optional extra parameters
-													// });
+													ReactGA.event("First Next form Agent Signup", {
+														event_category: "First Next form Agent Signup",
+														event_label: "name: " + name,
+													});
 												}}
 												className='mx-auto text-center btn btn-primary w-50'
 											>
@@ -160,11 +160,10 @@ const AgentsSignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Second Next form Agent Signup", {
+														event_category: "Second Next form Agent Signup",
+														event_label: "email: " + email,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -242,11 +241,10 @@ const AgentsSignupFormComp = ({
 												disabled={!/^\d{8,13}$/.test(phone)}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Third Next form Agent Signup", {
+														event_category: "Third Next form Agent Signup",
+														event_label: "phone: " + phone,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -324,11 +322,11 @@ const AgentsSignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Fourth Next form Agent Signup", {
+														event_category: "Fourth Next form Agent Signup",
+														event_label:
+															"Country: " + values.agentOtherData.agentCountry,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -413,11 +411,12 @@ const AgentsSignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Fifth Next form Agent Signup", {
+														event_category: "Fifth Next form Agent Signup",
+														event_label:
+															"Governorate: " +
+															values.agentOtherData.agentGovernorate,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -513,11 +512,12 @@ const AgentsSignupFormComp = ({
 												disabled={!values.agentOtherData.agentDistrict}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Sixth Next form Agent Signup", {
+														event_category: "Sixth Next form Agent Signup",
+														event_label:
+															"Governorate: " +
+															values.agentOtherData.agentDistrict,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -729,11 +729,12 @@ const AgentsSignupFormComp = ({
 												}
 												onClick={() => {
 													handleNextClick();
-													// ReactGA.event("2nd Next form promotion. StoreName", {
-													// 	event_category: "Promotion Form StoreName",
-													// 	event_label: "StoreName: " + storeName,
-													// 	value: 50,
-													// });
+													ReactGA.event("Eighth Next form Agent Signup", {
+														event_category: "Eighth Next form Agent Signup",
+														event_label:
+															"Governorate: " +
+															values.agentOtherData.agentDistrict,
+													});
 												}}
 												className='text-center btn btn-primary w-25 mx-2'
 											>
@@ -801,7 +802,14 @@ const AgentsSignupFormComp = ({
 									<Link
 										to='#'
 										className='btn btn-success w-75 btn-block mx-auto mt-5 mb-5'
-										onClick={clickSubmit}
+										onClick={() => {
+											clickSubmit();
+											ReactGA.event("Successful Registeration For Agent", {
+												event_category: "Successful Registeration For Agent",
+												event_label: "Successful Registeration For Agent",
+												value: 1, // Optional extra parameters
+											});
+										}}
 										disabled={
 											nextClicked !== 8 ||
 											!password ||
@@ -830,9 +838,9 @@ const AgentsSignupFormComp = ({
 							>
 								<Link
 									style={{ color: "white", background: "#a9082a" }}
-									to='/about'
+									to='/agent-guide'
 								>
-									<strong>CHECK WHO WE ARE?</strong>
+									<strong>CHECK YOUR GUIDE</strong>
 								</Link>
 							</div>
 						</div>

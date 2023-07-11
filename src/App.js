@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import axios from "axios";
+import ReactGA from "react-ga4";
 import { isAuthenticated } from "./auth";
 
 //Regular Routes
@@ -130,6 +131,15 @@ function App() {
 		}
 	}, []);
 
+	useEffect(() => {
+		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
+		ReactGA.gtag("event", "page_view", {
+			page_path: window.location.pathname,
+		});
+
+		// eslint-disable-next-line
+	}, [window.location.pathname]);
+
 	return (
 		<BrowserRouter>
 			<React.Fragment>
@@ -214,7 +224,13 @@ function App() {
 						exact
 						component={SchedulePageSteps2}
 					/>
-					<Route path='/schedule' exact component={StoresList} />
+
+					<Route
+						path='/schedule'
+						exact
+						component={() => <StoresList language={language} />}
+					/>
+
 					<Route
 						path='/appointment-successfully-scheduled/YourAppointmentWasSuccesfullyScheduled/:userId'
 						exact
