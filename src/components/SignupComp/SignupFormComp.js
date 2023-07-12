@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 import { Select } from "antd";
 import AgentChoiceModal from "./AgentChoiceModal";
 import ReactGA from "react-ga4";
@@ -49,37 +49,6 @@ const SignupFormComp = ({
 
 	return (
 		<SignupFormCompWrapper>
-			<Helmet>
-				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
-					<title dir='rtl'>إكس لوك | تسجيل شركاء العمل الرسميين</title>
-				) : (
-					<title>XLOOK | Official Business Partners' Registration</title>
-				)}
-
-				{language === "Arabic" ? (
-					<meta
-						name='description'
-						content='أفضل برنامج حجز في مصر، خاص بصالونات الحلاقة، صالونات الشعر، مراكز التجميل، وصالونات المساج.'
-					/>
-				) : (
-					<meta
-						name='description'
-						content='The best booking software in Egypt, specially designed for barber shops, hair salons, beauty centers, and massage salons.'
-					/>
-				)}
-
-				<meta
-					name='keywords'
-					content={
-						language === "Arabic"
-							? "برنامج حجز، صالونات الحلاقة، صالونات الشعر، مراكز التجميل، صالونات المساج"
-							: "booking software, barber shops, hair salons, beauty centers, massage salons"
-					}
-				/>
-
-				<link rel='canonical' href='https://xlookpro.com/signup' />
-			</Helmet>
 			<FormSignup>
 				<AgentChoiceModal
 					allAgents={allAgents}
@@ -95,7 +64,7 @@ const SignupFormComp = ({
 						<div className='form-container text-center'>
 							{language === "Arabic" ? (
 								<h1 className='mb-3' style={{ fontWeight: "bolder" }} dir='rtl'>
-									سجل <span className='text-primary'>متجرك</span>
+									سجل <span className='text-primary'>صالونك</span>
 								</h1>
 							) : (
 								<h1 className='mb-3' style={{ fontWeight: "bolder" }}>

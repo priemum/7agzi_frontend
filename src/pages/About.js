@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 // import AboutPhoto from "../imgs/traffic-3098747_1920.jpg";
 // import AboutPhoto from "../Navbar/RCHDIGIMP_Logo.jpg";
@@ -13,14 +13,18 @@ import Icon3 from "../Images/Icon3.png";
 import Icon4 from "../Images/Icon4.png";
 import Icon5 from "../Images/Icon5.png";
 import AboutHeroFooter from "../components/OtherHeroComp/AboutHeroFooter";
+import { Link } from "react-router-dom";
 
-const About = ({ language }) => {
-	// useEffect(() => {
-	// 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
-	// 	// To Report Page View
-	// 	ReactGA.pageview(window.location.pathname + window.location.search);
-	// 	// eslint-disable-next-line
-	// }, []);
+const About = ({ language, setLanguage }) => {
+	useEffect(() => {
+		if (
+			window.location.search.includes("ar") ||
+			window.location.search.includes("Ar")
+		) {
+			setLanguage("Arabic");
+		}
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<AboutPageWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
@@ -108,6 +112,18 @@ const About = ({ language }) => {
 							{language === "Arabic" ? "لماذا إكس لوك؟" : "Why XLOOK?"}
 						</strong>{" "}
 					</h1>
+
+					<div className='mb-2 imageWrapper'>
+						<img
+							className='iconImage'
+							src={Icon3}
+							alt={
+								language === "Arabic"
+									? "معنا ستزداد توسعاتك وفروعك."
+									: "With us, your expansions and branches will increase."
+							}
+						/>
+					</div>
 
 					<h2>
 						{language === "Arabic"
@@ -204,33 +220,6 @@ const About = ({ language }) => {
 						<div className='mb-2 imageWrapper'>
 							<img
 								className='iconImage'
-								src={Icon3}
-								alt={
-									language === "Arabic"
-										? "معنا ستزداد توسعاتك وفروعك."
-										: "With us, your expansions and branches will increase."
-								}
-							/>
-						</div>
-						<h2>
-							{" "}
-							<strong>
-								{language === "Arabic"
-									? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
-									: "You'll be discovered even if your location is not on a main street"}
-							</strong>{" "}
-						</h2>
-						<p>
-							{language === "Arabic"
-								? "مع منصة XLOOK ، ستكتشف حتى إذا كان موقعك مخفيًا عن الشارع الرئيسي. بمجرد تفعيل حسابك ، ستكون حقًا جزءًا من المنافسة وسيتم اكتشافك من قبل الجميع في منطقتك."
-								: "With XLOOK platform, you'll be discovered even if your location is hidden from the street. Once you activate your account, you will truly be part of the competition and will be discovered by everyone in your area."}
-						</p>
-					</div>
-
-					<div className='col-md-4 mx-auto mt-5 mb-3'>
-						<div className='mb-2 imageWrapper'>
-							<img
-								className='iconImage'
 								src={Icon1}
 								alt={
 									language === "Arabic"
@@ -253,13 +242,29 @@ const About = ({ language }) => {
 								: "We relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
 						</p>
 					</div>
+
+					<div className='col-md-4 mx-auto mt-5 mb-3'>
+						<h2>
+							{" "}
+							<strong>
+								{language === "Arabic"
+									? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
+									: "You'll be discovered even if your location is not on a main street"}
+							</strong>{" "}
+						</h2>
+						<p>
+							{language === "Arabic"
+								? "مع منصة XLOOK ، ستكتشف حتى إذا كان موقعك مخفيًا عن الشارع الرئيسي. بمجرد تفعيل حسابك ، ستكون حقًا جزءًا من المنافسة وسيتم اكتشافك من قبل الجميع في منطقتك."
+								: "With XLOOK platform, you'll be discovered even if your location is hidden from the street. Once you activate your account, you will truly be part of the competition and will be discovered by everyone in your area."}
+						</p>
+					</div>
 				</div>
 
-				<div className='col-md-5 mx-auto mt-5 mb-3'>
+				{/* <div className='col-md-5 mx-auto mt-5 mb-3'>
 					<div className='horizLine'></div>
-				</div>
+				</div> */}
 
-				<div className='col-md-10 mx-auto mt-5 mb-3'>
+				{/* <div className='col-md-10 mx-auto mt-5 mb-3'>
 					{language === "Arabic" ? (
 						<h2>
 							{" "}
@@ -343,7 +348,7 @@ const About = ({ language }) => {
 							</li>
 						</ul>
 					)}
-				</div>
+				</div> */}
 				{language === "Arabic" ? (
 					<div className='mt-5 text-center'>
 						<strong
@@ -382,6 +387,24 @@ const About = ({ language }) => {
 			</div>
 			<div className='mb-5 mt-1 '>
 				<AboutHeroFooter language={language} />
+			</div>
+
+			<div>
+				<p style={{ textAlign: "right", marginRight: "10px" }}>
+					اخيرا اصبح لصالونك موقع خاص إحتراف متخصص لعرض امكانياتك و خدماتك على
+					منصة مصممة لمراكز التجميل و صالونات الحلاقة مما سيتيح لك عرض جميع
+					خدماتك و فريق العمل لديك بشكل احترافى متخصص
+				</p>
+			</div>
+
+			<div className='redSquare'>
+				<div>خطوات التسجيل</div>
+				<div>للمزيد عن خطوات التسجيل</div>
+				<div>
+					<Link className='btn btn-primary btnArabic' to='/steps'>
+						دليل التسجيل من هنا
+					</Link>
+				</div>
 			</div>
 		</AboutPageWrapper>
 	);
@@ -434,6 +457,25 @@ const AboutPageWrapper = styled.section`
 
 	.heroFooterWrapper {
 		display: none;
+	}
+
+	.redSquare {
+		padding: 50px;
+		background-color: red;
+		color: white;
+		font-size: 1.9rem;
+		font-weight: bolder;
+		text-align: center;
+		border-radius: 5px;
+		margin: 20px 10px;
+	}
+
+	.btnArabic {
+		position: absolute;
+		margin-top: 8%;
+		background-color: black;
+		border: black 1px solid;
+		left: 33%;
 	}
 
 	@media (max-width: 1200px) {

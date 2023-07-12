@@ -187,17 +187,23 @@ function App() {
 					<Route
 						path='/about'
 						exact
-						component={() => <About language={language} />}
+						component={() => (
+							<About language={language} setLanguage={setLanguage} />
+						)}
 					/>
 					<Route
 						path='/steps'
 						exact
-						component={() => <RegisterSteps language={language} />}
+						component={() => (
+							<RegisterSteps language={language} setLanguage={setLanguage} />
+						)}
 					/>
 					<Route
 						path='/agent-guide'
 						exact
-						component={() => <AgentGuide language={language} />}
+						component={() => (
+							<AgentGuide language={language} setLanguage={setLanguage} />
+						)}
 					/>
 					<Route
 						path='/contact'

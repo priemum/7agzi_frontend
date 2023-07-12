@@ -68,7 +68,7 @@ const Home = ({ language, setLanguage }) => {
 				: null}
 
 			{!isAuthenticated() && !isAuthenticated().user ? (
-				<Redirect to='/signup' />
+				<Redirect to='/about?ar' />
 			) : null}
 
 			<MainHeroComp language={language} />

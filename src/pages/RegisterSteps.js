@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 // import ReactGA from "react-ga";
 import Helmet from "react-helmet";
@@ -10,13 +10,11 @@ import IconStep1 from "../Images/IconStep1.png";
 import IconStep2 from "../Images/IconStep2.png";
 import IconStep3 from "../Images/IconStep3.png";
 
-const RegisterSteps = ({ language }) => {
-	// useEffect(() => {
-	// 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
-	// 	// To Report Page View
-	// 	ReactGA.pageview(window.location.pathname + window.location.search);
-	// 	// eslint-disable-next-line
-	// }, []);
+const RegisterSteps = ({ language, setLanguage }) => {
+	useEffect(() => {
+		setLanguage("Arabic");
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<RegisterStepsWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>

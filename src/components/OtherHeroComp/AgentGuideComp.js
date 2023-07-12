@@ -169,6 +169,18 @@ const AgentGuideCompWrapper = styled.div`
 			margin-left: 8%;
 		}
 
+		.line1Arabic {
+			font-size: 1rem !important;
+		}
+
+		.line3Arabic {
+			font-size: 1rem !important;
+		}
+
+		.line4Arabic {
+			font-size: 1rem !important;
+		}
+
 		.thebtnArabic {
 			margin-top: 35px;
 		}

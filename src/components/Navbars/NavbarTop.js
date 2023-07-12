@@ -197,7 +197,7 @@ const Navbar1 = ({
 											setClick(false);
 										}}
 									>
-										Be Our Partner
+										Your Salon Account
 									</Link>
 								</li>
 								{/* <li
@@ -315,7 +315,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
-										to='/signup'
+										to='/about'
 										onClick={() => {
 											setClickMenu(false);
 											setClick(false);
@@ -338,7 +338,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
-										to='/agents-signup-form'
+										to='/agent-guide'
 										onClick={() => {
 											setClickMenu(false);
 											setClick(false);
@@ -451,6 +451,9 @@ const Navbar1 = ({
 						style={{ color: "white" }}
 						onClick={() => {
 							setLanguage("English");
+							if (window.location.search.includes("ar")) {
+								history.push(window.location.pathname);
+							}
 						}}
 					>
 						<img className='flags' src={AmericanFlag} alt='English' />{" "}
@@ -655,6 +658,9 @@ const Navbar1 = ({
 									className=' '
 									onClick={() => {
 										setLanguage("English");
+										if (window.location.search.includes("ar")) {
+											history.push(window.location.pathname);
+										}
 									}}
 								>
 									<img className='flags' src={AmericanFlag} alt='English' />{" "}

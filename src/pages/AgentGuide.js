@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import AgentGuideComp from "../components/OtherHeroComp/AgentGuideComp";
 
-const AgentGuide = ({ language }) => {
+const AgentGuide = ({ language, setLanguage }) => {
+	useEffect(() => {
+		setLanguage("Arabic");
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<AgentGuideWrapper>
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
@@ -158,7 +163,7 @@ const AgentGuide = ({ language }) => {
 										<tr>
 											<td>0-99</td>
 											<td>16</td>
-											<td>$1</td>
+											<td>EGP 30</td>
 											<td>NON</td>
 										</tr>
 										<tr>

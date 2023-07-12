@@ -29,7 +29,7 @@ const AboutHeroComp = ({ language }) => {
 				backgroundPosition: `center ${offsetY * 0.5}px`,
 			}}
 		>
-			<div className='col-12 mx-auto text-center'>
+			<div className='col-12 mx-auto '>
 				<Animated
 					animationIn='bounceInLeft'
 					animationOut='zoomOut'
@@ -42,10 +42,12 @@ const AboutHeroComp = ({ language }) => {
 						{language === "Arabic" ? (
 							<h1 dir='rtl'>
 								{" "}
-								<strong>لأصحاب الصالونات ومراكز التجميل</strong>
+								<strong className='float-right'>
+									لأصحاب الصالونات ومراكز التجميل
+								</strong>
 							</h1>
 						) : (
-							<h1>
+							<h1 className='line1English'>
 								{" "}
 								<strong>For Salon Owners & Beauty Centers</strong>
 							</h1>
@@ -53,27 +55,50 @@ const AboutHeroComp = ({ language }) => {
 
 						{language === "Arabic" ? (
 							<h2 className='' dir='rtl'>
-								<strong style={{ color: "white", fontSize: "1.4rem" }}>
+								<strong
+									style={{
+										color: "white",
+										fontSize: "2.1rem",
+										textAlign: "right",
+									}}
+								>
 									أنشئ مركز تجميل عبر الإنترنت في أقل من دقيقة
 								</strong>
 							</h2>
 						) : (
-							<h2 className=''>
-								<strong>
+							<h2 className='line2English'>
+								<strong
+									style={{
+										color: "white",
+										fontSize: "2.1rem",
+										textAlign: "left",
+									}}
+								>
 									Create an online beauty center in less than a minute
 								</strong>
 							</h2>
 						)}
 						{language === "Arabic" ? (
 							<h3 className='' dir='rtl'>
-								<strong style={{ color: "white", fontSize: "1.4rem" }}>
+								<strong
+									style={{
+										color: "white",
+										fontSize: "1rem",
+										textAlign: "left",
+									}}
+								>
 									سجّل الآن ولا تفوّت الفرصة للظهور أمام مئات الآلاف من الأشخاص
 									حول مركز التجميل الخاص بك.
 								</strong>
 							</h3>
 						) : (
-							<h3 className=''>
-								<strong>
+							<h3 className='line3English'>
+								<strong
+									style={{
+										color: "white",
+										textAlign: "right",
+									}}
+								>
 									Register now and don't miss the opportunity to appear in front
 									of hundreds of thousands of people around your beauty center.
 								</strong>
@@ -209,7 +234,7 @@ const AboutHeroCompWrapper = styled.div`
 	@media (max-width: 1300px) {
 		.content > h1 {
 			position: absolute;
-			margin-top: 230px;
+			margin-top: 210px;
 			color: white;
 			font-weight: bolder;
 			/* border: 1px solid black; */
@@ -217,40 +242,40 @@ const AboutHeroCompWrapper = styled.div`
 			left: -2.5%;
 			background-color: rgba(0, 0, 0, 0.65);
 			padding: 10px 2px;
-			font-size: 1.1rem;
+			font-size: 1rem;
 			/* transform: translate(-30%, -30%); */
 		}
 
 		.content > h2 {
-			position: absolute;
-			margin-top: 272px;
+			margin-top: 248px;
 			color: white;
 			font-weight: bolder;
 			font-size: 1.2rem;
 			width: 105%;
-			left: -2.5%;
+			left: -2%;
 			background-color: rgba(0, 0, 0, 0.65);
 			padding: 10px 2px;
 			font-size: 1rem;
+			text-align: right;
 		}
 
 		.content > h3 {
-			position: absolute;
-			margin-top: 332px;
+			margin-top: 340px;
 			color: white;
 			font-weight: bolder;
 			font-size: 0.9rem;
 			text-decoration: underline;
 			width: 105%;
 			left: -2.5%;
-			background-color: rgba(0, 0, 0, 0.65);
+			background-color: rgba(0, 0, 0, 0.6);
 			padding: 10px 2px;
-			font-size: 0.9rem !important;
+			font-size: 0.9rem;
+			text-align: right;
 		}
 
 		.content > .btn {
 			position: absolute;
-			margin-top: 420px;
+			margin-top: 410px;
 			color: white;
 			font-weight: bolder;
 			font-size: 1.5rem;
@@ -268,6 +293,15 @@ const AboutHeroCompWrapper = styled.div`
 			background-color: #363636;
 			border-radius: 5px;
 			color: white;
+		}
+
+		.line2English {
+			text-align: left !important;
+		}
+
+		.line3English {
+			text-align: left !important;
+			font-size: 0.9rem !important;
 		}
 	}
 `;

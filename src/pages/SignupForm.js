@@ -428,7 +428,7 @@ const SignupForm = ({ language }) => {
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
-					<title dir='rtl'>إكس لوك | كن شريكنا في الأعمال</title>
+					<title dir='rtl'>إكس لوك | كن شريكنا | سجل صالونك</title>
 				) : (
 					<title>XLOOK | Be Our Business Partner</title>
 				)}
