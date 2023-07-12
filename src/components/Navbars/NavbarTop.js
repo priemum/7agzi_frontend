@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../../auth";
 import styled from "styled-components";
-import myLogo from "../../Images/InfiniteAppsLogo.png";
+import myLogo from "../../Images/XLookLogo.png";
 import EgyptianFlag from "../../Images/Egypt.png";
 import AmericanFlag from "../../Images/UnitedStates.png";
 // import logo from "../pagesImgs/Sinai-I-Logo.jpg";
@@ -421,42 +421,42 @@ const Navbar1 = ({
 				>
 					<img src={myLogo} alt='infinite-apps.com' className='sinaiLogo' />
 
-					<span
-						className='languageFlagsPhone'
-						style={{ padding: "0px", marginLeft: "120px" }}
-					>
-						{language === "English" ? (
-							<span
-								className=''
-								onClick={() => {
-									setLanguage("Arabic");
-								}}
-							>
-								{" "}
-								<img
-									className='flags'
-									src={EgyptianFlag}
-									style={{ marginRight: "5px" }}
-									alt='Arabic'
-								/>
-							</span>
-						) : (
-							<span
-								className=' '
-								style={{ color: "white" }}
-								onClick={() => {
-									setLanguage("English");
-								}}
-							>
-								<img className='flags' src={AmericanFlag} alt='English' />{" "}
-							</span>
-						)}
-					</span>
 					{/* <div className='logo-type' style={{color: "white"}}>
 						{onlineStoreName && onlineStoreName.addStoreName} <br />
 					</div> */}
 				</Link>
 			</div>
+			<span
+				className='languageFlagsPhone'
+				style={{ padding: "0px", marginLeft: "" }}
+			>
+				{language === "English" ? (
+					<span
+						className=''
+						onClick={() => {
+							setLanguage("Arabic");
+						}}
+					>
+						{" "}
+						<img
+							className='flags'
+							src={EgyptianFlag}
+							style={{ marginRight: "5px" }}
+							alt='Arabic'
+						/>
+					</span>
+				) : (
+					<span
+						className=' '
+						style={{ color: "white" }}
+						onClick={() => {
+							setLanguage("English");
+						}}
+					>
+						<img className='flags' src={AmericanFlag} alt='English' />{" "}
+					</span>
+				)}
+			</span>
 			<div className='collapse navbar-collapse menu'>
 				<ul className='navbar-nav actual-list'>
 					{isAuthenticated() && isAuthenticated().user.role === 0 && (
@@ -673,7 +673,7 @@ export default withRouter(Navbar1);
 
 const Nav = styled.nav`
 	.sinaiLogo {
-		width: 120px;
+		width: 100%;
 		height: 58px;
 		object-fit: cover !important;
 	}
@@ -690,7 +690,7 @@ const Nav = styled.nav`
 		display: inline-block;
 		/* box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.1); */
 		vertical-align: middle;
-		margin-left: 4px;
+		align-content: space-between;
 	}
 
 	.languageList:hover {
@@ -713,7 +713,6 @@ const Nav = styled.nav`
 			object-fit: cover !important;
 		}
 		.logo-type {
-			font-size: 1rem;
 			font-family: "Snell Roundhand, cursive";
 			font-weight: bold;
 			text-align: center;
