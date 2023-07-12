@@ -12,7 +12,12 @@ import IconStep3 from "../Images/IconStep3.png";
 
 const RegisterSteps = ({ language, setLanguage }) => {
 	useEffect(() => {
-		setLanguage("Arabic");
+		if (
+			window.location.search.includes("ar") ||
+			window.location.search.includes("Ar")
+		) {
+			setLanguage("Arabic");
+		}
 		// eslint-disable-next-line
 	}, []);
 

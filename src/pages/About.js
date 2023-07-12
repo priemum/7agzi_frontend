@@ -401,7 +401,13 @@ const About = ({ language, setLanguage }) => {
 				<div>خطوات التسجيل</div>
 				<div>للمزيد عن خطوات التسجيل</div>
 				<div>
-					<Link className='btn btn-primary btnArabic' to='/steps'>
+					<Link
+						onClick={() => {
+							window.scrollTo({ top: 0, behavior: "smooth" });
+						}}
+						className='btn btn-primary btnArabic'
+						to='/steps?ar'
+					>
 						دليل التسجيل من هنا
 					</Link>
 				</div>

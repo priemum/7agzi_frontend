@@ -338,7 +338,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
-										to='/agent-guide'
+										to='/agent-guide?ar'
 										onClick={() => {
 											setClickMenu(false);
 											setClick(false);
@@ -414,7 +414,7 @@ const Navbar1 = ({
 			{sideBar()}
 			<div className='logo-type'>
 				<Link
-					to='#'
+					to='/about?ar'
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}

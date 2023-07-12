@@ -5,7 +5,12 @@ import AgentGuideComp from "../components/OtherHeroComp/AgentGuideComp";
 
 const AgentGuide = ({ language, setLanguage }) => {
 	useEffect(() => {
-		setLanguage("Arabic");
+		if (
+			window.location.search.includes("ar") ||
+			window.location.search.includes("Ar")
+		) {
+			setLanguage("Arabic");
+		}
 		// eslint-disable-next-line
 	}, []);
 
