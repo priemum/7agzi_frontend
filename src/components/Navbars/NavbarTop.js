@@ -674,7 +674,6 @@ export default withRouter(Navbar1);
 const Nav = styled.nav`
 	.sinaiLogo {
 		width: 100%;
-		height: 58px;
 		object-fit: cover !important;
 	}
 
@@ -708,8 +707,7 @@ const Nav = styled.nav`
 		z-index: 300;
 
 		.sinaiLogo {
-			width: 120px;
-			height: 58px;
+			width: 100%;
 			object-fit: cover !important;
 		}
 		.logo-type {
