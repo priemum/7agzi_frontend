@@ -38,109 +38,46 @@ const AboutHeroComp = ({ language }) => {
 					animationOutDuration={1000}
 					isVisible={true}
 				>
-					<div className='content'>
-						{language === "Arabic" ? (
-							<h1 dir='rtl'>
+					{language === "Arabic" ? (
+						<div className='contentWrapperArabic' dir='rtl'>
+							<div className='line1Arabic'>
 								{" "}
-								<strong className='float-right'>
-									لأصحاب الصالونات ومراكز التجميل
-								</strong>
-							</h1>
-						) : (
-							<h1 className='line1English'>
+								لأصحاب الصالونات ومراكز التجميل
+							</div>
+							<div className='line2Arabic'>
 								{" "}
-								<strong>For Salon Owners & Beauty Centers</strong>
-							</h1>
-						)}
+								أنشئ مركز تجميل عبر الإنترنت في أقل من دقيقة
+							</div>
+							<div className='line3Arabic'>
+								سجّل الآن ولا تفوّت الفرصة للظهور أمام مئات الآلاف من الأشخاص
+								حول مركز التجميل الخاص بك.
+							</div>
 
-						{language === "Arabic" ? (
-							<h2 className='' dir='rtl'>
-								<strong
-									style={{
-										color: "white",
-										fontSize: "2.1rem",
-										textAlign: "right",
-									}}
-								>
-									أنشئ مركز تجميل عبر الإنترنت في أقل من دقيقة
-								</strong>
-							</h2>
-						) : (
-							<h2 className='line2English'>
-								<strong
-									style={{
-										color: "white",
-										fontSize: "2.1rem",
-										textAlign: "left",
-									}}
-								>
-									Create an online beauty center in less than a minute
-								</strong>
-							</h2>
-						)}
-						{language === "Arabic" ? (
-							<h3 className='' dir='rtl'>
-								<strong
-									style={{
-										color: "white",
-										fontSize: "1rem",
-										textAlign: "left",
-									}}
-								>
-									سجّل الآن ولا تفوّت الفرصة للظهور أمام مئات الآلاف من الأشخاص
-									حول مركز التجميل الخاص بك.
-								</strong>
-							</h3>
-						) : (
-							<h3 className='line3English'>
-								<strong
-									style={{
-										color: "white",
-										textAlign: "right",
-									}}
-								>
-									Register now and don't miss the opportunity to appear in front
-									of hundreds of thousands of people around your beauty center.
-								</strong>
-							</h3>
-						)}
+							<div className='thebtnArabic'>
+								<Link to='/signup' className='btn btn-danger'>
+									<strong> سجِّل الآن </strong>
+								</Link>
+							</div>
+						</div>
+					) : (
+						<div className='contentWrapperEnglish'>
+							<div className='line1'>For Salon Owners & Beauty Centers</div>
+							<div className='line2'>
+								{" "}
+								Create an online beauty center in less than a minute
+							</div>
+							<div className='line3'>
+								Register now and don't miss the opportunity to appear in front
+								of hundreds of thousands of people around your beauty center.
+							</div>
 
-						{language === "Arabic" ? (
-							<button
-								className='btn btn-info'
-								sty
-								dir='rtl'
-								style={{
-									color: "white",
-									background: "#a9082a",
-									border: "#a9082a solid 1px",
-								}}
-							>
-								<Link
-									to='/signup'
-									style={{ color: "white", background: "#a9082a" }}
-								>
-									إشترك الآن
+							<div className='thebtnEnglish'>
+								<Link to='/signup' className='btn btn-danger'>
+									<strong>REGISTER NOW!</strong>
 								</Link>
-							</button>
-						) : (
-							<button
-								className='btn btn-info'
-								style={{
-									color: "white",
-									background: "#a9082a",
-									border: "#a9082a solid 1px",
-								}}
-							>
-								<Link
-									to='/signup'
-									style={{ color: "white", background: "#a9082a" }}
-								>
-									REGISTER NOW!
-								</Link>
-							</button>
-						)}
-					</div>
+							</div>
+						</div>
+					)}
 				</Animated>
 			</div>
 		</AboutHeroCompWrapper>
@@ -159,149 +96,117 @@ const AboutHeroCompWrapper = styled.div`
 		width: 100%;
 	}
 
-	.content > h1 {
+	.contentWrapperEnglish {
 		position: absolute;
-		margin-top: 300px;
-		border-radius: 5px;
-		color: white;
-		font-weight: bolder;
-		/* border: 1px solid black; */
-		width: 40%;
-		left: 60%;
-		background-color: rgba(0, 0, 0, 0.65) !important;
-		padding: 20px;
-		font-size: 1.5rem;
-		/* transform: translate(-30%, -30%); */
+		height: 160px;
+		width: 58%;
+		background-color: rgba(0, 0, 0, 0.4);
+		margin-top: 200px;
+		padding: 10px;
+		margin-right: 20px;
+		margin-left: 20px;
 	}
 
-	.content > h2 {
+	.contentWrapperArabic {
 		position: absolute;
-		margin-top: 370px;
-		border-radius: 5px;
-		color: white;
-		font-weight: bolder;
-		padding: 8px 5px;
-		left: 60.75%;
-		width: 38.5%;
-		background-color: rgba(0, 0, 0, 0.65);
-		font-size: 1.1rem;
+		height: 160px;
+		width: 50%;
+		background-color: rgba(0, 0, 0, 0.4);
+		margin-top: 200px;
+		padding: 10px;
+		margin-left: 45%;
+		text-align: right;
 	}
 
-	.content > h3 {
-		position: absolute;
-		margin-top: 408px;
-		border-radius: 5px;
+	.contentWrapperArabic > div {
 		color: white;
 		font-weight: bolder;
-		font-size: 0.9rem;
-		text-decoration: underline;
-		padding: 5px;
-		left: 60.75%;
-		width: 38.5%;
-		background-color: rgba(0, 0, 0, 0.65);
+		font-size: 1.2rem;
 	}
 
-	.content > .btn {
-		position: absolute;
-		margin-top: 470px;
+	.contentWrapperEnglish > div {
 		color: white;
 		font-weight: bolder;
-		font-size: 1.5rem;
-		top: 20%;
-		left: 62%;
-	}
-
-	.content > .scheduleNowButton {
-		position: absolute;
-		margin-top: 500px;
-		color: white;
-		font-weight: bolder;
-		padding: 5px;
 		font-size: 1rem;
-		top: 20%;
-		left: 50%;
-		background-color: #363636;
-		border-radius: 5px;
-		color: white;
 	}
 
-	.content > .scheduleNowButton > .btn {
-		font-size: 2rem;
-		font-weight: bolder;
-		color: white;
+	.thebtnEnglish {
+		text-align: right !important;
+		margin-top: 25px;
+	}
+
+	.thebtnEnglish > a {
+		font-size: 1.1rem;
+		width: 40%;
+	}
+
+	.thebtnArabic {
+		text-align: left !important;
+		margin-top: 50px;
+	}
+
+	.thebtnArabic > a {
+		font-size: 1.2rem;
+		width: 40%;
+	}
+
+	.line2 {
+		font-size: 1.9rem !important;
+	}
+
+	.line2Arabic {
+		font-size: 2.2rem !important;
 	}
 
 	@media (max-width: 1300px) {
-		.content > h1 {
+		.contentWrapperEnglish {
 			position: absolute;
-			margin-top: 210px;
-			color: white;
-			font-weight: bolder;
-			/* border: 1px solid black; */
-			width: 105%;
-			left: -2.5%;
-			background-color: rgba(0, 0, 0, 0.65);
-			padding: 10px 2px;
-			font-size: 1rem;
-			/* transform: translate(-30%, -30%); */
+			height: 270px;
+			width: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			margin-top: 100px;
+			margin-right: 0px;
+			margin-left: 0px;
 		}
 
-		.content > h2 {
-			margin-top: 248px;
-			color: white;
-			font-weight: bolder;
-			font-size: 1.2rem;
-			width: 105%;
-			left: -2%;
-			background-color: rgba(0, 0, 0, 0.65);
-			padding: 10px 2px;
-			font-size: 1rem;
-			text-align: right;
-		}
-
-		.content > h3 {
-			margin-top: 340px;
-			color: white;
-			font-weight: bolder;
-			font-size: 0.9rem;
-			text-decoration: underline;
-			width: 105%;
-			left: -2.5%;
-			background-color: rgba(0, 0, 0, 0.6);
-			padding: 10px 2px;
-			font-size: 0.9rem;
-			text-align: right;
-		}
-
-		.content > .btn {
+		.contentWrapperArabic {
 			position: absolute;
-			margin-top: 410px;
-			color: white;
-			font-weight: bolder;
-			font-size: 1.5rem;
-			left: 0%;
+			height: 230px;
+			width: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			margin-top: 100px;
+			margin-right: 0px;
+			margin-left: 8%;
 		}
 
-		.content > .scheduleNowButton {
-			position: absolute;
-			margin-top: 500px;
-			color: white;
-			font-weight: bolder;
-			padding: 5px;
-			font-size: 1rem;
-			top: 20%;
-			background-color: #363636;
-			border-radius: 5px;
-			color: white;
+		.line1Arabic {
+			font-size: 1rem !important;
 		}
 
-		.line2English {
-			text-align: left !important;
+		.line3Arabic {
+			font-size: 1rem !important;
 		}
 
-		.line3English {
-			text-align: left !important;
-			font-size: 0.9rem !important;
+		.line4Arabic {
+			font-size: 1rem !important;
+		}
+
+		.thebtnArabic {
+			margin-top: 35px;
+		}
+
+		.thebtnEnglish > a {
+			font-size: 1.1rem;
+			width: 55%;
+		}
+
+		.line2 {
+			font-size: 1.9rem !important;
+			line-height: 1.2;
+		}
+
+		.line2Arabic {
+			font-size: 1.9rem !important;
 		}
 	}
 `;

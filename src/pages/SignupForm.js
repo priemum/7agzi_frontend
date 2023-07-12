@@ -87,9 +87,7 @@ const SignupForm = ({ language }) => {
 	// 	}
 	// };
 
-	const clickSubmit = (event) => {
-		event.preventDefault();
-
+	const clickSubmit = () => {
 		if (!name) {
 			return toast.info("Name is required");
 		}

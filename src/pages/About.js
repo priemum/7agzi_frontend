@@ -467,7 +467,7 @@ const AboutPageWrapper = styled.section`
 
 	.redSquare {
 		padding: 50px;
-		background-color: red;
+		background-color: #be0000;
 		color: white;
 		font-size: 1.9rem;
 		font-weight: bolder;

@@ -84,9 +84,7 @@ const AgentsSignupForm = ({ language }) => {
 		});
 	};
 
-	const clickSubmit = (event) => {
-		event.preventDefault();
-
+	const clickSubmit = () => {
 		if (!name) {
 			return toast.info("Name is required");
 		}
@@ -198,10 +196,10 @@ const AgentsSignupForm = ({ language }) => {
 		let allUploadedFiles = values.agentOtherData.idImage;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 2048 * 1024) {
 					// file size is in bytes
 					setValues({ ...values, loading: false });
-					alert("File size should be less than 500kb");
+					alert("File size should be less than 2MB");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
@@ -273,10 +271,10 @@ const AgentsSignupForm = ({ language }) => {
 		let allUploadedFiles = values.agentOtherData.personalImage;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 2048 * 1024) {
 					// file size is in bytes
 					setValues({ ...values, loading2: false });
-					alert("File size should be less than 500kb");
+					alert("File size should be less than 2MB");
 
 					continue; // skip this file
 				}

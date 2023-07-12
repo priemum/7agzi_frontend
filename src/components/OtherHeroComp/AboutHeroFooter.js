@@ -204,7 +204,7 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link1 {
-			margin-top: 546px;
+			margin-top: 530px;
 			margin-left: 10px;
 			position: absolute;
 			color: white;
@@ -215,8 +215,8 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link2 {
-			margin-top: 546px;
-			margin-left: 180px;
+			margin-top: 530px;
+			margin-left: 187px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
@@ -227,8 +227,8 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link3 {
-			margin-top: 546px;
-			margin-right: 200px;
+			margin-top: 525px;
+			margin-right: 225px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
@@ -238,8 +238,8 @@ const AboutHeroCompWrapper = styled.div`
 		}
 
 		.pageLinks > .link4 {
-			margin-top: 546px;
-			margin-right: 10px;
+			margin-top: 525px;
+			margin-right: -10px;
 			position: absolute;
 			color: white;
 			font-weight: bolder;
