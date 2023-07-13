@@ -142,5 +142,10 @@ const EmployeeMainWrapper = styled.div`
 			margin-bottom: 20px;
 			margin-left: -10px;
 		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1% 99%;
+		}
 	}
 `;

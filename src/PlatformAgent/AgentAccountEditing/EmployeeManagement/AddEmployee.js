@@ -480,4 +480,8 @@ const AddEmployeeWrapper = styled.div`
 		font-weight: bold;
 		color: goldenrod;
 	}
+
+	@media (max-width: 1000px) {
+		margin: 30px 5px 140px 5px !important;
+	}
 `;

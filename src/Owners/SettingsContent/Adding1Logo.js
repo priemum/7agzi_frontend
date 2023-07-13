@@ -47,10 +47,10 @@ const Adding1Logo = ({
 		let allUploadedFiles = addStoreLogo;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 300 * 1024) {
+				if (files[i].size > 500 * 1024) {
 					setLoading2(false);
 					// file size is in bytes
-					alert("File size should be less than 300kb");
+					alert("File size should be less than 500kb");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
@@ -337,28 +337,6 @@ const Adding1Logo = ({
 
 				<div className='col-md-5 py-5 mx-auto'>
 					<label>
-						{language === "Arabic" ? "خط الطول" : "Longitude"}{" "}
-						<span style={{ color: "red", fontWeight: "bold" }}>
-							{" "}
-							<strong>*</strong>{" "}
-						</span>{" "}
-					</label>
-					<input
-						className='form-control'
-						type='text'
-						placeholder={
-							language === "Arabic"
-								? "ادخل خط الطول الخاص بالموقع"
-								: "Fill In Your Location Longitude"
-						}
-						value={longitude}
-						onChange={(e) => {
-							setLongitude(e.target.value);
-						}}
-					/>
-				</div>
-				<div className='col-md-5 py-5 mx-auto'>
-					<label>
 						{language === "Arabic" ? "خط العرض" : "Latitude"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
 							{" "}
@@ -376,6 +354,28 @@ const Adding1Logo = ({
 						value={latitude}
 						onChange={(e) => {
 							setLatitude(e.target.value);
+						}}
+					/>
+				</div>
+				<div className='col-md-5 py-5 mx-auto'>
+					<label>
+						{language === "Arabic" ? "خط الطول" : "Longitude"}{" "}
+						<span style={{ color: "red", fontWeight: "bold" }}>
+							{" "}
+							<strong>*</strong>{" "}
+						</span>{" "}
+					</label>
+					<input
+						className='form-control'
+						type='text'
+						placeholder={
+							language === "Arabic"
+								? "ادخل خط الطول الخاص بالموقع"
+								: "Fill In Your Location Longitude"
+						}
+						value={longitude}
+						onChange={(e) => {
+							setLongitude(e.target.value);
 						}}
 					/>
 				</div>
@@ -454,5 +454,10 @@ const Adding1LogoWrapper = styled.div`
 
 	@media (max-width: 1000px) {
 		margin-left: 10px;
+		div > .btn {
+			margin-left: 50px;
+			width: 60% !important;
+			cursor: pointer;
+		}
 	}
 `;
