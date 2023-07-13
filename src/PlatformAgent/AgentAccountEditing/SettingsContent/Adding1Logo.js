@@ -451,4 +451,8 @@ const Adding1LogoWrapper = styled.div`
 		margin-left: 350px;
 		cursor: pointer;
 	}
+
+	@media (max-width: 1000px) {
+		margin-left: 10px;
+	}
 `;

@@ -745,4 +745,16 @@ const UpdateServiceWrapper = styled.div`
 		font-size: 1.1rem;
 		text-decoration: underline;
 	}
+
+	@media (max-width: 1000px) {
+		margin-left: 10px;
+
+		h5 {
+			margin-left: 15px;
+		}
+
+		h3 {
+			margin-left: 15px;
+		}
+	}
 `;

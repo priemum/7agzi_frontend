@@ -96,86 +96,117 @@ const Adding2DaysClosed = ({
 						? "أيام إغلاق المتجر:"
 						: "Store Closed on days:"}
 				</label>
-				<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>
-					<label htmlFor='one' className='block '>
-						<input
-							type='checkbox'
-							id='one'
-							onChange={handleQueryChange}
-							value='Saturday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Saturday") > -1}
-						/>
-						{language === "Arabic" ? "السبت" : "Saturday"}
-					</label>
-					<label htmlFor='two' className='block'>
-						<input
-							type='checkbox'
-							id='two'
-							onChange={handleQueryChange}
-							value='Sunday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Sunday") > -1}
-						/>
-						{language === "Arabic" ? "الأحد" : "Sunday"}
-					</label>
-					<label htmlFor='three' className='block'>
-						<input
-							type='checkbox'
-							id='three'
-							onChange={handleQueryChange}
-							value='Monday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Monday") > -1}
-						/>
-						{language === "Arabic" ? "الاثنين" : "Monday"}
-					</label>
-					<label htmlFor='four' className='block'>
-						<input
-							type='checkbox'
-							id='four'
-							onChange={handleQueryChange}
-							value='Tuesday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Tuesday") > -1}
-						/>
-						{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
-					</label>
-					<label htmlFor='five' className='block'>
-						<input
-							type='checkbox'
-							id='five'
-							onChange={handleQueryChange}
-							value='Wednesday'
-							className='m-3'
-							checked={
-								daysStoreClosed.daysStoreClosed.indexOf("Wednesday") > -1
-							}
-						/>
-						{language === "Arabic" ? "الأربعاء" : "Wednesday"}
-					</label>
-					<label htmlFor='six' className='block'>
-						<input
-							type='checkbox'
-							id='six'
-							onChange={handleQueryChange}
-							value='Thursday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Thursday") > -1}
-						/>
-						{language === "Arabic" ? "الخميس" : "Thursday"}
-					</label>
-					<label htmlFor='seven' className='block'>
-						<input
-							type='checkbox'
-							id='seven'
-							onChange={handleQueryChange}
-							value='Friday'
-							className='m-3'
-							checked={daysStoreClosed.daysStoreClosed.indexOf("Friday") > -1}
-						/>
-						{language === "Arabic" ? "الجمعة" : "Friday"}
-					</label>
+				<div className='checkboxes border-gray-200 border border-solid'>
+					<div className='row'>
+						<div className='col-md-1'>
+							<label htmlFor='one' className='block '>
+								<input
+									type='checkbox'
+									id='one'
+									onChange={handleQueryChange}
+									value='Saturday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Saturday") > -1
+									}
+								/>
+								{language === "Arabic" ? "السبت" : "Saturday"}
+							</label>
+						</div>
+
+						<div className='col-md-1'>
+							<label htmlFor='two' className='block'>
+								<input
+									type='checkbox'
+									id='two'
+									onChange={handleQueryChange}
+									value='Sunday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Sunday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الأحد" : "Sunday"}
+							</label>
+						</div>
+
+						<div className='col-md-1'>
+							<label htmlFor='three' className='block'>
+								<input
+									type='checkbox'
+									id='three'
+									onChange={handleQueryChange}
+									value='Monday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Monday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الاثنين" : "Monday"}
+							</label>
+						</div>
+
+						<div className='col-md-1'>
+							<label htmlFor='four' className='block'>
+								<input
+									type='checkbox'
+									id='four'
+									onChange={handleQueryChange}
+									value='Tuesday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Tuesday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
+							</label>
+						</div>
+						<div className='col-md-1'>
+							<label htmlFor='five' className='block'>
+								<input
+									type='checkbox'
+									id='five'
+									onChange={handleQueryChange}
+									value='Wednesday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Wednesday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الأربعاء" : "Wednesday"}
+							</label>
+						</div>
+						<div className='col-md-1'>
+							<label htmlFor='six' className='block'>
+								<input
+									type='checkbox'
+									id='six'
+									onChange={handleQueryChange}
+									value='Thursday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Thursday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الخميس" : "Thursday"}
+							</label>
+						</div>
+						<div className='col-md-1'>
+							<label htmlFor='seven' className='block'>
+								<input
+									type='checkbox'
+									id='seven'
+									onChange={handleQueryChange}
+									value='Friday'
+									className='m-3'
+									checked={
+										daysStoreClosed.daysStoreClosed.indexOf("Friday") > -1
+									}
+								/>
+								{language === "Arabic" ? "الجمعة" : "Friday"}
+							</label>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -474,5 +505,9 @@ const Adding2DaysClosedWrapper = styled.div`
 	.removeButton {
 		border: 1px solid darkgrey;
 		border-radius: 10px;
+	}
+
+	@media (max-width: 1000px) {
+		width: 100% !important;
 	}
 `;

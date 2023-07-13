@@ -105,4 +105,15 @@ const ServicesMainWrapper = styled.div`
 		margin-bottom: 20px;
 		margin-left: 350px;
 	}
+
+	@media (max-width: 1000px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1% 99%;
+		}
+
+		.container {
+			margin-left: 10px;
+		}
+	}
 `;

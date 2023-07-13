@@ -129,16 +129,17 @@ const AddService = ({ language, ownerId }) => {
 
 	const gettingAllServices = () => {
 		getServices(token, ownerId).then((data) => {
-			if (data.error) {
+			if (data && data.error) {
 				setError(data.error);
 			} else {
 				setError("");
 				setAllServices(
-					data.map(
-						(serviceNames) =>
-							serviceNames.serviceName.toLowerCase() +
-							serviceNames.customerType.toLowerCase()
-					)
+					data &&
+						data.map(
+							(serviceNames) =>
+								serviceNames.serviceName.toLowerCase() +
+								serviceNames.customerType.toLowerCase()
+						)
 				);
 			}
 		});
@@ -150,6 +151,7 @@ const AddService = ({ language, ownerId }) => {
 	}, [servicePrice, serviceName, serviceLoyaltyPoints]);
 
 	let matchingServiceName =
+		allServices &&
 		allServices.indexOf(
 			serviceName.toLowerCase() + customerType.toLowerCase()
 		) !== -1;
@@ -662,7 +664,7 @@ const AddService = ({ language, ownerId }) => {
 	return (
 		<AddServiceWrapper>
 			<div
-				className='col-md-8 col-sm-6  mt-5 p-3'
+				className='col-md-8 col-sm-6  mt-5 p-3 serviceFormWrapper'
 				style={{
 					border: "2px #0f377e solid",
 					borderRadius: "20px",
@@ -684,5 +686,11 @@ const AddServiceWrapper = styled.div`
 	h3 {
 		font-weight: bold;
 		color: goldenrod;
+	}
+
+	@media (max-width: 1000px) {
+		.serviceFormWrapper {
+			margin-left: 0px !important;
+		}
 	}
 `;

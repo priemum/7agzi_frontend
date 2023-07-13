@@ -660,7 +660,7 @@ const AddService = ({ language }) => {
 	return (
 		<AddServiceWrapper>
 			<div
-				className='col-md-8 col-sm-6  mt-5 p-3'
+				className='col-md-8 col-sm-6  mt-5 p-3 serviceFormWrapper'
 				style={{
 					border: "2px #0f377e solid",
 					borderRadius: "20px",
@@ -682,5 +682,11 @@ const AddServiceWrapper = styled.div`
 	h3 {
 		font-weight: bold;
 		color: goldenrod;
+	}
+
+	@media (max-width: 1000px) {
+		.serviceFormWrapper {
+			margin-left: 0px !important;
+		}
 	}
 `;
