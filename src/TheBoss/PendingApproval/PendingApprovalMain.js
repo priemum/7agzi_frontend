@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import {isAuthenticated} from "../../auth";
-import {allLoyaltyPointsAndStoreStatus} from "../apiBoss";
+import { isAuthenticated } from "../../auth";
+import { allLoyaltyPointsAndStoreStatus } from "../apiBoss";
 import CardForStorePendingApp from "./CardForStorePendingApp";
 
 //DreamProject2023!
@@ -15,7 +15,7 @@ const PendingApprovalMain = () => {
 	const [storeProperties, setStoreProperties] = useState([]);
 
 	// eslint-disable-next-line
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		setLoading(true);
@@ -26,24 +26,27 @@ const PendingApprovalMain = () => {
 				var dataModified = data.map((i) => {
 					return {
 						...i,
-						storeId: i.belongsTo._id,
-						storeCreatedAt: i.belongsTo.createdAt,
+						storeId: i.belongsTo && i.belongsTo._id,
+						storeCreatedAt: i.belongsTo && i.belongsTo.createdAt,
 					};
 				});
 
-				dataModified.sort(
-					(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-				);
+				dataModified &&
+					dataModified.sort(
+						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+					);
 				// Then, use reduce to construct an object where the keys are storeNames and the values are the corresponding items with the latest date
-				var result = dataModified.reduce((acc, item) => {
-					if (
-						!acc[item.storeId] ||
-						new Date(item.createdAt) > new Date(acc[item.storeId].createdAt)
-					) {
-						acc[item.storeId] = item;
-					}
-					return acc;
-				}, {});
+				var result =
+					dataModified &&
+					dataModified.reduce((acc, item) => {
+						if (
+							!acc[item.storeId] ||
+							new Date(item.createdAt) > new Date(acc[item.storeId].createdAt)
+						) {
+							acc[item.storeId] = item;
+						}
+						return acc;
+					}, {});
 
 				// Finally, extract the values from the resulting object to get an array of items
 				var uniqueStoresWithLatestDates = Object.values(result);
@@ -96,7 +99,7 @@ const PendingApprovalMain = () => {
 															"chosenStore",
 															JSON.stringify(p)
 														);
-														window.scrollTo({top: 0, behavior: "smooth"});
+														window.scrollTo({ top: 0, behavior: "smooth" });
 													}}
 												>
 													<CardForStorePendingApp store={p} />

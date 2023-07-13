@@ -57,7 +57,9 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 
 	var theIndexOfAppointments =
 		allAppointments &&
-		allAppointments.map((ii) => ii._id).indexOf(store.belongsTo._id);
+		allAppointments
+			.map((ii) => ii._id)
+			.indexOf(store.belongsTo && store.belongsTo._id);
 
 	return (
 		<ProductWrapper className='my-3'>
@@ -67,7 +69,11 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 			>
 				<div className='card-body  '>
 					<div className='card-img-top  img'>
-						<Link to={`/boss/store/admin/dashboard/${store.belongsTo._id}`}>
+						<Link
+							to={`/boss/store/admin/dashboard/${
+								store.belongsTo && store.belongsTo._id
+							}`}
+						>
 							<ShowImage item={store} />
 						</Link>
 					</div>
@@ -79,7 +85,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 							textTransform: "capitalize",
 						}}
 					>
-						{store.belongsTo.storeType}
+						{store.belongsTo && store.belongsTo.storeType}
 					</div>
 
 					<div
@@ -100,7 +106,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 							fontWeight: "bold",
 						}}
 					>
-						Address: {store.belongsTo.storeAddress}
+						Address: {store.belongsTo && store.belongsTo.storeAddress}
 					</div>
 					<div
 						className='mt-3 mb-3'
@@ -109,7 +115,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 							fontWeight: "bold",
 						}}
 					>
-						Agent: {store.belongsTo.agent.name}
+						Agent: {store.belongsTo && store.belongsTo.agent.name}
 					</div>
 					<div className='mt-3'>
 						Total Appointments:{" "}

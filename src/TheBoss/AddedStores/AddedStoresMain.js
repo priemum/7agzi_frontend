@@ -31,8 +31,8 @@ const AddedStoresMain = () => {
 				var dataModified = data.map((i) => {
 					return {
 						...i,
-						storeId: i.belongsTo._id,
-						storeCreatedAt: i.belongsTo.createdAt,
+						storeId: i.belongsTo && i.belongsTo._id,
+						storeCreatedAt: i.belongsTo && i.belongsTo.createdAt,
 					};
 				});
 
@@ -40,15 +40,17 @@ const AddedStoresMain = () => {
 					(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
 				);
 				// Then, use reduce to construct an object where the keys are storeNames and the values are the corresponding items with the latest date
-				var result = dataModified.reduce((acc, item) => {
-					if (
-						!acc[item.storeId] ||
-						new Date(item.createdAt) > new Date(acc[item.storeId].createdAt)
-					) {
-						acc[item.storeId] = item;
-					}
-					return acc;
-				}, {});
+				var result =
+					dataModified &&
+					dataModified.reduce((acc, item) => {
+						if (
+							!acc[item.storeId] ||
+							new Date(item.createdAt) > new Date(acc[item.storeId].createdAt)
+						) {
+							acc[item.storeId] = item;
+						}
+						return acc;
+					}, {});
 
 				// Finally, extract the values from the resulting object to get an array of items
 				var uniqueStoresWithLatestDates = Object.values(result);
@@ -119,7 +121,9 @@ const AddedStoresMain = () => {
 													}}
 												>
 													<Link
-														to={`/boss/store/admin/dashboard/${p.belongsTo._id}`}
+														to={`/boss/store/admin/dashboard/${
+															p.belongsTo && p.belongsTo._id
+														}`}
 													></Link>
 													<CardForStoreBoss
 														store={p}

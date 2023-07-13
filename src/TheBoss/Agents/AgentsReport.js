@@ -453,13 +453,16 @@ const AgentsReport = () => {
 										</td>
 										<td
 											style={{
-												background: activeSalonOrNotHelper.activeStore
-													? "darkgreen"
-													: "darkred",
+												background:
+													activeSalonOrNotHelper &&
+													activeSalonOrNotHelper.activeStore
+														? "darkgreen"
+														: "darkred",
 												color: "white",
 											}}
 										>
-											{activeSalonOrNotHelper.activeStore
+											{activeSalonOrNotHelper &&
+											activeSalonOrNotHelper.activeStore
 												? "Active Salon"
 												: "Inactive"}
 										</td>
