@@ -57,9 +57,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 
 	var theIndexOfAppointments =
 		allAppointments &&
-		allAppointments
-			.map((ii) => ii._id)
-			.indexOf(store.belongsTo && store.belongsTo._id);
+		allAppointments.map((ii) => ii._id).indexOf(store.belongsTo._id);
 
 	return (
 		<ProductWrapper className='my-3'>
@@ -69,11 +67,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 			>
 				<div className='card-body  '>
 					<div className='card-img-top  img'>
-						<Link
-							to={`/boss/store/admin/dashboard/${
-								store.belongsTo && store.belongsTo._id
-							}`}
-						>
+						<Link to={`/boss/store/admin/dashboard/${store.belongsTo._id}`}>
 							<ShowImage item={store} />
 						</Link>
 					</div>

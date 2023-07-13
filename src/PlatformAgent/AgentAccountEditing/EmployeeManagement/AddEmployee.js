@@ -454,16 +454,19 @@ const AddEmployee = ({ language, ownerId }) => {
 					{/* Working Days */}
 					<hr />
 
-					<div className='col-md-6 mx-auto'>
-						<button
-							onClick={() => {
-								window.scrollTo({ top: 0, behavior: "smooth" });
-							}}
-							className='btn btn-outline-primary mt-3 btn-block'
-						>
-							Add Stylist
-						</button>
-					</div>
+					{clickedMenu === "WorkingDays" ||
+					clickedMenu === "EmployeeAccount" ? (
+						<div className='col-md-6 mx-auto'>
+							<button
+								onClick={() => {
+									window.scrollTo({ top: 0, behavior: "smooth" });
+								}}
+								className='btn btn-outline-primary mt-3 btn-block'
+							>
+								Add Stylist
+							</button>
+						</div>
+					) : null}
 				</form>
 			</div>
 		</AddEmployeeWrapper>
