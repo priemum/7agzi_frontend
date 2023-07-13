@@ -75,7 +75,7 @@ const ImageCard2 = ({
 								<input
 									type='file'
 									hidden
-									accept='images/*'
+									accept='image/*'
 									onChange={fileUploadAndResizeThumbNail}
 									required
 								/>
