@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated} from "../../auth";
-import {cloudinaryUpload1, createAbout, getAbouts} from "../apiOwner";
+import { isAuthenticated } from "../../auth";
+import { cloudinaryUpload1, createAbout, getAbouts } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import ImageCard from "./ImageCard";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const toolbarOptions = [
-	[{header: [1, 2, 3, 4, 5, 6, false]}],
-	["bold", "italic", "underline", "strike", {color: []}],
-	[{list: "ordered"}, {list: "bullet"}, {indent: "-1"}, {indent: "+1"}],
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
 	["link", "image", "video"],
 	["clean"],
 ];
@@ -27,7 +27,7 @@ const EditAboutUs = () => {
 	const [allAbouts, setAllAbouts] = useState([]);
 	const [addThumbnail, setAddThumbnail] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllAbouts = () => {
 		getAbouts(token, user._id).then((data) => {
@@ -65,9 +65,9 @@ const EditAboutUs = () => {
 		let allUploadedFiles = addThumbnail;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 300 * 1024) {
+				if (files[i].size > 500 * 1024) {
 					// file size is in bytes
-					alert("File size should be less than 300kb");
+					alert("File size should be less than 500kb");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
@@ -78,11 +78,11 @@ const EditAboutUs = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setAddThumbnail({...addThumbnail, images: allUploadedFiles});
+								setAddThumbnail({ ...addThumbnail, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -99,7 +99,7 @@ const EditAboutUs = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const EditAboutUs = () => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {images} = addThumbnail;
+				const { images } = addThumbnail;
 				setAddThumbnail([]);
 			})
 			.catch((err) => {
@@ -211,8 +211,8 @@ const EditAboutUs = () => {
 							placeholder='Fill in a description about your business'
 							onChange={handleEditorChange}
 							modules={{
-								toolbar: {container: toolbarOptions},
-								clipboard: {matchVisual: false},
+								toolbar: { container: toolbarOptions },
+								clipboard: { matchVisual: false },
 							}}
 							onPaste={handlePaste}
 						/>
@@ -222,7 +222,7 @@ const EditAboutUs = () => {
 					<button
 						className='btn btn-outline-success my-3 btn-block'
 						onClick={clickSubmit}
-						style={{fontWeight: "bold", fontSize: "1.2rem"}}
+						style={{ fontWeight: "bold", fontSize: "1.2rem" }}
 					>
 						Submit About us changes
 					</button>

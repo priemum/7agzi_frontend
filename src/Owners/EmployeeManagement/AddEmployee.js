@@ -302,9 +302,9 @@ const AddEmployee = ({ language }) => {
 
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 300 * 1024) {
+				if (files[i].size > 500 * 1024) {
 					// file size is in bytes
-					alert("File size should be less than 300kb");
+					alert("File size should be less than 500kb");
 					continue; // skip this file
 				}
 

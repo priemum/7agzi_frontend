@@ -176,7 +176,7 @@ const ImageCardHero = ({
 										<input
 											type='file'
 											hidden
-											accept='images/*'
+											accept='image/*'
 											onChange={fileUploadAndResizeThumbNail2}
 											required
 										/>
@@ -259,7 +259,7 @@ const ImageCardHero = ({
 										<input
 											type='file'
 											hidden
-											accept='images/*'
+											accept='image/*'
 											onChange={fileUploadAndResizeThumbNail3}
 											required
 										/>
@@ -343,7 +343,7 @@ const ImageCardHero = ({
 										<input
 											type='file'
 											hidden
-											accept='images/*'
+											accept='image/*'
 											onChange={fileUploadAndResizeThumbNail_Phone}
 											required
 										/>
@@ -425,7 +425,7 @@ const ImageCardHero = ({
 										<input
 											type='file'
 											hidden
-											accept='images/*'
+											accept='image/*'
 											onChange={fileUploadAndResizeThumbNail2_Phone}
 											required
 										/>
@@ -506,7 +506,7 @@ const ImageCardHero = ({
 										<input
 											type='file'
 											hidden
-											accept='images/*'
+											accept='image/*'
 											onChange={fileUploadAndResizeThumbNail3_Phone}
 											required
 										/>
