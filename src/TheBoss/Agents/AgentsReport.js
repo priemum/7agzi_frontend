@@ -79,8 +79,6 @@ const AgentsReport = () => {
 		});
 	};
 
-	console.log(inactiveAgents, "inactive Agents");
-
 	const gettingOverallOwnersData = () => {
 		gettingOverallSalonOwners(user._id, token).then((data) => {
 			if (data.error) {
@@ -387,6 +385,7 @@ const AgentsReport = () => {
 							<th scope='col'>Address</th>
 							<th scope='col'>Store Type</th>
 							<th scope='col'>Settings?</th>
+							<th scope='col'>Active Salon?</th>
 							<th scope='col'>Account Created</th>
 							<th scope='col'>Pro Account</th>
 							<th scope='col'>Agent Paid Initial?</th>
@@ -403,6 +402,16 @@ const AgentsReport = () => {
 								const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
 								// const remainingDays = 30 - diffDays;
+
+								//Active Salon
+
+								var activeSalonOrNotHelper =
+									storeProperties &&
+									storeProperties[
+										storeProperties
+											.map((iii) => iii.belongsTo && iii.belongsTo._id)
+											.indexOf(o._id)
+									];
 
 								return (
 									<tr key={i}>
@@ -441,6 +450,18 @@ const AgentsReport = () => {
 												.indexOf(o._id) === -1
 												? "NO"
 												: "YES"}
+										</td>
+										<td
+											style={{
+												background: activeSalonOrNotHelper.activeStore
+													? "darkgreen"
+													: "darkred",
+												color: "white",
+											}}
+										>
+											{activeSalonOrNotHelper.activeStore
+												? "Active Salon"
+												: "Inactive"}
 										</td>
 										<td>
 											{diffDays}{" "}

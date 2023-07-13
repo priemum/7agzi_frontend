@@ -206,6 +206,16 @@ const StoreBillingMain = () => {
 													>
 														<strong>Store Name: {store.addStoreName}</strong>
 														<br />
+														<strong style={{ color: "darkblue" }}>
+															Owner Name: {store.belongsTo.name}
+														</strong>
+														<br />
+														<strong
+															style={{ color: "darkblue", fontSize: "1rem" }}
+														>
+															Agent Name: {store.belongsTo.agent.name}
+														</strong>
+														<br />
 														<strong>Phone: {store.belongsTo.phone}</strong>
 														<br />
 														<br />

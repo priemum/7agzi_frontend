@@ -59,35 +59,133 @@ const UpdateAgent = () => {
 		<UpdateAgentWrapper>
 			<div>
 				{!selectedAgent ? (
-					<div className='row'>
-						{allAgents &&
-							allAgents.map((agent, i) => {
-								console.log(agent.activeAgent, "agent");
-								return (
-									<div
-										style={{ textTransform: "capitalize" }}
-										className='col-md-4 mx-auto agentName mt-2'
-										key={i}
-										onClick={() => {
-											setSelectedAgent(agent);
-											setValues(agent);
-										}}
-									>
-										{i + 1}-{"  "} {agent.name}{" "}
-										<span>
-											{agent.activeAgent ? (
-												<span style={{ color: "green", fontWeight: "bolder" }}>
-													(Active Agent)
-												</span>
-											) : (
-												<span style={{ color: "red", fontWeight: "bolder" }}>
-													(Inactive)
-												</span>
-											)}
-										</span>
-									</div>
-								);
-							})}
+					<div className=''>
+						<div
+							className='mt-5 mx-auto'
+							style={{
+								maxHeight: "1000px",
+								overflow: "auto",
+							}}
+						>
+							<h3 style={{ fontWeight: "bolder", textAlign: "center" }}>
+								Agents List
+							</h3>
+							<table
+								className='table table-bordered table-md-responsive table-hover table-striped'
+								style={{ fontSize: "0.8rem" }}
+							>
+								<thead
+								// className='thead-light'
+								// style={{border: "2px black solid"}}
+								>
+									<tr style={{ background: "black", color: "white" }}>
+										<th scope='col'>#</th>
+										<th scope='col'>Agent Name</th>
+										<th scope='col'>Agent Phone</th>
+										<th scope='col'>Agent Email</th>
+										<th scope='col'>Agent Address</th>
+										<th scope='col'>Agent Governorate</th>
+										<th scope='col'>Agent District</th>
+										<th scope='col'>Registeration Date</th>
+										<th scope='col'>Agent Status</th>
+										<th scope='col'>Update Agent</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{allAgents &&
+										allAgents.map((o, i) => {
+											const now = new Date();
+											const endDate = new Date(o.createdAt);
+											const diffTime = Math.abs(endDate - now);
+											const diffDays = Math.ceil(
+												diffTime / (1000 * 60 * 60 * 24)
+											);
+											return (
+												<tr key={i}>
+													<td>{i + 1}</td>
+													<td>{o.name}</td>
+													<td>
+														<strong>{o.phone}</strong>{" "}
+													</td>
+													<td>
+														<strong>{o.email}</strong>{" "}
+													</td>
+													<td>
+														<strong>
+															{o.agentOtherData &&
+																o.agentOtherData.agentAddress}
+														</strong>{" "}
+													</td>
+													<td>
+														<strong>
+															{o.agentOtherData &&
+																o.agentOtherData.agentGovernorate}
+														</strong>{" "}
+													</td>
+													<td>
+														<strong>
+															{o.agentOtherData &&
+																o.agentOtherData.agentDistrict}
+														</strong>{" "}
+													</td>
+													<td>
+														{diffDays}{" "}
+														{Number(diffDays) <= 1 ? "Day Ago" : "Days Ago"}
+													</td>
+
+													<td
+														style={{
+															background: o.activeAgent
+																? "darkgreen"
+																: "darkred",
+														}}
+													>
+														<strong>
+															{o.activeAgent ? (
+																<span
+																	style={{
+																		color: "white",
+																		fontWeight: "bolder",
+																	}}
+																>
+																	(Active Agent)
+																</span>
+															) : (
+																<span
+																	style={{
+																		color: "white",
+																		fontWeight: "bolder",
+																	}}
+																>
+																	(Inactive)
+																</span>
+															)}
+														</strong>{" "}
+													</td>
+
+													<td
+														onClick={() => {
+															setSelectedAgent(o);
+															setValues(o);
+														}}
+													>
+														<strong
+															style={{
+																color: "blue",
+																textDecoration: "underline",
+																cursor: "pointer",
+															}}
+														>
+															Update Agent
+														</strong>
+													</td>
+												</tr>
+											);
+										})}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				) : null}
 
@@ -131,7 +229,7 @@ const UpdateAgent = () => {
 export default UpdateAgent;
 
 const UpdateAgentWrapper = styled.div`
-	margin: 0px 200px;
+	margin: 0px 100px;
 	background-color: white;
 	padding: 10px;
 
