@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import axios from "axios";
 import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 import { isAuthenticated } from "./auth";
 
 //Regular Routes
@@ -140,6 +141,19 @@ function App() {
 
 		// eslint-disable-next-line
 	}, [window.location.pathname]);
+
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<BrowserRouter>

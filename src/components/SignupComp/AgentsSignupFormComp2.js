@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ReactGA from "react-ga4";
+
+// eslint-disable-next-line
+import ReactPixel from "react-facebook-pixel";
 
 const AgentsSignupFormComp2 = ({
 	values,
@@ -28,6 +31,19 @@ const AgentsSignupFormComp2 = ({
 		setNextClicked(nextClicked - 1);
 		setAnimationDirection("slide-right");
 	};
+
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<SignupFormCompWrapper>
@@ -219,6 +235,13 @@ const AgentsSignupFormComp2 = ({
 													event_label: "Agent Selected Country",
 													value: 1, // Optional extra parameters
 												});
+
+												ReactPixel.track("Agent Selected Country", {
+													content_name: "Agent Selected Country",
+													content_category: "Agent Selected Country",
+													value: "",
+													currency: "",
+												});
 											}}
 										>
 											<option value='Please Select'>Please Select</option>
@@ -281,6 +304,13 @@ const AgentsSignupFormComp2 = ({
 														event_category: "Agent Selected Governorate",
 														event_label: "Agent Selected Governorate",
 														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Agent Selected Governorate", {
+														content_name: "Agent Selected Governorate",
+														content_category: "Agent Selected Governorate",
+														value: "",
+														currency: "",
 													});
 												}}
 											>
@@ -346,6 +376,13 @@ const AgentsSignupFormComp2 = ({
 														event_category: "Agent Selected District",
 														event_label: "Agent Selected District",
 														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("AAgent Selected District", {
+														content_name: "Agent Selected District",
+														content_category: "Agent Selected District",
+														value: "",
+														currency: "",
 													});
 												}}
 											>
@@ -453,10 +490,17 @@ const AgentsSignupFormComp2 = ({
 											className='btn btn-success w-75 btn-block mx-auto mt-5 mb-5'
 											onClick={() => {
 												clickSubmit();
-												ReactGA.event("Successful Registeration For Agent", {
-													event_category: "Successful Registeration For Agent",
+												ReactGA.event("SuccessfulRegisterationForAgent", {
+													event_category: "SuccessfulRegisterationForAgent",
 													event_label: "Successful Registeration For Agent",
 													value: 1, // Optional extra parameters
+												});
+
+												ReactPixel.track("SuccessfulRegisterationForAgent", {
+													content_name: "SuccessfulRegisterationForAgent",
+													content_category: "SuccessfulRegisterationForAgent",
+													value: "",
+													currency: "",
 												});
 											}}
 											disabled={
