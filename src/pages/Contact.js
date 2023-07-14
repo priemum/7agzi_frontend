@@ -88,7 +88,7 @@ const Contact = ({ language }) => {
 					تقدمها إلمنصة من خالل أبليكيشن خاص لتسجيل وحجز إلمستخدمرين
 					إلخدمات إلتجميلية. Powered By https://infinite-apps.com`
 							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers
-					located in Egypt.
+					
 					The platform offers services for all family members, including women, girls, men, and
 					children, with a variety of services provided.
 					The XLOOK platform is used to choose and book a barbershop or beauty center appointment

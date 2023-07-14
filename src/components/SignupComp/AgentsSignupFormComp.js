@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import ImageCard2 from "./ImageCard";
 import ImageCardPersonal from "./ImageCardPersonal";
 import { Spin } from "antd";
@@ -43,25 +42,6 @@ const AgentsSignupFormComp = ({
 
 	return (
 		<SignupFormCompWrapper>
-			<Helmet>
-				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
-					<title>نموذج التسجيل الرسمي للوكلاء</title>
-				) : (
-					<title>Agents Official Signup Form</title>
-				)}
-
-				{language === "Arabic" ? (
-					<meta name='description' content='افضل برنامج حجز فى مصر' />
-				) : (
-					<meta
-						name='description'
-						content='The best booking software in Egypt'
-					/>
-				)}
-
-				<link rel='canonical' href='https://infinite-apps.com' />
-			</Helmet>
 			<FormSignup>
 				<div className='row justify-content-md-center mt-5'>
 					<div className='col-md-9 col-sm-12 '>

@@ -9,12 +9,12 @@ import {
 } from "../apiCore";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuthenticated, signin, signup } from "../auth";
-import AgentsSignupFormComp from "../components/SignupComp/AgentsSignupFormComp";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { Helmet } from "react-helmet";
+import AgentsSignupFormComp2 from "../components/SignupComp/AgentsSignupFormComp2";
 
-const AgentsSignupForm = ({ language }) => {
+const AgentsSignupForm2 = ({ language }) => {
 	const [nextClicked, setNextClicked] = useState(0);
 	const [values, setValues] = useState({
 		name: "",
@@ -95,38 +95,29 @@ const AgentsSignupForm = ({ language }) => {
 			return toast.info("password is required");
 		}
 		if (!password2) {
-			return toast.info("password2 is required");
-		}
-		if (!storeAddress) {
-			return toast.info("Store Address is required");
+			return toast.info("Please confirm your password");
 		}
 
-		if (!storeType) {
-			return toast.info("Store Type is required");
+		if (!values.agentOtherData.agentCountry) {
+			return toast.info("Country Is Required");
 		}
 
-		if (!storeGovernorate) {
-			return toast.info("Store Governorate is required");
+		if (!values.agentOtherData.agentGovernorate) {
+			return toast.info("Governorate Is Required");
 		}
 
-		if (!storeName) {
-			return toast.info("Store Name is required");
-		}
-
-		if (!storeCountry) {
-			return toast.info("Store Country Is Required");
-		}
-
-		if (!storeDistrict) {
-			return toast.info("District is Required");
+		if (!values.agentOtherData.agentDistrict) {
+			return toast.info(
+				"District Is Required. If District is not available, Please choose the closest district available in the list"
+			);
 		}
 
 		if (password !== password2) {
 			return toast.info("Passwords don't match");
 		}
 
-		if (!values.agentOtherData.agentNationalIdNumber) {
-			return toast.info("ID # is required");
+		if (!email.includes("@") || !email.includes(".com")) {
+			return toast.info("Your email format is incorrect");
 		}
 
 		setValues({ ...values, error: false });
@@ -338,7 +329,7 @@ const AgentsSignupForm = ({ language }) => {
 	};
 
 	const signUpForm = () => (
-		<AgentsSignupFormComp
+		<AgentsSignupFormComp2
 			values={values}
 			setValues={setValues}
 			clickSubmit={clickSubmit}
@@ -367,7 +358,6 @@ const AgentsSignupForm = ({ language }) => {
 
 	return (
 		<AgentsSignupFormWrapper>
-			<Redirect to='/agents-signup-form2' />
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
@@ -403,7 +393,7 @@ const AgentsSignupForm = ({ language }) => {
 	);
 };
 
-export default AgentsSignupForm;
+export default AgentsSignupForm2;
 
 const AgentsSignupFormWrapper = styled.div`
 	overflow: hidden;

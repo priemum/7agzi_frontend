@@ -27,6 +27,7 @@ import SingleStorePage from "./pages/SingleStorePage";
 import AgentsSignupForm from "./pages/AgentsSignupForm";
 import RegisterSteps from "./pages/RegisterSteps";
 import AgentGuide from "./pages/AgentGuide";
+import AgentsSignupForm2 from "./pages/AgentsSignupForm2";
 
 //Owner Route
 import OwnerRoute from "./auth/OwnerRoute";
@@ -246,6 +247,12 @@ function App() {
 						path='/agents-signup-form'
 						exact
 						component={() => <AgentsSignupForm language={language} />}
+					/>
+
+					<Route
+						path='/agents-signup-form2'
+						exact
+						component={() => <AgentsSignupForm2 language={language} />}
 					/>
 
 					{/* Owner Routes */}

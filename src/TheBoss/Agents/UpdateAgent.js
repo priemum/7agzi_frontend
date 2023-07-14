@@ -83,6 +83,7 @@ const UpdateAgent = () => {
 										<th scope='col'>Agent Name</th>
 										<th scope='col'>Agent Phone</th>
 										<th scope='col'>Agent Email</th>
+										<th scope='col'>Agent Degree</th>
 										<th scope='col'>Agent Address</th>
 										<th scope='col'>Agent Governorate</th>
 										<th scope='col'>Agent District</th>
@@ -110,6 +111,12 @@ const UpdateAgent = () => {
 													</td>
 													<td>
 														<strong>{o.email}</strong>{" "}
+													</td>
+													<td>
+														<strong>
+															{o.agentOtherData &&
+																o.agentOtherData.agentQualification}
+														</strong>{" "}
 													</td>
 													<td>
 														<strong>
@@ -229,7 +236,7 @@ const UpdateAgent = () => {
 export default UpdateAgent;
 
 const UpdateAgentWrapper = styled.div`
-	margin: 0px 100px;
+	margin: 0px 50px;
 	background-color: white;
 	padding: 10px;
 
