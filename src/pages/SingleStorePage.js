@@ -96,6 +96,7 @@ const SingleStorePage = ({ props, language }) => {
 		).then((data) => {
 			if (data.error) {
 				console.log("error rendering store data");
+				setLoading(false);
 			} else {
 				var pickedStoreRendered = data[data.length - 1];
 				setStoreChosen({
@@ -295,6 +296,8 @@ const SingleStorePage = ({ props, language }) => {
 		setChosenCustomerType(event.target.value);
 	};
 
+	var screenWidth = typeof window !== "undefined" ? window.innerWidth : null;
+
 	return (
 		<SingleStorePageWrapper>
 			{loading && !storeChosen && !storeChosen.belongsTo ? (
@@ -304,8 +307,8 @@ const SingleStorePage = ({ props, language }) => {
 					<Helmet>
 						<meta charSet='utf-8' />
 						<title>
-							{storeChosen && storeChosen.addStoreName.toUpperCase()} |
-							Barbershop Official Booking Website
+							{storeChosen && storeChosen.addStoreName.toUpperCase()} | Official
+							Booking Website
 						</title>
 						<meta
 							name='description'
@@ -313,7 +316,10 @@ const SingleStorePage = ({ props, language }) => {
 								storeChosen && storeChosen.addStoreName.toUpperCase()
 							} Booking Software Developed By Infinite-Apps.com`}
 						/>
-						<link rel='canonical' href='https://infinite-apps.com' />
+						<link
+							rel='canonical'
+							href={`https://xlookpro.com/${storeName}/${phone}`}
+						/>
 					</Helmet>
 					<HeroComponent
 						hero1={hero1}
@@ -352,7 +358,15 @@ const SingleStorePage = ({ props, language }) => {
 						</div>
 
 						<div>
-							<GettingMap storeProperties={storeChosen} />
+							{!loading &&
+							storeChosen &&
+							screenWidth &&
+							screenWidth >= 810 &&
+							storeChosen.addStoreName &&
+							storeChosen.latitude &&
+							storeChosen.longitude ? (
+								<GettingMap storeProperties={storeChosen} loading={loading} />
+							) : null}
 						</div>
 					</div>
 
@@ -510,7 +524,13 @@ const SingleStorePage = ({ props, language }) => {
 
 						{clickedMenu === "MAP" ? (
 							<div className='my-4'>
-								<GettingMap storeProperties={storeChosen} />
+								{!loading &&
+								storeChosen &&
+								storeChosen.addStoreName &&
+								storeChosen.latitude &&
+								storeChosen.longitude ? (
+									<GettingMap storeProperties={storeChosen} loading={loading} />
+								) : null}
 							</div>
 						) : null}
 						<div id='firstAvailableApp' className='firstAvailableApp mb-5'>

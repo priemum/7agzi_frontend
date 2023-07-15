@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import ResponsiveMapComp from "./ResponsiveMapComp";
 
-const GettingMap = ({ storeProperties }) => {
+const GettingMap = ({ storeProperties, loading }) => {
 	const { latitude, longitude } = storeProperties || {};
 
 	const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
@@ -14,27 +15,43 @@ const GettingMap = ({ storeProperties }) => {
 			: "550x400";
 
 	const imgUrlClose = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=16&size=${size}&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
-	const imgUrlFar = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=${size}&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
+
+	// const imgUrlFar = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=10&size=${size}&sensor=false&markers=color:red%7C${latitude},${longitude}&key=${process.env.REACT_APP_MAPS_API_KEY}`;
+
+	// Parse latitude and longitude values into numbers
+	const lat = Number(latitude);
+	const lng = Number(longitude);
+
+	// Check if latitude and longitude are available and are numbers
+	if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+		// You can render some error message or fallback UI here
+		return <div>Invalid latitude or longitude</div>;
+	}
 
 	return (
-		<GettingMapWrapper>
-			{latitude && longitude ? (
+		<GettingMapWrapper className='my-5'>
+			{latitude && longitude && !loading ? (
 				<div className='my-5'>
-					<a
-						href={`comgooglemaps://?daddr=${latitude},${longitude}&directionsmode=driving`}
-						target='_blank'
-						rel='noopener noreferrer'
-					>
-						{storeProperties && storeProperties.from === "update" ? null : (
+					{storeProperties && storeProperties.from === "update" ? null : (
+						<a
+							href={`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`}
+							target='_blank'
+							rel='noopener noreferrer'
+						>
 							<h3>Click To Get Directions</h3>
-						)}
-						<div className='my-5 col-md-5 mx-auto'>
-							<img src={imgUrlClose} alt='developed by infinite-apps.com' />
-						</div>
-						<div className='mb-2 col-md-5 mx-auto'>
-							<img src={imgUrlFar} alt='developed by infinite-apps.com' />
-						</div>
-					</a>
+						</a>
+					)}
+					<div className='my-5 col-md-5 mx-auto'>
+						<img src={imgUrlClose} alt='developed by infinite-apps.com' />
+					</div>
+					{/* <div className='mb-2 col-md-5 mx-auto'>
+						<img src={imgUrlFar} alt='developed by infinite-apps.com' />
+					</div> */}
+					<ResponsiveMapComp
+						storeProperties={storeProperties}
+						lat={lat}
+						lng={lng}
+					/>
 				</div>
 			) : null}
 		</GettingMapWrapper>

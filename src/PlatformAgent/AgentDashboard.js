@@ -5,6 +5,7 @@ import { readUser, storesListForAgents } from "./apiAgent";
 import CountUp from "react-countup";
 import { allLoyaltyPointsAndStoreStatus } from "../TheBoss/apiBoss";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const AgentDashboard = ({ language }) => {
 	//Read Single User for the agent
@@ -112,6 +113,37 @@ const AgentDashboard = ({ language }) => {
 
 	return (
 		<AgentDashboardWrapper>
+			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<meta charSet='utf-8' />
+				{language === "Arabic" ? (
+					<title dir='rtl'>{user.name} Dashboard</title>
+				) : (
+					<title>{user.name} Dashboard</title>
+				)}
+				<meta
+					name='description'
+					content={
+						language === "Arabic"
+							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
+				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
+				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
+				الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
+							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
+				The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided.
+				The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location.
+				Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
+					}
+				/>
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
+							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
+					}
+				/>
+				<link rel='canonical' href='https://www.xlookpro.com/agent/dashboard' />
+			</Helmet>
 			{currentUser && currentUser.activeAgent === false ? (
 				<div
 					className='underReview'
