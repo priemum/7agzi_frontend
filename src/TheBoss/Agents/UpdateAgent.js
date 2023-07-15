@@ -236,7 +236,7 @@ const UpdateAgent = () => {
 export default UpdateAgent;
 
 const UpdateAgentWrapper = styled.div`
-	margin: 0px 50px;
+	margin: 0px 25px;
 	background-color: white;
 	padding: 10px;
 
@@ -286,6 +286,10 @@ const UpdateAgentWrapper = styled.div`
 		text-decoration: underline;
 		margin: 10px 0px;
 		cursor: pointer;
+	}
+
+	td {
+		font-size: 12px;
 	}
 
 	@media (max-width: 1000px) {
