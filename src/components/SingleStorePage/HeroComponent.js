@@ -44,14 +44,14 @@ const HeroComponent = ({
 						hero1 && hero1.images && hero1.images[0]
 							? `url(${hero1.images[0].url})`
 							: `url(
-                    "https://cdn.pixabay.com/photo/2020/05/21/11/42/hair-salon-5200393_960_720.jpg"
-                )`,
+							"https://cdn.pixabay.com/photo/2020/05/21/11/42/hair-salon-5200393_960_720.jpg"
+						)`,
 					backgroundPosition: `center ${offsetY * 0.7}px`,
 					backgroundRepeat: "no-repeat",
-					backgroundSize: "cover", // add this line
+					backgroundSize: window.innerWidth >= 1000 ? "cover" : "cover",
 					position: "relative",
-					height: "790px",
-					width: "104%",
+					height: window.innerWidth >= 1000 ? "760px" : "100vh", // change this line
+					width: window.innerWidth >= 1000 ? "100vw" : "104vw", // change this line
 					borderRadius: "10px",
 				}}
 			>
@@ -180,7 +180,7 @@ const HeroComponentWrapper = styled.div`
 		border-radius: 100px 20px;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 1000px) {
 		.firstAppointWrapper {
 			position: relative; // Relative positioning is necessary for absolute child positioning
 
@@ -198,6 +198,7 @@ const HeroComponentWrapper = styled.div`
 
 		.rowWrapper {
 			height: 450px !important;
+			background-size: cover !important;
 		}
 
 		.firstAppointWrapperSub {
