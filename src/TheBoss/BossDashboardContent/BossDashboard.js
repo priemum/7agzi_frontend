@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import {allLoyaltyPointsAndStoreStatus, gettingAllUsers} from "../apiBoss";
+import { allLoyaltyPointsAndStoreStatus, gettingAllUsers } from "../apiBoss";
 import CountUp from "react-countup";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import moment from "moment";
 
 //DreamProject2023!
 //Plat form admin when he goes to store dashboard add a clear note.
@@ -31,7 +33,7 @@ const BossDashboard = () => {
 		}
 	}, []);
 
-	const {token, user} = isAuthenticated();
+	const { token, user } = isAuthenticated();
 
 	const getOnlineStoreName = () => {
 		allLoyaltyPointsAndStoreStatus().then((data) => {
@@ -93,6 +95,8 @@ const BossDashboard = () => {
 	var storesPendingApproval =
 		storeProperties && storeProperties.filter((i) => i.activeStore === false);
 
+	console.log(ownerAccounts, "ownerAccounts");
+
 	return (
 		<BossDashboardWrapper>
 			<div className='grid-container'>
@@ -109,13 +113,13 @@ const BossDashboard = () => {
 				<div className='mt-3 col-md-11 mx-auto'>
 					<div className='row'>
 						<div className='col-xl-4 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#50cd89"}}>
+							<div className='card' style={{ background: "#50cd89" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Registered Stores
 									</h5>
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={2}
 										delay={1}
 										end={ownerAccounts.length}
@@ -126,13 +130,13 @@ const BossDashboard = () => {
 						</div>
 
 						<div className='col-xl-4 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#f1416c"}}>
+							<div className='card' style={{ background: "#f1416c" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Finished Settings
 									</h5>
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={2}
 										delay={1}
 										end={storeProperties.length}
@@ -143,13 +147,13 @@ const BossDashboard = () => {
 						</div>
 
 						<div className='col-xl-4 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{background: "#009ef7"}}>
+							<div className='card' style={{ background: "#009ef7" }}>
 								<div className='card-body'>
-									<h5 style={{fontWeight: "bolder", color: "white"}}>
+									<h5 style={{ fontWeight: "bolder", color: "white" }}>
 										Pending Approval
 									</h5>
 									<CountUp
-										style={{color: "white"}}
+										style={{ color: "white" }}
 										duration={2}
 										delay={1}
 										end={storesPendingApproval.length}
@@ -161,7 +165,7 @@ const BossDashboard = () => {
 					</div>
 
 					<div className='row'>
-						<div className='col-md-6'>
+						<div className='col-md-12 mx-auto'>
 							<div
 								className='mt-5'
 								style={{
@@ -169,21 +173,31 @@ const BossDashboard = () => {
 									overflow: "auto",
 								}}
 							>
-								<h3 style={{fontWeight: "bolder"}}>Registered Owners</h3>
+								<h3 style={{ fontWeight: "bolder" }}>Registered Owners</h3>
 								<table
 									className='table table-bordered table-md-responsive table-hover table-striped'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
 									<thead
 									// className='thead-light'
 									// style={{border: "2px black solid"}}
 									>
 										<tr>
-											<th scope='col'>Name</th>
-											<th scope='col'>Phone</th>
+											<th scope='col'>Owner Name</th>
+											<th scope='col'>Owner Phone</th>
 											<th scope='col'>Governorate</th>
+											<th scope='col'>District</th>
 											<th scope='col'>Address</th>
+											<th scope='col'>Email</th>
+											<th scope='col'>Agent</th>
+											<th scope='col'>Registered</th>
 											<th scope='col'>Settings?</th>
+											<th
+												scope='col'
+												style={{ background: "#164216", color: "white" }}
+											>
+												Update Account?
+											</th>
 										</tr>
 									</thead>
 
@@ -203,10 +217,16 @@ const BossDashboard = () => {
 													<tr key={i}>
 														<td>{o.name}</td>
 														<td>{o.phone}</td>
-														<td style={{textTransform: "capitalize"}}>
+														<td style={{ textTransform: "capitalize" }}>
 															{o.storeGovernorate}
 														</td>
+														<td style={{ textTransform: "capitalize" }}>
+															{o.storeDistrict}
+														</td>
 														<td>{o.storeAddress}</td>
+														<td>{o.email}</td>
+														<td>{o.agent && o.agent.name}</td>
+														<td>{moment(o.createdAt).format("DD/MM/YYYY")}</td>
 														<td
 															style={{
 																background:
@@ -240,6 +260,24 @@ const BossDashboard = () => {
 																? "NO"
 																: "YES"}
 														</td>
+														<td
+															style={{
+																fontWeight: "bolder",
+																backgroundColor: "black",
+																color: "white",
+															}}
+														>
+															<Link
+																style={{
+																	color: "white",
+																	textDecoration: "underline",
+																}}
+																to={`/boss/store/admin/dashboard/${o._id}`}
+															>
+																{" "}
+																<strong>UPDATE ACCOUNT</strong>{" "}
+															</Link>
+														</td>
 													</tr>
 												);
 											})}
@@ -248,7 +286,7 @@ const BossDashboard = () => {
 							</div>
 						</div>
 
-						<div className='col-md-6'>
+						<div className='col-md-11 mx-auto'>
 							<div
 								className='mt-5'
 								style={{
@@ -256,10 +294,10 @@ const BossDashboard = () => {
 									overflow: "auto",
 								}}
 							>
-								<h3 style={{fontWeight: "bolder"}}>Stores Added Settings</h3>
+								<h3 style={{ fontWeight: "bolder" }}>Stores Added Settings</h3>
 								<table
 									className='table table-bordered table-md-responsive table-hover table-striped'
-									style={{fontSize: "0.75rem"}}
+									style={{ fontSize: "0.75rem" }}
 								>
 									<thead
 									// className='thead-light'
@@ -281,7 +319,7 @@ const BossDashboard = () => {
 													<tr key={i}>
 														<td>{o.belongsTo && o.belongsTo.name}</td>
 														<td>{o.belongsTo && o.belongsTo.phone}</td>
-														<td style={{textTransform: "capitalize"}}>
+														<td style={{ textTransform: "capitalize" }}>
 															{o.belongsTo && o.belongsTo.storeGovernorate}
 														</td>
 														<td>{o.addStoreName}</td>
@@ -308,7 +346,7 @@ const BossDashboardWrapper = styled.div`
 
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 13% 87%;
 	}
 
 	.container-fluid {

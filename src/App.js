@@ -75,6 +75,7 @@ import PendingApprovalMain from "./TheBoss/PendingApproval/PendingApprovalMain";
 import StorePreviewPage from "./TheBoss/PendingApproval/StorePreviewPage";
 import AgentsManagementMain from "./TheBoss/Agents/AgentsManagementMain";
 import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
+import UpdateBusinessAgent from "./TheBoss/AddedStores/SingleStoreAdminPage/OwnerDashboardContents/UpdateBusinessAgent";
 
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
@@ -427,6 +428,12 @@ function App() {
 						path='/boss/store/admin/settings/:ownerId'
 						exact
 						component={SettingsMainBoss}
+					/>
+
+					<BossRoute
+						path='/boss/store/admin/update-business-agent/:ownerId'
+						exact
+						component={UpdateBusinessAgent}
 					/>
 
 					<BossRoute

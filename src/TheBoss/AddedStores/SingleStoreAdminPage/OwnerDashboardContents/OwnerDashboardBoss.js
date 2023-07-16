@@ -176,6 +176,18 @@ const OwnerDashboardBoss = ({ language }) => {
 							Return To Your BOSS DASHBOARD
 						</Link>
 					</div>
+					<div className='mt-2 ml-5'>
+						<Link
+							style={{
+								fontSize: "2rem",
+								fontWeight: "bolder",
+								textDecoration: "underline",
+							}}
+							to={`/boss/store/admin/update-business-agent/${ownerId}`}
+						>
+							Update Business Partner <strong>AGENT</strong>
+						</Link>
+					</div>
 					<div
 						className=''
 						style={{ top: "70px", right: "2%", position: "absolute" }}
@@ -283,7 +295,7 @@ const OwnerDashboardBoss = ({ language }) => {
 									textDecoration: "underline",
 									letterSpacing: "5px",
 								}}
-								to='/store/admin/settings'
+								to={`/boss/store/admin/settings/${ownerId}`}
 							>
 								{language === "Arabic"
 									? "أضف إعدادات المتجر"

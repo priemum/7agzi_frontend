@@ -57,6 +57,13 @@ const items = [
 		<PieChartOutlined />
 	),
 	getItem(
+		<Link to={`/boss/store/admin/update-business-agent/${ownerId}`}>
+			Update Account Agent
+		</Link>,
+		"sub6",
+		<BranchesOutlined />
+	),
+	getItem(
 		<Link to={`/boss/store/admin/settings/${ownerId}`}>Settings</Link>,
 		"sub2",
 		<SettingOutlined />
@@ -81,6 +88,7 @@ const items = [
 		"sub5",
 		<ShopOutlined />
 	),
+
 	// getItem(
 	// 	<Link to='/boss/store/admin/branches'>Add New Branch</Link>,
 	// 	"sub6",
@@ -154,7 +162,7 @@ const AdminNavbar = ({
 						? "sub3"
 						: fromPage === "Employees"
 						? "sub4"
-						: fromPage === "Branches"
+						: fromPage === "UpdateAgent"
 						? "sub6"
 						: fromPage === "Ecommerce"
 						? "sub7"
