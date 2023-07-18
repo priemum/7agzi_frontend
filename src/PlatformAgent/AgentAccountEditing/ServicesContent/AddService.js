@@ -254,12 +254,12 @@ const AddService = ({ language, ownerId }) => {
 		{ english: "Male", arabic: "ذكر" },
 		{ english: "Female", arabic: "أنثى" },
 		{
-			english: "Boys (Client 12 Years Old or Younger)",
-			arabic: "الأولاد (العميل الذي تقل أعمارهم عن 12 سنة)",
+			english: "Boys",
+			arabic: "الأولاد",
 		},
 		{
-			english: "Girls (Client 12 Years Old or Younger)",
-			arabic: "البنات (العميل الذي تقل أعمارهم عن 12 سنة)",
+			english: "Girls",
+			arabic: "البنات)",
 		},
 	];
 
@@ -332,7 +332,6 @@ const AddService = ({ language, ownerId }) => {
 								required
 							/>
 						</div>
-						bash Copy code
 						<div className='form-group col-md-6 mx-auto'>
 							<label className='text-muted'>
 								{bundleService
