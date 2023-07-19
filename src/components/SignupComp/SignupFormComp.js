@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 // import { Helmet } from "react-helmet";
 import { Select } from "antd";
 import AgentChoiceModal from "./AgentChoiceModal";
 import ReactGA from "react-ga4";
+import { ShipToData } from "../../Utils";
+import ReactPixel from "react-facebook-pixel";
 
 const { Option } = Select;
 
@@ -14,38 +16,41 @@ const SignupFormComp = ({
 	clickSubmit,
 	handleChange,
 	countryList,
-	cairoDistricts,
-	alexandriaDistricts,
 	name,
 	email,
 	phone,
 	storeName,
 	EgyptGovernorate,
-	storeGovernorate,
 	storeAddress,
 	password,
 	password2,
 	nextClicked,
-	setNextClicked,
 	language,
 	allAgents,
 	setAllAgents,
+	allDistricts,
+	setAllDistricts,
 }) => {
+	// eslint-disable-next-line
 	const [animationDirection, setAnimationDirection] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleModalOpen = () => {
 		setModalVisible(true);
 	};
-	const handleNextClick = () => {
-		setNextClicked(nextClicked + 1);
-		setAnimationDirection("slide-left");
+
+	const options = {
+		autoConfig: true,
+		debug: false,
 	};
 
-	const handlePreviousClick = () => {
-		setNextClicked(nextClicked - 1);
-		setAnimationDirection("slide-right");
-	};
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<SignupFormCompWrapper>
@@ -76,51 +81,29 @@ const SignupFormComp = ({
 							{/* <Google informParent={informParent} /> */}
 
 							<div className='myContent col-md-8 mx-auto mb-3'>
-								{nextClicked === 0 ? (
-									<div
-										className={`mb-3 mx-auto ${
-											animationDirection === "slide-right"
-												? "slide-in-right"
-												: ""
-										}`}
-									>
-										<div className='col-md-8 mx-auto'>
-											<label htmlFor='name' style={{ fontWeight: "bold" }}>
-												{language === "Arabic" ? "الاسم الكامل" : "Full Name"}
-											</label>
-											<input
-												type='text'
-												name='name'
-												value={name}
-												onChange={handleChange("name")}
-												required
-												placeholder='e.g. Muhammed Hussein'
-											/>
-										</div>
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												disabled={!name || name.length < 3}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"First Next form business partner. Signup",
-														{
-															event_category:
-																"First Next form business partner. Signup",
-															event_label: "FullName: " + name,
-															value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='mx-auto text-center btn btn-primary w-50'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
+								<div
+									className={`mb-3 mx-auto ${
+										animationDirection === "slide-left"
+											? "slide-in-left"
+											: "slide-in-right"
+									}`}
+								>
+									<div className='col-md-8 mx-auto'>
+										<label htmlFor='name' style={{ fontWeight: "bold" }}>
+											{language === "Arabic" ? "الاسم الكامل" : "Full Name"}
+										</label>
+										<input
+											type='text'
+											name='name'
+											value={name}
+											onChange={handleChange("name")}
+											required
+											placeholder='e.g. Muhammed Hussein'
+										/>
 									</div>
-								) : null}
+								</div>
 
-								{nextClicked === 1 && name ? (
+								{name ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -147,41 +130,10 @@ const SignupFormComp = ({
 												placeholder='e.g. MuhammedHussein@gmail.com'
 											/>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={
-													!email.includes("@") || !email.includes(".com")
-												}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Second Next form business partner. Signup",
-														{
-															event_category:
-																"Second Next form business partner. Signup",
-															event_label: "Email: " + email,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "" : ""}
-
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 2 && name && email ? (
+								{name && email ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -208,37 +160,10 @@ const SignupFormComp = ({
 												placeholder='e.g. 01022459022 (Digits Only)'
 											/>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={!/^\d{8,13}$/.test(phone)}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Third Next form business partner. Signup",
-														{
-															event_category:
-																"Third Next form business partner. Signup",
-															event_label: "Phone: " + phone,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 3 && name && email && phone ? (
+								{name && email && phone ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -271,37 +196,10 @@ const SignupFormComp = ({
 												</option>
 											</select>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={!values.storeType}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Forth Next form business partner. Signup",
-														{
-															event_category:
-																"Forth Next form business partner. Signup",
-															event_label: "Store Type: " + values.storeType,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 4 ? (
+								{name && email && phone && values.storeType ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -325,37 +223,14 @@ const SignupFormComp = ({
 												placeholder='e.g. Barber Cut'
 											/>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={!storeName || storeName.length <= 2}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Fifth Next form business partner. Signup",
-														{
-															event_category:
-																"Fifth Next form business partner. Signup",
-															event_label: "Store Name: " + storeName,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 5 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -404,41 +279,16 @@ const SignupFormComp = ({
 												) : null}
 											</div>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={
-													!values.storeCountry ||
-													values.storeCountry !== "Egypt"
-												}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Sixth Next form business partner. Signup",
-														{
-															event_category:
-																"Sixth Next form business partner. Signup",
-															event_label:
-																"Store Country: " + values.storeCountry,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 6 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeCountry === "Egypt" ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -458,10 +308,17 @@ const SignupFormComp = ({
 											<select
 												className='form-control'
 												onChange={(e) => {
+													const selectedGovernorate = e.target.value;
 													setValues({
 														...values,
-														storeGovernorate: e.target.value,
+														storeGovernorate: selectedGovernorate,
 													});
+
+													const governorateCities = ShipToData.filter(
+														(item) => item.GovernorateEn === selectedGovernorate
+													).map((item) => item.City.AreaEn);
+
+													setAllDistricts([...new Set(governorateCities)]);
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -478,54 +335,18 @@ const SignupFormComp = ({
 											<div
 												className='mt-3'
 												style={{ color: "darkred", fontWeight: "bolder" }}
-											>
-												{values &&
-												values.storeGovernorate &&
-												values.storeGovernorate !== "Alexandria" &&
-												values.storeGovernorate !== "Cairo" ? (
-													<span>
-														{values.storeGovernorate} is not being supported at
-														the moment
-													</span>
-												) : null}
-											</div>
-										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={
-													!values.storeGovernorate ||
-													(values.storeGovernorate !== "Alexandria" &&
-														values.storeGovernorate !== "Cairo")
-												}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Seventh Next form business partner. Signup",
-														{
-															event_category:
-																"Seventh Next form business partner. Signup",
-															event_label:
-																"Store Governorate: " + values.storeGovernorate,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
+											></div>
 										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 7 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeGovernorate ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -533,98 +354,45 @@ const SignupFormComp = ({
 												: "slide-in-right"
 										}`}
 									>
-										{storeGovernorate === "Alexandria" ? (
-											<div
-												className='form-group col-md-8 mx-auto'
-												style={{ marginTop: "25px" }}
-											>
-												<label style={{ fontWeight: "bold" }}>
-													{language === "Arabic" ? "منطقة" : "Store District"}
-												</label>
-												<select
-													className='form-control'
-													onChange={(e) => {
-														setValues({
-															...values,
-															storeDistrict: e.target.value,
-														});
-													}}
-												>
-													<option value='Please Select'>Please Select</option>
-
-													{alexandriaDistricts.map((g, i) => {
-														return (
-															<option key={i} value={g}>
-																{g}
-															</option>
-														);
-													})}
-												</select>
-											</div>
-										) : null}
-
-										{storeGovernorate === "Cairo" ? (
-											<div
-												className='form-group col-md-8 mx-auto'
-												style={{ marginTop: "25px" }}
-											>
-												<label style={{ fontWeight: "bold" }}>
-													Store District
-													{language === "Arabic" ? "منطقة" : "Store District"}
-												</label>
-												<select
-													className='form-control'
-													onChange={(e) => {
-														setValues({
-															...values,
-															storeDistrict: e.target.value,
-														});
-													}}
-												>
-													<option value='Please Select'>Please Select</option>
-
-													{cairoDistricts.map((g, i) => {
-														return (
-															<option key={i} value={g}>
-																{g}
-															</option>
-														);
-													})}
-												</select>
-											</div>
-										) : null}
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={!values.storeDistrict}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Eighth Next form business partner. Signup",
-														{
-															event_category:
-																"Eighth Next form business partner. Signup",
-															event_label:
-																"Store District: " + values.storeDistrict,
-															// value: 10, // Optional extra parameters
-														}
-													);
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "25px" }}
+										>
+											<label style={{ fontWeight: "bold" }}>
+												{language === "Arabic" ? "منطقة" : "Store District"}
+											</label>
+											<select
+												className='form-control'
+												onChange={(e) => {
+													setValues({
+														...values,
+														storeDistrict: e.target.value,
+													});
 												}}
-												className='text-center btn btn-primary w-25 mx-2'
 											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
+												<option value='Please Select'>Please Select</option>
+
+												{allDistricts &&
+													allDistricts.map((g, i) => {
+														return (
+															<option key={i} value={g}>
+																{g}
+															</option>
+														);
+													})}
+											</select>
 										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 8 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeGovernorate &&
+								values.storeDistrict ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -650,40 +418,18 @@ const SignupFormComp = ({
 												placeholder='e.g. 123 main street, Alexandria, Egypt'
 											/>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={
-													!values.storeAddress ||
-													values.storeAddress.length <= 4
-												}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Ninth Next form business partner. Signup",
-														{
-															event_category:
-																"Ninth Next form business partner. Signup",
-															event_label: "Store Address: " + storeAddress,
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 9 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeGovernorate &&
+								values.storeDistrict &&
+								values.storeAddress ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -711,7 +457,7 @@ const SignupFormComp = ({
 												</div>
 											) : (
 												<div
-													className='my-2'
+													className='mt-4 mb-2'
 													style={{ color: "darkred", fontWeight: "bolder" }}
 												>
 													Please note that having an agent entitles you to a
@@ -795,37 +541,19 @@ const SignupFormComp = ({
 												)}
 											</div>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-											<button
-												disabled={!values.agent}
-												onClick={() => {
-													handleNextClick();
-													ReactGA.event(
-														"Tenth Next form business partner. Signup",
-														{
-															event_category:
-																"Tenth Next form business partner. Signup",
-															event_label: "Store Agent: ",
-															// value: 10, // Optional extra parameters
-														}
-													);
-												}}
-												className='text-center btn btn-primary w-25 mx-2'
-											>
-												{language === "Arabic" ? "التالي" : "Next"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 10 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeGovernorate &&
+								values.storeDistrict &&
+								values.storeAddress &&
+								values.agent.name ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -871,35 +599,39 @@ const SignupFormComp = ({
 												placeholder='Should have at least one digit'
 											/>
 										</div>
-
-										<div className='mt-3 mx-auto text-center'>
-											<button
-												onClick={handlePreviousClick}
-												className='text-center btn btn-info w-25 mx-2'
-											>
-												{language === "Arabic" ? "السابق" : "Previous"}
-											</button>
-										</div>
 									</div>
 								) : null}
 
-								{nextClicked === 10 ? (
+								{name &&
+								email &&
+								phone &&
+								values.storeType &&
+								values.storeName &&
+								values.storeCountry &&
+								values.storeGovernorate &&
+								values.storeDistrict &&
+								values.storeAddress &&
+								values.agent.name ? (
 									<Link
 										to='#'
 										className='btn btn-success w-75 btn-block mx-auto mt-5 mb-5'
 										onClick={() => {
 											clickSubmit();
-											ReactGA.event("Successful Registeration", {
-												event_category: "Successful Registeration",
-												event_label: "Successful Registeration",
+											ReactGA.event("SalonSuccessfulRegistration", {
+												event_category: "SalonSuccessfulRegistration",
+												event_label: "SalonSuccessfulRegistration",
 												value: 10, // Optional extra parameters
+											});
+
+											ReactPixel.track("SalonSuccessfulRegistration", {
+												content_name: "SalonSuccessfulRegistration",
+												content_category: "SalonSuccessfulRegistration",
+												value: "",
+												currency: "",
 											});
 										}}
 										disabled={
-											nextClicked !== 10 ||
-											!password ||
-											password.length <= 5 ||
-											!/\d/.test(password)
+											!password || password.length <= 5 || !/\d/.test(password)
 										}
 									>
 										{language === "Arabic" ? "التسجيل" : "Register"}

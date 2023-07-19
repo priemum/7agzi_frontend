@@ -5,6 +5,7 @@ import ReactGA from "react-ga4";
 
 // eslint-disable-next-line
 import ReactPixel from "react-facebook-pixel";
+import { ShipToData } from "../../Utils";
 
 const AgentsSignupFormComp2 = ({
 	values,
@@ -12,12 +13,12 @@ const AgentsSignupFormComp2 = ({
 	clickSubmit,
 	handleChange,
 	countryList,
-	cairoDistricts,
-	alexandriaDistricts,
 	name,
 	email,
 	phone,
 	EgyptGovernorate,
+	allDistricts,
+	setAllDistricts,
 	password,
 	password2,
 	nextClicked,
@@ -87,191 +88,202 @@ const AgentsSignupFormComp2 = ({
 									</div>
 								</div>
 
-								<div
-									className={`mb-3 mx-auto ${
-										animationDirection === "slide-left"
-											? "slide-in-left"
-											: "slide-in-right"
-									}`}
-								>
+								{name ? (
 									<div
-										className='form-group col-md-8 mx-auto'
-										style={{ marginTop: "10px" }}
+										className={`mb-3 mx-auto ${
+											animationDirection === "slide-left"
+												? "slide-in-left"
+												: "slide-in-right"
+										}`}
 									>
-										<label htmlFor='email' style={{ fontWeight: "bold" }}>
-											{language === "Arabic"
-												? "البريد الإلكتروني"
-												: "Email Address"}
-											{language === "Arabic" ? "" : ""}
-										</label>
-										<input
-											type='email'
-											name='email'
-											value={email}
-											onChange={handleChange("email")}
-											required
-											placeholder='e.g. MuhammedHussein@gmail.com'
-										/>
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "10px" }}
+										>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
+												{language === "Arabic"
+													? "البريد الإلكتروني"
+													: "Email Address"}
+												{language === "Arabic" ? "" : ""}
+											</label>
+											<input
+												type='email'
+												name='email'
+												value={email}
+												onChange={handleChange("email")}
+												required
+												placeholder='e.g. MuhammedHussein@gmail.com'
+											/>
+										</div>
 									</div>
-								</div>
+								) : null}
 
-								<div
-									className={`mb-3 mx-auto ${
-										animationDirection === "slide-left"
-											? "slide-in-left"
-											: "slide-in-right"
-									}`}
-								>
+								{name && email ? (
 									<div
-										className='form-group col-md-8 mx-auto'
-										style={{ marginTop: "10px" }}
+										className={`mb-3 mx-auto ${
+											animationDirection === "slide-left"
+												? "slide-in-left"
+												: "slide-in-right"
+										}`}
 									>
-										<label style={{ fontWeight: "bold" }}>
-											{language === "Arabic"
-												? "رقم الهاتف المحمول"
-												: "Cell Phone Number"}
-										</label>
-										<input
-											type='text'
-											name='phone'
-											pattern='\d*'
-											maxLength='13'
-											value={phone}
-											onChange={handleChange("phone")}
-											placeholder='e.g. 01022459022 (Digits Only)'
-										/>
-									</div>
-									{/* <div
-											className='form-group col-md-8 mx-auto my-2'
-											style={{ marginTop: "25px" }}
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "10px" }}
 										>
 											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic"
-													? "2 رقم الهاتف المحمول"
-													: "Cell Phone Number 2"}
+													? "رقم الهاتف المحمول"
+													: "Cell Phone Number"}
 											</label>
 											<input
 												type='text'
 												name='phone'
 												pattern='\d*'
 												maxLength='13'
-												value={values.agentOtherData.phone2}
+												value={phone}
+												onChange={handleChange("phone")}
+												placeholder='e.g. 01022459022 (Digits Only)'
+											/>
+										</div>
+										{/* <div
+												className='form-group col-md-8 mx-auto my-2'
+												style={{ marginTop: "25px" }}
+											>
+												<label style={{ fontWeight: "bold" }}>
+													{language === "Arabic"
+														? "2 رقم الهاتف المحمول"
+														: "Cell Phone Number 2"}
+												</label>
+												<input
+													type='text'
+													name='phone'
+													pattern='\d*'
+													maxLength='13'
+													value={values.agentOtherData.phone2}
+													onChange={(e) => {
+														setValues({
+															...values,
+															agentOtherData: {
+																...values.agentOtherData,
+																phone2: e.target.value,
+															},
+														});
+													}}
+													placeholder='e.g. 01022459022 (Digits Only)'
+												/>
+											</div> */}
+									</div>
+								) : null}
+
+								{name && email && phone ? (
+									<div
+										className={`mb-3 mx-auto ${
+											animationDirection === "slide-left"
+												? "slide-in-left"
+												: "slide-in-right"
+										}`}
+									>
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "10px" }}
+										>
+											<label htmlFor='email' style={{ fontWeight: "bold" }}>
+												{language === "Arabic"
+													? "الدرجة العلمية / المؤهل (اختياري)"
+													: "Degree/ Qualification (Optional)"}
+											</label>
+											<input
+												type='text'
+												name='certificate'
+												value={values.agentOtherData.agentQualification}
 												onChange={(e) => {
 													setValues({
 														...values,
 														agentOtherData: {
 															...values.agentOtherData,
-															phone2: e.target.value,
+															agentQualification: e.target.value,
 														},
 													});
 												}}
-												placeholder='e.g. 01022459022 (Digits Only)'
+												required
+												placeholder='OPTIONAL*'
 											/>
-										</div> */}
-								</div>
-
-								<div
-									className={`mb-3 mx-auto ${
-										animationDirection === "slide-left"
-											? "slide-in-left"
-											: "slide-in-right"
-									}`}
-								>
-									<div
-										className='form-group col-md-8 mx-auto'
-										style={{ marginTop: "10px" }}
-									>
-										<label htmlFor='email' style={{ fontWeight: "bold" }}>
-											{language === "Arabic"
-												? "الدرجة العلمية / المؤهل (اختياري)"
-												: "Degree/ Qualification (Optional)"}
-										</label>
-										<input
-											type='text'
-											name='certificate'
-											value={values.agentOtherData.agentQualification}
-											onChange={(e) => {
-												setValues({
-													...values,
-													agentOtherData: {
-														...values.agentOtherData,
-														agentQualification: e.target.value,
-													},
-												});
-											}}
-											required
-											placeholder='OPTIONAL*'
-										/>
-									</div>
-								</div>
-
-								<div
-									className={`mb-3 mx-auto ${
-										animationDirection === "slide-left"
-											? "slide-in-left"
-											: "slide-in-right"
-									}`}
-								>
-									<div
-										className='form-group col-md-8 mx-auto'
-										style={{ marginTop: "10px" }}
-									>
-										<label style={{ fontWeight: "bold" }}>
-											{language === "Arabic" ? "بلد" : "Agent Country"}
-										</label>
-										<select
-											className='form-control'
-											onChange={(e) => {
-												setValues({
-													...values,
-													agentOtherData: {
-														...values.agentOtherData,
-														agentCountry: e.target.value,
-													},
-												});
-
-												ReactGA.event("Agent Selected Country", {
-													event_category: "Agent Selected Country",
-													event_label: "Agent Selected Country",
-													value: 1, // Optional extra parameters
-												});
-
-												ReactPixel.track("Agent Selected Country", {
-													content_name: "Agent Selected Country",
-													content_category: "Agent Selected Country",
-													value: "",
-													currency: "",
-												});
-											}}
-										>
-											<option value='Please Select'>Please Select</option>
-
-											{countryList.map((g, i) => {
-												return (
-													<option key={i} value={g}>
-														{g}
-													</option>
-												);
-											})}
-										</select>
-										<div
-											className='mt-3'
-											style={{ color: "darkred", fontWeight: "bolder" }}
-										>
-											{values &&
-											values.agentOtherData &&
-											values.agentOtherData.agentCountry &&
-											values.agentOtherData.agentCountry !== "Egypt" ? (
-												<span>
-													{/* {values.storeCountry} is not where you are, please
-													select the correct country, Thank you! */}
-													Please Select The Correct Country, Thank You!
-												</span>
-											) : null}
 										</div>
 									</div>
-								</div>
-								{values.agentOtherData.agentCountry &&
+								) : null}
+
+								{name && email && phone ? (
+									<div
+										className={`mb-3 mx-auto ${
+											animationDirection === "slide-left"
+												? "slide-in-left"
+												: "slide-in-right"
+										}`}
+									>
+										<div
+											className='form-group col-md-8 mx-auto'
+											style={{ marginTop: "10px" }}
+										>
+											<label style={{ fontWeight: "bold" }}>
+												{language === "Arabic" ? "بلد" : "Agent Country"}
+											</label>
+											<select
+												className='form-control'
+												onChange={(e) => {
+													setValues({
+														...values,
+														agentOtherData: {
+															...values.agentOtherData,
+															agentCountry: e.target.value,
+														},
+													});
+
+													ReactGA.event("Agent Selected Country", {
+														event_category: "Agent Selected Country",
+														event_label: "Agent Selected Country",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Agent Selected Country", {
+														content_name: "Agent Selected Country",
+														content_category: "Agent Selected Country",
+														value: "",
+														currency: "",
+													});
+												}}
+											>
+												<option value='Please Select'>Please Select</option>
+
+												{countryList.map((g, i) => {
+													return (
+														<option key={i} value={g}>
+															{g}
+														</option>
+													);
+												})}
+											</select>
+											<div
+												className='mt-3'
+												style={{ color: "darkred", fontWeight: "bolder" }}
+											>
+												{values &&
+												values.agentOtherData &&
+												values.agentOtherData.agentCountry &&
+												values.agentOtherData.agentCountry !== "Egypt" ? (
+													<span>
+														{/* {values.storeCountry} is not where you are, please
+					select the correct country, Thank you! */}
+														Please Select The Correct Country, Thank You!
+													</span>
+												) : null}
+											</div>
+										</div>
+									</div>
+								) : null}
+
+								{name &&
+								email &&
+								phone &&
 								values.agentOtherData.agentCountry === "Egypt" ? (
 									<div
 										className={`mb-3 mx-auto ${
@@ -292,13 +304,21 @@ const AgentsSignupFormComp2 = ({
 											<select
 												className='form-control'
 												onChange={(e) => {
+													const selectedGovernorate = e.target.value;
+
 													setValues({
 														...values,
 														agentOtherData: {
 															...values.agentOtherData,
-															agentGovernorate: e.target.value,
+															agentGovernorate: selectedGovernorate,
 														},
 													});
+
+													const governorateCities = ShipToData.filter(
+														(item) => item.GovernorateEn === selectedGovernorate
+													).map((item) => item.City.AreaEn);
+
+													setAllDistricts([...new Set(governorateCities)]);
 
 													ReactGA.event("Agent Selected Governorate", {
 														event_category: "Agent Selected Governorate",
@@ -316,8 +336,8 @@ const AgentsSignupFormComp2 = ({
 											>
 												<option value='Please Select'>Please Select</option>
 
-												{EgyptGovernorate() &&
-													EgyptGovernorate().map((g, i) => {
+												{EgyptGovernorate &&
+													EgyptGovernorate.map((g, i) => {
 														return (
 															<option key={i} value={g}>
 																{g}
@@ -329,31 +349,23 @@ const AgentsSignupFormComp2 = ({
 											<div
 												className='mt-3'
 												style={{ color: "darkred", fontWeight: "bolder" }}
-											>
-												{values &&
-												values.agentOtherData &&
-												values.agentOtherData.agentGovernorate !==
-													"Alexandria" &&
-												values.agentOtherData.agentGovernorate !== "Cairo" &&
-												values.agentOtherData.agentGovernorate !== null ? (
-													<span>
-														{values.agentOtherData.agentGovernorate} is not
-														being supported at the moment
-													</span>
-												) : null}
-											</div>
+											></div>
 										</div>
 									</div>
 								) : null}
 
-								<div
-									className={`mb-3 mx-auto ${
-										animationDirection === "slide-left"
-											? "slide-in-left"
-											: "slide-in-right"
-									}`}
-								>
-									{values.agentOtherData.agentGovernorate === "Alexandria" ? (
+								{name &&
+								email &&
+								phone &&
+								values.agentOtherData.agentCountry === "Egypt" &&
+								!values.agentOtherData.agentGovernorate === false ? (
+									<div
+										className={`mb-3 mx-auto ${
+											animationDirection === "slide-left"
+												? "slide-in-left"
+												: "slide-in-right"
+										}`}
+									>
 										<div
 											className='form-group col-md-8 mx-auto'
 											style={{ marginTop: "10px" }}
@@ -388,52 +400,23 @@ const AgentsSignupFormComp2 = ({
 											>
 												<option value='Please Select'>Please Select</option>
 
-												{alexandriaDistricts().map((g, i) => {
-													return (
-														<option key={i} value={g}>
-															{g}
-														</option>
-													);
-												})}
+												{allDistricts &&
+													allDistricts.map((g, i) => {
+														return (
+															<option key={i} value={g}>
+																{g}
+															</option>
+														);
+													})}
 											</select>
 										</div>
-									) : null}
+									</div>
+								) : null}
 
-									{values.agentOtherData.agentGovernorate === "Cairo" ? (
-										<div
-											className='form-group col-md-8 mx-auto'
-											style={{ marginTop: "10px" }}
-										>
-											<label style={{ fontWeight: "bold" }}>
-												Agent District
-												{language === "Arabic" ? "منطقة" : "Agent District"}
-											</label>
-											<select
-												className='form-control'
-												onChange={(e) => {
-													setValues({
-														...values,
-														agentOtherData: {
-															...values.agentOtherData,
-															agentDistrict: e.target.value,
-														},
-													});
-												}}
-											>
-												<option value='Please Select'>Please Select</option>
-
-												{cairoDistricts().map((g, i) => {
-													return (
-														<option key={i} value={g}>
-															{g}
-														</option>
-													);
-												})}
-											</select>
-										</div>
-									) : null}
-								</div>
-								{values.agentOtherData.agentCountry &&
+								{name &&
+								email &&
+								phone &&
+								values.agentOtherData.agentCountry === "Egypt" &&
 								values.agentOtherData.agentGovernorate &&
 								values.agentOtherData.agentDistrict ? (
 									<>

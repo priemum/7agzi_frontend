@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import {
 	cairoDistricts,
-	EgyptGovernorate,
 	alexandriaDistricts,
 	cloudinaryAgentUpload,
 } from "../apiCore";
@@ -13,9 +12,12 @@ import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { Helmet } from "react-helmet";
 import AgentsSignupFormComp2 from "../components/SignupComp/AgentsSignupFormComp2";
+import { ShipToData } from "../Utils";
 
 const AgentsSignupForm2 = ({ language }) => {
 	const [nextClicked, setNextClicked] = useState(0);
+	const [allDistricts, setAllDistricts] = useState("");
+
 	const [values, setValues] = useState({
 		name: "",
 		email: "",
@@ -85,11 +87,16 @@ const AgentsSignupForm2 = ({ language }) => {
 	};
 
 	const clickSubmit = () => {
+		const emailFormat = /\S+@\S+\.com$/;
+
 		if (!name) {
 			return toast.info("Name is required");
 		}
 		if (!email) {
 			return toast.info("email is required");
+		}
+		if (!emailFormat.test(email)) {
+			return toast.info("Email is incorrect, please check");
 		}
 		if (!password) {
 			return toast.info("password is required");
@@ -328,6 +335,10 @@ const AgentsSignupForm2 = ({ language }) => {
 			});
 	};
 
+	let distinctGovernorates = [
+		...new Set(ShipToData.map((item) => item.GovernorateEn)),
+	];
+
 	const signUpForm = () => (
 		<AgentsSignupFormComp2
 			values={values}
@@ -341,7 +352,7 @@ const AgentsSignupForm2 = ({ language }) => {
 			email={email}
 			phone={phone}
 			storeName={storeName}
-			EgyptGovernorate={EgyptGovernorate}
+			EgyptGovernorate={distinctGovernorates}
 			storeGovernorate={storeGovernorate}
 			storeAddress={storeAddress}
 			password={password}
@@ -353,6 +364,8 @@ const AgentsSignupForm2 = ({ language }) => {
 			fileUploadAndResizeStoreThumbnail={fileUploadAndResizeStoreThumbnail}
 			handleImageRemovePersonal={handleImageRemovePersonal}
 			fileUploadAndResizeStoreThumbnail2={fileUploadAndResizeStoreThumbnail2}
+			allDistricts={allDistricts}
+			setAllDistricts={setAllDistricts}
 		/>
 	);
 
