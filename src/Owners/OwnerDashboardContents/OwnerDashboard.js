@@ -14,6 +14,8 @@ import {
 	getEmployees,
 } from "../apiOwner";
 import Countdown from "./Countdown";
+import AddSettingsGuideVideo from "../Videos/AddSettingsGuide.mp4";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -53,6 +55,19 @@ const OwnerDashboard = ({ language }) => {
 	const [clickedMenu, setClickedMenu] = useState("Calendar");
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
+
+	const [videoWidth, setVideoWidth] = useState(
+		window.innerWidth <= 1000 ? "400" : "1000"
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setVideoWidth(window.innerWidth <= 1000 ? "400" : "1000");
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	const { user, token } = isAuthenticated();
 
@@ -128,6 +143,40 @@ const OwnerDashboard = ({ language }) => {
 
 	return (
 		<OwnerDashboardWrapper>
+			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<meta charSet='utf-8' />
+				{language === "Arabic" ? (
+					<title dir='rtl'>{user.name} | Owner Dashboard</title>
+				) : (
+					<title>{user.name} | Owner Dashboard</title>
+				)}
+				<meta
+					name='description'
+					content={
+						language === "Arabic"
+							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
+				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
+				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
+				الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
+							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
+				The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided.
+				The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location.
+				Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
+					}
+				/>
+				<meta
+					name='keywords'
+					content={
+						language === "Arabic"
+							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
+							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
+					}
+				/>
+				<link
+					rel='canonical'
+					href='https://www.xlookpro.com/store/admin/dashboard'
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -233,30 +282,51 @@ const OwnerDashboard = ({ language }) => {
 						</div>
 					</div>
 					{!storeProperties ? (
-						<h2
-							style={{
-								fontWeight: "bolder",
-								marginLeft: "15%",
-								fontSize: "3rem",
-							}}
-						>
-							<br />
-							WELCOME OUR DEAR BUSINESS PARTNER!
-							<br />
-							<br />
-							<Link
+						<>
+							<h2
 								style={{
 									fontWeight: "bolder",
-									textDecoration: "underline",
-									letterSpacing: "5px",
+									marginLeft: "15%",
+									fontSize: "3rem",
 								}}
-								to='/store/admin/settings'
 							>
-								{language === "Arabic"
-									? "أضف إعدادات المتجر"
-									: "IMPORTANT => Please Add Salon Settings"}
-							</Link>{" "}
-						</h2>
+								<br />
+								WELCOME OUR DEAR BUSINESS PARTNER!
+								<br />
+								<br />
+								<Link
+									style={{
+										fontWeight: "bolder",
+										textDecoration: "underline",
+										fontSize: "3rem",
+									}}
+									to='/store/admin/settings'
+								>
+									{language === "Arabic"
+										? "أضف إعدادات المتجر"
+										: "IMPORTANT => Please Add Salon Settings"}
+								</Link>{" "}
+							</h2>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+									marginBottom: "100px",
+								}}
+							>
+								{window.scrollTo({ top: 700, behavior: "smooth" })}
+								<video
+									width={videoWidth}
+									height='450'
+									controls
+									controlsList='nodownload'
+								>
+									<source src={AddSettingsGuideVideo} type='video/mp4' />
+									Your browser does not support the video tag.
+								</video>
+							</div>
+						</>
 					) : allEmployees && allEmployees.length === 0 ? (
 						<h2
 							style={{
@@ -336,7 +406,7 @@ const OwnerDashboardWrapper = styled.div`
 		}
 
 		a {
-			font-size: 13px !important;
+			font-size: 13px;
 			text-align: center;
 		}
 
