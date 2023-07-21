@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Animated } from "react-animated-css";
 import myBackGroundImage from "../../Images/poster-design-xlook.png";
 import { Link } from "react-router-dom";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const AboutHeroFooter = ({ language }) => {
 	// eslint-disable-next-line
@@ -17,6 +19,29 @@ const AboutHeroFooter = ({ language }) => {
 
 	// 	return () => window.removeEventListener("scroll", handleScroll);
 	// }, []);
+
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
+		ReactGA.gtag("event", "page_view", {
+			page_path: window.location.pathname,
+		});
+
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<AboutHeroCompWrapper
 			className='col-md-6 mx-auto'
@@ -88,6 +113,18 @@ const AboutHeroFooter = ({ language }) => {
 							className='link2'
 							onClick={() => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
+								ReactGA.event("Account_Clicked_Register_Now", {
+									event_category: "Account_Clicked_Register_Now",
+									event_label: "Account_Clicked_Register_Now",
+									value: 1, // Optional extra parameters
+								});
+
+								ReactPixel.track("Account_Clicked_Register_Now", {
+									content_name: "Account_Clicked_Register_Now",
+									content_category: "Account_Clicked_Register_Now",
+									value: "",
+									currency: "",
+								});
 							}}
 						>
 							CHECK REGISTRATION STEPS

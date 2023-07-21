@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { Animated } from "react-animated-css";
 import myBackGroundImage from "../../Images/Banner2Steps.jpg";
 import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const StepsHeroFooter = ({ language }) => {
 	const [offsetY, setOffsetY] = useState(0);
@@ -17,6 +18,29 @@ const StepsHeroFooter = ({ language }) => {
 
 	// 	return () => window.removeEventListener("scroll", handleScroll);
 	// }, []);
+
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
+		ReactGA.gtag("event", "page_view", {
+			page_path: window.location.pathname,
+		});
+
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<AboutHeroCompWrapper
 			style={{
@@ -72,7 +96,24 @@ const StepsHeroFooter = ({ language }) => {
 								<h1 style={{ color: "white" }}>STEPS TO BE SEEN BY MILLIONS</h1>
 							</div>
 							<div className='btnWrapperEnglish'>
-								<Link to='/signup' className='btn btn-danger'>
+								<Link
+									to='/signup'
+									className='btn btn-danger'
+									onClick={() => {
+										ReactGA.event("Account_Clicked_Register_Now", {
+											event_category: "Account_Clicked_Register_Now",
+											event_label: "Account_Clicked_Register_Now",
+											value: 1, // Optional extra parameters
+										});
+
+										ReactPixel.track("Account_Clicked_Register_Now", {
+											content_name: "Account_Clicked_Register_Now",
+											content_category: "Account_Clicked_Register_Now",
+											value: "",
+											currency: "",
+										});
+									}}
+								>
 									REGISTER NOW
 								</Link>
 							</div>

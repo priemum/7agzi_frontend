@@ -135,6 +135,28 @@ const OwnerDashboard = ({ language }) => {
 		});
 	};
 
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
+		ReactGA.gtag("event", "page_view", {
+			page_path: window.location.pathname,
+		});
+
+		// eslint-disable-next-line
+	}, []);
+
 	const now = new Date();
 	const endDate = new Date(currentUser && currentUser.createdAt);
 	const diffTime = Math.abs(endDate - now);
@@ -160,8 +182,8 @@ const OwnerDashboard = ({ language }) => {
 
 	const onPause = () => {
 		ReactGA.event({
-			category: "Video",
-			action: "Pause",
+			category: "Owner_PausedSettingsTutorial",
+			action: "Owner_PausedSettingsTutorial",
 			label: "Video Paused",
 		});
 	};
