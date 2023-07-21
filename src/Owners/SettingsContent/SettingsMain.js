@@ -12,6 +12,7 @@ import {
 import { isAuthenticated } from "../../auth";
 import AddingWorkingHours from "./AddingWorkingHours";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -274,6 +275,15 @@ const SettingsMain = ({ language }) => {
 
 	return (
 		<SettingsMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>Owner {user.name} Add Settings</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/settings`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

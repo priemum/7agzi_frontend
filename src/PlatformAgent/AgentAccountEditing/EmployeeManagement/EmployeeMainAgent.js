@@ -5,6 +5,7 @@ import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
 import { Link } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -63,6 +64,15 @@ const EmployeeMainAgent = ({ language }) => {
 
 	return (
 		<EmployeeMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK Agent Add Employees</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/employees/agent/help/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

@@ -16,6 +16,8 @@ import {
 import Countdown from "./Countdown";
 import AddSettingsGuideVideo from "../Videos/AddSettingsGuide.mp4";
 import { Helmet } from "react-helmet";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -140,6 +142,29 @@ const OwnerDashboard = ({ language }) => {
 
 	// eslint-disable-next-line
 	const remainingDays = 3 - diffDays;
+
+	const onPlay = () => {
+		ReactGA.event({
+			category: "Owner_PlayedSettingsTutorial",
+			action: "Owner_PlayedSettingsTutorial",
+			label: "Video Played",
+		});
+
+		ReactPixel.track("Owner_PlayedSettingsTutorial", {
+			content_name: "Owner_PlayedSettingsTutorial",
+			content_category: "Owner_PlayedSettingsTutorial",
+			value: "",
+			currency: "",
+		});
+	};
+
+	const onPause = () => {
+		ReactGA.event({
+			category: "Video",
+			action: "Pause",
+			label: "Video Paused",
+		});
+	};
 
 	return (
 		<OwnerDashboardWrapper>
@@ -321,6 +346,8 @@ const OwnerDashboard = ({ language }) => {
 									height='450'
 									controls
 									controlsList='nodownload'
+									onPlay={onPlay}
+									onPause={onPause}
 								>
 									<source src={AddSettingsGuideVideo} type='video/mp4' />
 									Your browser does not support the video tag.

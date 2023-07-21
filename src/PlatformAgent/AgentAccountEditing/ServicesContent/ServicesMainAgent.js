@@ -4,6 +4,7 @@ import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
 import UpdateService from "./UpdateService";
 import { useLocation, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -57,6 +58,15 @@ const ServicesMainAgent = ({ language }) => {
 
 	return (
 		<ServicesMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK Agent Add Services</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/services/agent/help/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

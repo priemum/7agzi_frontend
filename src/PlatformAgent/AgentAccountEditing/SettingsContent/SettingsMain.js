@@ -14,6 +14,7 @@ import AddingWorkingHours from "./AddingWorkingHours";
 import { toast } from "react-toastify";
 import { useLocation, useParams } from "react-router-dom";
 import { readUser } from "../../../TheBoss/apiBoss";
+import { Helmet } from "react-helmet";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -305,6 +306,15 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 
 	return (
 		<SettingsMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK Agent Add Settings</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/settings/agent/help/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

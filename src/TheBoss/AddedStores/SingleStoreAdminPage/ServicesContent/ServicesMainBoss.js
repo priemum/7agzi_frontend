@@ -4,6 +4,7 @@ import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
 import UpdateService from "./UpdateService";
 import { useParams, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -57,6 +58,15 @@ const ServicesMainBoss = () => {
 
 	return (
 		<ServicesMainBossWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN Add Services</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/boss/store/admin/services/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

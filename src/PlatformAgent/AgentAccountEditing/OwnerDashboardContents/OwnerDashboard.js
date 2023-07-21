@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import MyCalendar from "./MyCalendar";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import EmployeeAppointments from "./EmployeeAppointments";
 import TableView from "./TableView";
 import ShopReports from "./ShopReports";
@@ -14,6 +14,9 @@ import {
 	getEmployees,
 } from "../apiOwner";
 import Countdown from "./Countdown";
+import AddSettingsGuideVideo from "../../../../Owners/Videos/AddSettingsGuide.mp4";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -45,6 +48,16 @@ const isActive = (history, path) => {
 };
 
 const OwnerDashboard = ({ language }) => {
+	let { ownerId } = useParams();
+	let location = useLocation();
+
+	useEffect(() => {
+		// Log the path of the current URL
+		console.log(location.pathname);
+		// Log the ownerId
+		console.log(ownerId);
+	}, [location, ownerId]);
+
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 	const [currentUser, setCurrentUser] = useState("");
@@ -53,6 +66,19 @@ const OwnerDashboard = ({ language }) => {
 	const [clickedMenu, setClickedMenu] = useState("Calendar");
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
+
+	const [videoWidth, setVideoWidth] = useState(
+		window.innerWidth <= 1000 ? "400" : "1000"
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setVideoWidth(window.innerWidth <= 1000 ? "400" : "1000");
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	const { user, token } = isAuthenticated();
 
@@ -125,6 +151,29 @@ const OwnerDashboard = ({ language }) => {
 
 	// eslint-disable-next-line
 	const remainingDays = 3 - diffDays;
+
+	const onPlay = () => {
+		ReactGA.event({
+			category: "Owner_PlayedSettingsTutorial",
+			action: "Owner_PlayedSettingsTutorial",
+			label: "Video Played",
+		});
+
+		ReactPixel.track("Owner_PlayedSettingsTutorial", {
+			content_name: "Owner_PlayedSettingsTutorial",
+			content_category: "Owner_PlayedSettingsTutorial",
+			value: "",
+			currency: "",
+		});
+	};
+
+	const onPause = () => {
+		ReactGA.event({
+			category: "Video",
+			action: "Pause",
+			label: "Video Paused",
+		});
+	};
 
 	return (
 		<OwnerDashboardWrapper>
@@ -233,30 +282,53 @@ const OwnerDashboard = ({ language }) => {
 						</div>
 					</div>
 					{!storeProperties ? (
-						<h2
-							style={{
-								fontWeight: "bolder",
-								marginLeft: "15%",
-								fontSize: "3rem",
-							}}
-						>
-							<br />
-							WELCOME OUR DEAR BUSINESS PARTNER!
-							<br />
-							<br />
-							<Link
+						<>
+							<h2
 								style={{
 									fontWeight: "bolder",
-									textDecoration: "underline",
-									letterSpacing: "5px",
+									marginLeft: "15%",
+									fontSize: "3rem",
 								}}
-								to='/store/admin/settings'
 							>
-								{language === "Arabic"
-									? "أضف إعدادات المتجر"
-									: "IMPORTANT => Please Add Salon Settings"}
-							</Link>{" "}
-						</h2>
+								<br />
+								WELCOME OUR DEAR BUSINESS PARTNER!
+								<br />
+								<br />
+								<Link
+									style={{
+										fontWeight: "bolder",
+										textDecoration: "underline",
+										fontSize: "3rem",
+									}}
+									to={`/store/admin/settings/agent/help/${ownerId}`}
+								>
+									{language === "Arabic"
+										? "أضف إعدادات المتجر"
+										: "IMPORTANT => Please Add Salon Settings"}
+								</Link>{" "}
+							</h2>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+									marginBottom: "100px",
+								}}
+							>
+								{window.scrollTo({ top: 700, behavior: "smooth" })}
+								<video
+									width={videoWidth}
+									height='450'
+									controls
+									controlsList='nodownload'
+									onPlay={onPlay}
+									onPause={onPause}
+								>
+									<source src={AddSettingsGuideVideo} type='video/mp4' />
+									Your browser does not support the video tag.
+								</video>
+							</div>
+						</>
 					) : allEmployees && allEmployees.length === 0 ? (
 						<h2
 							style={{

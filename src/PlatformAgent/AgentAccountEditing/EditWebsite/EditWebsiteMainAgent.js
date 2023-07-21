@@ -5,6 +5,7 @@ import EditAboutUs from "./EditAboutUs";
 import EditContactUs from "./EditContactUs";
 import EditHomePageBanner from "./EditHomePageBanner";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -67,6 +68,15 @@ const EditWebsiteMainAgent = () => {
 
 	return (
 		<EditWebsiteMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK Agent Web Page Edit</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/edit-website/agent/help/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

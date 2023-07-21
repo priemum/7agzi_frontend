@@ -14,6 +14,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { isAuthenticated } from "../../../../auth";
 import { readUser } from "../../../apiBoss";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -296,6 +297,15 @@ const SettingsMainBoss = () => {
 
 	return (
 		<SettingsMainBossWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN Add Settings</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/boss/store/admin/settings/${ownerId}`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

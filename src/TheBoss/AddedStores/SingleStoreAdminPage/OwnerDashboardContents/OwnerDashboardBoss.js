@@ -14,6 +14,10 @@ import {
 } from "../apiOwner";
 import Countdown from "./Countdown";
 import { isAuthenticated } from "../../../../auth";
+import AddSettingsGuideVideo from "../../../../Owners/Videos/AddSettingsGuide.mp4";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -63,6 +67,19 @@ const OwnerDashboardBoss = ({ language }) => {
 	const [clickedMenu, setClickedMenu] = useState("Calendar");
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
+
+	const [videoWidth, setVideoWidth] = useState(
+		window.innerWidth <= 1000 ? "400" : "1000"
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setVideoWidth(window.innerWidth <= 1000 ? "400" : "1000");
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
@@ -150,8 +167,40 @@ const OwnerDashboardBoss = ({ language }) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const onPlay = () => {
+		ReactGA.event({
+			category: "XLOOKAdmin_PlayedSettingsTutorial",
+			action: "XLOOKAdmin_PlayedSettingsTutorial",
+			label: "Video Played",
+		});
+
+		ReactPixel.track("XLOOKAdmin_PlayedSettingsTutorial", {
+			content_name: "XLOOKAdmin_PlayedSettingsTutorial",
+			content_category: "XLOOKAdmin_PlayedSettingsTutorial",
+			value: "",
+			currency: "",
+		});
+	};
+
+	const onPause = () => {
+		ReactGA.event({
+			category: "Video",
+			action: "Pause",
+			label: "Video Paused",
+		});
+	};
+
 	return (
 		<OwnerDashboardBossWrapper>
+			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN Owner Dashboard</title>
+
+				<link
+					rel='canonical'
+					href='https://www.xlookpro.com/boss/admin/dashboard'
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -281,27 +330,53 @@ const OwnerDashboardBoss = ({ language }) => {
 						</div>
 					</div>
 					{!storeProperties ? (
-						<h2
-							style={{
-								fontWeight: "bolder",
-								marginLeft: "30%",
-								fontSize: "3rem",
-							}}
-						>
-							{" "}
-							<Link
+						<>
+							<h2
 								style={{
 									fontWeight: "bolder",
-									textDecoration: "underline",
-									letterSpacing: "5px",
+									marginLeft: "15%",
+									fontSize: "3rem",
 								}}
-								to={`/boss/store/admin/settings/${ownerId}`}
 							>
-								{language === "Arabic"
-									? "أضف إعدادات المتجر"
-									: "Add Store Settings"}
-							</Link>{" "}
-						</h2>
+								<br />
+								WELCOME OUR DEAR BUSINESS PARTNER!
+								<br />
+								<br />
+								<Link
+									style={{
+										fontWeight: "bolder",
+										textDecoration: "underline",
+										fontSize: "3rem",
+									}}
+									to={`/boss/store/admin/settings/${ownerId}`}
+								>
+									{language === "Arabic"
+										? "أضف إعدادات المتجر"
+										: "IMPORTANT => Please Add Salon Settings"}
+								</Link>{" "}
+							</h2>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+									marginBottom: "100px",
+								}}
+							>
+								{window.scrollTo({ top: 700, behavior: "smooth" })}
+								<video
+									width={videoWidth}
+									height='450'
+									controls
+									controlsList='nodownload'
+									onPlay={onPlay}
+									onPause={onPause}
+								>
+									<source src={AddSettingsGuideVideo} type='video/mp4' />
+									Your browser does not support the video tag.
+								</video>
+							</div>
+						</>
 					) : allEmployees && allEmployees.length === 0 ? (
 						<h2
 							style={{

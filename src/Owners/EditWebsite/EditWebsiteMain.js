@@ -5,6 +5,8 @@ import EditAboutUs from "./EditAboutUs";
 import EditContactUs from "./EditContactUs";
 import EditHomePageBanner from "./EditHomePageBanner";
 import { Link } from "react-router-dom";
+import { isAuthenticated } from "../../auth";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -55,8 +57,20 @@ const EditWebsiteMain = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const { user } = isAuthenticated();
+
 	return (
 		<EditWebsiteMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>Owner {user.name} Add Edit Web Page</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/edit-website`}
+				/>
+			</Helmet>
+
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
 import UpdateService from "./UpdateService";
+import { Helmet } from "react-helmet";
+import { isAuthenticated } from "../../auth";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -44,8 +46,19 @@ const ServicesMain = ({ language }) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const { user } = isAuthenticated();
+
 	return (
 		<ServicesMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>Owner {user.name} Add Services</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/services`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

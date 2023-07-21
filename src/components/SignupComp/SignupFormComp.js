@@ -182,6 +182,18 @@ const SignupFormComp = ({
 												className='form-control'
 												onChange={(e) => {
 													setValues({ ...values, storeType: e.target.value });
+													ReactGA.event("Account_Chose_Store_Type", {
+														event_category: "Account_Chose_Store_Type",
+														event_label: "Account_Chose_Store_Type",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Account_Chose_Store_Type", {
+														content_name: "Account_Chose_Store_Type",
+														content_category: "Account_Chose_Store_Type",
+														value: "",
+														currency: "",
+													});
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -252,6 +264,19 @@ const SignupFormComp = ({
 														...values,
 														storeCountry: e.target.value,
 													});
+
+													ReactGA.event("Account_Chose_Country", {
+														event_category: "Account_Chose_Country",
+														event_label: "Account_Chose_Country",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Account_Chose_Country", {
+														content_name: "Account_Chose_Country",
+														content_category: "Account_Chose_Country",
+														value: "",
+														currency: "",
+													});
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -319,6 +344,19 @@ const SignupFormComp = ({
 													).map((item) => item.City.AreaEn);
 
 													setAllDistricts([...new Set(governorateCities)]);
+
+													ReactGA.event("Account_Chose_Governorate", {
+														event_category: "Account_Chose_Governorate",
+														event_label: "Account_Chose_Governorate",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Account_Chose_Governorate", {
+														content_name: "Account_Chose_Governorate",
+														content_category: "Account_Chose_Governorate",
+														value: "",
+														currency: "",
+													});
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -367,6 +405,19 @@ const SignupFormComp = ({
 													setValues({
 														...values,
 														storeDistrict: e.target.value,
+													});
+
+													ReactGA.event("Account_Chose_District", {
+														event_category: "Account_Chose_District",
+														event_label: "Account_Chose_District",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Account_Chose_District", {
+														content_name: "Account_Chose_District",
+														content_category: "Account_Chose_District",
+														value: "",
+														currency: "",
 													});
 												}}
 											>
@@ -484,6 +535,19 @@ const SignupFormComp = ({
 													setValues({
 														...values,
 														agent: chosenAgent,
+													});
+
+													ReactGA.event("Account_Chose_Agent", {
+														event_category: "Account_Chose_Agent",
+														event_label: "Account_Chose_Agent",
+														value: 1, // Optional extra parameters
+													});
+
+													ReactPixel.track("Account_Chose_Agent", {
+														content_name: "Account_Chose_Agent",
+														content_category: "Account_Chose_Agent",
+														value: "",
+														currency: "",
 													});
 												}}
 												showSearch

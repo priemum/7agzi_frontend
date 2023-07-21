@@ -4,6 +4,8 @@ import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
 import { Link } from "react-router-dom";
+import { isAuthenticated } from "../../auth";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -49,9 +51,19 @@ const EmployeeMain = ({ language }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	const { user } = isAuthenticated();
 
 	return (
 		<EmployeeMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>Owner {user.name} Add Employees</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/employees`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
