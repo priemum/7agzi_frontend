@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import EditAboutUs from "./EditAboutUs";
 import EditContactUs from "./EditContactUs";
 import EditHomePageBanner from "./EditHomePageBanner";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -132,5 +132,26 @@ const EditWebsiteMainWrapper = styled.div`
 		margin-top: 50px;
 		margin-bottom: 20px;
 		margin-left: 350px;
+	}
+
+	@media (max-width: 1200px) {
+		.grid-container {
+			grid-template-columns: 2% 98%;
+		}
+
+		a {
+			font-size: 13px !important;
+			text-align: center;
+		}
+
+		.container > div {
+			text-align: center;
+			margin-left: 0px !important;
+		}
+
+		.container {
+			margin-left: 0px !important;
+			text-align: center;
+		}
 	}
 `;

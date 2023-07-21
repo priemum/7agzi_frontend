@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
 import UpdateService from "./UpdateService";
-import {useParams, useLocation} from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -34,7 +34,7 @@ const isActive = (history, path) => {
 };
 
 const ServicesMainBoss = () => {
-	let {ownerId} = useParams();
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {
@@ -51,7 +51,7 @@ const ServicesMainBoss = () => {
 	const [clickedMenu, setClickedMenu] = useState("AddService");
 
 	useEffect(() => {
-		window.scrollTo({top: 50, behavior: "smooth"});
+		window.scrollTo({ top: 50, behavior: "smooth" });
 		// eslint-disable-next-line
 	}, []);
 
@@ -112,5 +112,16 @@ const ServicesMainBossWrapper = styled.div`
 		margin-top: 50px;
 		margin-bottom: 20px;
 		margin-left: 350px;
+	}
+
+	@media (max-width: 1000px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1% 99%;
+		}
+
+		.container {
+			margin-left: 10px;
+		}
 	}
 `;

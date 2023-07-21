@@ -147,4 +147,25 @@ const EditWebsiteMainWrapper = styled.div`
 		margin-bottom: 20px;
 		margin-left: 350px;
 	}
+
+	@media (max-width: 1200px) {
+		.grid-container {
+			grid-template-columns: 2% 98%;
+		}
+
+		a {
+			font-size: 13px !important;
+			text-align: center;
+		}
+
+		.container > div {
+			text-align: center;
+			margin-left: 0px !important;
+		}
+
+		.container {
+			margin-left: 0px !important;
+			text-align: center;
+		}
+	}
 `;

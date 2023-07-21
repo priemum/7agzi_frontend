@@ -254,4 +254,8 @@ const EditAboutUsWrapper = styled.div`
 		border: 1px solid lightgrey;
 		min-height: 200px;
 	}
+
+	@media (max-width: 1000px) {
+		margin-left: 10px;
+	}
 `;

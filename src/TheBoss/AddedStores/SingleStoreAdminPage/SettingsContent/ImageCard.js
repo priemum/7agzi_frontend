@@ -15,7 +15,9 @@ const ImageCard = ({
 			<div className='card card-flush  mx-auto'>
 				<div className=''>
 					<div className=' p-2'>
-						<h5 style={{fontWeight: "bold", fontSize: "1.2rem"}}>Store Logo</h5>
+						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+							Store Logo
+						</h5>
 					</div>
 				</div>
 				<div className='card-body text-center pt-0 mx-auto'>
@@ -63,13 +65,13 @@ const ImageCard = ({
 						{!addThumbnail.images ? (
 							<label
 								className=''
-								style={{cursor: "pointer", fontSize: "0.95rem"}}
+								style={{ cursor: "pointer", fontSize: "0.95rem" }}
 							>
 								<img src={imageImage} alt='imageUpload' />
 								<input
 									type='file'
 									hidden
-									accept='images/*'
+									accept='image/*'
 									onChange={fileUploadAndResizeThumbNail}
 									required
 								/>

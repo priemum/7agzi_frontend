@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {cloudinaryUpload1, createAbout, getAbouts} from "../apiOwner";
+import { cloudinaryUpload1, createAbout, getAbouts } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import ImageCard from "./ImageCard";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import {isAuthenticated} from "../../../../auth";
+import { isAuthenticated } from "../../../../auth";
 
 const toolbarOptions = [
-	[{header: [1, 2, 3, 4, 5, 6, false]}],
-	["bold", "italic", "underline", "strike", {color: []}],
-	[{list: "ordered"}, {list: "bullet"}, {indent: "-1"}, {indent: "+1"}],
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
 	["link", "image", "video"],
 	["clean"],
 ];
 
-const EditAboutUsBoss = ({ownerId}) => {
+const EditAboutUsBoss = ({ ownerId }) => {
 	//Adding Variables
 	const [header_1, setHeader1] = useState("");
 	const [header_1_OtherLanguage, setHeader1_OtherLanguage] = useState("");
@@ -27,7 +27,7 @@ const EditAboutUsBoss = ({ownerId}) => {
 	const [allAbouts, setAllAbouts] = useState([]);
 	const [addThumbnail, setAddThumbnail] = useState([]);
 
-	const {token} = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const gettingAllAbouts = () => {
 		getAbouts(token, ownerId).then((data) => {
@@ -78,11 +78,11 @@ const EditAboutUsBoss = ({ownerId}) => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(ownerId, token, {image: uri})
+						cloudinaryUpload1(ownerId, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setAddThumbnail({...addThumbnail, images: allUploadedFiles});
+								setAddThumbnail({ ...addThumbnail, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -99,7 +99,7 @@ const EditAboutUsBoss = ({ownerId}) => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${ownerId}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const EditAboutUsBoss = ({ownerId}) => {
 			)
 			.then((res) => {
 				// eslint-disable-next-line
-				const {images} = addThumbnail;
+				const { images } = addThumbnail;
 				setAddThumbnail([]);
 			})
 			.catch((err) => {
@@ -211,8 +211,8 @@ const EditAboutUsBoss = ({ownerId}) => {
 							placeholder='Fill in a description about your business'
 							onChange={handleEditorChange}
 							modules={{
-								toolbar: {container: toolbarOptions},
-								clipboard: {matchVisual: false},
+								toolbar: { container: toolbarOptions },
+								clipboard: { matchVisual: false },
 							}}
 							onPaste={handlePaste}
 						/>
@@ -222,7 +222,7 @@ const EditAboutUsBoss = ({ownerId}) => {
 					<button
 						className='btn btn-outline-success my-3 btn-block'
 						onClick={clickSubmit}
-						style={{fontWeight: "bold", fontSize: "1.2rem"}}
+						style={{ fontWeight: "bold", fontSize: "1.2rem" }}
 					>
 						Submit About us changes
 					</button>
@@ -253,5 +253,9 @@ const EditAboutUsBossWrapper = styled.div`
 	.ql-container {
 		border: 1px solid lightgrey;
 		min-height: 200px;
+	}
+
+	@media (max-width: 1000px) {
+		margin-left: 10px;
 	}
 `;

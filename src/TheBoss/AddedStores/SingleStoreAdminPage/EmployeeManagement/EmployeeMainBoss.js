@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
-import {Link, useParams, useLocation} from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -35,7 +35,7 @@ const isActive = (history, path) => {
 };
 
 const EmployeeMainBoss = () => {
-	let {ownerId} = useParams();
+	let { ownerId } = useParams();
 	let location = useLocation();
 
 	useEffect(() => {
@@ -137,6 +137,11 @@ const EmployeeMainBossWrapper = styled.div`
 			margin-top: 50px;
 			margin-bottom: 20px;
 			margin-left: -10px;
+		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1% 99%;
 		}
 	}
 `;

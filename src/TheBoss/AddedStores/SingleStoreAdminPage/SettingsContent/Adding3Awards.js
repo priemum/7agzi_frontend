@@ -116,4 +116,9 @@ const Adding3AwardsWrapper = styled.div`
 	padding: 20px;
 	border-radius: 10px;
 	width: 900px !important;
+
+	@media (max-width: 1000px) {
+		margin-left: 10px;
+		width: 100% !important;
+	}
 `;

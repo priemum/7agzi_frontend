@@ -445,4 +445,8 @@ const Adding2DaysClosedWrapper = styled.div`
 		border: 1px solid darkgrey;
 		border-radius: 10px;
 	}
+
+	@media (max-width: 1000px) {
+		width: 100% !important;
+	}
 `;

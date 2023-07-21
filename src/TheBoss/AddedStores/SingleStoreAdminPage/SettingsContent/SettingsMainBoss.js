@@ -446,4 +446,11 @@ const SettingsMainBossWrapper = styled.div`
 		font-weight: bold;
 		color: goldenrod;
 	}
+
+	@media (max-width: 1000px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1% 99%;
+		}
+	}
 `;
