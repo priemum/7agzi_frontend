@@ -4,6 +4,7 @@ import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import { isAuthenticated } from "../../auth";
 import { allLoyaltyPointsAndStoreStatus } from "../apiBoss";
 import CardForStorePendingApp from "./CardForStorePendingApp";
+import { Helmet } from "react-helmet";
 
 //DreamProject2023!
 
@@ -72,6 +73,15 @@ const PendingApprovalMain = () => {
 
 	return (
 		<PendingApprovalMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN | PENDING APPROVAL</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/boss/admin/pending-approval`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

@@ -6,6 +6,7 @@ import CountUp from "react-countup";
 import { isAuthenticated } from "../../auth";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 
 //DreamProject2023!
 //Plat form admin when he goes to store dashboard add a clear note.
@@ -99,6 +100,15 @@ const BossDashboard = () => {
 
 	return (
 		<BossDashboardWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN DASHBOARD</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/boss/admin/dashboard`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar

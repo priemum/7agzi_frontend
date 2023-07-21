@@ -8,6 +8,7 @@ import {
 	listScheduledOrdersForTheBoss,
 } from "../apiBoss";
 import CardForStoreBoss from "./CardForStoreBoss";
+import { Helmet } from "react-helmet";
 
 //DreamProject2023!
 
@@ -86,6 +87,15 @@ const AddedStoresMain = () => {
 
 	return (
 		<AddedStoresMainWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>XLOOK ADMIN | ADDED STORES</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/boss/admin/added-stores`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
