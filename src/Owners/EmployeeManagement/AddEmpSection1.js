@@ -83,6 +83,21 @@ const AddEmpSection1 = ({
 							}}
 						/>
 					</div>
+
+					<div className='mt-4'>
+						<label>Employee Gender</label>
+						<select
+							className='form-control'
+							value={values.employeeGender}
+							onChange={(e) => {
+								setValues({ ...values, employeeGender: e.target.value });
+							}}
+						>
+							<option value=''>Select Gender</option>
+							<option value='Male'>Male</option>
+							<option value='Female'>Female</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</AddEmpSection1Wrapper>

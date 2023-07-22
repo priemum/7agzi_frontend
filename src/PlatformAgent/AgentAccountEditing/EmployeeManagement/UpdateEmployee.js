@@ -59,6 +59,7 @@ const UpdateEmployee = ({ ownerId }) => {
 		description: "",
 		description1: "",
 		description2: "",
+		employeeGender: "",
 		workingDays: [],
 		workingHours: [],
 		bookings: null,
@@ -425,6 +426,7 @@ const UpdateEmployee = ({ ownerId }) => {
 											activeEmployee: s.activeEmployee,
 											personalPhotos: [],
 											workPhotos: s.workPhotos,
+											employeeGender: s.employeeGender,
 										});
 										setQuery(s.workingDays);
 										setQuery2(s.services.map((i) => i._id));

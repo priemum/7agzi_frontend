@@ -319,6 +319,8 @@ const AdminNavbarWrapper = styled.div`
 	}
 
 	@media (max-width: 1200px) {
+		margin-top: 50px !important;
+
 		ul {
 			display: ${(props) => (props.show ? "none" : "")};
 			margin-top: 0px !important;
@@ -330,7 +332,7 @@ const AdminNavbarWrapper = styled.div`
 		}
 
 		button {
-			margin-top: 5px !important;
+			margin-left: 2px !important;
 		}
 	}
 `;

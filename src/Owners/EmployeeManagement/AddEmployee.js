@@ -64,6 +64,7 @@ const AddEmployee = ({ language }) => {
 		activeEmployee: null,
 		personalPhotos: [],
 		workPhotos: [],
+		employeeGender: "",
 		belongsTo:
 			isAuthenticated() && isAuthenticated().user && isAuthenticated().user._id,
 	});
@@ -170,6 +171,10 @@ const AddEmployee = ({ language }) => {
 
 		if (!values.employeeNameOtherLanguage) {
 			return toast.error("Stylist Name In Arabic is required");
+		}
+
+		if (!values.employeeGender) {
+			return toast.error("Stylist Gender is required");
 		}
 
 		if (!values.employeePhone) {

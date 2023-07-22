@@ -61,6 +61,7 @@ const AddEmployee = ({ language, ownerId }) => {
 		bookings: null,
 		services: [{}],
 		servicesForGender: "",
+		employeeGender: "",
 		activeEmployee: null,
 		personalPhotos: [],
 		workPhotos: [],
@@ -173,6 +174,10 @@ const AddEmployee = ({ language, ownerId }) => {
 
 		if (!values.employeePhone) {
 			return toast.error("Stylist Phone is required");
+		}
+
+		if (!values.employeeGender) {
+			return toast.error("Stylist Gender is required");
 		}
 
 		if (values && values.workPhotos && values.workPhotos.length > 10) {
