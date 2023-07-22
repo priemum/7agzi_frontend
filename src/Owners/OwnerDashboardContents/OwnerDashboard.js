@@ -384,7 +384,7 @@ const OwnerDashboard = ({ language }) => {
 								fontSize: "3rem",
 							}}
 						>
-							{" "}
+							{window.scrollTo({ top: 78, behavior: "smooth" })}{" "}
 							<Link
 								style={{
 									fontWeight: "bolder",
@@ -398,6 +398,8 @@ const OwnerDashboard = ({ language }) => {
 						</h2>
 					) : (
 						<>
+							{window.scrollTo({ top: 78, behavior: "smooth" })}
+
 							{clickedMenu === "Calendar" ? (
 								<MyCalendar language={language} />
 							) : null}

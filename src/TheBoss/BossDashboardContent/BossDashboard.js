@@ -179,7 +179,7 @@ const BossDashboard = () => {
 							<div
 								className='mt-5'
 								style={{
-									maxHeight: "800px",
+									maxHeight: "900px",
 									overflow: "auto",
 								}}
 							>
@@ -194,7 +194,7 @@ const BossDashboard = () => {
 									>
 										<tr>
 											<th scope='col'>Owner Name</th>
-											<th scope='col'>Owner Phone</th>
+											<th scope='col'>Phone</th>
 											<th scope='col'>Governorate</th>
 											<th scope='col'>District</th>
 											<th scope='col'>Address</th>
@@ -206,7 +206,7 @@ const BossDashboard = () => {
 												scope='col'
 												style={{ background: "#164216", color: "white" }}
 											>
-												Update Account?
+												Update?
 											</th>
 										</tr>
 									</thead>
