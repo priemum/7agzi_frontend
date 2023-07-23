@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
-import CardsStorePhone from "./CardsStorePhone";
+// import CardsStorePhone from "./CardsStorePhone";
+import NewCardPhone from "./NewCardPhone";
 
 const StoreListPhone = ({
 	activeStoresOnly,
@@ -28,7 +29,7 @@ const StoreListPhone = ({
 										window.scrollTo({ top: 0, behavior: "smooth" });
 									}}
 								>
-									<CardsStorePhone
+									<NewCardPhone
 										store={p}
 										allServicesCombined={allServicesCombined}
 									/>

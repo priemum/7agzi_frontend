@@ -77,10 +77,10 @@ export const showAverageRating2 = (e) => {
 	}
 };
 
-export const showAverageRatingForEntireStore = (allRatings, store) => {
+export const showAverageRatingForEntireStore = (allRatings, store, x) => {
 	let totalStars = 0;
 	let totalCount = 0;
-	let averageRating = 3.5; // default value for averageRating
+	let averageRating = x === "FromList" ? 0 : 3.5; // default value for averageRating
 
 	// Check if there are any ratings
 	if (allRatings && allRatings.length > 0) {
@@ -106,12 +106,15 @@ export const showAverageRatingForEntireStore = (allRatings, store) => {
 
 	return (
 		<div className='mb-2'>
-			<span
-				style={{ textTransform: "uppercase", fontSize: "11px" }}
-				className='mr-1'
-			>
-				{store.belongsTo.storeAddress}{" "}
-			</span>
+			{x === "FromList" ? null : (
+				<span
+					style={{ textTransform: "uppercase", fontSize: "11px" }}
+					className='mr-1'
+				>
+					{store.belongsTo.storeAddress}{" "}
+				</span>
+			)}
+
 			<span>
 				<StarRating
 					starDimension='15px'

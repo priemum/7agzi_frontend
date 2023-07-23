@@ -25,7 +25,7 @@ import SuccessfulSchedule from "./pages/SchedulePage/SuccessfulSchedule";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleStorePage from "./pages/SingleStorePage";
-import AgentsSignupForm from "./pages/AgentsSignupForm";
+// import AgentsSignupForm from "./pages/AgentsSignupForm";
 import RegisterSteps from "./pages/RegisterSteps";
 import AgentGuide from "./pages/AgentGuide";
 import AgentsSignupForm2 from "./pages/AgentsSignupForm2";
@@ -258,10 +258,16 @@ function App() {
 						exact
 						component={SuccessfulSchedule}
 					/>
-					<Route
+					{/* <Route
 						path='/agents-signup-form'
 						exact
 						component={() => <AgentsSignupForm language={language} />}
+					/> */}
+
+					<Route
+						path='/agents-signup-form'
+						exact
+						component={() => <AgentsSignupForm2 language={language} />}
 					/>
 
 					<Route

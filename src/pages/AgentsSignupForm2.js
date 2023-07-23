@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-import {
-	cairoDistricts,
-	alexandriaDistricts,
-	cloudinaryAgentUpload,
-} from "../apiCore";
+import { cloudinaryAgentUpload } from "../apiCore";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuthenticated, signin, signup } from "../auth";
 import axios from "axios";
@@ -346,8 +342,6 @@ const AgentsSignupForm2 = ({ language }) => {
 			clickSubmit={clickSubmit}
 			handleChange={handleChange}
 			countryList={countryList}
-			cairoDistricts={cairoDistricts}
-			alexandriaDistricts={alexandriaDistricts}
 			name={name}
 			email={email}
 			phone={phone}

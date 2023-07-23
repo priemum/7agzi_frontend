@@ -367,7 +367,7 @@ const AgentsSignupForm = ({ language }) => {
 
 	return (
 		<AgentsSignupFormWrapper>
-			<Redirect to='/agents-signup-form2' />
+			{/* <Redirect to='/agents-signup-form2' /> */}
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (

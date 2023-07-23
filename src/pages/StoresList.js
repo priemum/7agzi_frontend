@@ -377,7 +377,7 @@ const StoresList = ({ language }) => {
 			});
 	}
 
-	console.log(allServicesCombined, "allServicesCombined");
+	// console.log(allServicesCombined, "allServicesCombined");
 	return (
 		<StoresListWrapper>
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
@@ -526,6 +526,11 @@ const StoresListWrapper = styled.div`
 	@media (max-width: 1000px) {
 		.deskTopVersion {
 			display: none;
+		}
+
+		img {
+			width: 100%;
+			min-height: 100%;
 		}
 	}
 `;

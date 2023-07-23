@@ -174,10 +174,11 @@ const HeroComponentWrapper = styled.div`
 	}
 
 	.requiredComponentBottomLeft > div {
-		background-color: rgba(0, 0, 0, 0.85);
+		background-color: rgba(0, 0, 0, 0.5);
 		color: white;
-		padding: 30px 20px;
-		border-radius: 100px 20px;
+		padding: 30px 10px;
+		/* border-radius: 100px 20px; */
+		border-radius: 5px;
 	}
 
 	@media (max-width: 1000px) {
@@ -191,8 +192,8 @@ const HeroComponentWrapper = styled.div`
 			.requiredComponentBottomLeft {
 				position: absolute; // Position the required component absolutely...
 				bottom: -10px; // ...at the bottom...
-				left: 8px; // ...and to the left of the parent container.
-				width: 95%;
+				left: 0px; // ...and to the left of the parent container.
+				width: 103.5%;
 			}
 		}
 

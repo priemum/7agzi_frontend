@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+// eslint-disable-next-line
 import { Slider } from "antd";
 
 const SideFilter = ({
@@ -58,6 +59,40 @@ const SideFilter = ({
 		);
 		// eslint-disable-next-line
 	}, [priceRange, allServicesCombined]);
+
+	//price range
+
+	// {allServicesCombined && allServicesCombined.length > 0 ? (
+	// 	<>
+	// 		<div className='col-md-3 col-12 mx-auto'>
+	// 			<div className='form-group'>
+	// 				<label htmlFor='price-range'>Price Range:</label>
+	// 				<div className='price-range-section'>
+	// 					<span>EGP {priceRange[0]}</span> {/* display min value */}
+	// 					<Slider
+	// 						id='price-range'
+	// 						range
+	// 						value={priceRange}
+	// 						min={Math.min(
+	// 							...allServicesCombined.map(
+	// 								(service) => service.servicePriceDiscount
+	// 							)
+	// 						)}
+	// 						max={Math.max(
+	// 							...allServicesCombined.map(
+	// 								(service) => service.servicePriceDiscount
+	// 							)
+	// 						)}
+	// 						onChange={setPriceRange}
+	// 						style={{ flex: 1, width: "100% !important" }} // this allows the slider to take up the available space
+	// 					/>
+	// 					<span>EGP {priceRange[1]}</span> {/* display max value */}
+	// 				</div>
+	// 			</div>
+	// 		</div>
+
+	// 	</>
+	// ) : null}
 
 	return (
 		<SideFilterWrapper scrollTop={scrollTop} show={filtersClicked}>
@@ -217,36 +252,8 @@ const SideFilter = ({
 							</select>
 						</div>
 					</div>
-					{allServicesCombined && allServicesCombined.length > 0 ? (
-						<>
-							<div className='col-md-3 col-12 mx-auto'>
-								<div className='form-group'>
-									<label htmlFor='price-range'>Price Range:</label>
-									<div className='price-range-section'>
-										<span>EGP {priceRange[0]}</span> {/* display min value */}
-										<Slider
-											id='price-range'
-											range
-											value={priceRange}
-											min={Math.min(
-												...allServicesCombined.map(
-													(service) => service.servicePriceDiscount
-												)
-											)}
-											max={Math.max(
-												...allServicesCombined.map(
-													(service) => service.servicePriceDiscount
-												)
-											)}
-											onChange={setPriceRange}
-											style={{ flex: 1, width: "100% !important" }} // this allows the slider to take up the available space
-										/>
-										<span>EGP {priceRange[1]}</span> {/* display max value */}
-									</div>
-								</div>
-							</div>
 
-							{/* {servicesInPriceRange.length > 0 && (
+					{/* {servicesInPriceRange.length > 0 && (
 								<div
 									className='col-md-3 mx-auto'
 									style={{
@@ -268,8 +275,6 @@ const SideFilter = ({
 									</div>
 								</div>
 							)} */}
-						</>
-					) : null}
 
 					{selectedCountry ||
 					selectedDistrict ||
