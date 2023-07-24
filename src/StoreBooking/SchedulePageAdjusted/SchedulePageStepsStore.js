@@ -1,15 +1,15 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 // import ReactGA from "react-ga";
-import {Steps, Button, message} from "antd";
+import { Steps, Button, message } from "antd";
 import styled from "styled-components";
 import moment from "moment";
 import Resizer from "react-image-file-resizer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import {
 	cloudinaryCommentUpload,
 	createScheduledAppointment,
@@ -17,12 +17,12 @@ import {
 	listScheduledOrders,
 	read,
 } from "../../apiCore";
-import {isAuthenticated} from "../../auth";
+import { isAuthenticated } from "../../auth";
 import FormStep1 from "./FormStep1";
 import FormStep2 from "./FormStep2";
 import FormStep3 from "./FormStep3";
-import {allLoyaltyPointsAndStoreStatus} from "../../Owners/apiOwner";
-const {Step} = Steps;
+import { allLoyaltyPointsAndStoreStatus } from "../../Owners/apiOwner";
+const { Step } = Steps;
 const allDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 const SchedulePageStepsStore = () => {
@@ -56,7 +56,7 @@ const SchedulePageStepsStore = () => {
 
 	const user = isAuthenticated() && isAuthenticated().user;
 	const token = isAuthenticated() && isAuthenticated().token;
-	const {email} = user;
+	const { email } = user;
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
@@ -587,11 +587,11 @@ const SchedulePageStepsStore = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryCommentUpload(user._id, token, {image: uri})
+						cloudinaryCommentUpload(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setScheduleAppointmentPhoto({images: allUploadedFiles});
+								setScheduleAppointmentPhoto({ images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -608,7 +608,7 @@ const SchedulePageStepsStore = () => {
 			<React.Fragment>
 				<label
 					className='btn btn-info btn-raised mb-3'
-					style={{cursor: "pointer", fontSize: "0.80rem"}}
+					style={{ cursor: "pointer", fontSize: "0.80rem" }}
 				>
 					Please add the desired styling photo if available
 					<input
@@ -820,7 +820,7 @@ const SchedulePageStepsStore = () => {
 	// );
 
 	const clickSubmitSchedule_NoPayment = () => {
-		window.scrollTo({top: 0, behavior: "smooth"});
+		window.scrollTo({ top: 0, behavior: "smooth" });
 		if (
 			pickedEmployee &&
 			pickedEmployee.workingDays[0] &&
@@ -845,8 +845,8 @@ const SchedulePageStepsStore = () => {
 			return toast.error("Please Fill in Your User Name...");
 		}
 
-		if (phone.length !== 10) {
-			return toast.error("Please make sure the phone number is only 10 digits");
+		if (phone.length !== 11) {
+			return toast.error("Please make sure the phone number is only 11 digits");
 		}
 
 		if (storeClosed_NotClosed) {
@@ -933,7 +933,7 @@ const SchedulePageStepsStore = () => {
 				// console.log(response);
 				// console.log("schedule booked");
 
-				window.scrollTo({top: 0, behavior: "smooth"});
+				window.scrollTo({ top: 0, behavior: "smooth" });
 				localStorage.removeItem("barber");
 				localStorage.removeItem("pickedServiceFirstAvailable");
 				localStorage.removeItem("chosenDateFromFirstAvailable");
@@ -988,7 +988,7 @@ const SchedulePageStepsStore = () => {
 							}}
 							onClick={() => {
 								next();
-								window.scrollTo({top: 100, behavior: "smooth"});
+								window.scrollTo({ top: 100, behavior: "smooth" });
 							}}
 						>
 							Next
@@ -1006,7 +1006,7 @@ const SchedulePageStepsStore = () => {
 							fontSize: "1.1rem",
 						}}
 						onClick={() => {
-							window.scrollTo({top: 150, behavior: "smooth"});
+							window.scrollTo({ top: 150, behavior: "smooth" });
 							next();
 						}}
 					>
@@ -1028,7 +1028,7 @@ const SchedulePageStepsStore = () => {
 						onClick={() => {
 							message.success("Processing complete!");
 							console.log("Success");
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 							setCurrent(0);
 						}}
 					>
@@ -1060,7 +1060,7 @@ const SchedulePageStepsStore = () => {
 									return "Appoitnment was successfully scheduled!";
 								}
 							});
-							window.scrollTo({top: 0, behavior: "smooth"});
+							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
 					>
 						Schedule Now
@@ -1086,7 +1086,7 @@ const SchedulePageStepsStore = () => {
 				<Link
 					to='/store/book-appointment-from-store'
 					onClick={() => {
-						window.scrollTo({top: 0, behavior: "smooth"});
+						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}
 				>
 					<div className='continueShoppingEmpty  my-5'>

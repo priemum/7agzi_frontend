@@ -543,10 +543,10 @@ const FirstAvailableAppointments = ({
 															chosenDate
 													  ).toLocaleDateString(
 															"ar-EG"
-													  )}. <br /> الرجاء التحقق من تاريخ آخر.`
+													  )}. الرجاء التحقق من تاريخ آخر.`
 													: `Hair Salon is closed on the selected date ${new Date(
 															chosenDate
-													  ).toDateString()}. <br /> Please check another date.`}
+													  ).toDateString()}. Please check another date.`}
 											</div>
 										) : (
 											<Fragment>
@@ -581,7 +581,7 @@ const FirstAvailableAppointments = ({
 																Please check another date.
 															</div>
 														) : (
-															<div style={{ color: "black" }}>
+															<div style={{ color: "white" }}>
 																{language === "Arabic" ? (
 																	<div>
 																		الموعد الأول المتاح هو مع

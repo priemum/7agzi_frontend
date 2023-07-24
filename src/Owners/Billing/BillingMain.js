@@ -96,6 +96,7 @@ const BillingMain = ({ language }) => {
 					email: user.email,
 					customerId: user._id,
 					planId: "One Time Payment",
+					country: "Egypt",
 				};
 
 				processPaymentAndThenStore(user._id, token, paymentData)

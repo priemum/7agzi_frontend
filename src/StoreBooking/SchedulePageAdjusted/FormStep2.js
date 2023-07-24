@@ -29,7 +29,7 @@ const FormStep2 = ({
 						<div className='mb-2 '>
 							<span
 								className='dataPointsReview '
-								style={{fontSize: "1.1rem", color: "black"}}
+								style={{ fontSize: "1.1rem", color: "black" }}
 							>
 								{" "}
 								<strong> Stylist Name:</strong>{" "}
@@ -50,7 +50,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong> Appointment Scheduled On Date:</strong>{" "}
@@ -73,7 +73,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong> Appointment Scheduled:</strong>{" "}
@@ -99,7 +99,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong>Scheduled Service:</strong>{" "}
@@ -123,7 +123,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong>Scheduled Service Price:</strong>{" "}
@@ -150,7 +150,7 @@ const FormStep2 = ({
 									<React.Fragment>
 										<span
 											className='dataPointsReview'
-											style={{fontSize: "1rem", color: "black"}}
+											style={{ fontSize: "1rem", color: "black" }}
 										>
 											{" "}
 											<strong>Online Services:</strong>{" "}
@@ -177,7 +177,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong>Added Tip:</strong>{" "}
@@ -205,7 +205,7 @@ const FormStep2 = ({
 								<React.Fragment>
 									<span
 										className='dataPointsReview'
-										style={{fontSize: "1rem", color: "black"}}
+										style={{ fontSize: "1rem", color: "black" }}
 									>
 										{" "}
 										<strong>Added Tip:</strong>{" "}
@@ -339,7 +339,7 @@ const FormStep2 = ({
 											type='number'
 											onChange={handleChosenTipOtherAmount}
 											value={chosenTipOtherAmount}
-											style={{borderRadius: "10px", textAlign: "center"}}
+											style={{ borderRadius: "10px", textAlign: "center" }}
 										/>
 									</div>
 								)}

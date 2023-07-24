@@ -410,7 +410,7 @@ const AddService = ({ language, ownerId }) => {
 								? "على سبيل المثال: لأول مرة ، خصم 20٪ على قص الشعر الخاص بك اليوم!"
 								: "e.g. For the first, 20% off your haircut today!"
 						}
-						required
+						// required
 					/>
 				</div>
 				<div className='form-group col-md-8 mx-auto'>
@@ -429,7 +429,7 @@ const AddService = ({ language, ownerId }) => {
 								? "على سبيل المثال: لأول مرة ، خصم 20٪ على قص الشعر الخاص بك اليوم!"
 								: "e.g. For the first, 20% off your haircut today!"
 						}
-						required
+						// required
 					/>
 				</div>
 			</div>

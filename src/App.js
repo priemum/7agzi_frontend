@@ -90,6 +90,7 @@ function App() {
 	const [clickMenu, setClickMenu] = useState(false);
 	const [language, setLanguage] = useState("English");
 
+	// eslint-disable-next-line
 	const { user } = isAuthenticated();
 
 	useEffect(() => {
@@ -165,7 +166,9 @@ function App() {
 						<DarkBackground setClick={setClick} setClickMenu={setClickMenu} />
 					) : null}
 					<>
-						{user && user.role === 3 ? null : (
+						{window.location.pathname.includes(
+							"book-appointment-from-store"
+						) ? null : (
 							<>
 								<NavbarTop
 									click={click}
@@ -366,8 +369,11 @@ function App() {
 					<StoreRoute
 						path='/store/book-appointment-from-store'
 						exact
-						component={BookingFromStore}
+						component={() => (
+							<BookingFromStore language={language} setLanguage={setLanguage} />
+						)}
 					/>
+
 					<StoreRoute
 						path='/store/book-appointment-from-store/employee/:employeeId'
 						exact

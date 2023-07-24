@@ -1,20 +1,22 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import {
+	allLoyaltyPointsAndStoreStatus,
 	getEmployees,
 	listScheduledOrders2,
 	listScheduledOrdersStore,
 } from "../Owners/apiOwner";
-import {isAuthenticated} from "../auth";
+import { isAuthenticated } from "../auth";
 import FirstAvailableAppointmentsStore2 from "./FirstAvailableAppointmentsStore2";
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 import styled from "styled-components";
 import OverallCalendarStore from "./OverallCalendarStore";
 import TableViewStore from "./TableViewStore";
 import POSAccount from "./POSAccount";
+import NavbarPOS from "./NavbarPOS/NavbarPOS";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -45,7 +47,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const BookingFromStore = () => {
+const BookingFromStore = ({ language, setLanguage }) => {
 	const [clickedMenu, setClickedMenu] = useState("NewAppointment");
 	const [allEmployees, setAllEmployees] = useState([]);
 	// eslint-disable-next-line
@@ -53,8 +55,9 @@ const BookingFromStore = () => {
 	// eslint-disable-next-line
 	const [chosenDate, setChosenDate] = useState("");
 	const [orders, setOrders] = useState([]);
+	const [onlineStoreName, setOnlineStoreName] = useState("");
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
@@ -133,9 +136,22 @@ const BookingFromStore = () => {
 		}
 	};
 
+	const getOnlineStoreName = () => {
+		allLoyaltyPointsAndStoreStatus("token", userBelongsToModified).then(
+			(data) => {
+				if (data.error) {
+					console.log(data.error);
+				} else {
+					setOnlineStoreName(data && data[data.length - 1]);
+				}
+			}
+		);
+	};
+
 	useEffect(() => {
 		loadOrders();
 		loadAllAvailableEmployees();
+		getOnlineStoreName();
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("barber");
 		localStorage.removeItem("chosenStylistId_Store");
@@ -147,7 +163,7 @@ const BookingFromStore = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	// console.log(allEmployees, "allEmployees");
+	// console.log(onlineStoreName, "onlineStoreName");
 
 	useEffect(() => {
 		if (window.location.search.includes("new-appointments")) {
@@ -164,23 +180,28 @@ const BookingFromStore = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const reloadCount = sessionStorage.getItem("reloadCount");
+	// const reloadCount = sessionStorage.getItem("reloadCount");
 
-	useEffect(() => {
-		if (user && user.role === 3) {
-			if (reloadCount < 2) {
-				sessionStorage.setItem("reloadCount", String(reloadCount + 1));
-				window.location.reload();
-			} else {
-				sessionStorage.removeItem("reloadCount");
-			}
-		}
+	// useEffect(() => {
+	// 	if (user && user.role === 3) {
+	// 		if (reloadCount < 2) {
+	// 			sessionStorage.setItem("reloadCount", String(reloadCount + 1));
+	// 			window.location.reload();
+	// 		} else {
+	// 			sessionStorage.removeItem("reloadCount");
+	// 		}
+	// 	}
 
-		// eslint-disable-next-line
-	}, []);
+	// 	// eslint-disable-next-line
+	// }, []);
 
 	return (
-		<BookFromStoreWrapper>
+		<BookFromStoreWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<NavbarPOS
+				language={language}
+				setLanguage={setLanguage}
+				onlineStoreName={onlineStoreName}
+			/>
 			{user && user.role === 1000 ? (
 				<>
 					<div className='mx-auto col-md-10 mt-5'>
@@ -195,104 +216,203 @@ const BookingFromStore = () => {
 							Back to admin dashboard
 						</Link>
 					</div>
-
-					<div className='row mx-auto text-center my-5 col-md-10'>
-						<div
-							className='col-md-3 mx-auto'
-							style={isActive(clickedMenu, "NewAppointment")}
-							onClick={() => setClickedMenu("NewAppointment")}
-						>
-							<Link
+					{language === "Arabic" ? (
+						<div className='row mx-auto text-center my-5 col-md-10'>
+							<div
+								className='col-md-3 mx-auto'
 								style={isActive(clickedMenu, "NewAppointment")}
-								to='/store/book-appointment-from-store?new-appointments'
+								onClick={() => setClickedMenu("NewAppointment")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Book New
-								Appointment
-							</Link>
-						</div>
-						<div
-							className='col-md-3 mx-auto'
-							style={isActive(clickedMenu, "POSAccount")}
-							onClick={() => setClickedMenu("POSAccount")}
-						>
-							<Link
+								<Link
+									style={isActive(clickedMenu, "NewAppointment")}
+									to='/store/book-appointment-from-store?new-appointments'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> حجز موعد
+									جديد
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
 								style={isActive(clickedMenu, "POSAccount")}
-								to='/store/book-appointment-from-store?pos-account'
+								onClick={() => setClickedMenu("POSAccount")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Create a POS
-								Account
-							</Link>
-						</div>
-						<div
-							className='col-md-3 mx-auto'
-							style={isActive(clickedMenu, "OverAllCalendar")}
-							onClick={() => setClickedMenu("OverAllCalendar")}
-						>
-							<Link
+								<Link
+									style={isActive(clickedMenu, "POSAccount")}
+									to='/store/book-appointment-from-store?pos-account'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> إنشاء حساب
+									نقطة البيع (POS)
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
 								style={isActive(clickedMenu, "OverAllCalendar")}
-								to='/store/book-appointment-from-store?overall-calendar'
+								onClick={() => setClickedMenu("OverAllCalendar")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Overall
-								Calendar View
-							</Link>
-						</div>
-						<div
-							className='col-md-3 mx-auto'
-							style={isActive(clickedMenu, "TableView")}
-							onClick={() => setClickedMenu("TableView")}
-						>
-							<Link
+								<Link
+									style={isActive(clickedMenu, "OverAllCalendar")}
+									to='/store/book-appointment-from-store?overall-calendar'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> عرض التقويم
+									العام
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
 								style={isActive(clickedMenu, "TableView")}
-								to='/store/book-appointment-from-store?table-view'
+								onClick={() => setClickedMenu("TableView")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Table View
-							</Link>
+								<Link
+									style={isActive(clickedMenu, "TableView")}
+									to='/store/book-appointment-from-store?table-view'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> عرض الجدول
+								</Link>
+							</div>
 						</div>
-					</div>
+					) : (
+						<div className='row mx-auto text-center my-5 col-md-10'>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "NewAppointment")}
+								onClick={() => setClickedMenu("NewAppointment")}
+							>
+								<Link
+									style={isActive(clickedMenu, "NewAppointment")}
+									to='/store/book-appointment-from-store?new-appointments'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Book New
+									Appointment
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "POSAccount")}
+								onClick={() => setClickedMenu("POSAccount")}
+							>
+								<Link
+									style={isActive(clickedMenu, "POSAccount")}
+									to='/store/book-appointment-from-store?pos-account'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Create a
+									POS Account
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "OverAllCalendar")}
+								onClick={() => setClickedMenu("OverAllCalendar")}
+							>
+								<Link
+									style={isActive(clickedMenu, "OverAllCalendar")}
+									to='/store/book-appointment-from-store?overall-calendar'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Overall
+									Calendar View
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "TableView")}
+								onClick={() => setClickedMenu("TableView")}
+							>
+								<Link
+									style={isActive(clickedMenu, "TableView")}
+									to='/store/book-appointment-from-store?table-view'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Table View
+								</Link>
+							</div>
+						</div>
+					)}
 				</>
 			) : (
 				<>
-					<div className='row mx-auto text-center my-5 col-md-10'>
-						<div
-							className='col-md-4 mx-auto'
-							style={isActive(clickedMenu, "NewAppointment")}
-							onClick={() => setClickedMenu("NewAppointment")}
-						>
-							<Link
+					{language === "Arabic" ? (
+						<div className='row mx-auto text-center my-5 col-md-10'>
+							<div
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "NewAppointment")}
-								to='/store/book-appointment-from-store?new-appointments'
+								onClick={() => setClickedMenu("NewAppointment")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Book New
-								Appointment
-							</Link>
-						</div>
+								<Link
+									style={isActive(clickedMenu, "NewAppointment")}
+									to='/store/book-appointment-from-store?new-appointments'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> حجز موعد
+									جديد
+								</Link>
+							</div>
 
-						<div
-							className='col-md-4 mx-auto'
-							style={isActive(clickedMenu, "OverAllCalendar")}
-							onClick={() => setClickedMenu("OverAllCalendar")}
-						>
-							<Link
+							<div
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "OverAllCalendar")}
-								to='/store/book-appointment-from-store?overall-calendar'
+								onClick={() => setClickedMenu("OverAllCalendar")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Overall
-								Calendar View
-							</Link>
-						</div>
-						<div
-							className='col-md-4 mx-auto'
-							style={isActive(clickedMenu, "TableView")}
-							onClick={() => setClickedMenu("TableView")}
-						>
-							<Link
+								<Link
+									style={isActive(clickedMenu, "OverAllCalendar")}
+									to='/store/book-appointment-from-store?overall-calendar'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> عرض التقويم
+									العام
+								</Link>
+							</div>
+							<div
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "TableView")}
-								to='/store/book-appointment-from-store?table-view'
+								onClick={() => setClickedMenu("TableView")}
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> Table View
-							</Link>
+								<Link
+									style={isActive(clickedMenu, "TableView")}
+									to='/store/book-appointment-from-store?table-view'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> عرض الجدول
+								</Link>
+							</div>
 						</div>
-					</div>
+					) : (
+						<div className='row mx-auto text-center my-5 col-md-10'>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "NewAppointment")}
+								onClick={() => setClickedMenu("NewAppointment")}
+							>
+								<Link
+									style={isActive(clickedMenu, "NewAppointment")}
+									to='/store/book-appointment-from-store?new-appointments'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Book New
+									Appointment
+								</Link>
+							</div>
+
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "OverAllCalendar")}
+								onClick={() => setClickedMenu("OverAllCalendar")}
+							>
+								<Link
+									style={isActive(clickedMenu, "OverAllCalendar")}
+									to='/store/book-appointment-from-store?overall-calendar'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Overall
+									Calendar View
+								</Link>
+							</div>
+							<div
+								className='col-md-3 mx-auto'
+								style={isActive(clickedMenu, "TableView")}
+								onClick={() => setClickedMenu("TableView")}
+							>
+								<Link
+									style={isActive(clickedMenu, "TableView")}
+									to='/store/book-appointment-from-store?table-view'
+								>
+									<i className='fa-brands fa-servicestack mr-1'></i> Table View
+								</Link>
+							</div>
+						</div>
+					)}
 				</>
 			)}
 
@@ -307,11 +427,14 @@ const BookingFromStore = () => {
 							animationOutDuration={1000}
 							isVisible={true}
 						>
-							<FirstAvailableAppointmentsStore2 user={user} />
+							<FirstAvailableAppointmentsStore2
+								user={user}
+								language={language}
+							/>
 						</Animated>
 					</div>
 
-					<div style={{marginBottom: "300px"}}>
+					<div style={{ marginBottom: "300px" }}>
 						<div className='col-md-10 mx-auto'>
 							<hr />
 						</div>
@@ -338,10 +461,10 @@ const BookingFromStore = () => {
 											onClick={() => {
 												localStorage.setItem("barber", JSON.stringify(i._id));
 											}}
-											style={{fontWeight: "bold"}}
+											style={{ fontWeight: "bold" }}
 										>
 											{i.employeeName}
-											<span style={{color: "black"}}>
+											<span style={{ color: "black" }}>
 												{" "}
 												(
 												{orders &&

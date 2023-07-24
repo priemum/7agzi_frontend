@@ -398,7 +398,7 @@ const UpdateService = () => {
 						onChange={handleChange11}
 						value={catchyPhrase}
 						placeholder='e.g. For the first, 20% off your haircut today!'
-						required
+						// required
 					/>
 				</div>
 
@@ -412,7 +412,7 @@ const UpdateService = () => {
 						onChange={handleChange14}
 						value={catchyPhraseOtherLanguage}
 						placeholder='e.g. For the first, 20% off your haircut today!'
-						required
+						// required
 					/>
 				</div>
 			</div>

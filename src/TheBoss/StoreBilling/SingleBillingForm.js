@@ -153,9 +153,11 @@ const SingleBillingForm = ({
 														allAppointmentsNotPaid[
 															theIndexOfAppointmentsNotPaid
 														].totalOnlineServicesFees
-													) / 32
+													)
 											  ).toFixed(2)
 											: Number(customizedAmount), // Replace 30 with the amount you want to charge the customer
+
+										paymentMethodToken: "", //Should add payment method token for the user
 									};
 
 									retriggerPayment(store.belongsTo._id, token, paymentData)

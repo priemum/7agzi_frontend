@@ -365,7 +365,7 @@ const AddService = ({ ownerId }) => {
 						onChange={handleChange10}
 						value={catchyPhrase}
 						placeholder='e.g. For the first, 20% off your haircut today!'
-						required
+						// required
 					/>
 				</div>
 
@@ -379,7 +379,7 @@ const AddService = ({ ownerId }) => {
 						onChange={handleChange14}
 						value={catchyPhraseOtherLanguage}
 						placeholder='e.g. For the first, 20% off your haircut today!'
-						required
+						// required
 					/>
 				</div>
 			</div>
