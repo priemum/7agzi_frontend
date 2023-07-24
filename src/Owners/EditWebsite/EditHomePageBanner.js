@@ -1,13 +1,13 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {cloudinaryUpload1, createHero, getAllHeros} from "../apiOwner";
+import { cloudinaryUpload1, createHero, getAllHeros } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import ImageCardHero from "./ImageCardHero";
-import {toast} from "react-toastify";
-import {isAuthenticated} from "../../auth";
+import { toast } from "react-toastify";
+import { isAuthenticated } from "../../auth";
 
 const EditHomePageBanner = () => {
 	// eslint-disable-next-line
@@ -24,7 +24,7 @@ const EditHomePageBanner = () => {
 	const [hyper_link2, setHyperLink2] = useState("");
 	const [hyper_link3, setHyperLink3] = useState("");
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const gettingAllHeroes = () => {
 		getAllHeros(token, user._id).then((data) => {
@@ -89,7 +89,7 @@ const EditHomePageBanner = () => {
 		let allUploadedFiles = thumbnail;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -102,11 +102,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail({...thumbnail, images: allUploadedFiles});
+								setThumbnail({ ...thumbnail, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -124,7 +124,7 @@ const EditHomePageBanner = () => {
 		let allUploadedFiles = thumbnail2;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -137,11 +137,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail2({...thumbnail2, images: allUploadedFiles});
+								setThumbnail2({ ...thumbnail2, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -159,7 +159,7 @@ const EditHomePageBanner = () => {
 		let allUploadedFiles = thumbnail3;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -172,11 +172,11 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
-								setThumbnail3({...thumbnail3, images: allUploadedFiles});
+								setThumbnail3({ ...thumbnail3, images: allUploadedFiles });
 							})
 							.catch((err) => {
 								console.log("CLOUDINARY UPLOAD ERR", err);
@@ -194,7 +194,7 @@ const EditHomePageBanner = () => {
 		let allUploadedFiles = thumbnail_Phone;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -207,7 +207,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -232,7 +232,7 @@ const EditHomePageBanner = () => {
 		let allUploadedFiles = thumbnail2_Phone;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					alert("File size should be less than 500kb");
 					continue; // skip this file
@@ -245,7 +245,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -283,7 +283,7 @@ const EditHomePageBanner = () => {
 					100,
 					0,
 					(uri) => {
-						cloudinaryUpload1(user._id, token, {image: uri})
+						cloudinaryUpload1(user._id, token, { image: uri })
 							.then((data) => {
 								allUploadedFiles.push(data);
 
@@ -347,7 +347,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -357,7 +357,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail;
+				const { images } = thumbnail;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -377,7 +377,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -387,7 +387,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail2;
+				const { images } = thumbnail2;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -409,7 +409,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -419,7 +419,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail3;
+				const { images } = thumbnail3;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -441,7 +441,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -451,7 +451,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail_Phone;
+				const { images } = thumbnail_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -471,7 +471,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -481,7 +481,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail2_Phone;
+				const { images } = thumbnail2_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -503,7 +503,7 @@ const EditHomePageBanner = () => {
 		axios
 			.post(
 				`${process.env.REACT_APP_API_URL}/admin/removeimage/${user._id}`,
-				{public_id},
+				{ public_id },
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -513,7 +513,7 @@ const EditHomePageBanner = () => {
 			.then((res) => {
 				setLoading(false);
 				// eslint-disable-next-line
-				const {images} = thumbnail3_Phone;
+				const { images } = thumbnail3_Phone;
 				// let filteredImages = images.filter((item) => {
 				// 	return item.public_id !== public_id;
 				// });
@@ -567,7 +567,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 1
 						</label>
@@ -585,7 +585,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 2
 						</label>
@@ -603,7 +603,7 @@ const EditHomePageBanner = () => {
 					<div className='form-group'>
 						<label
 							className='text-muted'
-							style={{fontWeight: "bold", fontSize: "15px"}}
+							style={{ fontWeight: "bold", fontSize: "15px" }}
 						>
 							Hyper Link Connected To Image 3
 						</label>

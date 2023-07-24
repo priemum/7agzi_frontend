@@ -99,6 +99,8 @@ const SingleStorePage = ({ props, language }) => {
 				setLoading(false);
 			} else {
 				var pickedStoreRendered = data[data.length - 1];
+				console.log(pickedStoreRendered, "pickedStoreRendered");
+				console.log(storeName.split("-").join(" "), "pickedStoreRendered");
 				setStoreChosen({
 					...pickedStoreRendered,
 					storeId: pickedStoreRendered.belongsTo._id,

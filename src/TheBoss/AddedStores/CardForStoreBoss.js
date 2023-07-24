@@ -31,7 +31,7 @@ const CardForStoreBoss = ({ store, allAppointments }) => {
 
 	const ShowImage = ({ item }) => (
 		<div className='product-img' style={{ borderRadius: "50%" }}>
-			{item && item.storeThumbnail && (
+			{item && item.storeThumbnail && item.storeThumbnail[0] && (
 				<Carousel
 					showArrows={false}
 					dynamicHeight={true}

@@ -111,10 +111,10 @@ const Adding1Logo = ({
 		let allUploadedFiles = storeThumbnail;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					setLoading(false);
 					// file size is in bytes
-					alert("File size should be less than 500kb");
+					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(

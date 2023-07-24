@@ -47,6 +47,7 @@ const Adding1Logo = ({
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 300 * 1024) {
 					// file size is in bytes
+					setLoading2(false);
 					alert("File size should be less than 300kb");
 					continue; // skip this file
 				}
@@ -108,9 +109,10 @@ const Adding1Logo = ({
 		let allUploadedFiles = storeThumbnail;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 500 * 1024) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
-					alert("File size should be less than 500kb");
+					setLoading(false);
+					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
@@ -176,6 +178,7 @@ const Adding1Logo = ({
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
 					// file size is in bytes
+					setLoading3(false);
 					alert("File size should be less than 500kb");
 					continue; // skip this file
 				}

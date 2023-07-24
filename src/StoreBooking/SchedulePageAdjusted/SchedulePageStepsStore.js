@@ -845,7 +845,7 @@ const SchedulePageStepsStore = () => {
 			return toast.error("Please Fill in Your User Name...");
 		}
 
-		if (phone.length !== 11) {
+		if (phone.length !== 10) {
 			return toast.error("Please make sure the phone number is only 11 digits");
 		}
 

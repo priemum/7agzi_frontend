@@ -29,6 +29,7 @@ const ImageCard = ({
 						<div className='col-12'>
 							{addThumbnail &&
 								addThumbnail.images &&
+								addThumbnail.images[0] &&
 								addThumbnail.images.map((image, i) => {
 									return (
 										<div className='m-3 col-6 ' key={i}>

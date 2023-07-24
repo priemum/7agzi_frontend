@@ -1,19 +1,19 @@
 /** @format */
 
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from "react-responsive-carousel";
-import {updateStoreStatus} from "../apiBoss";
-import {isAuthenticated} from "../../auth";
+import { Carousel } from "react-responsive-carousel";
+import { updateStoreStatus } from "../apiBoss";
+import { isAuthenticated } from "../../auth";
 
-const CardForStorePendingApp = ({store}) => {
-	const {user, token} = isAuthenticated();
+const CardForStorePendingApp = ({ store }) => {
+	const { user, token } = isAuthenticated();
 
-	const ShowImage = ({item}) => (
-		<div className='product-img' style={{borderRadius: "50%"}}>
-			{item && item.storeThumbnail && (
+	const ShowImage = ({ item }) => (
+		<div className='product-img' style={{ borderRadius: "50%" }}>
+			{item && item.storeThumbnail && item.storeThumbnail[0] && (
 				<Carousel
 					showArrows={false}
 					dynamicHeight={true}
@@ -29,7 +29,7 @@ const CardForStorePendingApp = ({store}) => {
 							alt='Developed By Infinite-Apps.com'
 							src={i.url}
 							key={i.public_id}
-							style={{height: "240px", width: "100%", objectFit: "cover"}}
+							style={{ height: "240px", width: "100%", objectFit: "cover" }}
 						/>
 					))}
 				</Carousel>
@@ -51,7 +51,7 @@ const CardForStorePendingApp = ({store}) => {
 				if (data.error) {
 					console.log("Status update failed");
 				} else {
-					window.scrollTo({top: 0, behavior: "smooth"});
+					window.scrollTo({ top: 0, behavior: "smooth" });
 					window.location.reload(false);
 				}
 			});
@@ -62,7 +62,7 @@ const CardForStorePendingApp = ({store}) => {
 		<ProductWrapper className='my-3'>
 			<div
 				className='card '
-				style={{borderRadius: "5% 10%", backgroundColor: "#f7f7f6"}}
+				style={{ borderRadius: "5% 10%", backgroundColor: "#f7f7f6" }}
 			>
 				<div className='card-body  '>
 					<div className='card-img-top  img'>

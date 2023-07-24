@@ -373,7 +373,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 					) : (
 						<div className='row mx-auto text-center my-5 col-md-10'>
 							<div
-								className='col-md-3 mx-auto'
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "NewAppointment")}
 								onClick={() => setClickedMenu("NewAppointment")}
 							>
@@ -387,7 +387,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 							</div>
 
 							<div
-								className='col-md-3 mx-auto'
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "OverAllCalendar")}
 								onClick={() => setClickedMenu("OverAllCalendar")}
 							>
@@ -400,7 +400,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 								</Link>
 							</div>
 							<div
-								className='col-md-3 mx-auto'
+								className='col-md-4 mx-auto'
 								style={isActive(clickedMenu, "TableView")}
 								onClick={() => setClickedMenu("TableView")}
 							>
