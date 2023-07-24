@@ -25,6 +25,7 @@ const BossDashboard = () => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [storeProperties, setStoreProperties] = useState([]);
 	const [ownerAccounts, setOwnerAccounts] = useState([]);
+	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
 		if (window.location.pathname.includes("/store/admin/dashboard")) {
@@ -96,7 +97,13 @@ const BossDashboard = () => {
 	var storesPendingApproval =
 		storeProperties && storeProperties.filter((i) => i.activeStore === false);
 
-	console.log(ownerAccounts, "ownerAccounts");
+	const filteredOwnerAccounts = ownerAccounts.filter(
+		(o) =>
+			o.agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.storeGovernorate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.phone.toLowerCase().includes(searchQuery)
+	);
 
 	return (
 		<BossDashboardWrapper>
@@ -179,11 +186,26 @@ const BossDashboard = () => {
 							<div
 								className='mt-5'
 								style={{
-									maxHeight: "900px",
+									maxHeight: "1200px",
 									overflow: "auto",
 								}}
 							>
 								<h3 style={{ fontWeight: "bolder" }}>Registered Owners</h3>
+								<div className='text-center col-md-5 mx-auto'>
+									<label>
+										{" "}
+										<strong>Search</strong>{" "}
+									</label>
+									<br />
+									<input
+										className='form-control'
+										type='text'
+										value={searchQuery}
+										onChange={(e) => setSearchQuery(e.target.value)}
+										placeholder='Search by agent or owner name or phone or governorate'
+										style={{ marginBottom: "10px" }}
+									/>
+								</div>
 								<table
 									className='table table-bordered table-md-responsive table-hover table-striped'
 									style={{ fontSize: "0.75rem" }}
@@ -193,6 +215,7 @@ const BossDashboard = () => {
 									// style={{border: "2px black solid"}}
 									>
 										<tr>
+											<th scope='col'>#</th>
 											<th scope='col'>Owner Name</th>
 											<th scope='col'>Phone</th>
 											<th scope='col'>Governorate</th>
@@ -212,8 +235,8 @@ const BossDashboard = () => {
 									</thead>
 
 									<tbody>
-										{ownerAccounts &&
-											ownerAccounts.map((o, i) => {
+										{filteredOwnerAccounts &&
+											filteredOwnerAccounts.map((o, i) => {
 												// const now = new Date();
 												// const endDate = new Date(o.createdAt);
 												// const diffTime = Math.abs(endDate - now);
@@ -225,6 +248,7 @@ const BossDashboard = () => {
 
 												return (
 													<tr key={i}>
+														<td>{i + 1}</td>
 														<td>{o.name}</td>
 														<td>{o.phone}</td>
 														<td style={{ textTransform: "capitalize" }}>
@@ -296,7 +320,7 @@ const BossDashboard = () => {
 							</div>
 						</div>
 
-						<div className='col-md-11 mx-auto'>
+						{/* <div className='col-md-11 mx-auto'>
 							<div
 								className='mt-5'
 								style={{
@@ -340,7 +364,7 @@ const BossDashboard = () => {
 									</tbody>
 								</table>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
