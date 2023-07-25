@@ -58,7 +58,7 @@ const Adding1Logo = ({
 					files[i],
 					666,
 					315,
-					"PNG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -185,7 +185,7 @@ const Adding1Logo = ({
 					files[i],
 					800,
 					954,
-					"PNG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
