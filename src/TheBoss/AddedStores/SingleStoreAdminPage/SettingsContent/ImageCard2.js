@@ -5,7 +5,6 @@ import styled from "styled-components";
 import imageImage from "../../../../Images/UploadImageImage.jpg";
 import { cloudinaryUpload1 } from "../apiOwner";
 import { isAuthenticated } from "../../../../auth";
-import Resizer from "react-image-file-resizer";
 
 const ImageCard2 = ({
 	setAddThumbnail,
@@ -18,53 +17,42 @@ const ImageCard2 = ({
 	const fileUploadAndResizeThumbNail = (e) => {
 		setLoading(true);
 
-		// console.log(e.target.files);
 		let files = e.target.files;
 		let allUploadedFiles =
 			addThumbnail &&
 			addThumbnail.images &&
 			addThumbnail.images[0] &&
 			addThumbnail.images[0].url
-				? [...addThumbnail]
+				? [...addThumbnail.images]
 				: [];
+
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				// if (files[i].size > 1024 * 1024) {
-				// 	// file size is in bytes
-				// 	setLoading(false);
-				// 	alert("File size should be less than 1MB");
-				// 	continue; // skip this file
-				// }
-				Resizer.imageFileResizer(
-					files[i],
-					1400,
-					1400,
-					"PNG",
-					100,
-					0,
-					(uri) => {
-						cloudinaryUpload1(user._id, token, { image: uri })
-							.then((data) => {
-								allUploadedFiles.push(data);
+				let reader = new FileReader();
+				reader.readAsDataURL(files[i]);
+				reader.onload = (event) => {
+					cloudinaryUpload1(user._id, token, { image: event.target.result })
+						.then((data) => {
+							allUploadedFiles.push(data);
 
-								setAddThumbnail({
-									...addThumbnail,
-									images: allUploadedFiles,
-								});
-							})
-							.catch((err) => {
-								setLoading(false);
-								console.log("CLOUDINARY UPLOAD ERR", err);
+							setAddThumbnail({
+								...addThumbnail,
+								images: allUploadedFiles,
 							});
-					},
-					"base64"
-				);
+						})
+						.catch((err) => {
+							setLoading(false);
+							console.log("CLOUDINARY UPLOAD ERR", err);
+						});
+				};
 			}
+
 			setTimeout(() => {
 				setLoading(false);
 			}, 1500);
 		}
 	};
+
 	return (
 		<ImageCardWrapper>
 			<div className='card card-flush  mx-auto'>
