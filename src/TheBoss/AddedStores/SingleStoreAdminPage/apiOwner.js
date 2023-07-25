@@ -131,6 +131,28 @@ export const cloudinaryUpload1 = (userId, token, image) => {
 		});
 };
 
+export const cloudinaryUpload2 = (userId, token, image) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/admin/uploadimages/${userId}`,
+		{
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(image),
+			// body: image,
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
 export const getEmployees = (ownerId) => {
 	return fetch(`${process.env.REACT_APP_API_URL}/employees/${ownerId}`, {
 		method: "GET",
