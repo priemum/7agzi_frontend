@@ -10,6 +10,7 @@ import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
 import ImageCard3 from "./ImageCard3";
 import GettingMap from "../../../../components/SingleStorePage/GettingMap";
+import { toast } from "react-toastify";
 
 const Adding1Logo = ({
 	addStoreLogo,
@@ -101,47 +102,53 @@ const Adding1Logo = ({
 			});
 	};
 
-	const fileUploadAndResizeStoreThumbnail = (e) => {
+	const fileUploadAndResizeStoreThumbnail = async (e) => {
 		setLoading(true);
 		// console.log(e.target.files);
 		let files = e.target.files;
 		console.log(files);
-		let allUploadedFiles = storeThumbnail;
+
 		if (files) {
-			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 1024 * 1024) {
+			let allUploadedFiles = storeThumbnail.images
+				? [...storeThumbnail.images]
+				: [];
+			for (let file of files) {
+				if (file.size > 1024 * 1024) {
 					// file size is in bytes
 					setLoading(false);
 					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
-				Resizer.imageFileResizer(
-					files[i],
-					800,
-					954,
-					"PNG",
-					100,
-					0,
-					(uri) => {
-						cloudinaryUpload1(user._id, token, { image: uri })
-							.then((data) => {
-								allUploadedFiles.push(data);
-
-								setStoreThumbnail({
-									...storeThumbnail,
-									images: allUploadedFiles,
-								});
-							})
-							.catch((err) => {
-								console.log("CLOUDINARY UPLOAD ERR", err);
-							});
-					},
-					"base64"
-				);
+				try {
+					await new Promise((resolve, reject) => {
+						Resizer.imageFileResizer(
+							file,
+							800,
+							954,
+							"PNG",
+							100,
+							0,
+							async (uri) => {
+								try {
+									const data = await cloudinaryUpload1(user._id, token, {
+										image: uri,
+									});
+									allUploadedFiles.push(data);
+									resolve();
+								} catch (err) {
+									reject(err);
+								}
+							},
+							"base64"
+						);
+					});
+				} catch (err) {
+					console.log("CLOUDINARY UPLOAD ERR", err);
+					toast.error("Error in file upload");
+				}
 			}
-			setTimeout(() => {
-				setLoading(false);
-			}, 1500);
+			setStoreThumbnail({ ...storeThumbnail, images: allUploadedFiles });
+			setLoading(false);
 		}
 	};
 

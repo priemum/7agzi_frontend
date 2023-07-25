@@ -162,10 +162,14 @@ const SettingsMainBoss = () => {
 					setStoreThumbnail(
 						lastAddedSettings &&
 							lastAddedSettings.storeThumbnail &&
-							lastAddedSettings.storeThumbnail.length > 0
-							? { images: lastAddedSettings.storeThumbnail }
+							lastAddedSettings.storeThumbnail.length > 0 &&
+							lastAddedSettings.storeThumbnail[0]
+							? {
+									images: lastAddedSettings.storeThumbnail,
+							  }
 							: []
 					);
+
 					setOwnerIdPhoto(
 						lastAddedSettings &&
 							lastAddedSettings.ownerIdPhoto &&

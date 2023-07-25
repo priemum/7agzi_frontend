@@ -220,7 +220,7 @@ const OwnerDashboardBoss = ({ language }) => {
 								fontWeight: "bolder",
 								textDecoration: "underline",
 							}}
-							to='/boss/admin/added-stores'
+							to='/boss/admin/dashboard'
 						>
 							Return To Your BOSS DASHBOARD
 						</Link>

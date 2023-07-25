@@ -64,7 +64,9 @@ const ImageCard2 = ({
 									);
 								})}
 						</div>
-						{!addThumbnail.images || addThumbnail.images.length === 0 ? (
+						{!addThumbnail.images ||
+						addThumbnail.images.length === 0 ||
+						!addThumbnail.images[0] ? (
 							<label
 								className=''
 								style={{ cursor: "pointer", fontSize: "0.95rem" }}
