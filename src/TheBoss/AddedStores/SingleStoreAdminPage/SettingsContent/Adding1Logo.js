@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { isAuthenticated } from "../../../../auth";
-import { cloudinaryUpload1, cloudinaryUpload2 } from "../apiOwner";
+import { cloudinaryUpload1 } from "../apiOwner";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import ImageCard from "./ImageCard";
@@ -123,14 +123,14 @@ const Adding1Logo = ({
 					await new Promise((resolve, reject) => {
 						Resizer.imageFileResizer(
 							file,
-							800,
-							954,
+							2000,
+							2000,
 							"PNG",
 							100,
 							0,
 							async (uri) => {
 								try {
-									const data = await cloudinaryUpload2(user._id, token, {
+									const data = await cloudinaryUpload1(user._id, token, {
 										image: uri,
 									});
 									allUploadedFiles.push(data);
