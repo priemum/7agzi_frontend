@@ -84,6 +84,8 @@ import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsConte
 import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
+import GallaryMain from "./Owners/GallaryAddition/GallaryMain";
+import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryAddition/GallaryMainBoss";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -338,6 +340,12 @@ function App() {
 						component={() => <BillingMain language={language} />}
 					/>
 
+					<OwnerRoute
+						path='/store/admin/add-gallary'
+						exact
+						component={() => <GallaryMain language={language} />}
+					/>
+
 					<PrivateRoute
 						path='/profile-update/:userId'
 						exact
@@ -484,6 +492,11 @@ function App() {
 						path='/boss/admin/agent-management'
 						exact
 						component={AgentsManagementMain}
+					/>
+					<BossRoute
+						path='/boss/store/admin/add-gallary/:ownerId'
+						exact
+						component={GallaryMainBoss}
 					/>
 					<BossRoute
 						path='/boss/admin/store-billing'

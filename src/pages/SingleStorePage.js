@@ -19,6 +19,7 @@ import Gallary from "../components/SingleStorePage/Gallary";
 import FirstAvailableAppointments from "../components/SingleStorePage/FirstAvailableAppointments";
 import { Link } from "react-router-dom";
 import GettingMap from "../components/SingleStorePage/GettingMap";
+import { getPreviousAddedGallary } from "../Owners/apiOwner";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -69,6 +70,7 @@ const SingleStorePage = ({ props, language }) => {
 	const [allCustomerType, setAllCustomerType] = useState([]);
 	const [chosenCustomerType, setChosenCustomerType] = useState("");
 	const [chosenCustomerType2, setChosenCustomerType2] = useState("");
+	const [gettingGallary, setGettingGallary] = useState("");
 	const [chosenDate, setChosenDate] = useState("");
 	const [chosenService, setChosenService] = useState("");
 	const [loading, setLoading] = useState(true);
@@ -99,8 +101,6 @@ const SingleStorePage = ({ props, language }) => {
 				setLoading(false);
 			} else {
 				var pickedStoreRendered = data[data.length - 1];
-				console.log(pickedStoreRendered, "pickedStoreRendered");
-				console.log(storeName.split("-").join(" "), "pickedStoreRendered");
 				setStoreChosen({
 					...pickedStoreRendered,
 					storeId: pickedStoreRendered.belongsTo._id,
@@ -283,6 +283,26 @@ const SingleStorePage = ({ props, language }) => {
 		});
 	};
 
+	const getStoreGallary = () => {
+		getPreviousAddedGallary("token", storeChosen.belongsTo._id).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				var lastAdded = data[data.length - 1];
+				var adjustingPhotos =
+					lastAdded &&
+					lastAdded.gallaryPhotos &&
+					lastAdded.gallaryPhotos.map((i) => {
+						return {
+							url: i.url,
+							public_id: i.public_id,
+						};
+					});
+				setGettingGallary(adjustingPhotos);
+			}
+		});
+	};
+
 	useEffect(() => {
 		if (storeChosen && storeChosen.belongsTo) {
 			getAllService();
@@ -290,6 +310,7 @@ const SingleStorePage = ({ props, language }) => {
 			gettingAllContacts();
 			gettingAllHeroes();
 			gettingAllEmployees();
+			getStoreGallary();
 		}
 		// eslint-disable-next-line
 	}, [props, chosenDate, chosenCustomerType, chosenService]);
@@ -520,7 +541,7 @@ const SingleStorePage = ({ props, language }) => {
 
 						{clickedMenu === "GALLERY" ? (
 							<div className='my-4'>
-								<Gallary filteredResults={allEmployees} />
+								<Gallary filteredResults={gettingGallary} />
 							</div>
 						) : null}
 

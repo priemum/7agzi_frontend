@@ -353,7 +353,7 @@ export const updateOrderStatus = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, scheduleorderId, updatedByUser}),
+			body: JSON.stringify({ status, scheduleorderId, updatedByUser }),
 		}
 	)
 		.then((response) => {
@@ -377,7 +377,7 @@ export const updateOrderStatusStore = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, scheduleorderId}),
+			body: JSON.stringify({ status, scheduleorderId }),
 		}
 	)
 		.then((response) => {
@@ -477,7 +477,7 @@ export const updateClientActivity = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({activeUser, clientUserId}),
+			body: JSON.stringify({ activeUser, clientUserId }),
 		}
 	)
 		.then((response) => {
@@ -501,7 +501,7 @@ export const updateOrderStylistComment = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({commentsByStylist, scheduleorderId}),
+			body: JSON.stringify({ commentsByStylist, scheduleorderId }),
 		}
 	)
 		.then((response) => {
@@ -710,6 +710,43 @@ export const updateOwnerProfile = (userId, token, user) => {
 		},
 		body: JSON.stringify(user),
 	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const addingSalonGallary = (userId, token, gallary) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/gallary/create/${userId}`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(gallary),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const getPreviousAddedGallary = (token, ownerId) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/gallary/list/owner/${ownerId}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
 		.then((response) => {
 			return response.json();
 		})

@@ -6,6 +6,7 @@ import {
 	BranchesOutlined,
 	ContactsFilled,
 	DollarCircleOutlined,
+	HomeTwoTone,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
 	PieChartOutlined,
@@ -80,6 +81,11 @@ const items = [
 		</Link>,
 		"sub5",
 		<ShopOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/add-gallary/agent/help'>Gallary</Link>,
+		"sub12",
+		<HomeTwoTone />
 	),
 	// getItem(
 	// 	<Link to='/boss/store/admin/branches'>Add New Branch</Link>,
@@ -164,6 +170,8 @@ const AdminNavbar = ({
 						? "sub11"
 						: fromPage === "EditWebsite"
 						? "sub5"
+						: fromPage === "AddGallary"
+						? "sub12"
 						: "sub1"
 				}
 				defaultOpenKeys={[
