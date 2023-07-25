@@ -126,7 +126,6 @@ const Adding1Logo = ({
 							2000,
 							2000,
 							"PNG",
-							100,
 							0,
 							async (uri) => {
 								try {
