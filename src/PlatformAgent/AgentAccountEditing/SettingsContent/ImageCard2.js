@@ -3,15 +3,56 @@
 import React from "react";
 import styled from "styled-components";
 import imageImage from "../../../Images/UploadImageImage.jpg";
+import { cloudinaryUpload1 } from "../../../Owners/apiOwner";
+import { isAuthenticated } from "../../../auth";
 
 const ImageCard2 = ({
 	setAddThumbnail,
 	handleImageRemove,
 	addThumbnail,
-	fileUploadAndResizeThumbNail,
 	language,
+	setLoading,
 }) => {
-	console.log(addThumbnail, "image 2");
+	const { user, token } = isAuthenticated();
+
+	const fileUploadAndResizeThumbNail = (e) => {
+		setLoading(true);
+
+		let files = e.target.files;
+		let allUploadedFiles =
+			addThumbnail &&
+			addThumbnail.images &&
+			addThumbnail.images[0] &&
+			addThumbnail.images[0].url
+				? [...addThumbnail.images]
+				: [];
+
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				let reader = new FileReader();
+				reader.readAsDataURL(files[i]);
+				reader.onload = (event) => {
+					cloudinaryUpload1(user._id, token, { image: event.target.result })
+						.then((data) => {
+							allUploadedFiles.push(data);
+
+							setAddThumbnail({
+								...addThumbnail,
+								images: allUploadedFiles,
+							});
+						})
+						.catch((err) => {
+							setLoading(false);
+							console.log("CLOUDINARY UPLOAD ERR", err);
+						});
+				};
+			}
+
+			setTimeout(() => {
+				setLoading(false);
+			}, 1500);
+		}
+	};
 	return (
 		<ImageCardWrapper>
 			<div className='card card-flush  mx-auto'>

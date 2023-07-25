@@ -261,6 +261,7 @@ const Adding1Logo = ({
 							setAddThumbnail={setStoreThumbnail}
 							fileUploadAndResizeThumbNail={fileUploadAndResizeStoreThumbnail}
 							language={language}
+							setLoading={setLoading}
 						/>
 					)}
 				</div>
