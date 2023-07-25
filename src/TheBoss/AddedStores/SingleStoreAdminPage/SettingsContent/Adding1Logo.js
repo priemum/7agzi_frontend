@@ -10,7 +10,6 @@ import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
 import ImageCard3 from "./ImageCard3";
 import GettingMap from "../../../../components/SingleStorePage/GettingMap";
-import { toast } from "react-toastify";
 
 const Adding1Logo = ({
 	addStoreLogo,
@@ -102,52 +101,48 @@ const Adding1Logo = ({
 			});
 	};
 
-	const fileUploadAndResizeStoreThumbnail = async (e) => {
+	const fileUploadAndResizeStoreThumbnail = (e) => {
 		setLoading(true);
+
 		// console.log(e.target.files);
 		let files = e.target.files;
-		console.log(files);
-
+		let allUploadedFiles = storeThumbnail;
 		if (files) {
-			let allUploadedFiles = storeThumbnail.images
-				? [...storeThumbnail.images]
-				: [];
-			for (let file of files) {
-				if (file.size > 1024 * 1024) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
 					setLoading(false);
 					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
-				try {
-					await new Promise((resolve, reject) => {
-						Resizer.imageFileResizer(
-							file,
-							2000,
-							2000,
-							"PNG",
-							0,
-							async (uri) => {
-								try {
-									const data = await cloudinaryUpload1(user._id, token, {
-										image: uri,
-									});
-									allUploadedFiles.push(data);
-									resolve();
-								} catch (err) {
-									reject(err);
-								}
-							},
-							"base64"
-						);
-					});
-				} catch (err) {
-					console.log("CLOUDINARY UPLOAD ERR", err);
-					toast.error("Error in file upload");
-				}
+				Resizer.imageFileResizer(
+					files[i],
+					1400,
+					1400,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryUpload1(user._id, token, { image: uri })
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setStoreThumbnail({
+									...storeThumbnail,
+									images: allUploadedFiles,
+								});
+							})
+							.catch((err) => {
+								setLoading(false);
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
 			}
-			setStoreThumbnail({ ...storeThumbnail, images: allUploadedFiles });
-			setLoading(false);
+			setTimeout(() => {
+				setLoading(false);
+			}, 1500);
 		}
 	};
 
