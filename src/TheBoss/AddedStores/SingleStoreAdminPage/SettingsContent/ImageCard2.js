@@ -20,7 +20,13 @@ const ImageCard2 = ({
 
 		// console.log(e.target.files);
 		let files = e.target.files;
-		let allUploadedFiles = addThumbnail;
+		let allUploadedFiles =
+			addThumbnail &&
+			addThumbnail.images &&
+			addThumbnail.images[0] &&
+			addThumbnail.images[0].url
+				? [...addThumbnail]
+				: [];
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
 				// if (files[i].size > 1024 * 1024) {
