@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { isAuthenticated } from "../../auth";
 import { cloudinaryUpload1 } from "../apiOwner";
 import axios from "axios";
-import Resizer from "react-image-file-resizer";
 import ImageCard from "./ImageCard";
+import Resizer from "react-image-file-resizer";
 import { Link } from "react-router-dom";
 import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
@@ -106,14 +106,16 @@ const Adding1Logo = ({
 
 	const fileUploadAndResizeStoreThumbnail = async (e) => {
 		setLoading(true);
-		// console.log(e.target.files);
 		let files = e.target.files;
-		console.log(files);
 
 		if (files) {
-			let allUploadedFiles = storeThumbnail.images
-				? [...storeThumbnail.images]
-				: [];
+			let allUploadedFiles =
+				storeThumbnail &&
+				storeThumbnail.images &&
+				storeThumbnail.images[0] &&
+				storeThumbnail.images[0].url
+					? [...storeThumbnail.images]
+					: [];
 			for (let file of files) {
 				if (file.size > 1024 * 1024) {
 					// file size is in bytes
@@ -121,34 +123,22 @@ const Adding1Logo = ({
 					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
-				try {
-					await new Promise((resolve, reject) => {
-						Resizer.imageFileResizer(
-							file,
-							800,
-							954,
-							"PNG",
-							100,
-							0,
-							async (uri) => {
-								try {
-									const data = await cloudinaryUpload1(user._id, token, {
-										image: uri,
-									});
-									allUploadedFiles.push(data);
-									resolve();
-								} catch (err) {
-									reject(err);
-								}
-							},
-							"base64"
-						);
-					});
-				} catch (err) {
-					console.log("CLOUDINARY UPLOAD ERR", err);
-					toast.error("Error in file upload");
-				}
+
+				let reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = async (event) => {
+					try {
+						const data = await cloudinaryUpload1(user._id, token, {
+							image: event.target.result,
+						});
+						allUploadedFiles.push(data);
+					} catch (err) {
+						console.log("CLOUDINARY UPLOAD ERR", err);
+						toast.error("Error in file upload");
+					}
+				};
 			}
+
 			setStoreThumbnail({ ...storeThumbnail, images: allUploadedFiles });
 			setLoading(false);
 		}

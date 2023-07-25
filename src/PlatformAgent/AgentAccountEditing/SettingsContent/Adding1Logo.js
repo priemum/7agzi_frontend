@@ -105,42 +105,36 @@ const Adding1Logo = ({
 
 	const fileUploadAndResizeStoreThumbnail = (e) => {
 		setLoading(true);
-		// console.log(e.target.files);
 		let files = e.target.files;
-		console.log(files);
-		let allUploadedFiles = storeThumbnail;
+
 		if (files) {
+			let allUploadedFiles = storeThumbnail ? [...storeThumbnail] : [];
+
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 500 * 1024) {
 					setLoading(false);
-					// file size is in bytes
-					alert("File size should be less than 500kb");
+					alert("File size should be less than 500KB");
 					continue; // skip this file
 				}
-				Resizer.imageFileResizer(
-					files[i],
-					800,
-					954,
-					"PNG",
-					100,
-					0,
-					(uri) => {
-						cloudinaryUpload1(user._id, token, { image: uri })
-							.then((data) => {
-								allUploadedFiles.push(data);
 
-								setStoreThumbnail({
-									...storeThumbnail,
-									images: allUploadedFiles,
-								});
-							})
-							.catch((err) => {
-								console.log("CLOUDINARY UPLOAD ERR", err);
+				let reader = new FileReader();
+				reader.readAsDataURL(files[i]);
+				reader.onload = (event) => {
+					cloudinaryUpload1(user._id, token, { image: event.target.result })
+						.then((data) => {
+							allUploadedFiles.push(data);
+
+							setStoreThumbnail({
+								...storeThumbnail,
+								images: allUploadedFiles,
 							});
-					},
-					"base64"
-				);
+						})
+						.catch((err) => {
+							console.log("CLOUDINARY UPLOAD ERR", err);
+						});
+				};
 			}
+
 			setTimeout(() => {
 				setLoading(false);
 			}, 1500);

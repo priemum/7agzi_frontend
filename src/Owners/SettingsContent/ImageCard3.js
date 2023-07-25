@@ -18,8 +18,8 @@ const ImageCard3 = ({
 					<div className=' p-2'>
 						<h5 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
 							{language === "Arabic"
-								? "صورة بطاقة هوية المالك"
-								: "Owner ID Photo"}
+								? " (اختياري) صورة بطاقة هوية المالك"
+								: "Owner ID Photo (Optional)"}
 						</h5>
 					</div>
 				</div>
