@@ -37,6 +37,51 @@ const Adding1Logo = ({
 	// destructure user and token from localstorage
 	const { user, token } = isAuthenticated();
 
+	const fileUploadAndResizeStoreThumbnail = (e) => {
+		setLoading(true);
+
+		// console.log(e.target.files);
+		let files = e.target.files;
+		let allUploadedFiles = storeThumbnail;
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				if (files[i].size > 1024 * 1024) {
+					// file size is in bytes
+					setLoading(false);
+					alert("File size should be less than 1MB");
+					continue; // skip this file
+				}
+				Resizer.imageFileResizer(
+					files[i],
+					1400,
+					1400,
+					"PNG",
+					100,
+					0,
+					(uri) => {
+						cloudinaryUpload1(user._id, token, { image: uri })
+							.then((data) => {
+								allUploadedFiles.push(data);
+
+								setStoreThumbnail({
+									...storeThumbnail,
+									images: allUploadedFiles,
+								});
+							})
+							.catch((err) => {
+								setLoading(false);
+								console.log("CLOUDINARY UPLOAD ERR", err);
+							});
+					},
+					"base64"
+				);
+			}
+			setTimeout(() => {
+				setLoading(false);
+			}, 1500);
+		}
+	};
+
 	const fileUploadAndResizeLogo = (e) => {
 		setLoading2(true);
 
@@ -99,51 +144,6 @@ const Adding1Logo = ({
 					window.location.reload(false);
 				}, 1000);
 			});
-	};
-
-	const fileUploadAndResizeStoreThumbnail = (e) => {
-		setLoading(true);
-
-		// console.log(e.target.files);
-		let files = e.target.files;
-		let allUploadedFiles = storeThumbnail;
-		if (files) {
-			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 1024 * 1024) {
-					// file size is in bytes
-					setLoading(false);
-					alert("File size should be less than 1MB");
-					continue; // skip this file
-				}
-				Resizer.imageFileResizer(
-					files[i],
-					1400,
-					1400,
-					"PNG",
-					100,
-					0,
-					(uri) => {
-						cloudinaryUpload1(user._id, token, { image: uri })
-							.then((data) => {
-								allUploadedFiles.push(data);
-
-								setStoreThumbnail({
-									...storeThumbnail,
-									images: allUploadedFiles,
-								});
-							})
-							.catch((err) => {
-								setLoading(false);
-								console.log("CLOUDINARY UPLOAD ERR", err);
-							});
-					},
-					"base64"
-				);
-			}
-			setTimeout(() => {
-				setLoading(false);
-			}, 1500);
-		}
 	};
 
 	const handleImageRemove2 = (public_id) => {
