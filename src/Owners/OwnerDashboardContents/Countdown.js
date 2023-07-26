@@ -12,13 +12,13 @@ const Countdown = ({ theDate, hasAgent }) => {
 	const diffTime = Math.abs(endDate - now);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-	const remainingDays = hasAgent ? 90 - diffDays : 60 - diffDays;
+	const remainingDays = hasAgent ? 90 - diffDays : 30 - diffDays;
 	const percentage = (remainingDays / 90) * 100;
 
 	return (
 		<CountdownWrapper>
 			{remainingDays < 0 ? null : (
-				<div className='my-5'>
+				<div className='my-5 wrapper'>
 					<div className='progress-bar'>
 						<CircularProgressbarWithChildren
 							value={percentage}
@@ -51,6 +51,13 @@ const CountdownWrapper = styled.div`
 		width: 105px; /* Adjust the width as desired */
 		height: 105px; /* Adjust the height as desired */
 		background-color: #f5f8fa;
+	}
+
+	@media (max-width: 1100px) {
+		display: none;
+		.wrapper {
+			margin: 10px !important;
+		}
 	}
 `;
 

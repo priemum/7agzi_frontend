@@ -19,6 +19,8 @@ import { isAuthenticated } from "../../auth";
 import { getAllUsers } from "../apiOwner";
 import LastAddedLogoImage from "./LastAddedLogoImage";
 import GetBrandName from "./GetBrandName";
+import LastAddedLogoImageArabic from "./LastAddedLogoImageArabic";
+import GetBrandNameArabic from "./GetBrandNameArabic";
 
 function getItem(label, key, icon, children, type) {
 	return {
@@ -94,16 +96,102 @@ const items = [
 	),
 
 	getItem(
-		<Link to='/store/admin/billing-account'>Account Billing</Link>,
+		<Link to='/store/book-appointment-from-store'>SHOP POS</Link>,
+		"sub11",
+		<ContactsFilled />
+	),
+	getItem(
+		<Link className='mt-5' to='/store/admin/billing-account'>
+			Account Billing
+		</Link>,
 		"sub10",
 		<>
 			<DollarCircleOutlined />
 		</>
 	),
+	// getItem("Option 3", "4", <ContainerOutlined />),
+];
+
+const itemsArabic = [
 	getItem(
-		<Link to='/store/book-appointment-from-store'>SHOP POS</Link>,
+		<div className='logoClass'></div>,
+		"StoreLogo",
+		<div>
+			<LastAddedLogoImageArabic />
+		</div>
+	),
+	getItem(
+		<div className='logoClass '></div>,
+		"StoreLogo",
+		<GetBrandNameArabic />
+	),
+	getItem(
+		<div className='logoClass '></div>,
+		"StoreLogo",
+		<div
+			className='logoClass no-background'
+			style={{
+				width: "100%",
+			}}
+		>
+			<hr />
+		</div>
+	),
+	getItem(
+		<Link to='/store/admin/dashboard'>صالونى</Link>,
+		"sub1",
+		<PieChartOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/settings'>إعدادات</Link>,
+		"sub2",
+		<SettingOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/services'>خدمات</Link>,
+		"sub3",
+		<ShopOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/employees'>موارد بشرية</Link>,
+		"sub4",
+		<TeamOutlined />
+	),
+
+	getItem(
+		<Link to='/store/admin/edit-website'>الموقع الرسمى</Link>,
+		"sub5",
+		<ShopOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/add-gallary'>الالبوم</Link>,
+		"sub12",
+		<HomeTwoTone />
+	),
+	getItem(
+		<Link to='/store/admin/branches'>فروعى</Link>,
+		"sub6",
+		<BranchesOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/ecommerce-integration'>المتجر الإليكترونى</Link>,
+		"sub7",
+		<ShoppingCartOutlined />
+	),
+
+	getItem(
+		<Link to='/store/book-appointment-from-store'>الكاشير</Link>,
 		"sub11",
 		<ContactsFilled />
+	),
+	getItem(
+		<Link className='mt-5' to='/store/admin/billing-account'>
+			المدفوعات
+		</Link>,
+		"sub10",
+		<>
+			<DollarCircleOutlined />
+		</>
 	),
 	// getItem("Option 3", "4", <ContainerOutlined />),
 ];
@@ -113,6 +201,7 @@ const AdminNavbar = ({
 	setAdminMenuStatus,
 	collapsed,
 	setCollapsed,
+	language,
 }) => {
 	const [values, setValues] = useState({
 		name: "",
@@ -189,6 +278,8 @@ const AdminNavbar = ({
 
 	return (
 		<AdminNavbarWrapper
+			language={language}
+			dir={language === "Arabic" ? "rtl" : "ltr"}
 			show={collapsed}
 			show2={clickedOn}
 			style={{
@@ -200,8 +291,8 @@ const AdminNavbar = ({
 				onClick={toggleCollapsed}
 				style={{
 					marginBottom: 8,
-					textAlign: "center",
-					marginLeft: 10,
+					marginLeft: language === "Arabic" ? "" : 10,
+					left: language === "Arabic" ? 220 : "",
 					marginTop: 3,
 				}}
 			>
@@ -251,7 +342,7 @@ const AdminNavbar = ({
 				mode='inline'
 				theme='dark'
 				inlineCollapsed={collapsed}
-				items={items}
+				items={language === "Arabic" ? itemsArabic : items}
 				onClick={(e) => {
 					if (e.key === "StoreLogo") {
 						setClickedOn(true);
@@ -274,7 +365,7 @@ const AdminNavbarWrapper = styled.div`
 	position: fixed;
 	z-index: 20000;
 	overflow: auto;
-	height: ${(props) => (props.show ? "" : "100%")} !important;
+	height: ${(props) => (props.show ? "100%" : "100%")} !important;
 
 	.logoClass {
 		display: ${(props) => (props.show ? "none " : "block")} !important;
@@ -292,7 +383,7 @@ const AdminNavbarWrapper = styled.div`
 	}
 
 	.ant-menu.ant-menu-inline-collapsed {
-		min-height: 850px;
+		min-height: 950px;
 		/* position: fixed; */
 	}
 
@@ -312,6 +403,16 @@ const AdminNavbarWrapper = styled.div`
 		background: ${(props) => (props.show2 ? "none !important" : "")};
 	}
 
+	.ant-menu-title-content {
+		text-align: ${(props) => (props.language === "Arabic" ? "right" : "")};
+		margin-right: ${(props) => (props.language === "Arabic" ? "10px" : "")};
+	}
+
+	.ant-menu-title-content > a {
+		font-size: ${(props) => (props.language === "Arabic" ? "1.1rem" : "")};
+		font-weight: ${(props) => (props.language === "Arabic" ? "bolder" : "")};
+	}
+
 	@media (max-width: 1650px) {
 		background: ${(props) => (props.show ? "" : "transparent")};
 
@@ -327,7 +428,7 @@ const AdminNavbarWrapper = styled.div`
 	}
 
 	@media (max-width: 1200px) {
-		margin-top: 50px !important;
+		margin-top: 68px !important;
 
 		ul {
 			display: ${(props) => (props.show ? "none" : "")};
@@ -341,6 +442,11 @@ const AdminNavbarWrapper = styled.div`
 
 		button {
 			margin-left: 2px !important;
+			margin-top: 10px !important;
 		}
+	}
+
+	@media (max-width: 1100px) {
+		/* display: none; */
 	}
 `;

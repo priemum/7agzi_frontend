@@ -99,7 +99,7 @@ const OwnerDashboard = ({ language }) => {
 		} else {
 			setCollapsed(false);
 		}
-		window.scrollTo({ top: 78, behavior: "smooth" });
+		window.scrollTo({ top: 58, behavior: "smooth" });
 	}, []);
 
 	useEffect(() => {
@@ -163,7 +163,7 @@ const OwnerDashboard = ({ language }) => {
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
 	// eslint-disable-next-line
-	const remainingDays = 3 - diffDays;
+	const remainingDays = 90 - diffDays;
 
 	const onPlay = () => {
 		ReactGA.event({
@@ -189,7 +189,7 @@ const OwnerDashboard = ({ language }) => {
 	};
 
 	return (
-		<OwnerDashboardWrapper>
+		<OwnerDashboardWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
@@ -224,7 +224,11 @@ const OwnerDashboard = ({ language }) => {
 					href='https://www.xlookpro.com/store/admin/dashboard'
 				/>
 			</Helmet>
-			<div className='grid-container'>
+			<div
+				className={
+					language === "Arabic" ? "grid-container-arabic" : "grid-container"
+				}
+			>
 				<div>
 					<AdminNavbar
 						fromPage='AdminDasboard'
@@ -232,13 +236,19 @@ const OwnerDashboard = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
 
 				<div>
 					<div
 						className=''
-						style={{ top: "70px", right: "2%", position: "absolute" }}
+						style={{
+							top: "70px",
+							right: language === "Arabic" ? "" : "2%",
+							position: "absolute",
+							left: language === "Arabic" ? "2%" : "",
+						}}
 					>
 						{currentUser && currentUser.createdAt ? (
 							<Countdown
@@ -250,8 +260,16 @@ const OwnerDashboard = ({ language }) => {
 								}
 							/>
 						) : null}
+
+						<div className='text-center trialPeriod'>
+							انت الان على باقة البرو التجريبية
+							<div style={{ fontWeight: "bolder", color: "darkred" }}>
+								{" "}
+								<strong>متبقى {remainingDays} يوم</strong>{" "}
+							</div>
+						</div>
 					</div>
-					<div className='container-fluid col-lg-12 mx-auto text-center'>
+					<div className='container-fluid col-lg-12 mx-auto text-center mt-5'>
 						<div className='row text-center ml-5 my-5'>
 							<div
 								style={isActive(clickedMenu, "Calendar")}
@@ -259,10 +277,11 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("Calendar")}
 							>
 								<Link
+									className='dashboardLinks'
 									style={isActive(clickedMenu, "Calendar")}
 									to='/store/admin/dashboard?calendar'
 								>
-									<i className='fa-brands fa-servicestack mr-1'></i>
+									<i className='fa-brands fa-servicestack mx-1'></i>
 									{language === "Arabic" ? "الجدول" : "Overall Appointments"}
 								</Link>
 							</div>
@@ -272,10 +291,11 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("BarberAppointment")}
 							>
 								<Link
+									className='dashboardLinks'
 									style={isActive(clickedMenu, "BarberAppointment")}
 									to='/store/admin/dashboard?barber-appointments'
 								>
-									<i className='fa-solid fa-pen mr-1'></i>
+									<i className='fa-solid fa-pen mx-1'></i>
 									{language === "Arabic"
 										? "عمل الموظف"
 										: "Employee Appointments"}
@@ -287,10 +307,11 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("TableView")}
 							>
 								<Link
+									className='dashboardLinks'
 									style={isActive(clickedMenu, "TableView")}
 									to='/store/admin/dashboard?table-view'
 								>
-									<i className='fa-solid fa-table mr-1'></i>
+									<i className='fa-solid fa-table mx-1'></i>
 									{language === "Arabic" ? "جدول المحتويات" : "Table View"}
 								</Link>
 							</div>
@@ -299,14 +320,15 @@ const OwnerDashboard = ({ language }) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("ShopReports");
-									window.scrollTo({ top: 100, behavior: "smooth" });
+									window.scrollTo({ top: 70, behavior: "smooth" });
 								}}
 							>
 								<Link
+									className='dashboardLinks'
 									style={isActive(clickedMenu, "ShopReports")}
 									to='/store/admin/dashboard?shop-reports'
 								>
-									<i className='fa-solid fa-chart-pie mr-1'></i>
+									<i className='fa-solid fa-chart-pie mx-1'></i>
 									{language === "Arabic" ? "التقارير العامة" : "Shop Reports"}
 								</Link>
 							</div>
@@ -315,14 +337,15 @@ const OwnerDashboard = ({ language }) => {
 								className='col-md-2 menuItems '
 								onClick={() => {
 									setClickedMenu("CustomerReports");
-									window.scrollTo({ top: 100, behavior: "smooth" });
+									window.scrollTo({ top: 70, behavior: "smooth" });
 								}}
 							>
 								<Link
+									className='dashboardLinks'
 									style={isActive(clickedMenu, "CustomerReports")}
 									to='/store/admin/dashboard?customer-reports'
 								>
-									<i className='fa-solid fa-chart-simple mr-1'></i>
+									<i className='fa-solid fa-chart-simple mx-1'></i>
 									{language === "Arabic" ? "تقرير العملاء" : "Customers Report"}
 								</Link>
 							</div>
@@ -362,7 +385,7 @@ const OwnerDashboard = ({ language }) => {
 									marginBottom: "100px",
 								}}
 							>
-								{window.scrollTo({ top: 700, behavior: "smooth" })}
+								{window.scrollTo({ top: 200, behavior: "smooth" })}
 								<video
 									width={videoWidth}
 									height='450'
@@ -380,11 +403,12 @@ const OwnerDashboard = ({ language }) => {
 						<h2
 							style={{
 								fontWeight: "bolder",
-								marginLeft: "30%",
+								marginLeft: "15%",
+								marginRight: "15%",
 								fontSize: "3rem",
 							}}
 						>
-							{window.scrollTo({ top: 78, behavior: "smooth" })}{" "}
+							{window.scrollTo({ top: 58, behavior: "smooth" })}{" "}
 							<Link
 								style={{
 									fontWeight: "bolder",
@@ -398,7 +422,7 @@ const OwnerDashboard = ({ language }) => {
 						</h2>
 					) : (
 						<>
-							{window.scrollTo({ top: 78, behavior: "smooth" })}
+							{window.scrollTo({ top: 58, behavior: "smooth" })}
 
 							{clickedMenu === "Calendar" ? (
 								<MyCalendar language={language} />
@@ -434,6 +458,11 @@ const OwnerDashboardWrapper = styled.div`
 		grid-template-columns: 5% 95%;
 	}
 
+	.grid-container-arabic {
+		display: grid;
+		grid-template-columns: 5% 95%;
+	}
+
 	.container-fluid {
 		margin-top: 20px;
 		margin-bottom: 20px;
@@ -451,8 +480,16 @@ const OwnerDashboardWrapper = styled.div`
 		color: white;
 	}
 
+	.trialPeriod {
+		display: none;
+	}
+
 	@media (max-width: 1200px) {
 		.grid-container {
+			grid-template-columns: 2% 98%;
+		}
+		.grid-container-arabic {
+			display: grid;
 			grid-template-columns: 2% 98%;
 		}
 
@@ -468,7 +505,23 @@ const OwnerDashboardWrapper = styled.div`
 
 		.container-fluid {
 			margin-left: 0px !important;
+			margin-top: 70px !important;
 			text-align: center;
+		}
+
+		.dashboardLinks {
+			font-size: 0.8rem !important;
+		}
+	}
+
+	@media (max-width: 1100px) {
+		.trialPeriod {
+			display: block;
+			margin-right: 50px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-weight: bolder;
+			font-size: 1.2rem;
 		}
 	}
 `;
