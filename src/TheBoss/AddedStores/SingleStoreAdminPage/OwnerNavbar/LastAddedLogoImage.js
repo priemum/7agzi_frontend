@@ -1,18 +1,19 @@
 import styled from "styled-components";
-import {allLoyaltyPointsAndStoreStatus} from "../apiOwner";
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {isAuthenticated} from "../../../../auth";
+import { allLoyaltyPointsAndStoreStatus } from "../apiOwner";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { isAuthenticated } from "../../../../auth";
 
-const LastAddedLogoImage = () => {
+const LastAddedLogoImage = ({ ownerId }) => {
 	const [lastLogoURL, setLastLogoURL] = useState("");
-	const {token, user} = isAuthenticated();
+	// eslint-disable-next-line
+	const { token, user } = isAuthenticated();
 
 	var logoUrl =
 		"https://res.cloudinary.com/infiniteapps/image/upload/v1640547562/Infinite-Apps/MyLogo_p0bqjs.jpg";
 
 	const gettingPreviousLoyaltyPointsManagement = () => {
-		allLoyaltyPointsAndStoreStatus(token, user._id).then((data) => {
+		allLoyaltyPointsAndStoreStatus(token, ownerId).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {

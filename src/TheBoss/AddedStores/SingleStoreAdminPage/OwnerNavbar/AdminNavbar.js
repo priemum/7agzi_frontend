@@ -18,6 +18,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 import LastAddedLogoImage from "./LastAddedLogoImage";
+import GetBrandName from "./GetBrandName";
 
 function getItem(label, key, icon, children, type) {
 	return {
@@ -38,7 +39,14 @@ const items = [
 	getItem(
 		<div className='logoClass'></div>,
 		"StoreLogo",
-		<LastAddedLogoImage />
+		<div>
+			<LastAddedLogoImage ownerId={ownerId} />
+		</div>
+	),
+	getItem(
+		<div className='logoClass '></div>,
+		"StoreLogo",
+		<GetBrandName ownerId={ownerId} />
 	),
 	getItem(
 		<div className='logoClass '></div>,
