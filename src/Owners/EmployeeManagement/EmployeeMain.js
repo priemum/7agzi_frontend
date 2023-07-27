@@ -54,7 +54,7 @@ const EmployeeMain = ({ language }) => {
 	const { user } = isAuthenticated();
 
 	return (
-		<EmployeeMainWrapper>
+		<EmployeeMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Employees</title>
@@ -72,6 +72,7 @@ const EmployeeMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
 				<div>

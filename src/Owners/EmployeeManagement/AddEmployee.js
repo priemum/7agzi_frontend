@@ -317,7 +317,7 @@ const AddEmployee = ({ language }) => {
 					files[i],
 					800,
 					954,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {

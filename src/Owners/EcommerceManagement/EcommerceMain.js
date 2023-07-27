@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 
-const EcommerceMain = () => {
+const EcommerceMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
 	return (
-		<EcommerceMainWrapper>
+		<EcommerceMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -16,22 +16,40 @@ const EcommerceMain = () => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
-				<div className='messageWrapper mx-auto col-md-6 mt-5'>
-					<h2 style={{fontWeight: "bolder"}}>
-						Unfortunately, Your current plan doesn't support adding an eCommerce
-						store into your system.
-						<br />
-						<br />
-						You can Whats App +19099914386 and one of our representatives will
-						advise.
-						<br />
-						<br />
-						Please be noted that adding an eCommerce platform to your plan will
-						increase it by at least $25/Mo.
-					</h2>
-				</div>
+				{language === "Arabic" ? (
+					<div className='messageWrapper mx-auto col-md-6 mt-5'>
+						<h2 style={{ fontWeight: "bolder" }}>
+							للأسف، الخطة الحالية التي لديك لا تدعم إضافة متجر إلكتروني إلى
+							نظامك.
+							<br />
+							<br />
+							يمكنك التواصل عبر الواتساب على الرقم +19099914386 وسيقوم أحد
+							ممثلينا بتقديم الاستشارة المناسبة.
+							<br />
+							<br />
+							يُرجى ملاحظة أن إضافة منصة التجارة الإلكترونية إلى الخطة الحالية
+							ستزيد من تكلفتها بمبلغ 25 دولار شهريًا على الأقل.
+						</h2>
+					</div>
+				) : (
+					<div className='messageWrapper mx-auto col-md-6 mt-5'>
+						<h2 style={{ fontWeight: "bolder" }}>
+							Unfortunately, Your current plan doesn't support adding an
+							eCommerce store into your system.
+							<br />
+							<br />
+							You can Whats App +19099914386 and one of our representatives will
+							advise.
+							<br />
+							<br />
+							Please be noted that adding an eCommerce platform to your plan
+							will increase it by at least $25/Mo.
+						</h2>
+					</div>
+				)}
 			</div>
 		</EcommerceMainWrapper>
 	);

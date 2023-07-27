@@ -365,7 +365,7 @@ const AdminNavbarWrapper = styled.div`
 	position: fixed;
 	z-index: 20000;
 	overflow: auto;
-	height: ${(props) => (props.show ? "100%" : "100%")} !important;
+	height: ${(props) => (props.show ? "" : "100%")} !important;
 
 	.logoClass {
 		display: ${(props) => (props.show ? "none " : "block")} !important;
@@ -429,6 +429,7 @@ const AdminNavbarWrapper = styled.div`
 
 	@media (max-width: 1200px) {
 		margin-top: 68px !important;
+		width: ${(props) => (props.show ? "20%" : "60%")} !important;
 
 		ul {
 			display: ${(props) => (props.show ? "none" : "")};

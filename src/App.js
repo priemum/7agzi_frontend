@@ -41,6 +41,7 @@ import BranchesMain from "./Owners/Branches/BranchesMain";
 import EcommerceMain from "./Owners/EcommerceManagement/EcommerceMain";
 import SingleAppointmentPage from "./Owners/OwnerDashboardContents/SingleAppointmentPage";
 import BillingMain from "./Owners/Billing/BillingMain";
+import GallaryMain from "./Owners/GallaryAddition/GallaryMain";
 
 //user routes
 import PrivateRoute from "./auth/PrivateRoute";
@@ -76,6 +77,7 @@ import StorePreviewPage from "./TheBoss/PendingApproval/StorePreviewPage";
 import AgentsManagementMain from "./TheBoss/Agents/AgentsManagementMain";
 import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
 import UpdateBusinessAgent from "./TheBoss/AddedStores/SingleStoreAdminPage/OwnerDashboardContents/UpdateBusinessAgent";
+import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryAddition/GallaryMainBoss";
 
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
@@ -84,8 +86,6 @@ import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsConte
 import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
-import GallaryMain from "./Owners/GallaryAddition/GallaryMain";
-import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryAddition/GallaryMainBoss";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -309,17 +309,19 @@ function App() {
 					<OwnerRoute
 						path='/store/admin/edit-website'
 						exact
-						component={EditWebsiteMain}
+						component={() => <EditWebsiteMain language={language} />}
 					/>
+
 					<OwnerRoute
 						path='/store/admin/branches'
 						exact
-						component={BranchesMain}
+						component={() => <BranchesMain language={language} />}
 					/>
+
 					<OwnerRoute
 						path='/store/admin/ecommerce-integration'
 						exact
-						component={EcommerceMain}
+						component={() => <EcommerceMain language={language} />}
 					/>
 
 					<OwnerRoute

@@ -12,7 +12,7 @@ const AddEmpSection1 = ({
 	language,
 }) => {
 	return (
-		<AddEmpSection1Wrapper>
+		<AddEmpSection1Wrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='row mx-auto'>
 				<div className='col-md-6'>
 					<ImageCard
@@ -23,7 +23,10 @@ const AddEmpSection1 = ({
 						language={language}
 					/>
 				</div>
-				<div className='col-md-6 pt-5'>
+				<div
+					className='col-md-6 pt-5'
+					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+				>
 					<div>
 						<label>
 							{language === "Arabic" ? "اسم الموظف" : "Employee Name"}
@@ -42,7 +45,11 @@ const AddEmpSection1 = ({
 							}}
 						/>
 					</div>
-					<div>
+					<div
+						className='mt-3'
+						dir={language === "Arabic" ? "rtl" : "ltr"}
+						style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					>
 						<label>
 							{language === "Arabic"
 								? "اسم الموظف بالعربية"

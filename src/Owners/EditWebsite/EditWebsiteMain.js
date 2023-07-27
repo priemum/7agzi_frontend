@@ -37,7 +37,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const EditWebsiteMain = () => {
+const EditWebsiteMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
@@ -60,7 +60,7 @@ const EditWebsiteMain = () => {
 	const { user } = isAuthenticated();
 
 	return (
-		<EditWebsiteMainWrapper>
+		<EditWebsiteMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Edit Web Page</title>
@@ -79,50 +79,95 @@ const EditWebsiteMain = () => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
 				<div>
 					<div className='container'>
-						<div className='row mx-auto'>
-							<div
-								style={isActive(clickedMenu, "AboutUs")}
-								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("AboutUs")}
-							>
-								<Link
+						{language === "Arabic" ? (
+							<div className='row mx-auto'>
+								<div
 									style={isActive(clickedMenu, "AboutUs")}
-									to='/store/admin/edit-website?edit-about-us'
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("AboutUs")}
 								>
-									<i className='fa-brands fa-servicestack mr-1'></i> Edit About
-									Us Page
-								</Link>
-							</div>
-							<div
-								style={isActive(clickedMenu, "ContactUs")}
-								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("ContactUs")}
-							>
-								<Link
+									<Link
+										style={isActive(clickedMenu, "AboutUs")}
+										to='/store/admin/edit-website?edit-about-us'
+									>
+										<i className='fa-brands fa-servicestack mr-1'></i> تعديل
+										صفحة من نحن
+									</Link>
+								</div>
+								<div
 									style={isActive(clickedMenu, "ContactUs")}
-									to='/store/admin/edit-website?edit-contact-us'
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("ContactUs")}
 								>
-									<i className='fa-solid fa-pen mr-1'></i> Edit Contact Us Page
-								</Link>
-							</div>
-							<div
-								style={isActive(clickedMenu, "HomePage")}
-								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("HomePage")}
-							>
-								<Link
+									<Link
+										style={isActive(clickedMenu, "ContactUs")}
+										to='/store/admin/edit-website?edit-contact-us'
+									>
+										<i className='fa-solid fa-pen mr-1'></i> تعديل صفحة اتصل بنا
+									</Link>
+								</div>
+								<div
 									style={isActive(clickedMenu, "HomePage")}
-									to='/store/admin/edit-website?edit-hero-comp'
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("HomePage")}
 								>
-									<i className='fa-sharp fa-solid fa-house'></i> Edit Home Page
-									Banners
-								</Link>
+									<Link
+										style={isActive(clickedMenu, "HomePage")}
+										to='/store/admin/edit-website?edit-hero-comp'
+									>
+										<i className='fa-sharp fa-solid fa-house'></i> تعديل صفحة
+										الرئيسية
+									</Link>
+								</div>
 							</div>
-						</div>
+						) : (
+							<div className='row mx-auto'>
+								<div
+									style={isActive(clickedMenu, "AboutUs")}
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("AboutUs")}
+								>
+									<Link
+										style={isActive(clickedMenu, "AboutUs")}
+										to='/store/admin/edit-website?edit-about-us'
+									>
+										<i className='fa-brands fa-servicestack mr-1'></i> Edit
+										About Us Page
+									</Link>
+								</div>
+								<div
+									style={isActive(clickedMenu, "ContactUs")}
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("ContactUs")}
+								>
+									<Link
+										style={isActive(clickedMenu, "ContactUs")}
+										to='/store/admin/edit-website?edit-contact-us'
+									>
+										<i className='fa-solid fa-pen mr-1'></i> Edit Contact Us
+										Page
+									</Link>
+								</div>
+								<div
+									style={isActive(clickedMenu, "HomePage")}
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("HomePage")}
+								>
+									<Link
+										style={isActive(clickedMenu, "HomePage")}
+										to='/store/admin/edit-website?edit-hero-comp'
+									>
+										<i className='fa-sharp fa-solid fa-house'></i> Edit Home
+										Page Banners
+									</Link>
+								</div>
+							</div>
+						)}
 					</div>
 					{clickedMenu === "AboutUs" ? <EditAboutUs /> : null}
 					{clickedMenu === "ContactUs" ? <EditContactUs /> : null}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getServices, updateService } from "../apiOwner";
 import { isAuthenticated } from "../../../auth";
 import { toast } from "react-toastify";
+import { Select } from "antd";
 
 const UpdateService = ({ ownerId }) => {
 	const [allServices, setAllServices] = useState([]);
@@ -37,6 +38,8 @@ const UpdateService = ({ ownerId }) => {
 		setServiceDescriptionCombinedOtherLanguage,
 	] = useState([]);
 	const [activeService, setActiveService] = useState("1");
+	const [bundleServicesAdded, setBundleServicesAdded] = useState([]);
+	const [allServicesDetails, setAllServicesDetails] = useState([]);
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
@@ -47,6 +50,7 @@ const UpdateService = ({ ownerId }) => {
 				console.log(data.error);
 			} else {
 				setAllServices(data);
+				setAllServicesDetails(data);
 			}
 		});
 	};
@@ -78,6 +82,7 @@ const UpdateService = ({ ownerId }) => {
 			setCatchyPhrase(chosenService.catchyPhrase);
 			setCatchyPhraseOtherLanguage(chosenService.catchyPhraseOtherLanguage);
 			setBundleService(chosenService.bundleService);
+			setBundleServicesAdded(chosenService.bundleServicesAdded);
 		}
 		// eslint-disable-next-line
 	}, [serviceClicked]);
@@ -133,6 +138,7 @@ const UpdateService = ({ ownerId }) => {
 					catchyPhraseOtherLanguage: catchyPhraseOtherLanguage,
 					bundleService: bundleService,
 					activeService,
+					bundleServicesAdded: bundleServicesAdded,
 				}).then((data) => {
 					if (data.error) {
 						console.log(data.error);
@@ -162,6 +168,7 @@ const UpdateService = ({ ownerId }) => {
 				catchyPhrase: catchyPhrase,
 				catchyPhraseOtherLanguage: catchyPhraseOtherLanguage,
 				bundleService: bundleService,
+				bundleServicesAdded: bundleServicesAdded,
 			}).then((data) => {
 				if (data.error) {
 					console.log(data.error);
@@ -289,6 +296,18 @@ const UpdateService = ({ ownerId }) => {
 		setServiceDescriptionOtherLanguage("");
 	};
 
+	const individualServices =
+		allServicesDetails &&
+		allServicesDetails.filter((i) => i.bundleService === false);
+
+	// Handle the onChange event to update the state with the selected options
+	const handleSelectChange = (selectedServiceNames) => {
+		const selectedServices = individualServices.filter((service) =>
+			selectedServiceNames.includes(service.serviceName)
+		);
+		setBundleServicesAdded(selectedServices);
+	};
+
 	const newServiceForm = () => (
 		<form onSubmit={clickSubmit} className='col-md-10'>
 			<div className='row'>
@@ -363,6 +382,28 @@ const UpdateService = ({ ownerId }) => {
 								required
 							/>
 						</div>
+
+						{bundleService ? (
+							<div className='form-group mx-auto col-md-12 w-100 py-2'>
+								<label className='text-muted'>Add Set Of Services</label>
+								<Select
+									mode='multiple'
+									placeholder='Select services'
+									style={{ width: "100%" }}
+									onChange={handleSelectChange}
+									value={
+										bundleServicesAdded &&
+										bundleServicesAdded.map((service) => service.serviceName)
+									}
+								>
+									{individualServices.map((service) => (
+										<Select.Option key={service.id} value={service.serviceName}>
+											{service.serviceName}
+										</Select.Option>
+									))}
+								</Select>
+							</div>
+						) : null}
 					</>
 				) : null}
 
@@ -416,169 +457,178 @@ const UpdateService = ({ ownerId }) => {
 					/>
 				</div>
 			</div>
-			<div className='row'>
-				<div className='col-md-6 mx-auto'>
-					<div>
-						{serviceDescriptionCombined &&
-							serviceDescriptionCombined.length > 0 && (
-								<React.Fragment>
-									Added Descriptions:
-									<ul>
-										{serviceDescriptionCombined &&
-											serviceDescriptionCombined.map((i, e) => (
-												<li
-													style={{
-														listStyle: "none",
-														marginLeft: "20px",
-														fontSize: "12px",
-													}}
-													key={e}
-												>
-													<button
-														type='button'
-														onClick={() => {
-															var array =
-																serviceDescriptionCombined &&
-																serviceDescriptionCombined.filter(function (s) {
-																	return s !== i;
-																});
-															setServiceDescriptionCombined(array);
-														}}
-														style={{
-															color: "white",
-															background: "black",
-															fontSize: "15px",
-															borderRadius: "15px",
-															marginRight: "10px",
-														}}
-														aria-label='Close'
-													>
-														<span aria-hidden='true'>&times;</span>
-													</button>
-													{i}
-												</li>
-											))}
-									</ul>
-								</React.Fragment>
-							)}
-					</div>
-					<label className='text-muted'>
-						Add set of services connected to{" "}
-						<span style={{ color: "blue", fontWeight: "bold" }}>
-							"{serviceName}"
-						</span>
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange8}
-						value={serviceDescription}
-						placeholder='Describtion of the service'
-					/>
-					<div className='row'>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={pushToServiceDescription}
-							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
-						>
-							Add Service Description.
-						</button>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={() => {
-								setServiceDescriptionCombined([]);
-								setServiceType("Please select / Required*");
-							}}
-							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
-						>
-							Clear Set Of Descriptions
-						</button>
-					</div>
-				</div>
-			</div>
 
-			<div className='row'>
-				<div className='col-md-6 mx-auto'>
-					<div>
-						{serviceDescriptionCombinedOtherLanguage &&
-							serviceDescriptionCombinedOtherLanguage.length > 0 && (
-								<React.Fragment>
-									Added Descriptions Arabic:
-									<ul>
-										{serviceDescriptionCombinedOtherLanguage &&
-											serviceDescriptionCombinedOtherLanguage.map((i, e) => (
-												<li
-													style={{
-														listStyle: "none",
-														marginLeft: "20px",
-														fontSize: "12px",
-													}}
-													key={e}
-												>
-													<button
-														type='button'
-														onClick={() => {
-															var array =
-																serviceDescriptionCombinedOtherLanguage &&
-																serviceDescriptionCombinedOtherLanguage.filter(
-																	function (s) {
-																		return s !== i;
-																	}
-																);
-															setServiceDescriptionCombinedOtherLanguage(array);
-														}}
+			{!bundleService ? (
+				<div className='row'>
+					<div className='col-md-6 mx-auto'>
+						<div>
+							{serviceDescriptionCombined &&
+								serviceDescriptionCombined.length > 0 && (
+									<React.Fragment>
+										Added Descriptions:
+										<ul>
+											{serviceDescriptionCombined &&
+												serviceDescriptionCombined.map((i, e) => (
+													<li
 														style={{
-															color: "white",
-															background: "black",
-															fontSize: "15px",
-															borderRadius: "15px",
-															marginRight: "10px",
+															listStyle: "none",
+															marginLeft: "20px",
+															fontSize: "12px",
 														}}
-														aria-label='Close'
+														key={e}
 													>
-														<span aria-hidden='true'>&times;</span>
-													</button>
-													{i}
-												</li>
-											))}
-									</ul>
-								</React.Fragment>
-							)}
-					</div>
-					<label className='text-muted'>
-						Add set of services connected to{" "}
-						<span style={{ color: "blue", fontWeight: "bold" }}>
-							"{serviceNameOtherLanguage}" In Arabic
-						</span>
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange13}
-						value={serviceDescriptionOtherLanguage}
-						placeholder='Describtion of the service'
-					/>
-					<div className='row'>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={pushToServiceDescriptionOtherLanguage}
-							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
-						>
-							Add Service Description.
-						</button>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={() => {
-								setServiceDescriptionCombinedOtherLanguage([]);
-								setServiceType("Please select / Required*");
-							}}
-							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
-						>
-							Clear Set Of Descriptions
-						</button>
+														<button
+															type='button'
+															onClick={() => {
+																var array =
+																	serviceDescriptionCombined &&
+																	serviceDescriptionCombined.filter(function (
+																		s
+																	) {
+																		return s !== i;
+																	});
+																setServiceDescriptionCombined(array);
+															}}
+															style={{
+																color: "white",
+																background: "black",
+																fontSize: "15px",
+																borderRadius: "15px",
+																marginRight: "10px",
+															}}
+															aria-label='Close'
+														>
+															<span aria-hidden='true'>&times;</span>
+														</button>
+														{i}
+													</li>
+												))}
+										</ul>
+									</React.Fragment>
+								)}
+						</div>
+						<label className='text-muted'>
+							Add set of services connected to{" "}
+							<span style={{ color: "blue", fontWeight: "bold" }}>
+								"{serviceName}"
+							</span>
+						</label>
+						<input
+							type='text'
+							className='form-control'
+							onChange={handleChange8}
+							value={serviceDescription}
+							placeholder='Describtion of the service'
+						/>
+						<div className='row'>
+							<button
+								style={{ fontSize: "12px" }}
+								onClick={pushToServiceDescription}
+								className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
+							>
+								Add Service Description.
+							</button>
+							<button
+								style={{ fontSize: "12px" }}
+								onClick={() => {
+									setServiceDescriptionCombined([]);
+									setServiceType("Please select / Required*");
+								}}
+								className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
+							>
+								Clear Set Of Descriptions
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			) : null}
+
+			{!bundleService ? (
+				<div className='row'>
+					<div className='col-md-6 mx-auto'>
+						<div>
+							{serviceDescriptionCombinedOtherLanguage &&
+								serviceDescriptionCombinedOtherLanguage.length > 0 && (
+									<React.Fragment>
+										Added Descriptions Arabic:
+										<ul>
+											{serviceDescriptionCombinedOtherLanguage &&
+												serviceDescriptionCombinedOtherLanguage.map((i, e) => (
+													<li
+														style={{
+															listStyle: "none",
+															marginLeft: "20px",
+															fontSize: "12px",
+														}}
+														key={e}
+													>
+														<button
+															type='button'
+															onClick={() => {
+																var array =
+																	serviceDescriptionCombinedOtherLanguage &&
+																	serviceDescriptionCombinedOtherLanguage.filter(
+																		function (s) {
+																			return s !== i;
+																		}
+																	);
+																setServiceDescriptionCombinedOtherLanguage(
+																	array
+																);
+															}}
+															style={{
+																color: "white",
+																background: "black",
+																fontSize: "15px",
+																borderRadius: "15px",
+																marginRight: "10px",
+															}}
+															aria-label='Close'
+														>
+															<span aria-hidden='true'>&times;</span>
+														</button>
+														{i}
+													</li>
+												))}
+										</ul>
+									</React.Fragment>
+								)}
+						</div>
+						<label className='text-muted'>
+							Add set of services connected to{" "}
+							<span style={{ color: "blue", fontWeight: "bold" }}>
+								"{serviceNameOtherLanguage}" In Arabic
+							</span>
+						</label>
+						<input
+							type='text'
+							className='form-control'
+							onChange={handleChange13}
+							value={serviceDescriptionOtherLanguage}
+							placeholder='Describtion of the service'
+						/>
+						<div className='row'>
+							<button
+								style={{ fontSize: "12px" }}
+								onClick={pushToServiceDescriptionOtherLanguage}
+								className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
+							>
+								Add Service Description.
+							</button>
+							<button
+								style={{ fontSize: "12px" }}
+								onClick={() => {
+									setServiceDescriptionCombinedOtherLanguage([]);
+									setServiceType("Please select / Required*");
+								}}
+								className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
+							>
+								Clear Set Of Descriptions
+							</button>
+						</div>
+					</div>
+				</div>
+			) : null}
 
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>

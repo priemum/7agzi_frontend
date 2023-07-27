@@ -49,7 +49,7 @@ const ServicesMain = ({ language }) => {
 	const { user } = isAuthenticated();
 
 	return (
-		<ServicesMainWrapper>
+		<ServicesMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Services</title>
@@ -67,6 +67,7 @@ const ServicesMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
 				<div>

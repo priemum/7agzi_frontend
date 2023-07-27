@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 
-const BranchesMain = () => {
+const BranchesMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
 	return (
-		<BranchesMainWrapper>
+		<BranchesMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -16,17 +16,30 @@ const BranchesMain = () => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
-				<div className='messageWrapper mx-auto col-md-6 mt-5'>
-					<h2 style={{fontWeight: "bolder"}}>
-						Unfortunately, We are not supporting multi branch stores at the
-						moment.
-						<br />
-						<br />
-						This functionality still in progress for the current platform setup.
-					</h2>
-				</div>
+				{language === "Arabic" ? (
+					<div className='messageWrapper mx-auto col-md-6 mt-5 float-right'>
+						<h2 style={{ fontWeight: "bolder" }}>
+							للأسف، لا ندعم حاليًا المتاجر ذات الفروع المتعددة.
+							<br />
+							<br />
+							هذه الوظيفة قيد التطوير لتكون جاهزة على المنصة الحالية.
+						</h2>
+					</div>
+				) : (
+					<div className='messageWrapper mx-auto col-md-6 mt-5'>
+						<h2 style={{ fontWeight: "bolder" }}>
+							Unfortunately, We are not supporting multi branch stores at the
+							moment.
+							<br />
+							<br />
+							This functionality still in progress for the current platform
+							setup.
+						</h2>
+					</div>
+				)}
 			</div>
 		</BranchesMainWrapper>
 	);

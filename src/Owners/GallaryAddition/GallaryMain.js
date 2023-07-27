@@ -78,7 +78,7 @@ const GallaryMain = ({ language }) => {
 					files[i],
 					800,
 					954,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -147,7 +147,7 @@ const GallaryMain = ({ language }) => {
 	};
 
 	return (
-		<GallaryMainWrapper>
+		<GallaryMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -156,6 +156,7 @@ const GallaryMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
+						language={language}
 					/>
 				</div>
 				<div>

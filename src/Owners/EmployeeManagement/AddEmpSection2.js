@@ -29,9 +29,12 @@ const AddEmpSection2 = ({ values, setValues, handleChange, language }) => {
 	}
 
 	return (
-		<AddEmpSection2Wrapper>
+		<AddEmpSection2Wrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div>
-				<div className='row'>
+				<div
+					className='row'
+					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+				>
 					<div className='form-group col-md-6 mx-auto mt-5'>
 						<div>
 							<label className=''>

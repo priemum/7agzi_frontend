@@ -237,6 +237,8 @@ const AdminNavbarWrapper = styled.div`
 	}
 
 	@media (max-width: 1200px) {
+		width: ${(props) => (props.show ? "20%" : "60%")} !important;
+
 		ul {
 			display: ${(props) => (props.show ? "none" : "")};
 			margin-top: 0px !important;
