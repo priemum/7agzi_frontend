@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TimePicker } from "antd";
 import moment from "moment";
 import styled from "styled-components";
@@ -12,6 +12,9 @@ const StoreTimePicker = ({
 	allHours,
 	setAllHours,
 }) => {
+	const [openTimeOpen, setOpenTimeOpen] = useState(false);
+	const [closeTimeOpen, setCloseTimeOpen] = useState(false);
+
 	useEffect(() => {
 		if (openTime && closeTime) {
 			let currentTime = moment(openTime);
@@ -28,58 +31,43 @@ const StoreTimePicker = ({
 			}
 			setAllHours(times);
 		}
-		// eslint-disable-next-line
 	}, [openTime, closeTime]);
 
-	const disabledTime = () => {
-		return {
-			disabledHours: () => {
-				const hours = [];
-				for (let i = 0; i < 24; i++) {
-					if (openTime && i <= openTime.hours()) {
-						hours.push(i);
-					}
-				}
-				return hours;
-			},
-			disabledMinutes: (selectedHour) => {
-				const minutes = [];
-				if (openTime && selectedHour === openTime.hours()) {
-					for (let i = 0; i < 60; i += 15) {
-						if (i < openTime.minutes()) {
-							minutes.push(i);
-						}
-					}
-				}
-				return minutes;
-			},
-		};
+	const onOpenTimeChange = (time) => {
+		setOpenTime(time);
+		setOpenTimeOpen(false); // Close the picker after selecting an option
 	};
 
-	console.log(allHours, "allHours");
+	const onCloseTimeChange = (time) => {
+		setCloseTime(time);
+		setCloseTimeOpen(false); // Close the picker after selecting an option
+	};
 
 	return (
 		<StoreTimePickerWrapper>
 			<div>
-				Salon Hours From "{allHours && allHours[0]}" to "
-				{allHours && allHours[0] && allHours[allHours.length - 1]}"
+				Salon Hours From <strong>"{allHours && allHours[0]}"</strong> to{" "}
+				<strong>
+					"{allHours && allHours[0] && allHours[allHours.length - 1]}"
+				</strong>
 			</div>
 			<TimePicker
-				format='HH:mm'
-				minuteStep={15}
+				format='HH'
 				value={openTime}
-				onChange={setOpenTime}
+				onChange={onOpenTimeChange}
+				open={openTimeOpen}
+				onOpenChange={setOpenTimeOpen}
 				placeholder='Select Opening Time'
 				className='w-75 text-center'
 			/>
 			<TimePicker
-				format='HH:mm'
-				minuteStep={15}
+				format='HH'
 				value={closeTime}
-				onChange={setCloseTime}
+				onChange={onCloseTimeChange}
+				open={closeTimeOpen}
+				onOpenChange={setCloseTimeOpen}
 				disabled={openTime === null}
 				placeholder='Select Closing Time'
-				disabledTime={disabledTime}
 				className='mobile-scrollable-dropdown w-75 text-center my-2'
 			/>
 		</StoreTimePickerWrapper>
@@ -91,6 +79,6 @@ export default StoreTimePicker;
 const StoreTimePickerWrapper = styled.div`
 	.mobile-scrollable-dropdown .ant-picker-dropdown {
 		overflow: auto;
-		max-height: 200px; /* adjust as needed */
+		max-height: 200px;
 	}
 `;
