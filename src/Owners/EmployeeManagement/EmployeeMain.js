@@ -38,7 +38,7 @@ const isActive = (history, path) => {
 
 const EmployeeMain = ({ language }) => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapsed, setCollapsed] = useState(true);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("AddEmployee");

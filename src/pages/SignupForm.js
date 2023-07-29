@@ -177,10 +177,10 @@ const SignupForm = ({ language }) => {
 
 	const redirectUser = () => {
 		if (redirectToReferrer) {
-			if (user && user.role === 1) {
-				return <Redirect to='/admin/dashboard' />;
+			if (user && user.role === 10000) {
+				return <Redirect to='/boss/admin/dashboard' />;
 			} else if (user && user.role === 1000) {
-				return <Redirect to='/store/admin/dashboard' />;
+				return <Redirect to='/store/admin/store-preview' />;
 			} else {
 				return <Redirect to='/schedule' />;
 			}

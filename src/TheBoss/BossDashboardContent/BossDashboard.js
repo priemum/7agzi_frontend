@@ -453,7 +453,10 @@ const BossDashboard = () => {
 																		color: "white",
 																		textDecoration: "underline",
 																	}}
-																	to={`/boss/store/admin/dashboard/${o._id}`}
+																	to={`#`}
+																	onClick={() => {
+																		window.location.href = `/boss/store/admin/dashboard/${o._id}`;
+																	}}
 																>
 																	{" "}
 																	<strong>UPDATE ACCOUNT</strong>{" "}

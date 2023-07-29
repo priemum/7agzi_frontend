@@ -98,7 +98,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1920,
 					809,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -133,7 +133,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1920,
 					809,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -168,7 +168,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1920,
 					809,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -203,7 +203,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1024,
 					1024,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -241,7 +241,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1024,
 					1024,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {
@@ -279,7 +279,7 @@ const EditHomePageBanner = () => {
 					files[i],
 					1024,
 					1024,
-					"JPEG",
+					"AUTO",
 					100,
 					0,
 					(uri) => {

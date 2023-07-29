@@ -83,7 +83,7 @@ const SigninForm = ({ history, language }) => {
 				} else if (user && user.role === 3) {
 					return <Redirect to='/store/book-appointment-from-store' />;
 				} else if (user && user.role === 1000) {
-					return <Redirect to='/store/admin/dashboard' />;
+					return <Redirect to='/store/admin/store-preview' />;
 				} else if (user && user.role === 2) {
 					return <Redirect to='/stylist/dashboard' />;
 				} else if (user && user.role === 10000) {

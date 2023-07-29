@@ -42,6 +42,7 @@ import EcommerceMain from "./Owners/EcommerceManagement/EcommerceMain";
 import SingleAppointmentPage from "./Owners/OwnerDashboardContents/SingleAppointmentPage";
 import BillingMain from "./Owners/Billing/BillingMain";
 import GallaryMain from "./Owners/GallaryAddition/GallaryMain";
+import StorePreviewMain from "./Owners/StorePreview/StorePreviewMain";
 
 //user routes
 import PrivateRoute from "./auth/PrivateRoute";
@@ -86,6 +87,7 @@ import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsConte
 import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
+import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -289,6 +291,12 @@ function App() {
 					/>
 
 					<OwnerRoute
+						path='/store/admin/store-preview'
+						exact
+						component={() => <StorePreviewMain language={language} />}
+					/>
+
+					<OwnerRoute
 						path='/store/admin/settings'
 						exact
 						component={() => <SettingsMain language={language} />}
@@ -458,6 +466,11 @@ function App() {
 						component={UpdateBusinessAgent}
 					/>
 
+					<BossRoute
+						path='/boss/store/admin/store-preview/:ownerId'
+						exact
+						component={() => <StorePreviewMainBoss language={language} />}
+					/>
 					<BossRoute
 						path='/boss/store/admin/services/:ownerId'
 						exact

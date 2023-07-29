@@ -232,26 +232,69 @@ const AddService = ({ language, ownerId }) => {
 	};
 
 	var possibleServices = [
-		{ english: "Custom Service", arabic: "Custom Service" },
+		{ english: "Custom Service", arabic: " خدمة مخصصة" },
 		{ english: "Bundle Service", arabic: "خدمة الباقة" },
 		{ english: "Haircut", arabic: "قص الشعر" },
-		{ english: "Hair Styling", arabic: "تصفيف الشعر" },
-		{ english: "Hair Coloring", arabic: "صبغ الشعر" },
-		{ english: "Highlights/Lowlights", arabic: "الإبراز / الظلال" },
-		{ english: "Deep Conditioning Treatments", arabic: "علاجات ترطيب الشعر" },
-		{ english: "Perm", arabic: "الشعر الدائم" },
-		{ english: "Relaxer", arabic: "مسترخي الشعر" },
-		{ english: "Hair Straightening", arabic: "فرد الشعر" },
-		{ english: "Hair Extensions", arabic: "امتدادات الشعر" },
+		{ english: "Children's haircut", arabic: "قص شعر اطفال " },
+		{ english: "Hairdrying", arabic: "استشوار" },
+		{ english: "Babyliss", arabic: "مكواه" },
+		{
+			english: "Hairdrying + babyliss + Hair washing",
+			arabic: "غسيل+سشوار+مكواه",
+		},
+		{ english: "Beard shaving", arabic: "حلاقة ذقن" },
 		{ english: "Beard Trimming", arabic: "تقليم اللحية" },
-		{ english: "Shaving", arabic: "الحلاقة" },
+		{ english: "Beard coloring", arabic: " صبغة الذقن" },
+		{ english: "Hair Coloring", arabic: "صبغ الشعر" },
+		{ english: "Hair Coloring 2 colors", arabic: " صبغ الشعر لونين " },
+		{ english: "Highlights/Lowlights", arabic: "الإبراز / الظلال" },
+		{ english: "Hair Straightening", arabic: "فرد الشعر" },
+		{ english: "Protein hair straightener", arabic: "فرد شعر بالبروتين " },
+		{ english: "Creatine hair straightener", arabic: "فرد شعر بالكرياتين " },
+		{ english: " Oil bath", arabic: "حمام زيت " },
+		{ english: " Cream bath ", arabic: "حمام كريم" },
+		{
+			english: " Steam cream bath session ",
+			arabic: " جلسة حمام كريم بالبخار",
+		},
+		{ english: "Pedicure `hand`", arabic: "باديكير " },
+		{ english: " Pedicure `foot`", arabic: " باديكير " },
+		{ english: " Edorgil Pedicure ", arabic: "بادكير ايدورجيل" },
+		{ english: "Manicure", arabic: "المانيكير" },
+		{ english: "Regular mask", arabic: "ماسك عادى" },
+		{ english: "Steam mask", arabic: "ماسك بخار" },
+		{ english: " Deep skin cleansing ", arabic: " تنظيف بشرة عميق " },
+		{
+			english: " Laser deep skin cleansing ",
+			arabic: " تنظيف بشرة عميق بالليزر ",
+		},
+		{ english: " Normal skin cleansing ", arabic: " تنظيف بشرة عادى " },
+		{
+			english: "skin cleansing HydroFacial",
+			arabic: "تنظيف بشرة هايدروفيشيل ",
+		},
 		{ english: "Facial Treatments", arabic: "العلاجات الوجهية" },
 		{ english: "Scalp Treatments", arabic: "العلاجات فروة الرأس" },
-		{ english: "Manicure", arabic: "المانيكير" },
-		{ english: "Pedicure", arabic: "الباديكير" },
-		{ english: "Waxing", arabic: "الشمع" },
-		{ english: "Threading", arabic: "الخياطة" },
-		{ english: "Bridal Hair Styling", arabic: "تصفيف شعر العروس" },
+		{ english: "Threading", arabic: "فتلة" },
+		{ english: "Face Waxing", arabic: "للوجه  الشمع" },
+		{ english: "Full body waxing", arabic: "للجسم كامل  الشمع" },
+		{ english: "Full hand waxing", arabic: "لليد كاملة  الشمع" },
+		{ english: "Full leg waxing", arabic: "للرجل كاملة  الشمع" },
+		{ english: " Half hand waxing", arabic: " الشمع نصف اليد " },
+		{ english: "Half leg waxing", arabic: " نصف الرجل الشمع" },
+		{
+			english: "Bikini & underarm waxing",
+			arabic: " الشمع البكينى والاندر ارم ",
+		},
+		{ english: "Full body sweet", arabic: "للجسم كامل  سويت" },
+		{ english: "Full hand sweet ", arabic: "لليد كاملة  سويت " },
+		{ english: "Full leg sweet ", arabic: "للرجل كاملة  سويت " },
+		{ english: " Half hand sweet ", arabic: " سويت نصف اليد " },
+		{ english: "Half leg sweet ", arabic: " نصف الرجل سويت " },
+		{
+			english: "Bikini & underarm sweet ",
+			arabic: " سويت البكينى والاندر ارم ",
+		},
 		{ english: "Makeup services", arabic: "خدمات المكياج" },
 	];
 
@@ -474,195 +517,187 @@ const AddService = ({ language, ownerId }) => {
 				</div>
 			</div>
 
-			{!bundleService ? (
-				<div className='row'>
-					<div className='col-md-6 mx-auto'>
-						<div>
-							{serviceDescriptionCombined &&
-								serviceDescriptionCombined.length > 0 && (
-									<Fragment>
-										{language === "Arabic"
-											? "الوصف المضاف:"
-											: "Added Descriptions:"}
-										<ul>
-											{serviceDescriptionCombined &&
-												serviceDescriptionCombined.map((i, e) => (
-													<li
-														style={{
-															listStyle: "none",
-															marginLeft: "20px",
-															fontSize: "12px",
+			<div className='row'>
+				<div className='col-md-6 mx-auto'>
+					<div>
+						{serviceDescriptionCombined &&
+							serviceDescriptionCombined.length > 0 && (
+								<Fragment>
+									{language === "Arabic"
+										? "الوصف المضاف:"
+										: "Added Descriptions:"}
+									<ul>
+										{serviceDescriptionCombined &&
+											serviceDescriptionCombined.map((i, e) => (
+												<li
+													style={{
+														listStyle: "none",
+														marginLeft: "20px",
+														fontSize: "12px",
+													}}
+													key={e}
+												>
+													<button
+														type='button'
+														onClick={() => {
+															var array =
+																serviceDescriptionCombined &&
+																serviceDescriptionCombined.filter(function (s) {
+																	return s !== i;
+																});
+															setServiceDescriptionCombined(array);
 														}}
-														key={e}
+														style={{
+															color: "white",
+															background: "black",
+															fontSize: "15px",
+															borderRadius: "15px",
+															marginRight: "10px",
+														}}
+														aria-label='Close'
 													>
-														<button
-															type='button'
-															onClick={() => {
-																var array =
-																	serviceDescriptionCombined &&
-																	serviceDescriptionCombined.filter(function (
-																		s
-																	) {
-																		return s !== i;
-																	});
-																setServiceDescriptionCombined(array);
-															}}
-															style={{
-																color: "white",
-																background: "black",
-																fontSize: "15px",
-																borderRadius: "15px",
-																marginRight: "10px",
-															}}
-															aria-label='Close'
-														>
-															<span aria-hidden='true'>&times;</span>
-														</button>
-														{i}
-													</li>
-												))}
-										</ul>
-									</Fragment>
-								)}
-						</div>
-						<label className='text-muted'>
+														<span aria-hidden='true'>&times;</span>
+													</button>
+													{i}
+												</li>
+											))}
+									</ul>
+								</Fragment>
+							)}
+					</div>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceName}"`
+							: `Add set of services connected to "${serviceName}"`}
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange8}
+						value={serviceDescription}
+						placeholder={
+							language === "Arabic"
+								? "وصف الخدمة"
+								: "Description of the service"
+						}
+					/>
+					<div className='row'>
+						<button
+							style={{ fontSize: "12px" }}
+							onClick={pushToServiceDescription}
+							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
+						>
 							{language === "Arabic"
-								? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceName}"`
-								: `Add set of services connected to "${serviceName}"`}
-						</label>
-						<input
-							type='text'
-							className='form-control'
-							onChange={handleChange8}
-							value={serviceDescription}
-							placeholder={
-								language === "Arabic"
-									? "وصف الخدمة"
-									: "Description of the service"
-							}
-						/>
-						<div className='row'>
-							<button
-								style={{ fontSize: "12px" }}
-								onClick={pushToServiceDescription}
-								className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
-							>
-								{language === "Arabic"
-									? "إضافة وصف الخدمة."
-									: "Add Service Description."}
-							</button>
-							<button
-								style={{ fontSize: "12px" }}
-								onClick={() => {
-									setServiceDescriptionCombined([]);
-									setServiceType("Please select / Required*");
-								}}
-								className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
-							>
-								{language === "Arabic"
-									? "مسح مجموعة الأوصاف"
-									: "Clear Set Of Descriptions"}
-							</button>
-						</div>
+								? "إضافة وصف الخدمة."
+								: "Add Service Description."}
+						</button>
+						<button
+							style={{ fontSize: "12px" }}
+							onClick={() => {
+								setServiceDescriptionCombined([]);
+								setServiceType("Please select / Required*");
+							}}
+							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
+						>
+							{language === "Arabic"
+								? "مسح مجموعة الأوصاف"
+								: "Clear Set Of Descriptions"}
+						</button>
 					</div>
 				</div>
-			) : null}
+			</div>
 
-			{!bundleService ? (
-				<div className='row'>
-					<div className='col-md-6 mx-auto'>
-						<div>
-							{serviceDescriptionCombinedOtherLanguage &&
-								serviceDescriptionCombinedOtherLanguage.length > 0 && (
-									<Fragment>
-										{language === "Arabic"
-											? "الوصف المضاف باللغة العربية:"
-											: "Added Descriptions Arabic:"}
-										<ul>
-											{serviceDescriptionCombinedOtherLanguage &&
-												serviceDescriptionCombinedOtherLanguage.map((i, e) => (
-													<li
-														style={{
-															listStyle: "none",
-															marginLeft: "20px",
-															fontSize: "12px",
-														}}
-														key={e}
-													>
-														<button
-															type='button'
-															onClick={() => {
-																var array =
-																	serviceDescriptionCombinedOtherLanguage &&
-																	serviceDescriptionCombinedOtherLanguage.filter(
-																		function (s) {
-																			return s !== i;
-																		}
-																	);
-																setServiceDescriptionCombinedOtherLanguage(
-																	array
+			<div className='row'>
+				<div className='col-md-6 mx-auto'>
+					<div>
+						{serviceDescriptionCombinedOtherLanguage &&
+							serviceDescriptionCombinedOtherLanguage.length > 0 && (
+								<Fragment>
+									{language === "Arabic"
+										? "الوصف المضاف باللغة العربية:"
+										: "Added Descriptions Arabic:"}
+									<ul>
+										{serviceDescriptionCombinedOtherLanguage &&
+											serviceDescriptionCombinedOtherLanguage.map((i, e) => (
+												<li
+													style={{
+														listStyle: "none",
+														marginLeft: "20px",
+														fontSize: "12px",
+													}}
+													key={e}
+												>
+													<button
+														type='button'
+														onClick={() => {
+															var array =
+																serviceDescriptionCombinedOtherLanguage &&
+																serviceDescriptionCombinedOtherLanguage.filter(
+																	function (s) {
+																		return s !== i;
+																	}
 																);
-															}}
-															style={{
-																color: "white",
-																background: "black",
-																fontSize: "15px",
-																borderRadius: "15px",
-																marginRight: "10px",
-															}}
-															aria-label='Close'
-														>
-															<span aria-hidden='true'>&times;</span>
-														</button>
-														{i}
-													</li>
-												))}
-										</ul>
-									</Fragment>
-								)}
-						</div>
-						<label className='text-muted'>
+															setServiceDescriptionCombinedOtherLanguage(array);
+														}}
+														style={{
+															color: "white",
+															background: "black",
+															fontSize: "15px",
+															borderRadius: "15px",
+															marginRight: "10px",
+														}}
+														aria-label='Close'
+													>
+														<span aria-hidden='true'>&times;</span>
+													</button>
+													{i}
+												</li>
+											))}
+									</ul>
+								</Fragment>
+							)}
+					</div>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceNameOtherLanguage}" باللغة العربية`
+							: `Add set of services connected to "${serviceNameOtherLanguage}" In Arabic`}
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						onChange={handleChange13}
+						value={serviceDescriptionOtherLanguage}
+						placeholder={
+							language === "Arabic"
+								? "وصف الخدمة"
+								: "Description of the service"
+						}
+					/>
+					<div className='row'>
+						<button
+							style={{ fontSize: "12px" }}
+							onClick={pushToServiceDescriptionOtherLanguage}
+							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
+						>
 							{language === "Arabic"
-								? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceNameOtherLanguage}" باللغة العربية`
-								: `Add set of services connected to "${serviceNameOtherLanguage}" In Arabic`}
-						</label>
-						<input
-							type='text'
-							className='form-control'
-							onChange={handleChange13}
-							value={serviceDescriptionOtherLanguage}
-							placeholder={
-								language === "Arabic"
-									? "وصف الخدمة"
-									: "Description of the service"
-							}
-						/>
-						<div className='row'>
-							<button
-								style={{ fontSize: "12px" }}
-								onClick={pushToServiceDescriptionOtherLanguage}
-								className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
-							>
-								{language === "Arabic"
-									? "إضافة وصف الخدمة."
-									: "Add Service Description."}
-							</button>
-							<button
-								style={{ fontSize: "12px" }}
-								onClick={() => {
-									setServiceDescriptionCombinedOtherLanguage([]);
-									setServiceType("Please select / Required*");
-								}}
-								className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
-							>
-								{language === "Arabic"
-									? "مسح مجموعة الأوصاف"
-									: "Clear Set Of Descriptions"}
-							</button>
-						</div>
+								? "إضافة وصف الخدمة."
+								: "Add Service Description."}
+						</button>
+						<button
+							style={{ fontSize: "12px" }}
+							onClick={() => {
+								setServiceDescriptionCombinedOtherLanguage([]);
+								setServiceType("Please select / Required*");
+							}}
+							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
+						>
+							{language === "Arabic"
+								? "مسح مجموعة الأوصاف"
+								: "Clear Set Of Descriptions"}
+						</button>
 					</div>
 				</div>
-			) : null}
+			</div>
 
 			<div className='row'>
 				<div className='form-group col-md-6 mx-auto'>

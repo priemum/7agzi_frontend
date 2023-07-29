@@ -154,19 +154,6 @@ const OwnerDashboardBoss = ({ language }) => {
 	// eslint-disable-next-line
 	const remainingDays = 3 - diffDays;
 
-	const reloadCount = sessionStorage.getItem("reloadCount");
-
-	useEffect(() => {
-		if (reloadCount < 1) {
-			sessionStorage.setItem("reloadCount", String(reloadCount + 1));
-			window.location.reload();
-		} else {
-			sessionStorage.removeItem("reloadCount");
-		}
-
-		// eslint-disable-next-line
-	}, []);
-
 	const onPlay = () => {
 		ReactGA.event({
 			category: "XLOOKAdmin_PlayedSettingsTutorial",

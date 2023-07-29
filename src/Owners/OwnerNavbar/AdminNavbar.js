@@ -59,6 +59,11 @@ const items = [
 		<PieChartOutlined />
 	),
 	getItem(
+		<Link to='/store/admin/store-preview'>Salon Preview</Link>,
+		"sub13",
+		<ShopOutlined />
+	),
+	getItem(
 		<Link to='/store/admin/settings'>Settings</Link>,
 		"sub2",
 		<SettingOutlined />
@@ -141,6 +146,11 @@ const itemsArabic = [
 		<Link to='/store/admin/dashboard'>صالونى</Link>,
 		"sub1",
 		<PieChartOutlined />
+	),
+	getItem(
+		<Link to='/store/admin/store-preview'>معاينة صالون</Link>,
+		"sub13",
+		<ShopOutlined />
 	),
 	getItem(
 		<Link to='/store/admin/settings'>إعدادات</Link>,
@@ -292,7 +302,7 @@ const AdminNavbar = ({
 				style={{
 					marginBottom: 8,
 					marginLeft: language === "Arabic" ? "" : 10,
-					left: language === "Arabic" ? 220 : "",
+					left: language === "Arabic" ? 25 : "",
 					marginTop: 3,
 				}}
 			>
@@ -342,7 +352,6 @@ const AdminNavbar = ({
 				mode='inline'
 				theme='dark'
 				inlineCollapsed={collapsed}
-				items={language === "Arabic" ? itemsArabic : items}
 				onClick={(e) => {
 					if (e.key === "StoreLogo") {
 						setClickedOn(true);
@@ -351,7 +360,17 @@ const AdminNavbar = ({
 					}
 					return <Redirect to={e.key} />;
 				}}
-			/>
+			>
+				{(language === "Arabic" ? itemsArabic : items).map((item, index) => (
+					<Menu.Item
+						key={item.key}
+						icon={item.icon}
+						onClick={toggleCollapsed} // This will collapse the menu when you click on a link
+					>
+						{item.label}
+					</Menu.Item>
+				))}
+			</Menu>
 		</AdminNavbarWrapper>
 	);
 };

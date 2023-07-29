@@ -111,7 +111,7 @@ export const showAverageRatingForEntireStore = (allRatings, store, x) => {
 					style={{ textTransform: "uppercase", fontSize: "11px" }}
 					className='mr-1'
 				>
-					{store.belongsTo.storeAddress}{" "}
+					{store && store.belongsTo && store.belongsTo.storeAddress}{" "}
 				</span>
 			)}
 

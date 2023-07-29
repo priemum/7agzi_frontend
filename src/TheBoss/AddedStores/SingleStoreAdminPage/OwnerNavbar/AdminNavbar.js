@@ -73,6 +73,13 @@ const items = [
 		<BranchesOutlined />
 	),
 	getItem(
+		<Link to={`/boss/store/admin/store-preview/${ownerId}`}>
+			Salon Preview
+		</Link>,
+		"sub13",
+		<ShopOutlined />
+	),
+	getItem(
 		<Link to={`/boss/store/admin/settings/${ownerId}`}>Settings</Link>,
 		"sub2",
 		<SettingOutlined />
