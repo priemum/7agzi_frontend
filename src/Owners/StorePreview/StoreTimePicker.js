@@ -31,6 +31,7 @@ const StoreTimePicker = ({
 			}
 			setAllHours(times);
 		}
+		// eslint-disable-next-line
 	}, [openTime, closeTime]);
 
 	const onOpenTimeChange = (time) => {

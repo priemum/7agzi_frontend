@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { showAverageRatingForEntireStore } from "../../components/SingleEmployee/Rating";
 import { Animated } from "react-animated-css";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const HeroComponent = ({
 	hero1,
@@ -25,6 +27,28 @@ const HeroComponent = ({
 	}, []);
 
 	const allRatingArray = allEmployees && allEmployees.map((i) => i.ratings);
+
+	useEffect(() => {
+		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
+		ReactGA.gtag("event", "page_view", {
+			page_path: window.location.pathname,
+		});
+
+		// eslint-disable-next-line
+	}, [window.location.pathname]);
+
+	const options = {
+		autoConfig: true,
+		debug: false,
+	};
+
+	useEffect(() => {
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
+
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<HeroComponentWrapper>
@@ -107,6 +131,18 @@ const HeroComponent = ({
 						className='btn btn-info p-1'
 						onClick={() => {
 							setModalVisible(true);
+							ReactGA.event("Account_Clicked_To_Edit_ThumbnailPhotos", {
+								event_category: "Account_Clicked_To_Edit_ThumbnailPhotos",
+								event_label: "Account_Clicked_To_Edit_ThumbnailPhotos",
+								value: 0, // Optional extra parameters
+							});
+
+							ReactPixel.track("Account_Clicked_To_Edit_ThumbnailPhotos", {
+								content_name: "Account_Clicked_To_Edit_ThumbnailPhotos",
+								content_category: "Account_Clicked_To_Edit_ThumbnailPhotos",
+								value: "",
+								currency: "",
+							});
 						}}
 					>
 						{language === "Arabic" ? "تعديل الصورة الرئيسية" : "Edit Banner"}
@@ -186,6 +222,28 @@ const HeroComponent = ({
 										className='btn btn-info p-1'
 										onClick={() => {
 											setModalVisible2(true);
+											ReactGA.event(
+												"Account_Clicked_To_Edit_GeneralSalonData",
+												{
+													event_category:
+														"Account_Clicked_To_Edit_GeneralSalonData",
+													event_label:
+														"Account_Clicked_To_Edit_GeneralSalonData",
+													value: 0, // Optional extra parameters
+												}
+											);
+
+											ReactPixel.track(
+												"Account_Clicked_To_Edit_GeneralSalonData",
+												{
+													content_name:
+														"Account_Clicked_To_Edit_GeneralSalonData",
+													content_category:
+														"Account_Clicked_To_Edit_GeneralSalonData",
+													value: "",
+													currency: "",
+												}
+											);
 										}}
 									>
 										{language === "Arabic"
