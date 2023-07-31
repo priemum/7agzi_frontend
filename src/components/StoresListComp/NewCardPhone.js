@@ -224,4 +224,9 @@ const CardsStorePhoneWrapper = styled.div`
 	.right {
 		justify-self: end;
 	}
+
+	@media (max-width: 1000px) {
+		margin-top: 7px;
+		margin-bottom: 7px;
+	}
 `;

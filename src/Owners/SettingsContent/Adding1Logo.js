@@ -236,7 +236,13 @@ const Adding1Logo = ({
 
 	return (
 		<Adding1LogoWrapper>
-			<div className='row col-12'>
+			<div
+				className='row col-12'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<div className='col-md-4'>
 					{loading2 ? (
 						<div style={{ textAlign: "center", marginTop: "10%" }}>
@@ -451,7 +457,9 @@ const Adding1LogoWrapper = styled.div`
 	}
 
 	@media (max-width: 1000px) {
-		margin-left: 10px;
+		margin-left: 0px;
+		margin-top: 10px;
+
 		div > .btn {
 			margin-left: 50px;
 			width: 60% !important;

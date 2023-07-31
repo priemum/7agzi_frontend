@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const BranchesMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	// const [collapsed, setCollapsed] = useState(false);
 
 	return (
 		<BranchesMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
-				<div>
+				{/* <div>
 					<AdminNavbar
 						fromPage='Branches'
 						AdminMenuStatus={AdminMenuStatus}
@@ -18,6 +19,10 @@ const BranchesMain = ({ language }) => {
 						setCollapsed={setCollapsed}
 						language={language}
 					/>
+				</div> */}
+
+				<div className='menuWrapper'>
+					<OwnerNavmenu language={language} fromPage='Branches' />
 				</div>
 				{language === "Arabic" ? (
 					<div className='messageWrapper mx-auto col-md-6 mt-5 float-right'>
@@ -49,12 +54,29 @@ export default BranchesMain;
 
 const BranchesMainWrapper = styled.div`
 	min-height: 1000px;
+
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
+	}
+
+	.menuWrapper {
+		background-color: black;
+		overflow: auto;
+		min-height: 1000px;
 	}
 
 	@media (max-width: 1200px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: 18% 82%;
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
+		}
+
 		.messageWrapper {
 			margin-right: 2px !important;
 			margin-left: 5px !important;

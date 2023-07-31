@@ -322,9 +322,15 @@ const AddService = ({ language }) => {
 	};
 
 	const newServiceForm = () => (
-		<form onSubmit={clickSubmit}>
+		<form onSubmit={clickSubmit} dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='row'>
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic" ? "الخدمة لـ" : "Service For"}
 					</label>
@@ -343,7 +349,13 @@ const AddService = ({ language }) => {
 						))}
 					</select>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic" ? "اسم الخدمة" : "Service Name"}
 					</label>
@@ -367,7 +379,13 @@ const AddService = ({ language }) => {
 				</div>
 				{customServicePicked || bundleService ? (
 					<>
-						<div className='form-group col-md-6 mx-auto'>
+						<div
+							className='form-group col-md-6 mx-auto'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
 								{bundleService
 									? language === "Arabic"
@@ -390,7 +408,13 @@ const AddService = ({ language }) => {
 								required
 							/>
 						</div>
-						<div className='form-group col-md-6 mx-auto'>
+						<div
+							className='form-group col-md-6 mx-auto'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
 								{bundleService
 									? language === "Arabic"
@@ -415,7 +439,13 @@ const AddService = ({ language }) => {
 							/>
 						</div>
 						{bundleService ? (
-							<div className='form-group mx-auto col-md-12 w-100 py-2'>
+							<div
+								className='form-group mx-auto col-md-12 w-100 py-2'
+								style={{
+									textAlign: language === "Arabic" ? "right" : "",
+									fontWeight: language === "Arabic" ? "bolder" : "",
+								}}
+							>
 								<label className='text-muted'>
 									{language === "Arabic"
 										? "Add Set Of Services"
@@ -442,7 +472,13 @@ const AddService = ({ language }) => {
 					</>
 				) : null}
 
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
 					</label>
@@ -459,7 +495,13 @@ const AddService = ({ language }) => {
 						required
 					/>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic"
 							? "سعر الخدمة بعد الخصم"
@@ -478,7 +520,13 @@ const AddService = ({ language }) => {
 						required
 					/>
 				</div>
-				<div className='form-group col-md-8 mx-auto'>
+				<div
+					className='form-group col-md-8 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic"
 							? "عبارة جذابة لهذه الخدمة (10 كلمات)"
@@ -496,7 +544,13 @@ const AddService = ({ language }) => {
 						}
 					/>
 				</div>
-				<div className='form-group col-md-8 mx-auto'>
+				<div
+					className='form-group col-md-8 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic"
 							? "عبارة جذابة لهذه الخدمة باللغة العربية (10 كلمات)"
@@ -698,7 +752,13 @@ const AddService = ({ language }) => {
 			</div>
 
 			<div className='row'>
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic"
 							? "الوقت المقدر للخدمة"
@@ -717,7 +777,13 @@ const AddService = ({ language }) => {
 						}
 					/>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<label className='text-muted'>
 						{language === "Arabic" ? "نقاط الولاء" : "Loyalty Points"}
 					</label>

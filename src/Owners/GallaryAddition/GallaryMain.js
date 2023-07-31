@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import {
 	addingSalonGallary,
 	cloudinaryUpload1,
@@ -11,15 +10,14 @@ import axios from "axios";
 import ImageCard from "./ImageCard";
 import { isAuthenticated } from "../../auth";
 import { toast } from "react-toastify";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const GallaryMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
-
 	const [values, setValues] = useState({ gallaryPhotos: [] });
 	// eslint-disable-next-line
 	const [previousGallary, setPreviousGallary] = useState({});
 	const [loading, setLoading] = useState(true);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	const { user, token } = isAuthenticated();
 
@@ -147,9 +145,12 @@ const GallaryMain = ({ language }) => {
 	};
 
 	return (
-		<GallaryMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<GallaryMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<div className='grid-container'>
-				<div>
+				{/* <div>
 					<AdminNavbar
 						fromPage='AddGallary'
 						AdminMenuStatus={AdminMenuStatus}
@@ -157,6 +158,23 @@ const GallaryMain = ({ language }) => {
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
 						language={language}
+					/>
+				</div> */}
+
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
+						language={language}
+						fromPage='Gallary'
+						collapseMenu={collapseMenu}
 					/>
 				</div>
 				<div>
@@ -173,9 +191,9 @@ const GallaryMain = ({ language }) => {
 								setValues={setValues}
 								language={language}
 							/>
-							<div className='mt-3 mx-auto text-center'>
+							<div className='mt-3 mb-5 mx-auto text-center'>
 								<button
-									className='btn btn-primary mx-auto w-25'
+									className='btn btn-primary mx-auto w-50'
 									onClick={() => {
 										AddNewGallaryToSalon();
 									}}
@@ -197,7 +215,7 @@ const GallaryMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 13% 87%;
+		grid-template-columns: 5% 95%;
 	}
 
 	button {
@@ -206,9 +224,33 @@ const GallaryMainWrapper = styled.div`
 		text-transform: uppercase;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1200px) {
 		.grid-container {
-			grid-template-columns: 2% 98%;
+			display: grid;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
 		}
 
 		a {

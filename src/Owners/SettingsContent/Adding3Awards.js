@@ -26,7 +26,13 @@ const Adding3Awards = ({
 
 	return (
 		<Adding3AwardsWrapper>
-			<div className='col-md-10 mx-auto'>
+			<div
+				className='col-md-10 mx-auto'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<div className='form-group'>
 					<label className='text-muted'>
 						{language === "Arabic"
@@ -90,7 +96,13 @@ const Adding3Awards = ({
 				</div>
 			</div>
 
-			<div className='col-md-12 mx-auto mt-5'>
+			<div
+				className='col-md-12 mx-auto mt-5'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<div className='form-group'>
 					<label className='text-muted'>
 						{language === "Arabic"

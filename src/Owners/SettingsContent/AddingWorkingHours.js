@@ -328,23 +328,25 @@ const AddingWorkingHours = ({
 								: "Add Active Appointments Hours/Times"}
 						</h3>
 
-						<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>
+						<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center row'>
 							{AllPossibleHours &&
 								AllPossibleHours.map((h) => {
 									return (
-										<span key={h} className='m-1 p-1'>
-											<label htmlFor={h} className='block '>
-												<input
-													type='checkbox'
-													id={h}
-													onChange={handleQueryChange_WorkingHours}
-													value={h}
-													className='m-3'
-													checked={query4 && query4.indexOf(h) !== -1}
-												/>
-												{h}
-											</label>
-										</span>
+										<div className='col-md-1 col-4 mx-auto mt-2'>
+											<span key={h} className='m-1 p-1'>
+												<label htmlFor={h} className='block '>
+													<input
+														type='checkbox'
+														id={h}
+														onChange={handleQueryChange_WorkingHours}
+														value={h}
+														className='m-1'
+														checked={query4 && query4.indexOf(h) !== -1}
+													/>
+													{h}
+												</label>
+											</span>
+										</div>
 									);
 								})}
 						</div>
@@ -355,7 +357,7 @@ const AddingWorkingHours = ({
 									Your added Times:
 									<div className='row'>
 										{AllAddedHoursCombined.AllAddedHoursCombined.map((t, i) => (
-											<div key={i} className='col-md-2 mt-2'>
+											<div key={i} className='col-md-2 mt-2 col-4 mx-auto'>
 												{t}
 											</div>
 										))}

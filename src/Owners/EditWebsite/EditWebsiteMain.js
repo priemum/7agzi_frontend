@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import EditAboutUs from "./EditAboutUs";
 import EditContactUs from "./EditContactUs";
 import EditHomePageBanner from "./EditHomePageBanner";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { Helmet } from "react-helmet";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -38,8 +39,9 @@ const isActive = (history, path) => {
 };
 
 const EditWebsiteMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	// const [collapsed, setCollapsed] = useState(false);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("AboutUs");
@@ -60,7 +62,10 @@ const EditWebsiteMain = ({ language }) => {
 	const { user } = isAuthenticated();
 
 	return (
-		<EditWebsiteMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<EditWebsiteMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Edit Web Page</title>
@@ -72,7 +77,7 @@ const EditWebsiteMain = ({ language }) => {
 			</Helmet>
 
 			<div className='grid-container'>
-				<div>
+				{/* <div>
 					<AdminNavbar
 						fromPage='EditWebsite'
 						AdminMenuStatus={AdminMenuStatus}
@@ -81,6 +86,23 @@ const EditWebsiteMain = ({ language }) => {
 						setCollapsed={setCollapsed}
 						language={language}
 					/>
+				</div> */}
+
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
+						language={language}
+						fromPage='EditWebsite'
+						collapseMenu={collapseMenu}
+					/>
 				</div>
 				<div>
 					<div className='container'>
@@ -88,7 +110,7 @@ const EditWebsiteMain = ({ language }) => {
 							<div className='row mx-auto'>
 								<div
 									style={isActive(clickedMenu, "AboutUs")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("AboutUs")}
 								>
 									<Link
@@ -101,7 +123,7 @@ const EditWebsiteMain = ({ language }) => {
 								</div>
 								<div
 									style={isActive(clickedMenu, "ContactUs")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("ContactUs")}
 								>
 									<Link
@@ -113,7 +135,7 @@ const EditWebsiteMain = ({ language }) => {
 								</div>
 								<div
 									style={isActive(clickedMenu, "HomePage")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("HomePage")}
 								>
 									<Link
@@ -129,7 +151,7 @@ const EditWebsiteMain = ({ language }) => {
 							<div className='row mx-auto'>
 								<div
 									style={isActive(clickedMenu, "AboutUs")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("AboutUs")}
 								>
 									<Link
@@ -142,7 +164,7 @@ const EditWebsiteMain = ({ language }) => {
 								</div>
 								<div
 									style={isActive(clickedMenu, "ContactUs")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("ContactUs")}
 								>
 									<Link
@@ -155,7 +177,7 @@ const EditWebsiteMain = ({ language }) => {
 								</div>
 								<div
 									style={isActive(clickedMenu, "HomePage")}
-									className='col-md-3 menuItems'
+									className='col-md-3 col-6 mx-auto menuItems'
 									onClick={() => setClickedMenu("HomePage")}
 								>
 									<Link
@@ -184,7 +206,7 @@ const EditWebsiteMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
 	}
 
 	.container {
@@ -193,9 +215,33 @@ const EditWebsiteMainWrapper = styled.div`
 		margin-left: 350px;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1200px) {
 		.grid-container {
-			grid-template-columns: 2% 98%;
+			display: grid;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
 		}
 
 		a {
@@ -211,6 +257,7 @@ const EditWebsiteMainWrapper = styled.div`
 		.container {
 			margin-left: 0px !important;
 			text-align: center;
+			margin-top: 20px !important;
 		}
 	}
 `;

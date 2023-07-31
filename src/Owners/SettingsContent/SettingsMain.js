@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import Adding1Logo from "./Adding1Logo";
 import Adding2DaysClosed from "./Adding2DaysClosed";
 import Adding3Awards from "./Adding3Awards";
@@ -13,6 +13,7 @@ import { isAuthenticated } from "../../auth";
 import AddingWorkingHours from "./AddingWorkingHours";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -44,8 +45,8 @@ const isActive = (history, path) => {
 };
 
 const SettingsMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(true);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("AddLogo");
@@ -177,7 +178,6 @@ const SettingsMain = ({ language }) => {
 
 	useEffect(() => {
 		gettingPreviousLoyaltyPointsManagement();
-		window.scrollTo({ top: 100, behavior: "smooth" });
 
 		// eslint-disable-next-line
 	}, []);
@@ -274,7 +274,10 @@ const SettingsMain = ({ language }) => {
 	}, []);
 
 	return (
-		<SettingsMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<SettingsMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Settings</title>
@@ -285,14 +288,20 @@ const SettingsMain = ({ language }) => {
 				/>
 			</Helmet>
 			<div className='grid-container'>
-				<div>
-					<AdminNavbar
-						fromPage='Settings'
-						AdminMenuStatus={AdminMenuStatus}
-						setAdminMenuStatus={setAdminMenuStatus}
-						collapsed={collapsed}
-						setCollapsed={setCollapsed}
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
 						language={language}
+						fromPage='Settings'
+						collapseMenu={collapseMenu}
 					/>
 				</div>
 
@@ -301,7 +310,7 @@ const SettingsMain = ({ language }) => {
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddLogo")}
-								className='col-md-3 menuItems'
+								className='col-3 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("AddLogo")}
 							>
 								<i className='fa-brands fa-html5 mr-1'></i>{" "}
@@ -309,27 +318,27 @@ const SettingsMain = ({ language }) => {
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingDays")}
-								className='col-md-3 menuItems'
+								className='col-3 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingDays")}
 							>
 								<i className='fa-solid fa-calendar-days mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف أيام عمل" : "Add Working Days"}
+								{language === "Arabic" ? "أيام عمل" : "Add Working Days"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
-								className='col-md-3 menuItems'
+								className='col-3 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("Awards")}
 							>
 								<i className='fa-solid fa-award mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف جوائز" : "Add Awards"}
+								{language === "Arabic" ? "جوائز" : "Add Awards"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingHours")}
-								className='col-md-3 menuItems'
+								className='col-3 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("WorkingHours")}
 							>
 								<i className='fa-solid fa-clock mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف ساعات عمل" : "Add Working Hours"}
+								{language === "Arabic" ? "ساعات عمل" : "Add Working Hours"}
 							</div>
 						</div>
 					</div>
@@ -432,7 +441,7 @@ const SettingsMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 12% 84%;
+		grid-template-columns: 5% 95%;
 	}
 
 	.container {
@@ -445,10 +454,38 @@ const SettingsMainWrapper = styled.div`
 		color: goldenrod;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1000px) {
 		.grid-container {
 			display: grid;
-			grid-template-columns: 1% 99%;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.container {
+			margin-top: 10px;
+			margin-bottom: 20px;
+		}
+
+		.menuItems {
+			font-size: 13px !important;
+			margin: auto;
 		}
 	}
 `;

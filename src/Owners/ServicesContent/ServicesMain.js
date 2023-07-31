@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddService from "./AddService";
 import UpdateService from "./UpdateService";
 import { Helmet } from "react-helmet";
 import { isAuthenticated } from "../../auth";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -35,8 +36,9 @@ const isActive = (history, path) => {
 };
 
 const ServicesMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(true);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	// const [collapsed, setCollapsed] = useState(true);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("AddService");
@@ -49,7 +51,10 @@ const ServicesMain = ({ language }) => {
 	const { user } = isAuthenticated();
 
 	return (
-		<ServicesMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<ServicesMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Services</title>
@@ -60,14 +65,20 @@ const ServicesMain = ({ language }) => {
 				/>
 			</Helmet>
 			<div className='grid-container'>
-				<div>
-					<AdminNavbar
-						fromPage='Services'
-						AdminMenuStatus={AdminMenuStatus}
-						setAdminMenuStatus={setAdminMenuStatus}
-						collapsed={collapsed}
-						setCollapsed={setCollapsed}
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
 						language={language}
+						fromPage='Services'
+						collapseMenu={collapseMenu}
 					/>
 				</div>
 				<div>
@@ -111,7 +122,7 @@ const ServicesMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
 	}
 
 	.container {
@@ -120,10 +131,33 @@ const ServicesMainWrapper = styled.div`
 		margin-left: 350px;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1000px) {
 		.grid-container {
 			display: grid;
-			grid-template-columns: 1% 99%;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
 		}
 
 		.container {

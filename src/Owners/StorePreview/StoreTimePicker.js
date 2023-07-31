@@ -1,8 +1,7 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import styled from "styled-components";
-import ReactGA from "react-ga4";
-import ReactPixel from "react-facebook-pixel";
 
 const StoreTimePicker = ({
 	language,
@@ -42,43 +41,12 @@ const StoreTimePicker = ({
 	];
 
 	useEffect(() => {
-		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
-		ReactGA.gtag("event", "page_view", {
-			page_path: window.location.pathname,
-		});
-
-		// eslint-disable-next-line
-	}, [window.location.pathname]);
-
-	const options = {
-		autoConfig: true,
-		debug: false,
-	};
-
-	useEffect(() => {
-		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
-
-		ReactPixel.pageView();
-
-		// eslint-disable-next-line
-	}, []);
-
-	useEffect(() => {
 		if (openTime && closeTime) {
 			let currentTime = moment(openTime, "HH:mm");
 			const times = [];
-			while (true) {
+			while (currentTime.isSameOrBefore(moment(closeTime, "HH:mm"))) {
 				times.push(currentTime.format("HH:mm"));
-				currentTime = currentTime.clone().add(1, "hour");
-				if (currentTime.isAfter(moment(closeTime, "HH:mm"))) {
-					if (
-						times[times.length - 1] !==
-						moment(closeTime, "HH:mm").format("HH:mm")
-					) {
-						times.push(moment(closeTime, "HH:mm").format("HH:mm"));
-					}
-					break;
-				}
+				currentTime = currentTime.clone().add(15, "minutes");
 			}
 			setAllHours(times);
 		}
@@ -87,43 +55,16 @@ const StoreTimePicker = ({
 
 	const onOpenTimeChange = (e) => {
 		setOpenTime(e.target.value);
-
-		ReactGA.event("Account_Picked_Salon_Open_Time", {
-			event_category: "Account_Picked_Salon_Open_Time",
-			event_label: "Account_Picked_Salon_Open_Time",
-			value: 0, // Optional extra parameters
-		});
-
-		ReactPixel.track("Account_Picked_Salon_Open_Time", {
-			content_name: "Account_Picked_Salon_Open_Time",
-			content_category: "Account_Picked_Salon_Open_Time",
-			value: "",
-			currency: "",
-		});
 	};
 
 	const onCloseTimeChange = (e) => {
 		setCloseTime(e.target.value);
-
-		ReactGA.event("Account_Picked_Salon_Closing_Time", {
-			event_category: "Account_Picked_Salon_Closing_Time",
-			event_label: "Account_Picked_Salon_Closing_Time",
-			value: 0, // Optional extra parameters
-		});
-
-		ReactPixel.track("Account_Picked_Salon_Closing_Time", {
-			content_name: "Account_Picked_Salon_Closing_Time",
-			content_category: "Account_Picked_Salon_Closing_Time",
-			value: "",
-			currency: "",
-		});
 	};
 
+	// console.log(allHours, "allHours");
+
 	return (
-		<StoreTimePickerWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
-			className='mb-5'
-		>
+		<StoreTimePickerWrapper>
 			<div>
 				Salon Hours From <strong>"{allHours && allHours[0]}"</strong> to{" "}
 				<strong>
@@ -133,13 +74,8 @@ const StoreTimePicker = ({
 			<select
 				value={openTime}
 				onChange={onOpenTimeChange}
-				className='w-100 p-2 mt-2 mb-4 form-control'
+				className='w-75 text-center'
 			>
-				<option value=''>
-					{language === "Arabic"
-						? "يفتح الصالون الساعة (اختر من فضلك*) "
-						: "Salon Opens At (Required*)"}
-				</option>
 				{possibleTimes.map((time, index) => (
 					<option key={index} value={time}>
 						{time}
@@ -150,13 +86,8 @@ const StoreTimePicker = ({
 				value={closeTime}
 				onChange={onCloseTimeChange}
 				disabled={!openTime}
-				className='mobile-scrollable-dropdown w-100 p-2 my-2 form-control'
+				className='mobile-scrollable-dropdown w-75 text-center my-2'
 			>
-				<option value=''>
-					{language === "Arabic"
-						? "يغلق الصالون الساعة (اختر من فضلك*)"
-						: "Salon Closes At"}
-				</option>
 				{possibleTimes
 					.slice(possibleTimes.indexOf(openTime) + 1)
 					.map((time, index) => (

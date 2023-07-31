@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import MyCalendar from "./MyCalendar";
 import { Link } from "react-router-dom";
 import EmployeeAppointments from "./EmployeeAppointments";
@@ -18,6 +18,7 @@ import AddSettingsGuideVideo from "../Videos/AddSettingsGuide.mp4";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -49,9 +50,10 @@ const isActive = (history, path) => {
 };
 
 const OwnerDashboard = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	// const [collapsed, setCollapsed] = useState(false);
 	const [currentUser, setCurrentUser] = useState("");
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("Calendar");
@@ -92,15 +94,6 @@ const OwnerDashboard = ({ language }) => {
 			}
 		});
 	};
-
-	useEffect(() => {
-		if (window.location.pathname.includes("/store/admin/dashboard")) {
-			setCollapsed(true);
-		} else {
-			setCollapsed(false);
-		}
-		window.scrollTo({ top: 58, behavior: "smooth" });
-	}, []);
 
 	useEffect(() => {
 		if (window.location.search.includes("calendar")) {
@@ -189,7 +182,10 @@ const OwnerDashboard = ({ language }) => {
 	};
 
 	return (
-		<OwnerDashboardWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<OwnerDashboardWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{language === "Arabic" ? (
@@ -229,14 +225,20 @@ const OwnerDashboard = ({ language }) => {
 					language === "Arabic" ? "grid-container-arabic" : "grid-container"
 				}
 			>
-				<div>
-					<AdminNavbar
-						fromPage='AdminDasboard'
-						AdminMenuStatus={AdminMenuStatus}
-						setAdminMenuStatus={setAdminMenuStatus}
-						collapsed={collapsed}
-						setCollapsed={setCollapsed}
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
 						language={language}
+						fromPage='MainPage'
+						collapseMenu={collapseMenu}
 					/>
 				</div>
 
@@ -261,7 +263,10 @@ const OwnerDashboard = ({ language }) => {
 							/>
 						) : null}
 
-						<div className='text-center trialPeriod'>
+						<div
+							className='text-center trialPeriod'
+							style={{ textAlign: "center", margin: "auto" }}
+						>
 							انت الان على باقة البرو التجريبية
 							<div style={{ fontWeight: "bolder", color: "darkred" }}>
 								{" "}
@@ -269,11 +274,11 @@ const OwnerDashboard = ({ language }) => {
 							</div>
 						</div>
 					</div>
-					<div className='container-fluid col-lg-12 mx-auto text-center mt-5'>
+					<div className='container-fluid col-lg-12  text-center mt-5'>
 						<div className='row text-center ml-5 my-5'>
 							<div
 								style={isActive(clickedMenu, "Calendar")}
-								className='col-md-2 menuItems'
+								className='col-md-2 col-6  menuItems'
 								onClick={() => setClickedMenu("Calendar")}
 							>
 								<Link
@@ -282,12 +287,12 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?calendar'
 								>
 									<i className='fa-brands fa-servicestack mx-1'></i>
-									{language === "Arabic" ? "الجدول" : "Overall Appointments"}
+									{language === "Arabic" ? "الجدول" : "Appointments"}
 								</Link>
 							</div>
 							<div
 								style={isActive(clickedMenu, "BarberAppointment")}
-								className='col-md-2 menuItems'
+								className='col-md-2 col-6  menuItems'
 								onClick={() => setClickedMenu("BarberAppointment")}
 							>
 								<Link
@@ -296,14 +301,12 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?barber-appointments'
 								>
 									<i className='fa-solid fa-pen mx-1'></i>
-									{language === "Arabic"
-										? "عمل الموظف"
-										: "Employee Appointments"}
+									{language === "Arabic" ? "عمل الموظف" : "Employee Schedule"}
 								</Link>
 							</div>
 							<div
 								style={isActive(clickedMenu, "TableView")}
-								className='col-md-2 menuItems'
+								className='col-md-2 col-6  menuItems'
 								onClick={() => setClickedMenu("TableView")}
 							>
 								<Link
@@ -317,10 +320,9 @@ const OwnerDashboard = ({ language }) => {
 							</div>
 							<div
 								style={isActive(clickedMenu, "ShopReports")}
-								className='col-md-2 menuItems '
+								className='col-md-2 col-6  menuItems '
 								onClick={() => {
 									setClickedMenu("ShopReports");
-									window.scrollTo({ top: 70, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -334,10 +336,9 @@ const OwnerDashboard = ({ language }) => {
 							</div>
 							<div
 								style={isActive(clickedMenu, "CustomerReports")}
-								className='col-md-2 menuItems '
+								className='col-md-2 col-6  menuItems '
 								onClick={() => {
 									setClickedMenu("CustomerReports");
-									window.scrollTo({ top: 70, behavior: "smooth" });
 								}}
 							>
 								<Link
@@ -346,7 +347,7 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?customer-reports'
 								>
 									<i className='fa-solid fa-chart-simple mx-1'></i>
-									{language === "Arabic" ? "تقرير العملاء" : "Customers Report"}
+									{language === "Arabic" ? "تقرير العملاء" : "Customers"}
 								</Link>
 							</div>
 						</div>
@@ -385,7 +386,6 @@ const OwnerDashboard = ({ language }) => {
 									marginBottom: "100px",
 								}}
 							>
-								{window.scrollTo({ top: 200, behavior: "smooth" })}
 								<video
 									width={videoWidth}
 									height='450'
@@ -408,7 +408,6 @@ const OwnerDashboard = ({ language }) => {
 								fontSize: "3rem",
 							}}
 						>
-							{window.scrollTo({ top: 58, behavior: "smooth" })}{" "}
 							<Link
 								style={{
 									fontWeight: "bolder",
@@ -422,8 +421,6 @@ const OwnerDashboard = ({ language }) => {
 						</h2>
 					) : (
 						<>
-							{window.scrollTo({ top: 58, behavior: "smooth" })}
-
 							{clickedMenu === "Calendar" ? (
 								<MyCalendar language={language} />
 							) : null}
@@ -455,7 +452,8 @@ const OwnerDashboardWrapper = styled.div`
 
 	.grid-container {
 		display: grid;
-		grid-template-columns: 5% 95%;
+		/* grid-template-columns: 5% 95%; */
+		grid-template-columns: ${(props) => (props.show ? "5% 95%" : "5% 95%")};
 	}
 
 	.grid-container-arabic {
@@ -484,13 +482,38 @@ const OwnerDashboardWrapper = styled.div`
 		display: none;
 	}
 
-	@media (max-width: 1200px) {
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
+	@media (max-width: 1000px) {
 		.grid-container {
-			grid-template-columns: 2% 98%;
+			display: grid;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
 		}
 		.grid-container-arabic {
 			display: grid;
-			grid-template-columns: 2% 98%;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "10px" : "5px")};
 		}
 
 		a {
@@ -505,23 +528,23 @@ const OwnerDashboardWrapper = styled.div`
 
 		.container-fluid {
 			margin-left: 0px !important;
-			margin-top: 70px !important;
+			margin-top: 80px !important;
 			text-align: center;
 		}
 
 		.dashboardLinks {
-			font-size: 0.8rem !important;
+			font-size: 0.75rem !important;
 		}
 	}
 
 	@media (max-width: 1100px) {
 		.trialPeriod {
 			display: block;
-			margin-right: 50px;
-			margin-top: 10px;
-			margin-bottom: 10px;
+			margin-left: 50px !important;
+			margin-top: 15px !important;
+			margin-bottom: 20px !important;
 			font-weight: bolder;
-			font-size: 1.2rem;
+			font-size: 1.1rem;
 		}
 	}
 `;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const AddEmpSection4Account = ({values, values2, setValues2}) => {
+const AddEmpSection4Account = ({ values, values2, setValues2 }) => {
 	const signUpForm = () => (
 		<div className=' justify-content-md-center mt-2'>
 			<div className='mb-3'>
@@ -18,7 +18,7 @@ const AddEmpSection4Account = ({values, values2, setValues2}) => {
 					</h3>
 					<form>
 						<div className='form-group'>
-							<label style={{fontWeight: "bold"}}>Full Name</label>
+							<label style={{ fontWeight: "bold" }}>Full Name</label>
 							<input
 								type='text'
 								name='name'
@@ -32,8 +32,8 @@ const AddEmpSection4Account = ({values, values2, setValues2}) => {
 								marginTop: "25px",
 							}}
 						></div>
-						<div className='form-group' style={{marginTop: "25px"}}>
-							<label style={{fontWeight: "bold"}}>Phone #</label>
+						<div className='form-group' style={{ marginTop: "25px" }}>
+							<label style={{ fontWeight: "bold" }}>Phone #</label>
 							<input
 								type='text'
 								name='email'
@@ -42,30 +42,30 @@ const AddEmpSection4Account = ({values, values2, setValues2}) => {
 							/>
 						</div>
 
-						<div className='form-group ' style={{marginTop: "25px"}}>
-							<label style={{fontWeight: "bold"}}>Password</label>
+						<div className='form-group ' style={{ marginTop: "25px" }}>
+							<label style={{ fontWeight: "bold" }}>Password</label>
 							<input
 								type='password'
 								name='password'
 								value={values2.password}
 								onChange={(e) =>
-									setValues2({...values2, password: e.target.value})
+									setValues2({ ...values2, password: e.target.value })
 								}
 								required
 							/>
 						</div>
 						<div
 							className='form-group'
-							style={{marginTop: "25px", marginBottom: "40px"}}
+							style={{ marginTop: "25px", marginBottom: "40px" }}
 						>
-							<label style={{fontWeight: "bold"}}> Confirm Password</label>
+							<label style={{ fontWeight: "bold" }}> Confirm Password</label>
 							<input
 								background='red'
 								type='password'
 								name='password2'
 								value={values2.password2}
 								onChange={(e) =>
-									setValues2({...values2, password2: e.target.value})
+									setValues2({ ...values2, password2: e.target.value })
 								}
 								required
 							/>
@@ -124,5 +124,12 @@ const AddEmpSection4AccountWrapper = styled.div`
 
 	@media (max-width: 1000px) {
 		margin: 0px 10px;
+		padding: 5px;
+		width: 100% !important;
+
+		.form-container {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
 	}
 `;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { Helmet } from "react-helmet";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -37,8 +38,9 @@ const isActive = (history, path) => {
 };
 
 const EmployeeMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(true);
+	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	// const [collapsed, setCollapsed] = useState(true);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
 	const [clickedMenu, setClickedMenu] = useState("AddEmployee");
@@ -54,7 +56,10 @@ const EmployeeMain = ({ language }) => {
 	const { user } = isAuthenticated();
 
 	return (
-		<EmployeeMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<EmployeeMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>Owner {user.name} Add Employees</title>
@@ -65,7 +70,7 @@ const EmployeeMain = ({ language }) => {
 				/>
 			</Helmet>
 			<div className='grid-container'>
-				<div>
+				{/* <div>
 					<AdminNavbar
 						fromPage='Employees'
 						AdminMenuStatus={AdminMenuStatus}
@@ -74,13 +79,30 @@ const EmployeeMain = ({ language }) => {
 						setCollapsed={setCollapsed}
 						language={language}
 					/>
+				</div> */}
+
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
+						language={language}
+						fromPage='Employees'
+						collapseMenu={collapseMenu}
+					/>
 				</div>
 				<div>
 					<div className='container'>
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddEmployee")}
-								className='col-md-3 menuItems'
+								className='col-md-3 col-6 mx-auto menuItems'
 								onClick={() => setClickedMenu("AddEmployee")}
 							>
 								<Link
@@ -96,7 +118,7 @@ const EmployeeMain = ({ language }) => {
 							</div>
 							<div
 								style={isActive(clickedMenu, "UpdateEmployee")}
-								className='col-md-3 menuItems'
+								className='col-md-3 col-6 mx-auto menuItems'
 								onClick={() => setClickedMenu("UpdateEmployee")}
 							>
 								<Link
@@ -129,7 +151,7 @@ const EmployeeMainWrapper = styled.div`
 
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
 	}
 
 	.container {
@@ -138,16 +160,39 @@ const EmployeeMainWrapper = styled.div`
 		margin-left: 350px;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1000px) {
 		.container {
 			margin-top: 50px;
 			margin-bottom: 20px;
-			margin-left: -10px;
+			padding: 1px 6px !important;
 		}
 
 		.grid-container {
 			display: grid;
-			grid-template-columns: 1% 99%;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.menuItems > a {
+			font-size: 15px !important;
+			margin: auto !important;
 		}
 	}
 `;

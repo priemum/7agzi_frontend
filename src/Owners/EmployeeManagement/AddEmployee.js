@@ -370,7 +370,7 @@ const AddEmployee = ({ language }) => {
 				<div className='row mx-auto mb-4'>
 					<div
 						style={isActive(clickedMenu, "AddImagesAndName")}
-						className='col-md-3 menuItems'
+						className='col-md-3 col-6 mx-auto menuItems'
 						onClick={() => setClickedMenu("AddImagesAndName")}
 					>
 						<i className='fa-solid fa-address-book mr-1'></i>{" "}
@@ -378,7 +378,7 @@ const AddEmployee = ({ language }) => {
 					</div>
 					<div
 						style={isActive(clickedMenu, "AboutEmployee")}
-						className='col-md-3 menuItems'
+						className='col-md-3 col-6 mx-auto menuItems'
 						onClick={() => setClickedMenu("AboutEmployee")}
 					>
 						<i className='fa-solid fa-address-card mr-1'></i>{" "}
@@ -386,7 +386,7 @@ const AddEmployee = ({ language }) => {
 					</div>
 					<div
 						style={isActive(clickedMenu, "WorkingDays")}
-						className='col-md-3 menuItems'
+						className='col-md-3 col-6 mx-auto menuItems'
 						onClick={() => setClickedMenu("WorkingDays")}
 					>
 						<i className='fa-solid fa-calendar mr-1'></i>{" "}
@@ -394,7 +394,7 @@ const AddEmployee = ({ language }) => {
 					</div>
 					<div
 						style={isActive(clickedMenu, "EmployeeAccount")}
-						className='col-md-3 menuItems'
+						className='col-md-3 col-6 mx-auto menuItems'
 						onClick={() => setClickedMenu("EmployeeAccount")}
 					>
 						<i className='fa-solid fa-right-to-bracket mr-1'></i>{" "}
@@ -489,5 +489,9 @@ const AddEmployeeWrapper = styled.div`
 
 	@media (max-width: 1000px) {
 		margin: 30px 5px 140px 5px !important;
+
+		.menuItems {
+			font-size: 15px !important;
+		}
 	}
 `;

@@ -59,7 +59,13 @@ const Adding2DaysClosed = ({
 
 	return (
 		<Adding2DaysClosedWrapper className='container'>
-			<div className='mb-3'>
+			<div
+				className='mb-3'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<label className='mr-2' style={{ fontWeight: "bold" }}>
 					{language === "Arabic"
 						? "تفعيل الحجز الإلكتروني (خدمة الحجز الذاتي عبر الإنترنت)؟"
@@ -90,15 +96,27 @@ const Adding2DaysClosed = ({
 				</label>
 			</div>
 
-			<div className='w-100 mb-5'>
+			<div
+				className='w-100 mb-5'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<label>
 					{language === "Arabic"
 						? "أيام إغلاق المتجر:"
 						: "Store Closed on days:"}
 				</label>
-				<div className='checkboxes border-gray-200 border border-solid'>
+				<div
+					className='checkboxes border-gray-200 border border-solid'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<div className='row'>
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='one' className='block '>
 								<input
 									type='checkbox'
@@ -114,7 +132,7 @@ const Adding2DaysClosed = ({
 							</label>
 						</div>
 
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='two' className='block'>
 								<input
 									type='checkbox'
@@ -130,7 +148,7 @@ const Adding2DaysClosed = ({
 							</label>
 						</div>
 
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='three' className='block'>
 								<input
 									type='checkbox'
@@ -146,7 +164,7 @@ const Adding2DaysClosed = ({
 							</label>
 						</div>
 
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='four' className='block'>
 								<input
 									type='checkbox'
@@ -161,7 +179,7 @@ const Adding2DaysClosed = ({
 								{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
 							</label>
 						</div>
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='five' className='block'>
 								<input
 									type='checkbox'
@@ -176,7 +194,7 @@ const Adding2DaysClosed = ({
 								{language === "Arabic" ? "الأربعاء" : "Wednesday"}
 							</label>
 						</div>
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='six' className='block'>
 								<input
 									type='checkbox'
@@ -191,7 +209,7 @@ const Adding2DaysClosed = ({
 								{language === "Arabic" ? "الخميس" : "Thursday"}
 							</label>
 						</div>
-						<div className='col-md-1'>
+						<div className='col-md-1 col-4 mx-auto'>
 							<label htmlFor='seven' className='block'>
 								<input
 									type='checkbox'
@@ -211,11 +229,22 @@ const Adding2DaysClosed = ({
 			</div>
 
 			<div className='my-3'>
-				<h4 style={{ fontWeight: "bolder" }}>
+				<h4
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "bolder",
+					}}
+				>
 					{language === "Arabic" ? "البيانات العامة" : "General Data"}
 				</h4>
 
-				<div className='row'>
+				<div
+					className='row'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
 					<div className='mb-3 col-md-3'>
 						<label className='mr-1' style={{ fontWeight: "bold" }}>
 							{language === "Arabic" ? "قبول النقد؟" : "Accept Cash?"}
@@ -345,7 +374,13 @@ const Adding2DaysClosed = ({
 					</div>
 
 					<div className='col-md-4 mx-auto'>
-						<div className='form-group'>
+						<div
+							className='form-group'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
 								{language === "Arabic"
 									? "كم عدد الفروع؟"
@@ -366,7 +401,13 @@ const Adding2DaysClosed = ({
 					</div>
 
 					<div className='col-md-4 mx-auto'>
-						<div className='form-group'>
+						<div
+							className='form-group'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
 								{language === "Arabic"
 									? "كم عدد الموظفين؟"
@@ -387,7 +428,13 @@ const Adding2DaysClosed = ({
 					</div>
 
 					<div className='col-md-4 mx-auto'>
-						<div className='form-group'>
+						<div
+							className='form-group'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
 								{language === "Arabic" ? "كم عدد الكراسي؟" : "How Many Chairs?"}
 							</label>
@@ -405,7 +452,13 @@ const Adding2DaysClosed = ({
 				</div>
 			</div>
 
-			<div className='form-group'>
+			<div
+				className='form-group'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<label className='text-muted'>
 					{language === "Arabic"
 						? "أضف التواريخ التي تكون فيها المتجر مغلقًا (مثل العطلات، يوم العمل، وما إلى ذلك)؟"
@@ -413,7 +466,7 @@ const Adding2DaysClosed = ({
 				</label>
 				<br />
 				<DatePicker
-					className='inputFieldsFirstAvail'
+					className='inputFieldsFirstAvail w-100'
 					onChange={(date) =>
 						setOneDateStoreOff(date || new Date(date._d).toLocaleDateString())
 					}
