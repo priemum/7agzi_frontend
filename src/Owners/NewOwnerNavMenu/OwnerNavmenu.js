@@ -370,7 +370,7 @@ const OwnerNavmenuWrapper = styled.div`
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: darkgrey; /* Color of the thumb (draggable part of the scrollbar) */
+		background-color: white; /* Color of the thumb (draggable part of the scrollbar) */
 		border-radius: 10px; /* Rounded corners for the thumb */
 		transition: 0.2s;
 	}

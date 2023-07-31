@@ -377,9 +377,9 @@ export const updateUser = (user, next) => {
 };
 
 //For Payment
-export const getBraintreeClientToken = (userId, token) => {
+export const getBraintreeClientToken = (userId, token, country) => {
 	return fetch(
-		`${process.env.REACT_APP_API_URL}/braintree/getToken/${userId}`,
+		`${process.env.REACT_APP_API_URL}/braintree/getToken/${country}/${userId}`,
 		{
 			method: "GET",
 			headers: {
@@ -414,7 +414,12 @@ export const processPayment_Subscription = (userId, token, paymentData) => {
 		.catch((err) => console.log(err));
 };
 
-export const processPaymentAndThenStore = (userId, token, paymentData) => {
+export const processPaymentAndThenStore = (
+	userId,
+	token,
+	paymentData,
+	country
+) => {
 	return fetch(
 		`${process.env.REACT_APP_API_URL}/braintree/payment-store/${userId}`,
 		{
@@ -424,7 +429,7 @@ export const processPaymentAndThenStore = (userId, token, paymentData) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify(paymentData),
+			body: JSON.stringify(paymentData, country),
 		}
 	)
 		.then((response) => {

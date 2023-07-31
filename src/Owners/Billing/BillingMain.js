@@ -65,7 +65,7 @@ const BillingMain = ({ language }) => {
 
 	const getToken = (userId, token) => {
 		setData({ ...data, loading: true });
-		getBraintreeClientToken(userId, token).then((data) => {
+		getBraintreeClientToken(userId, token, user.storeCountry).then((data) => {
 			if (data.error) {
 				setData({ ...data, error: data.error });
 			} else {
@@ -92,14 +92,16 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 5,
+					amount: 100,
 					email: user.email,
 					customerId: user._id,
 					planId: "One Time Payment",
-					country: "Egypt",
+					country: user.storeCountry.toLowerCase(),
 				};
 
-				processPaymentAndThenStore(user._id, token, paymentData)
+				processPaymentAndThenStore(user._id, token, paymentData, {
+					country: user.storeCountry.toLowerCase(),
+				})
 					.then((response) => {
 						if (
 							response.transaction &&

@@ -154,27 +154,27 @@ const PlatformShareComp = ({
 								<>
 									{language === "Arabic" ? (
 										<div dir='rtl'>
-											<h3>المنصة ستحصل على 3 جنيهات مصرية من كل موعد</h3>
+											<h3>المنصة ستحصل على 5 جنيهات مصرية من كل موعد</h3>
 											<h5>
 												الدفع الأولي سيكون{" "}
 												<strong style={{ color: "black", fontSize: "1.3rem" }}>
-													5 دولارات
+													200 EGP
 												</strong>{" "}
-												ومن ثم سيتم إعادة الشحن كل أسبوع بمقدار 3 جنيهات مصرية
+												ومن ثم سيتم إعادة الشحن كل أسبوع بمقدار 5 جنيهات مصرية
 												من إجمالي مواعيدك
 											</h5>
 										</div>
 									) : (
 										<>
 											<h3>
-												The XLOOK's share will be 3 EGP from each appointment
+												The XLOOK's share will be 5 EGP from each appointment
 											</h3>
 											<h5>
 												The initial payment will be{" "}
 												<strong style={{ color: "black", fontSize: "1.3rem" }}>
-													$5
+													200 EGP
 												</strong>{" "}
-												and then you will be re-charged 3 EGP each week based on
+												and then you will be re-charged 5 EGP each week based on
 												your overall appointments
 											</h5>
 										</>
