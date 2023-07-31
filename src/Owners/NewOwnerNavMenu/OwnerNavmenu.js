@@ -370,7 +370,7 @@ const OwnerNavmenuWrapper = styled.div`
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: white; /* Color of the thumb (draggable part of the scrollbar) */
+		background-color: transparent; /* Color of the thumb (draggable part of the scrollbar) */
 		border-radius: 10px; /* Rounded corners for the thumb */
 		transition: 0.2s;
 	}
@@ -404,7 +404,6 @@ const OwnerNavmenuWrapper = styled.div`
 	@media (max-width: 1000px) {
 		position: fixed;
 		width: 20%; // add a width if it's not there
-		/* display: ${(props) => (props.show ? "none" : "")}; */
 		transform: ${(props) =>
 			props.show && props.show2
 				? "translateX(100%)"

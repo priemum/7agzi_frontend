@@ -111,9 +111,7 @@ const EmployeeMain = ({ language }) => {
 									to='/store/admin/employees'
 								>
 									<i className='fa-solid fa-person-dress-burst mr-1'></i>{" "}
-									{language === "Arabic"
-										? "إضافة موظف جديد"
-										: "Add A New Employee"}
+									{language === "Arabic" ? "إضافة موظف جديد" : "New Employee"}
 								</Link>
 							</div>
 							<div
@@ -169,12 +167,6 @@ const EmployeeMainWrapper = styled.div`
 	}
 
 	@media (max-width: 1000px) {
-		.container {
-			margin-top: 50px;
-			margin-bottom: 20px;
-			padding: 1px 6px !important;
-		}
-
 		.grid-container {
 			display: grid;
 			/* grid-template-columns: 18% 82%; */
@@ -191,8 +183,12 @@ const EmployeeMainWrapper = styled.div`
 		}
 
 		.menuItems > a {
-			font-size: 15px !important;
+			font-size: 12px !important;
 			margin: auto !important;
+		}
+
+		.container {
+			margin-left: 10px;
 		}
 	}
 `;
