@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {isAuthenticated, signup} from "../auth";
-import {toast} from "react-toastify";
+import { isAuthenticated, signup } from "../auth";
+import { toast } from "react-toastify";
 
 const POSAccount = () => {
 	const [values, setValues] = useState({
@@ -15,7 +15,7 @@ const POSAccount = () => {
 			isAuthenticated() && isAuthenticated().user && isAuthenticated().user._id,
 	});
 
-	const {user} = isAuthenticated();
+	const { user } = isAuthenticated();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -33,7 +33,7 @@ const POSAccount = () => {
 					</React.Fragment>
 				);
 			} else {
-				setValues({...values, error: false, misMatch: false});
+				setValues({ ...values, error: false, misMatch: false });
 				signup({
 					name: values.name,
 					email: values.phone,
@@ -42,6 +42,7 @@ const POSAccount = () => {
 					storeName: user.storeName,
 					storeAddress: user.storeAddress,
 					storeGovernorate: user.storeGovernorate,
+					storeCountry: user.storeCountry,
 					belongsTo: user._id,
 					role: 3,
 					password: values.password,
@@ -78,9 +79,9 @@ const POSAccount = () => {
 					</h3>
 					<form onSubmit={handleSubmit}>
 						<div className='form-group'>
-							<label style={{fontWeight: "bold"}}>Full Name</label>
+							<label style={{ fontWeight: "bold" }}>Full Name</label>
 							<input
-								onChange={(e) => setValues({...values, name: e.target.value})}
+								onChange={(e) => setValues({ ...values, name: e.target.value })}
 								type='text'
 								name='name'
 								value={values.name}
@@ -93,8 +94,8 @@ const POSAccount = () => {
 								marginTop: "25px",
 							}}
 						></div>
-						<div className='form-group' style={{marginTop: "25px"}}>
-							<label style={{fontWeight: "bold"}}>Phone #/ Email</label>
+						<div className='form-group' style={{ marginTop: "25px" }}>
+							<label style={{ fontWeight: "bold" }}>Phone #/ Email</label>
 							<input
 								onChange={(e) =>
 									setValues({
@@ -110,30 +111,30 @@ const POSAccount = () => {
 							/>
 						</div>
 
-						<div className='form-group ' style={{marginTop: "25px"}}>
-							<label style={{fontWeight: "bold"}}>Password</label>
+						<div className='form-group ' style={{ marginTop: "25px" }}>
+							<label style={{ fontWeight: "bold" }}>Password</label>
 							<input
 								type='password'
 								name='password'
 								value={values.password}
 								onChange={(e) =>
-									setValues({...values, password: e.target.value})
+									setValues({ ...values, password: e.target.value })
 								}
 								required
 							/>
 						</div>
 						<div
 							className='form-group'
-							style={{marginTop: "25px", marginBottom: "40px"}}
+							style={{ marginTop: "25px", marginBottom: "40px" }}
 						>
-							<label style={{fontWeight: "bold"}}> Confirm Password</label>
+							<label style={{ fontWeight: "bold" }}> Confirm Password</label>
 							<input
 								background='red'
 								type='password'
 								name='password2'
 								value={values.password2}
 								onChange={(e) =>
-									setValues({...values, password2: e.target.value})
+									setValues({ ...values, password2: e.target.value })
 								}
 								required
 							/>
@@ -142,7 +143,7 @@ const POSAccount = () => {
 						<div className='col-md-6 mx-auto'>
 							<button
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 								className='btn btn-outline-primary mt-3 btn-block'
 							>

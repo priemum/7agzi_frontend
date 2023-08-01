@@ -129,11 +129,32 @@ const AgentsSignupForm = ({ language }) => {
 			return toast.info("ID # is required");
 		}
 
+		function containsArabicNumerals(str) {
+			// Regular expression to match Arabic numerals
+			const arabicNumeralsRegex = /[\u0660-\u0669]/;
+			return arabicNumeralsRegex.test(str);
+		}
+
+		function convertArabicToEnglishNumbers(arabicNumber) {
+			// Remove non-numeric characters (including '+') from the input
+			const numericOnly = arabicNumber.replace(/\D/g, "");
+
+			// Check if the input contains Arabic numerals
+			if (containsArabicNumerals(arabicNumber)) {
+				// Convert Arabic numerals to English numerals
+				const englishNumber = Number(numericOnly).toLocaleString("en-AE");
+				return englishNumber;
+			}
+
+			// Return the numericOnly string as is (English numerals)
+			return numericOnly;
+		}
+
 		setValues({ ...values, error: false });
 		signup({
 			name,
 			email,
-			phone,
+			phone: convertArabicToEnglishNumbers(phone),
 			password,
 			storeType,
 			storeName,

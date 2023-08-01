@@ -137,11 +137,58 @@ const SignupForm = ({ language }) => {
 			return toast.info("Passwords Are NOT Matching");
 		}
 
+		function containsArabicNumerals(str) {
+			// Regular expression to match Arabic numerals
+			const arabicNumeralsRegex = /[\u0660-\u0669]/;
+			return arabicNumeralsRegex.test(str);
+		}
+
+		function removeNonNumericCharacters(str) {
+			// Regular expression to remove non-numeric characters
+			const numericOnlyRegex = /\D/g;
+			return str.replace(numericOnlyRegex, "");
+		}
+
+		function convertArabicToEnglishNumerals(arabicNumber) {
+			const arabicNumeralsMap = {
+				"٠": "0",
+				"١": "1",
+				"٢": "2",
+				"٣": "3",
+				"٤": "4",
+				"٥": "5",
+				"٦": "6",
+				"٧": "7",
+				"٨": "8",
+				"٩": "9",
+			};
+
+			// Convert Arabic numerals to English numerals
+			return arabicNumber.replace(
+				/[\u0660-\u0669]/g,
+				(match) => arabicNumeralsMap[match]
+			);
+		}
+
+		function convertArabicOrNumericToEnglish(arabicNumber) {
+			// Remove non-numeric characters (including '+') from the input
+			const numericOnly = removeNonNumericCharacters(arabicNumber);
+
+			// Check if the input contains Arabic numerals
+			if (containsArabicNumerals(arabicNumber)) {
+				// If it contains Arabic numerals, convert to English numerals
+				return convertArabicToEnglishNumerals(numericOnly);
+			}
+
+			// Return the numericOnly string as is (English numerals)
+			return numericOnly;
+		}
+
 		setValues({ ...values, error: false });
 		signup({
 			name,
 			email,
-			phone,
+			phone: convertArabicOrNumericToEnglish(phone),
 			password,
 			storeType,
 			storeName,

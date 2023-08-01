@@ -15,7 +15,7 @@ import styled from "styled-components";
 import AddedServices from "../components/SingleStorePage/AddedServices";
 import { allLoyaltyPointsAndStoreStatus } from "../Owners/apiOwner";
 
-const FirstAvailableAppointmentsStore2 = ({ user }) => {
+const FirstAvailableAppointmentsArabic = ({ user }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
 	const [HistOrders, setHistOrders] = useState([]);
@@ -490,22 +490,36 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 		onlineStoreName.daysStoreClosed.length > 0 &&
 		onlineStoreName.daysStoreClosed.indexOf(chosenDateName) > -1;
 
+	function formatArabicDate(date) {
+		const options = {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			weekday: "long",
+			calendar: "gregory",
+			numberingSystem: "arab",
+			timeZone: "Africa/Cairo", // Set to Egypt's time zone
+		};
+		const arLocale = "ar";
+		return date.toLocaleDateString(arLocale, options);
+	}
+
 	return (
-		<FirstAvailableAppointmentsStore2Wrapper dir='ltr'>
+		<FirstAvailableAppointmentsStore2Wrapper dir='rtl'>
 			<div className='contentWrapper'>
 				<div className='mt-3 firstAvailableApp text-center'>
-					Check First Available Appointment on{" "}
-					{new Date(chosenDate).toDateString()}
+					تحقق من أول موعد متاح في تاريخ{" "}
+					{formatArabicDate(new Date(chosenDate))}
 				</div>{" "}
-				<div className='horizLine col-6 col-lg-2 col-md-3  mx-auto'></div>
+				<div className='horizLine col-6 col-lg-2 col-md-3 mx-auto'></div>
 				<div className='text-center mt-3'>
 					<div className='row'>
 						<div className='col-md-6'>
-							<label className='mr-4 chooseDateServiceFirstAvail'>
-								Choose a Date
+							<label className='ml-3 chooseDateServiceFirstAvail '>
+								اختر تاريخًا
 							</label>
 							<DatePicker
-								className='inputFieldsFirstAvail'
+								className='inputFieldsFirstAvail w-75'
 								onChange={(date) =>
 									setChosenDate(date || new Date(date._d).toLocaleDateString())
 								}
@@ -513,17 +527,17 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 								max
 								showToday={true}
 								defaultValue={chosenDate || moment()}
-								placeholder='Please pick the desired schedule date'
+								placeholder='الرجاء اختيار تاريخ الجدول المرغوب فيه'
 							/>
 							<br />
-							<label className='mr-5 mt-3 chooseDateServiceFirstAvail'>
-								Service For
+							<label className='ml-3 mt-3 chooseDateServiceFirstAvail'>
+								الخدمة ل
 							</label>
 							<select
 								onChange={handleChosenCustomerType}
-								placeholder='Please Select'
+								placeholder='الرجاء التحديد'
 								style={{ textTransform: "capitalize" }}
-								className='inputFieldsFirstAvail ml-1'
+								className='inputFieldsFirstAvail w-75'
 							>
 								{chosenCustomerType &&
 								chosenCustomerType !== "Please Select" ? (
@@ -531,7 +545,7 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 										{chosenCustomerType}
 									</option>
 								) : (
-									<option className='items text-muted'>Please Select</option>
+									<option className='items text-muted'>الرجاء التحديد</option>
 								)}
 								{HistOrders &&
 									allCustomerType &&
@@ -545,23 +559,21 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 
 							{chosenCustomerType ? (
 								<Fragment>
-									<label className='mr-2 chooseDateServiceFirstAvail'>
-										Select a Service
+									<label className='ml-2 chooseDateServiceFirstAvail'>
+										اختر خدمة
 									</label>
 									<select
 										onChange={handleChosenService}
-										placeholder='Select a Service'
+										placeholder='اختر خدمة'
 										style={{ textTransform: "capitalize" }}
-										className='inputFieldsFirstAvail'
+										className='inputFieldsFirstAvail w-75'
 									>
 										{chosenService && chosenService !== "Select a Service" ? (
 											<option className='items text-muted'>
 												{chosenService}
 											</option>
 										) : (
-											<option className='items text-muted'>
-												Select a Service
-											</option>
+											<option className='items text-muted'>اختر خدمة</option>
 										)}
 										{HistOrders &&
 											AllServices &&
@@ -572,22 +584,23 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 												(ss) => ss.serviceType === "package service"
 											).map((s, i) => (
 												<option key={i} value={s.serviceName} className='items'>
-													{s.serviceName} (EGP {s.servicePrice})
+													{s.serviceNameOtherLanguage} (EGP {s.servicePrice})
 												</option>
 											))}
 									</select>
-									{chosenService && pickedService() && (
-										<ul className=' col-md-11  mx-auto AnimationCustom'>
-											<strong style={{ color: "white" }}>
-												Service Description:
-											</strong>
-											{pickedService().serviceDescription.map((d, i) => (
-												<li className='listOfServiceDescription' key={i}>
-													{d}
-												</li>
-											))}
-										</ul>
-									)}
+									{chosenService &&
+										pickedService() &&
+										pickedService().serviceDescription &&
+										pickedService().serviceDescription.length > 0 && (
+											<ul className='col-md-11 mx-auto AnimationCustom'>
+												<strong style={{ color: "white" }}>وصف الخدمة:</strong>
+												{pickedService().serviceDescription.map((d, i) => (
+													<li className='listOfServiceDescription' key={i}>
+														{d}
+													</li>
+												))}
+											</ul>
+										)}
 								</Fragment>
 							) : null}
 						</div>
@@ -599,9 +612,9 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 									onlineStoreName.daysStoreClosed.length > 0 &&
 									storeClosed_NotClosed === true ? (
 										<div className='my-3 noAppointFirstAvail'>
-											Hair Salon is closed on the selected date{" "}
-											{new Date(chosenDate).toDateString()}. <br /> Please check
-											another date.
+											مغلق صالون الشعر في التاريخ المحدد{" "}
+											{formatArabicDate(new Date(chosenDate))}. <br /> يُرجى
+											التحقق من تاريخ آخر.
 										</div>
 									) : (
 										<Fragment>
@@ -614,9 +627,9 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 												).toLocaleDateString()
 											) > -1 ? (
 												<div className='my-3 noAppointFirstAvail'>
-													No Appointments available on{" "}
-													{new Date(chosenDate).toDateString()}. <br /> Please
-													check another date.
+													لا توجد مواعيد متاحة في التاريخ{" "}
+													{formatArabicDate(new Date(chosenDate))}. <br /> يُرجى
+													التحقق من تاريخ آخر.
 												</div>
 											) : (
 												<React.Fragment>
@@ -625,13 +638,13 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 														finalStep_FirstAvailableEmployee.length === 0) ||
 													finalStep_FirstAvailableEmployee === undefined ? (
 														<div className='my-3 noAppointFirstAvail'>
-															No Appointments available on{" "}
-															{new Date(chosenDate).toDateString()}. <br />{" "}
-															Please check another date.
+															لا توجد مواعيد متاحة في التاريخ{" "}
+															{formatArabicDate(new Date(chosenDate))}. <br />{" "}
+															يُرجى التحقق من تاريخ آخر.
 														</div>
 													) : (
 														<div style={{ color: "white" }}>
-															The First Available Appointment is with{" "}
+															أول موعد متاح مع{" "}
 															<strong
 																style={{
 																	color: "wheat",
@@ -644,7 +657,7 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 																		.employeeName}{" "}
 															</strong>
 															<br />
-															at{" "}
+															في الساعة{" "}
 															<strong style={{ color: "wheat" }}>
 																{finalStep_FirstAvailableEmployee &&
 																	finalStep_FirstAvailableEmployee[0] &&
@@ -653,9 +666,9 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 																	finalStep_FirstAvailableEmployee[0]
 																		.availableHoursFinal[0]}{" "}
 															</strong>
-															on{" "}
+															في{" "}
 															<strong style={{ color: "wheat" }}>
-																{new Date(chosenDate).toDateString()}
+																{formatArabicDate(new Date(chosenDate))}
 															</strong>
 															<div
 																onClick={AddEmployee}
@@ -664,7 +677,6 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 																	fontSize: "1.2rem",
 																	marginBottom: "10px",
 																	marginTop: "10px",
-																	// letterSpacing: "5px",
 																	textShadow: "1px 2px 4px",
 																}}
 															>
@@ -688,7 +700,7 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 																		window.scrollTo(0, 0);
 																	}}
 																>
-																	Schedule Now...
+																	احجز الان
 																</Link>
 															</div>
 														</div>
@@ -701,14 +713,12 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 							) : (
 								<React.Fragment>
 									<div className='pleaseSelectAServFirstAvail'>
-										Please Select A Service To Check The First Available
-										Appointment
+										يُرجى اختيار خدمة للتحقق من أول موعد متاح
 										<div className='my-3 disclaimer'>
-											If you have the need to schedule for more than one person,
-											please schedule a separate appointment for each. You may
-											be able to schedule the appointments with different
-											stylists all at once to finish your styling needs with
-											less time!
+											إذا كنت بحاجة إلى جدولة أكثر من شخص، يُرجى جدولة موعد
+											منفصل لكل شخص. قد تكون قادرًا على جدولة المواعيد مع أنماط
+											مختلفة في نفس الوقت لإنهاء احتياجات التصفيف الخاصة بك بأقل
+											وقت!
 										</div>
 									</div>
 									{/* {chosenCustomerType ? (
@@ -729,7 +739,7 @@ const FirstAvailableAppointmentsStore2 = ({ user }) => {
 	);
 };
 
-export default FirstAvailableAppointmentsStore2;
+export default FirstAvailableAppointmentsArabic;
 
 const FirstAvailableAppointmentsStore2Wrapper = styled.div`
 	background: #191919;
@@ -738,6 +748,10 @@ const FirstAvailableAppointmentsStore2Wrapper = styled.div`
 
 	.contentWrapper {
 		position: relative;
+	}
+
+	label {
+		font-size: 15px;
 	}
 
 	@media (max-width: 1000px) {

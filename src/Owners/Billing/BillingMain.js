@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import { isAuthenticated } from "../../auth";
 
 import {
@@ -17,6 +16,8 @@ import BeProComp from "./BeProComp";
 import SMSPayAsYouGo from "./SMSPayAsYouGo";
 import { updateOwnerProfile } from "../apiOwner";
 import { updateUser } from "../../customer/apiUser";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { Helmet } from "react-helmet";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -48,8 +49,7 @@ const isActive = (history, path) => {
 };
 
 const BillingMain = ({ language }) => {
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapseMenu, setCollapseMenu] = useState(false);
 	const [clickedMenu, setClickedMenu] = useState("PlatformShare");
 	const [updateCardClicked, setUpdateCardClicked] = useState(false);
 
@@ -342,15 +342,34 @@ const BillingMain = ({ language }) => {
 	}, []);
 
 	return (
-		<BillingMainWrapper>
+		<BillingMainWrapper
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+			show={collapseMenu}
+		>
+			<Helmet>
+				<meta charSet='utf-8' />
+				<title dir='rtl'>Owner {user.name} Payment Share</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/store/admin/billing-account`}
+				/>
+			</Helmet>
 			<div className='grid-container'>
-				<div>
-					<AdminNavbar
-						fromPage='BillingMain'
-						AdminMenuStatus={AdminMenuStatus}
-						setAdminMenuStatus={setAdminMenuStatus}
-						collapsed={collapsed}
-						setCollapsed={setCollapsed}
+				<div className='menuWrapper'>
+					<div
+						className='iconMenu'
+						onClick={() => {
+							setCollapseMenu(!collapseMenu);
+						}}
+					>
+						<i className='fa-solid fa-bars'></i>
+					</div>
+
+					<OwnerNavmenu
+						language={language}
+						fromPage='Payment'
+						collapseMenu={collapseMenu}
 					/>
 				</div>
 
@@ -449,7 +468,7 @@ const BillingMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
 	}
 
 	.container {
@@ -476,12 +495,40 @@ const BillingMainWrapper = styled.div`
 		color: grey;
 	}
 
+	.menuWrapper {
+		background-color: ${(props) => (props.show ? "white" : "black")};
+		overflow: auto;
+	}
+	.iconMenu {
+		display: none;
+	}
+
 	@media (max-width: 1200px) {
-		.platformShare {
-			margin-left: 20px;
+		.grid-container {
+			display: grid;
+			/* grid-template-columns: 18% 82%; */
+			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
+		}
+
+		.iconMenu {
+			display: block;
+			color: ${(props) => (props.show ? "black" : "white")};
+			position: ${(props) => (props.show ? "absolute" : "")};
+			text-align: right;
+			font-size: 20px;
+			margin-right: ${(props) => (props.show ? "3px" : "5px")};
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
 		}
 
 		.container {
+			margin-left: 10px;
+		}
+
+		.platformShare {
 			margin-left: 20px;
 		}
 	}
