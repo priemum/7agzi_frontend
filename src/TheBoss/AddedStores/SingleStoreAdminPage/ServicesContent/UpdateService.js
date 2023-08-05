@@ -169,6 +169,7 @@ const UpdateService = ({ ownerId }) => {
 				catchyPhraseOtherLanguage: catchyPhraseOtherLanguage,
 				bundleService: bundleService,
 				bundleServicesAdded: bundleServicesAdded,
+				activeService: activeService,
 			}).then((data) => {
 				if (data.error) {
 					console.log(data.error);

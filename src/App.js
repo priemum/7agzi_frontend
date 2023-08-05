@@ -39,7 +39,7 @@ import EmployeeMain from "./Owners/EmployeeManagement/EmployeeMain";
 import EditWebsiteMain from "./Owners/EditWebsite/EditWebsiteMain";
 import BranchesMain from "./Owners/Branches/BranchesMain";
 import EcommerceMain from "./Owners/EcommerceManagement/EcommerceMain";
-import SingleAppointmentPage from "./Owners/OwnerDashboardContents/SingleAppointmentPage";
+import SingleAppointmentPage from "./Owners/OwnerDashboardContents/SingleAppointmentFolder/SingleAppointmentPage";
 import BillingMain from "./Owners/Billing/BillingMain";
 import GallaryMain from "./Owners/GallaryAddition/GallaryMain";
 import StorePreviewMain from "./Owners/StorePreview/StorePreviewMain";
@@ -60,8 +60,7 @@ import GeneralStats from "./employee/GeneralStats";
 //StoreBooking
 import StoreRoute from "./auth/StoreRoute";
 import BookingFromStore from "./StoreBooking/BookingFromStore";
-import SchedulePageStepsStore from "./StoreBooking/SchedulePageAdjusted/SchedulePageStepsStore";
-import SingleAppointmentPageStore from "./StoreBooking/SingleAppointmentPageStore";
+import SingleAppointmentPageStore from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentPageStore";
 
 //Platform Admin routes
 import BossRoute from "./auth/BossRoute";
@@ -88,6 +87,7 @@ import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesConte
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
 import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
+import ScheduleFormFinal from "./StoreBooking/POSBook/ScheduleFormFinal";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -120,6 +120,10 @@ function App() {
 				.then((response) => {
 					const { address } = response.data;
 					const { country, state, city } = address;
+
+					if (country.toLowerCase() === "egypt") {
+						setLanguage("Arabic");
+					}
 
 					const userLocation = {
 						country,
@@ -251,7 +255,12 @@ function App() {
 					<Route
 						path='/schedule-an-appointment'
 						exact
-						component={SchedulePageSteps2}
+						component={() => (
+							<SchedulePageSteps2
+								language={language}
+								setLanguage={setLanguage}
+							/>
+						)}
 					/>
 
 					<Route
@@ -393,9 +402,14 @@ function App() {
 					/>
 
 					<StoreRoute
-						path='/store/book-appointment-from-store/employee/:employeeId'
+						path='/store/book-appointment-from-store2/employee/:employeeId'
 						exact
-						component={SchedulePageStepsStore}
+						component={() => (
+							<ScheduleFormFinal
+								language={language}
+								setLanguage={setLanguage}
+							/>
+						)}
 					/>
 
 					<StoreRoute

@@ -38,7 +38,7 @@ const isActive = (history, path) => {
 	}
 };
 
-const AddedServices = ({ chosenCustomerType, ownerId }) => {
+const AddedServices = ({ chosenCustomerType, ownerId, language }) => {
 	const [AllServices, setAllServices] = useState([]);
 	const [clickedMenu, setClickedMenu] = useState("STANDARD");
 	const [checkedService, setCheckedService] = useState(null);
@@ -76,6 +76,10 @@ const AddedServices = ({ chosenCustomerType, ownerId }) => {
 						newArray.push(uniqueObject[i]);
 					}
 
+					if (clickedMenu === "BUNDLE") {
+						newArray = newArray.filter((i) => i.bundleService === true);
+					}
+
 					// Display the unique objects
 					setAllServices(newArray);
 				}
@@ -88,11 +92,12 @@ const AddedServices = ({ chosenCustomerType, ownerId }) => {
 		const chosenCustomerTypeFromFirstAvailable = chosenCustomerType;
 		getAllService(chosenCustomerTypeFromFirstAvailable);
 		// eslint-disable-next-line
-	}, [chosenCustomerType]);
+	}, [chosenCustomerType, clickedMenu]);
 
 	const allLists = () => {
 		return (
 			<Collapse
+				dir={language === "Arabic" ? "rtl" : "ltr"}
 				expandIconPosition='right'
 				accordion
 				className='my-custom-collapse'
@@ -112,12 +117,21 @@ const AddedServices = ({ chosenCustomerType, ownerId }) => {
 									<div>
 										<div className='row'>
 											<div className='col-4'>
-												<span
-													className=''
-													style={{ color: "white", fontSize: "11px" }}
-												>
-													{s.serviceName}{" "}
-												</span>
+												{language === "Arabic" ? (
+													<span
+														className=''
+														style={{ color: "white", fontSize: "11px" }}
+													>
+														{s.serviceNameOtherLanguage}{" "}
+													</span>
+												) : (
+													<span
+														className=''
+														style={{ color: "white", fontSize: "11px" }}
+													>
+														{s.serviceName}{" "}
+													</span>
+												)}
 											</div>
 											<div className='col-3'>
 												<span
@@ -128,12 +142,21 @@ const AddedServices = ({ chosenCustomerType, ownerId }) => {
 												</span>
 											</div>
 											<div className='col-3'>
-												<span
-													className=''
-													style={{ color: "white", fontSize: "11px" }}
-												>
-													{s.serviceTime} mins
-												</span>
+												{language === "Arabic" ? (
+													<span
+														className=''
+														style={{ color: "white", fontSize: "11px" }}
+													>
+														{s.serviceTime} دقيقة
+													</span>
+												) : (
+													<span
+														className=''
+														style={{ color: "white", fontSize: "11px" }}
+													>
+														{s.serviceTime} mins
+													</span>
+												)}
 											</div>
 											<div className='col-2'>
 												<Checkbox
@@ -178,22 +201,43 @@ const AddedServices = ({ chosenCustomerType, ownerId }) => {
 	};
 
 	return (
-		<AddedServicesStyling>
+		<AddedServicesStyling dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='row my-3 ml-3'>
-				<div
-					className='col-3'
-					style={isActive(clickedMenu, "STANDARD")}
-					onClick={() => setClickedMenu("STANDARD")}
-				>
-					Standard
-				</div>
-				<div
-					className='col-3'
-					style={isActive(clickedMenu, "BUNDLE")}
-					onClick={() => setClickedMenu("BUNDLE")}
-				>
-					Bundle
-				</div>
+				{language === "Arabic" ? (
+					<div
+						className='col-4 ArabicStyling'
+						style={isActive(clickedMenu, "STANDARD")}
+						onClick={() => setClickedMenu("STANDARD")}
+					>
+						الخدمات الفردية
+					</div>
+				) : (
+					<div
+						className='col-3'
+						style={isActive(clickedMenu, "STANDARD")}
+						onClick={() => setClickedMenu("STANDARD")}
+					>
+						Standard
+					</div>
+				)}
+
+				{language === "Arabic" ? (
+					<div
+						className='col-5 ArabicStyling'
+						style={isActive(clickedMenu, "BUNDLE")}
+						onClick={() => setClickedMenu("BUNDLE")}
+					>
+						الخدمات المجمعة (العروض)
+					</div>
+				) : (
+					<div
+						className='col-3'
+						style={isActive(clickedMenu, "BUNDLE")}
+						onClick={() => setClickedMenu("BUNDLE")}
+					>
+						Bundle
+					</div>
+				)}
 			</div>
 			{allLists()}
 		</AddedServicesStyling>
@@ -225,6 +269,10 @@ const AddedServicesStyling = styled.div`
 	.my-custom-collapse .ant-collapse-content > .ant-collapse-content-box {
 		background: #1e1e1e !important;
 		color: white !important;
+	}
+
+	.ArabicStyling {
+		font-size: 0.9rem !important;
 	}
 
 	@media (max-width: 1000px) {

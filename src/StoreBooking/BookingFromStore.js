@@ -10,7 +10,6 @@ import {
 	listScheduledOrdersStore,
 } from "../Owners/apiOwner";
 import { isAuthenticated } from "../auth";
-import FirstAvailableAppointmentsStore2 from "./FirstAvailableAppointmentsStore2";
 import { Animated } from "react-animated-css";
 import styled from "styled-components";
 import OverallCalendarStore from "./OverallCalendarStore";
@@ -19,7 +18,13 @@ import POSAccount from "./POSAccount";
 import NavbarPOS from "./NavbarPOS/NavbarPOS";
 import { Helmet } from "react-helmet";
 import OwnerNavmenu from "../Owners/NewOwnerNavMenu/OwnerNavmenu";
-import FirstAvailableAppointmentsArabic from "./FirstAvailableAppointmentsArabic";
+import {
+	getServices,
+	getUniqueCustomerTypesStore,
+	gettingFirstAppointmentFromBackend,
+} from "../apiCore";
+import FirstAvailableAppointmentModified from "./POSBook/FirstAvailableAppointmentModified";
+import FirstAvailableAppointmentModifiedArabic from "./POSBook/FirstAvailableAppointmentModifiedArabic";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -53,22 +58,37 @@ const isActive = (history, path) => {
 const BookingFromStore = ({ language, setLanguage }) => {
 	const [clickedMenu, setClickedMenu] = useState("NewAppointment");
 	const [allEmployees, setAllEmployees] = useState([]);
+	const [allCustomerType, setAllCustomerType] = useState([]);
+	const [allActiveServices, setAllActiveServices] = useState([]);
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState("");
+	const [chosenDate, setChosenDate] = useState(null);
 	const [orders, setOrders] = useState([]);
 	const [onlineStoreName, setOnlineStoreName] = useState("");
+	const [appointmentFirst, setAppointmentFirst] = useState({
+		firstAvailableTime: null,
+	});
 	const [collapseMenu, setCollapseMenu] = useState(false);
-
+	const [chosenCustomerType, setChosenCustomerType] = useState("");
+	const [chosenService, setChosenService] = useState("");
+	const [serviceDetailsArray, setServiceDetailsArray] = useState([]);
 	const { user, token } = isAuthenticated();
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
-	useEffect(() => {
-		setChosenDate(new Date().toLocaleDateString());
-		// eslint-disable-next-line
-	}, []);
+	const loadAllActiveCustomerTypes = () => {
+		setLoading(true);
+
+		getUniqueCustomerTypesStore(userBelongsToModified).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				setAllCustomerType(data);
+				setLoading(false);
+			}
+		});
+	};
 
 	const loadAllAvailableEmployees = () => {
 		setLoading(true);
@@ -152,10 +172,47 @@ const BookingFromStore = ({ language, setLanguage }) => {
 		);
 	};
 
+	const firstAppointmentAvailable = () => {
+		if (
+			chosenDate &&
+			chosenCustomerType &&
+			chosenService &&
+			chosenService.length > 0
+		) {
+			setLoading(true);
+			let allPickedServices =
+				serviceDetailsArray && serviceDetailsArray.map((i) => i.serviceName);
+
+			// Format date to "MM-DD-YYYY"
+			const date = new Date(chosenDate);
+			const formattedDate = `${
+				date.getMonth() + 1
+			}-${date.getDate()}-${date.getFullYear()}`;
+
+			console.log(date, "date");
+			gettingFirstAppointmentFromBackend(
+				allPickedServices.join(","),
+				chosenCustomerType,
+				formattedDate,
+				"Egypt",
+				userBelongsToModified
+			).then((data) => {
+				if (data.error) {
+					console.log(data.error);
+				} else {
+					setAppointmentFirst(data);
+					console.log(data, "first Available time");
+					setLoading(false);
+				}
+			});
+		}
+	};
+
 	useEffect(() => {
 		loadOrders();
 		loadAllAvailableEmployees();
 		getOnlineStoreName();
+		loadAllActiveCustomerTypes();
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("barber");
 		localStorage.removeItem("chosenStylistId_Store");
@@ -167,7 +224,34 @@ const BookingFromStore = ({ language, setLanguage }) => {
 		// eslint-disable-next-line
 	}, []);
 
-	// console.log(onlineStoreName, "onlineStoreName");
+	const getAllService = () => {
+		getServices("token", userBelongsToModified).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				if (chosenCustomerType) {
+					setAllActiveServices(
+						data.filter((i) => i.activeService === true) &&
+							data.filter((i) => i.activeService === true).map((ii) => ii) &&
+							data
+								.filter((i) => i.activeService === true)
+								.map((ii) => ii)
+								.filter(
+									(iv) =>
+										iv.customerType.toLowerCase() ===
+										chosenCustomerType.toLowerCase()
+								)
+					);
+				}
+			}
+		});
+	};
+
+	useEffect(() => {
+		getAllService();
+		firstAppointmentAvailable();
+		// eslint-disable-next-line
+	}, [chosenCustomerType, chosenService, chosenDate]);
 
 	useEffect(() => {
 		if (window.location.search.includes("new-appointments")) {
@@ -183,21 +267,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	// const reloadCount = sessionStorage.getItem("reloadCount");
-
-	// useEffect(() => {
-	// 	if (user && user.role === 3) {
-	// 		if (reloadCount < 2) {
-	// 			sessionStorage.setItem("reloadCount", String(reloadCount + 1));
-	// 			window.location.reload();
-	// 		} else {
-	// 			sessionStorage.removeItem("reloadCount");
-	// 		}
-	// 	}
-
-	// 	// eslint-disable-next-line
-	// }, []);
 
 	return (
 		<BookFromStoreWrapper
@@ -304,7 +373,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 									</div>
 								</div>
 							) : (
-								<div className='row mx-auto text-center mb-5 col-md-10'>
+								<div className='row mx-auto text-center mb-4 mt-2'>
 									<div
 										className='col-md-9 col-9 mx-auto menuItems mb-1'
 										style={isActive(clickedMenu, "POSAccount")}
@@ -318,9 +387,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											a POS Account
 										</Link>
 									</div>
-									<br />
-									<br />
-									<br />
 
 									<div
 										className='col-md-3 col-4 mx-auto menuItems'
@@ -332,7 +398,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?new-appointments'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											New Appointment
+											New Appoint.
 										</Link>
 									</div>
 
@@ -346,7 +412,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											Calendar View
+											Calendar
 										</Link>
 									</div>
 									<div
@@ -358,8 +424,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											style={isActive(clickedMenu, "TableView")}
 											to='/store/book-appointment-from-store?table-view'
 										>
-											<i className='fa-brands fa-servicestack mr-1'></i> Table
-											View
+											<i className='fa-brands fa-servicestack mr-1'></i> Cashier
 										</Link>
 									</div>
 								</div>
@@ -422,7 +487,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?new-appointments'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											New Appointment
+											New Appoint.
 										</Link>
 									</div>
 
@@ -436,7 +501,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											Calendar View
+											Calendar
 										</Link>
 									</div>
 									<div
@@ -467,14 +532,38 @@ const BookingFromStore = ({ language, setLanguage }) => {
 								isVisible={true}
 							>
 								{language === "Arabic" ? (
-									<FirstAvailableAppointmentsArabic
+									<FirstAvailableAppointmentModifiedArabic
 										user={user}
 										language={language}
+										chosenDate={chosenDate}
+										setChosenDate={setChosenDate}
+										allCustomerType={allCustomerType}
+										allActiveServices={allActiveServices}
+										chosenCustomerType={chosenCustomerType}
+										setChosenCustomerType={setChosenCustomerType}
+										chosenService={chosenService}
+										setChosenService={setChosenService}
+										appointmentFirst={appointmentFirst}
+										loading={loading}
+										setServiceDetailsArray={setServiceDetailsArray}
+										serviceDetailsArray={serviceDetailsArray}
 									/>
 								) : (
-									<FirstAvailableAppointmentsStore2
+									<FirstAvailableAppointmentModified
 										user={user}
 										language={language}
+										chosenDate={chosenDate}
+										setChosenDate={setChosenDate}
+										allCustomerType={allCustomerType}
+										allActiveServices={allActiveServices}
+										chosenCustomerType={chosenCustomerType}
+										setChosenCustomerType={setChosenCustomerType}
+										chosenService={chosenService}
+										setChosenService={setChosenService}
+										appointmentFirst={appointmentFirst}
+										loading={loading}
+										setServiceDetailsArray={setServiceDetailsArray}
+										serviceDetailsArray={serviceDetailsArray}
 									/>
 								)}
 							</Animated>
@@ -514,12 +603,12 @@ const BookingFromStore = ({ language, setLanguage }) => {
 									{allEmployees &&
 										allEmployees.map((i, c) => (
 											<div
-												className='col-md-3 my-3 mx-auto EmployeesLinks'
+												className='col-md-3 col-5 my-3 mx-auto EmployeesLinks'
 												key={c}
 											>
 												{" "}
 												<Link
-													to={`/store/book-appointment-from-store/employee/${i._id}`}
+													to={`/store/book-appointment-from-store2/employee/${i._id}`}
 													onClick={() => {
 														localStorage.setItem(
 															"barber",

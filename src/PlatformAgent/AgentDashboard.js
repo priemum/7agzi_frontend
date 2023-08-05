@@ -15,6 +15,7 @@ const AgentDashboard = ({ language }) => {
 	const [currentUser, setCurrentUser] = useState("");
 	const [ownerAccounts, setOwnerAccounts] = useState("");
 	const [storeProperties, setStoreProperties] = useState([]);
+	const [searchQuery, setSearchQuery] = useState("");
 
 	const { user, token } = isAuthenticated();
 
@@ -111,6 +112,14 @@ const AgentDashboard = ({ language }) => {
 			? ownerAccounts.filter((i) => i.agentPaidPro === true)
 			: [];
 
+	const filteredOwnerAccounts = ownerAccounts.filter(
+		(o) =>
+			o.agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.storeGovernorate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			o.phone.toLowerCase().includes(searchQuery)
+	);
+
 	return (
 		<AgentDashboardWrapper>
 			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
@@ -197,7 +206,7 @@ const AgentDashboard = ({ language }) => {
 				<div>
 					<h1>
 						{" "}
-						<strong> HI AGENT {currentUser && currentUser.name}</strong>
+						<strong> HI BOSS {currentUser && currentUser.name}</strong>
 					</h1>
 					<div className='row' dir={language === "Arabic" ? "rtl" : "ltr"}>
 						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
@@ -287,6 +296,23 @@ const AgentDashboard = ({ language }) => {
 						<h3 style={{ fontWeight: "bolder" }}>
 							Registered Accounts With You:
 						</h3>
+						<div className='text-center col-md-5 mx-auto my-3'>
+							<label>
+								{" "}
+								<strong>Search</strong>{" "}
+							</label>
+							<br />
+							<input
+								className='form-control'
+								type='text'
+								value={searchQuery}
+								onChange={(e) => {
+									setSearchQuery(e.target.value);
+								}}
+								placeholder='Search by agent or owner name or phone or governorate'
+								style={{ marginBottom: "10px" }}
+							/>
+						</div>
 						<table
 							className='table table-bordered table-md-responsive table-hover table-striped'
 							style={{ fontSize: "0.75rem" }}
@@ -353,8 +379,8 @@ const AgentDashboard = ({ language }) => {
 							</thead>
 
 							<tbody>
-								{ownerAccounts &&
-									ownerAccounts.map((o, i) => {
+								{filteredOwnerAccounts &&
+									filteredOwnerAccounts.map((o, i) => {
 										const now = new Date();
 										const endDate = new Date(o.createdAt);
 										const diffTime = Math.abs(endDate - now);
@@ -447,9 +473,13 @@ const AgentDashboard = ({ language }) => {
 														fontWeight: "bolder",
 														textDecoration: "underline",
 													}}
+													onClick={() => {
+														window.location.href = `/store/admin/settings/agent/help/${o._id}`;
+													}}
 												>
 													<Link
-														to={`/store/admin/settings/agent/help/${o._id}`}
+														to={`#`}
+														// to={`/store/admin/settings/agent/help/${o._id}`}
 													>
 														HELP ACCOUNT
 													</Link>

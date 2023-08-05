@@ -1,3 +1,5 @@
+//New Version
+
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
@@ -16,10 +18,13 @@ import { useParams } from "react-router-dom";
 import { allLoyaltyPointsAndStoreStatusByPhoneAndStore } from "../TheBoss/apiBoss";
 import AddedServices from "../components/SingleStorePage/AddedServices";
 import Gallary from "../components/SingleStorePage/Gallary";
-import FirstAvailableAppointments from "../components/SingleStorePage/FirstAvailableAppointments";
+
+// eslint-disable-next-line
+// import FirstAvailableAppointments from "../components/SingleStorePage/FirstAvailableAppointments";
 import { Link } from "react-router-dom";
 import GettingMap from "../components/SingleStorePage/GettingMap";
 import { getPreviousAddedGallary } from "../Owners/apiOwner";
+import MainFirstAvailableApp from "../components/SingleStorePage/FirstAvailableAppointmentsMain/MainFirstAvailableApp";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -106,147 +111,7 @@ const SingleStorePage = ({ props, language }) => {
 					storeId: pickedStoreRendered.belongsTo._id,
 					storeCreatedAt: pickedStoreRendered.belongsTo.createdAt,
 				});
-			}
-		});
-	};
 
-	useEffect(() => {
-		gettingChosenStore();
-		// eslint-disable-next-line
-	}, [phone, storeName]);
-
-	useEffect(() => {
-		if (window.location.search.includes("STYLISTS")) {
-			setClickedMenu("STYLISTS");
-		} else if (window.location.search.includes("about")) {
-			setClickedMenu("ABOUT");
-		} else if (window.location.search.includes("gallery")) {
-			setClickedMenu("GALLERY");
-		} else if (window.location.search.includes("map")) {
-			setClickedMenu("MAP");
-		} else {
-			setClickedMenu("SERVICES");
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const gettingAllAbouts = (ownerId) => {
-		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
-			"token",
-			storeName.split("-").join(" "),
-			phone
-		).then((data2) => {
-			if (data2.error) {
-				console.log("error rendering store data");
-			} else {
-				var pickedStoreRendered = data2[data2.length - 1];
-				getAbouts("asdasd", pickedStoreRendered.belongsTo._id).then((data) => {
-					if (data.error) {
-						console.log(data.error);
-					} else {
-						setAboutUs(data[data.length - 1]);
-					}
-				});
-			}
-		});
-	};
-
-	const gettingAllContacts = (ownerId) => {
-		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
-			"token",
-			storeName.split("-").join(" "),
-			phone
-		).then((data2) => {
-			if (data2.error) {
-				console.log("error rendering store data");
-			} else {
-				var pickedStoreRendered = data2[data2.length - 1];
-				getContacts("asdasd", pickedStoreRendered.belongsTo._id).then(
-					(data) => {
-						if (data.error) {
-							console.log(data.error);
-						} else {
-							setContact(data[data.length - 1]);
-						}
-					}
-				);
-			}
-		});
-	};
-
-	const gettingAllHeroes = (ownerId) => {
-		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
-			"token",
-			storeName.split("-").join(" "),
-			phone
-		).then((data2) => {
-			if (data2.error) {
-				console.log("error rendering store data");
-			} else {
-				var pickedStoreRendered = data2[data2.length - 1];
-				getAllHeros("token", pickedStoreRendered.belongsTo._id).then((data) => {
-					if (data.error) {
-					} else {
-						const lastAddedHeros = data[data.length - 1];
-						if (lastAddedHeros && data.length > 0) {
-							setHero1(
-								data[data.length - 1].thumbnail[0]
-									? data[data.length - 1].thumbnail[0]
-									: []
-							);
-							setHero2(
-								data[data.length - 1].thumbnail2[0]
-									? data[data.length - 1].thumbnail2[0]
-									: []
-							);
-						} else {
-							setHero1([]);
-							setHero2([]);
-						}
-
-						// setHyperLink(data[data.length - 1].hyper_link);
-						// setHyperLink2(data[data.length - 1].hyper_link2);
-						// setHyperLink3(data[data.length - 1].hyper_link3);
-					}
-				});
-			}
-		});
-	};
-
-	const gettingAllEmployees = (ownerId) => {
-		setLoading(true);
-
-		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
-			"token",
-			storeName.split("-").join(" "),
-			phone
-		).then((data2) => {
-			if (data2.error) {
-				console.log("error rendering store data");
-			} else {
-				var pickedStoreRendered = data2[data2.length - 1];
-				getEmployees(pickedStoreRendered.belongsTo._id).then((data) => {
-					if (data.error) {
-						console.log(data.error);
-					} else {
-						setAllEmployees(data);
-						setLoading(false);
-					}
-				});
-			}
-		});
-	};
-
-	const getAllService = (ownerId) => {
-		allLoyaltyPointsAndStoreStatusByPhoneAndStore(
-			"token",
-			storeName.split("-").join(" "),
-			phone
-		).then((data2) => {
-			if (data2.error) {
-				console.log("error rendering store data");
-			} else {
-				var pickedStoreRendered = data2[data2.length - 1];
 				getServices("token", pickedStoreRendered.belongsTo._id).then((data) => {
 					if (data.error) {
 						console.log(data.error);
@@ -279,41 +144,105 @@ const SingleStorePage = ({ props, language }) => {
 						}
 					}
 				});
-			}
-		});
-	};
 
-	const getStoreGallary = () => {
-		getPreviousAddedGallary("token", storeChosen.belongsTo._id).then((data) => {
-			if (data.error) {
-				console.log(data.error);
-			} else {
-				var lastAdded = data[data.length - 1];
-				var adjustingPhotos =
-					lastAdded &&
-					lastAdded.gallaryPhotos &&
-					lastAdded.gallaryPhotos.map((i) => {
-						return {
-							url: i.url,
-							public_id: i.public_id,
-						};
-					});
-				setGettingGallary(adjustingPhotos);
+				getAllHeros("token", pickedStoreRendered.belongsTo._id).then((data) => {
+					if (data.error) {
+					} else {
+						const lastAddedHeros = data[data.length - 1];
+						if (lastAddedHeros && data.length > 0) {
+							setHero1(
+								data[data.length - 1].thumbnail[0]
+									? data[data.length - 1].thumbnail[0]
+									: []
+							);
+							setHero2(
+								data[data.length - 1].thumbnail2[0]
+									? data[data.length - 1].thumbnail2[0]
+									: []
+							);
+						} else {
+							setHero1([]);
+							setHero2([]);
+						}
+
+						// setHyperLink(data[data.length - 1].hyper_link);
+						// setHyperLink2(data[data.length - 1].hyper_link2);
+						// setHyperLink3(data[data.length - 1].hyper_link3);
+					}
+				});
+
+				getAbouts("asdasd", pickedStoreRendered.belongsTo._id).then((data) => {
+					if (data.error) {
+						console.log(data.error);
+					} else {
+						setAboutUs(data[data.length - 1]);
+					}
+				});
+
+				getContacts("asdasd", pickedStoreRendered.belongsTo._id).then(
+					(data) => {
+						if (data.error) {
+							console.log(data.error);
+						} else {
+							setContact(data[data.length - 1]);
+						}
+					}
+				);
+
+				getEmployees(pickedStoreRendered.belongsTo._id).then((data) => {
+					if (data.error) {
+						console.log(data.error);
+					} else {
+						setAllEmployees(data);
+						setLoading(false);
+					}
+				});
+
+				getPreviousAddedGallary(
+					"token",
+					pickedStoreRendered.belongsTo._id
+				).then((data) => {
+					if (data.error) {
+						console.log(data.error);
+					} else {
+						var lastAdded = data[data.length - 1];
+						var adjustingPhotos =
+							lastAdded &&
+							lastAdded.gallaryPhotos &&
+							lastAdded.gallaryPhotos.map((i) => {
+								return {
+									url: i.url,
+									public_id: i.public_id,
+								};
+							});
+						setGettingGallary(adjustingPhotos);
+					}
+				});
+
+				setLoading(false);
 			}
 		});
 	};
 
 	useEffect(() => {
-		if (storeChosen && storeChosen.belongsTo) {
-			getAllService();
-			gettingAllAbouts();
-			gettingAllContacts();
-			gettingAllHeroes();
-			gettingAllEmployees();
-			getStoreGallary();
-		}
+		gettingChosenStore();
 		// eslint-disable-next-line
-	}, [props, chosenDate, chosenCustomerType, chosenService]);
+	}, [phone, storeName, chosenDate, chosenCustomerType]);
+
+	useEffect(() => {
+		if (window.location.search.includes("STYLISTS")) {
+			setClickedMenu("STYLISTS");
+		} else if (window.location.search.includes("about")) {
+			setClickedMenu("ABOUT");
+		} else if (window.location.search.includes("gallery")) {
+			setClickedMenu("GALLERY");
+		} else if (window.location.search.includes("map")) {
+			setClickedMenu("MAP");
+		} else {
+			setClickedMenu("SERVICES");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleChosenCustomerType = (event) => {
 		setChosenCustomerType(event.target.value);
@@ -557,22 +486,21 @@ const SingleStorePage = ({ props, language }) => {
 							</div>
 						) : null}
 						<div id='firstAvailableApp' className='firstAvailableApp mb-5'>
-							<FirstAvailableAppointments
+							<MainFirstAvailableApp
 								onlineStoreName={storeChosen}
-								allEmployees={allEmployees}
-								AllServices={AllServices}
-								contact={contact}
+								user={storeChosen}
+								language={language}
+								chosenDate={chosenDate}
+								setChosenDate={setChosenDate}
 								allCustomerType={allCustomerType}
 								chosenCustomerType={chosenCustomerType}
 								setChosenCustomerType={setChosenCustomerType}
-								chosenDate={chosenDate}
-								setChosenDate={setChosenDate}
-								setChosenService={setChosenService}
+								allActiveServices={AllServices}
 								chosenService={chosenService}
-								handleChosenCustomerType={handleChosenCustomerType}
-								fromLocalStore={storeChosen}
-								language={language}
-								clickedMenu={clickedMenu}
+								setChosenService={setChosenService}
+								loading={loading}
+								allEmployees={allEmployees}
+								setLoading={setLoading}
 							/>
 						</div>
 					</div>

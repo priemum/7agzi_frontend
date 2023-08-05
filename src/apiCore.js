@@ -629,3 +629,96 @@ export const getFirstAvailableAppointmentEmployee = (ownerId) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const getUniqueServicesPerStore = (ownerId) => {
+	if (ownerId) {
+		return fetch(
+			`${process.env.REACT_APP_API_URL}/findUniqueActiveServices/${ownerId}`,
+			{
+				method: "GET",
+				headers: {
+					// content type?
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+			}
+		)
+			.then((response) => {
+				return response.json();
+			})
+			.catch((err) => console.log(err));
+	}
+};
+
+export const getUniqueCustomerTypesStore = (ownerId) => {
+	if (ownerId) {
+		return fetch(
+			`${process.env.REACT_APP_API_URL}/findUniqueCustomerTypes/${ownerId}`,
+			{
+				method: "GET",
+				headers: {
+					// content type?
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+			}
+		)
+			.then((response) => {
+				return response.json();
+			})
+			.catch((err) => console.log(err));
+	}
+};
+
+export const gettingFirstAppointmentFromBackend = (
+	serviceName,
+	customerType,
+	date,
+	country,
+	ownerId
+) => {
+	console.log(serviceName, "serviceNames");
+	if (ownerId) {
+		return fetch(
+			`${process.env.REACT_APP_API_URL}/findFirstAvailableAppointment/${serviceName}/${customerType}/${date}/${country}/${ownerId}`,
+			{
+				method: "GET",
+				headers: {
+					// content type?
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+			}
+		)
+			.then((response) => {
+				return response.json();
+			})
+			.catch((err) => console.log(err));
+	}
+};
+
+export const gettingEmployeeFreeSlots = (
+	employeeId,
+	customerType,
+	services,
+	date,
+	ownerId
+) => {
+	if (ownerId) {
+		return fetch(
+			`${process.env.REACT_APP_API_URL}/employee-schedule/${employeeId}/${customerType}/${services}/${date}/${ownerId}`,
+			{
+				method: "GET",
+				headers: {
+					// content type?
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+			}
+		)
+			.then((response) => {
+				return response.json();
+			})
+			.catch((err) => console.log(err));
+	}
+};

@@ -5,29 +5,24 @@ import {
 	getServices,
 	gettingEmployeeFreeSlots,
 	read,
-} from "../../../apiCore";
-import { authenticate, isAuthenticated, signin, signup } from "../../../auth";
+} from "../../apiCore";
+import { isAuthenticated } from "../../auth";
 import { Spin } from "antd";
 import moment from "moment";
 import ScheduleFormHelper from "./ScheduleFormHelper";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { allLoyaltyPointsAndStoreStatus } from "../../../apiCore";
+import NavbarPOS from "../NavbarPOS/NavbarPOS";
+import { allLoyaltyPointsAndStoreStatus } from "../../Owners/apiOwner";
 import ScheduleFormHelperArabic from "./ScheduleFormHelperArabic";
+import DiscountModal from "./DiscountModal";
 
-const SchedulePageSteps2 = ({ language }) => {
-	const chosenStoreLocalStorage = JSON.parse(
-		localStorage.getItem("chosenStore")
-	);
-
+const ScheduleFormFinal = ({ language, setLanguage }) => {
 	const [pickedEmployee, setPickedEmployee] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 	const [scheduledHours, setScheduledHours] = useState([]);
-
-	// eslint-disable-next-line
 	const [onlineStoreName, setOnlineStoreName] = useState("");
-	const [password, setPassword] = useState("");
-	const [password2, setPassword2] = useState("");
 	const [AllServices, setAllServices] = useState("");
 	const [serviceDetailsArray, setServiceDetailsArray] = useState([]);
 	const [allCustomerTypes, setAllCustomerTypes] = useState([]);
@@ -35,14 +30,17 @@ const SchedulePageSteps2 = ({ language }) => {
 	const [chosenTime, setChosenTime] = useState(null);
 	const [employeeAvailability, setEmployeeAvailability] = useState("");
 	const [scheduledByUserName, setScheduledByUserName] = useState("");
-	// eslint-disable-next-line
 	const [discountCash, setDiscountCash] = useState(0);
 	const [customerPhone, setCustomerPhone] = useState(null);
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
+	// eslint-disable-next-line
 	const [chosenDate, setChosenDate] = useState("");
 
+	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
+
+	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
 	const checkLength = (i) => {
 		if (i < 10) {
@@ -67,24 +65,11 @@ const SchedulePageSteps2 = ({ language }) => {
 		return current < moment();
 	};
 
-	useEffect(() => {
-		if (user && user.name && user.email) {
-			setScheduledByUserName(user.name);
-			setCustomerPhone(user.phone);
-		}
-		// eslint-disable-next-line
-	}, []);
-
 	const loadPickedEmployee = (
 		employeeId,
 		pickedServiceFirstAvailable,
 		CustomerType
 	) => {
-		const gettingBelongsTo =
-			chosenStoreLocalStorage &&
-			chosenStoreLocalStorage.belongsTo &&
-			chosenStoreLocalStorage.belongsTo._id;
-
 		setLoading(true);
 		read(employeeId).then((data) => {
 			if (data.error) {
@@ -112,7 +97,7 @@ const SchedulePageSteps2 = ({ language }) => {
 				}
 				//--------------------------------------//
 				//getting Services Associated With Picked Employee
-				getServices("token", gettingBelongsTo).then((data2) => {
+				getServices(token, userBelongsToModified).then((data2) => {
 					setLoading(true);
 
 					if (data2.error) {
@@ -181,16 +166,15 @@ const SchedulePageSteps2 = ({ language }) => {
 	};
 
 	const getOnlineStoreName = () => {
-		allLoyaltyPointsAndStoreStatus(
-			"token",
-			chosenStoreLocalStorage.belongsTo._id
-		).then((data) => {
-			if (data.error) {
-				console.log(data.error);
-			} else {
-				setOnlineStoreName(data && data[data.length - 1]);
+		allLoyaltyPointsAndStoreStatus("token", userBelongsToModified).then(
+			(data) => {
+				if (data.error) {
+					console.log(data.error);
+				} else {
+					setOnlineStoreName(data && data[data.length - 1]);
+				}
 			}
-		});
+		);
 	};
 
 	useEffect(() => {
@@ -245,16 +229,12 @@ const SchedulePageSteps2 = ({ language }) => {
 	};
 
 	useEffect(() => {
-		const gettingBelongsTo =
-			chosenStoreLocalStorage &&
-			chosenStoreLocalStorage.belongsTo &&
-			chosenStoreLocalStorage.belongsTo._id;
 		if (
 			pickedEmployee &&
 			pickedEmployee._id &&
 			chosenDate &&
 			chosenCustomerType &&
-			gettingBelongsTo &&
+			userBelongsToModified &&
 			serviceDetailsArray &&
 			serviceDetailsArray.length > 0
 		) {
@@ -271,7 +251,7 @@ const SchedulePageSteps2 = ({ language }) => {
 				chosenCustomerType,
 				allPickedServices,
 				formattedDate,
-				gettingBelongsTo
+				userBelongsToModified
 			);
 		}
 		// eslint-disable-next-line
@@ -429,13 +409,6 @@ const SchedulePageSteps2 = ({ language }) => {
 		if (!serviceDetailsArray) {
 			return toast.error("Add at least one service");
 		}
-		if (!user) {
-			if (!/(?=.*\d).{6,}/.test(password)) {
-				return toast.error(
-					"Password should be at least 6 characters and a number should be included"
-				);
-			}
-		}
 
 		function containsArabicNumerals(str) {
 			// Regular expression to match Arabic numerals
@@ -501,185 +474,70 @@ const SchedulePageSteps2 = ({ language }) => {
 			0
 		);
 
-		const gettingBelongsTo =
-			chosenStoreLocalStorage &&
-			chosenStoreLocalStorage.belongsTo &&
-			chosenStoreLocalStorage.belongsTo._id;
-
-		//sign user up
-		const cleanedPhone = convertArabicOrNumericToEnglish(customerPhone);
-
-		if (!user) {
-			signup({
-				name: scheduledByUserName,
-				email: convertArabicOrNumericToEnglish(customerPhone),
-				phone: convertArabicOrNumericToEnglish(customerPhone),
-				password,
-				storeType: "No Store",
-				storeName: "No Store",
-				storeAddress: "No Store",
-				storeGovernorate:
-					chosenStoreLocalStorage &&
-					chosenStoreLocalStorage.belongsTo.storeGovernorate,
-				storeCountry:
-					chosenStoreLocalStorage &&
-					chosenStoreLocalStorage.belongsTo.storeCountry,
-				storeDistrict:
-					chosenStoreLocalStorage &&
-					chosenStoreLocalStorage.belongsTo.storeDistrict,
-				role: 0,
-				roleDescription: "Client",
-				activeUser: true,
-			}).then((data1) => {
-				if (data1.error) {
-					console.log(data1.error, "data1.error");
-					return toast.info(data1.error);
-				} else {
-					signin({ email: cleanedPhone, password }).then((data) => {
-						if (data.error) {
-							console.log(data, "Error Login");
-						} else {
-							authenticate(data, () => {
-								console.log(data, "data");
-							});
-
-							//User Signed In Then Create The order
-							const createOrderData = {
-								employees: [pickedEmployee],
-								scheduledByUserName: scheduledByUserName,
-								scheduledByUserEmail:
-									convertArabicOrNumericToEnglish(customerPhone),
-								amount:
-									Number(totalServicePriceDiscount) - Number(discountCash),
-								paidTip: 0,
-								tipPercentage: 0,
-								servicePrice: totalServicePrice,
-								service: serviceDetailsArray
-									.map((i) => i.serviceName)
-									.join(","),
-								serviceDetails: employeeAvailability,
-								serviceDetailsArray: serviceDetailsArrayModified,
-								employeeAvailability: employeeAvailability,
-								serviceDuration: employeeAvailability.totalServiceTime,
-								LoyaltyPoints: 0,
-								scheduledDate: chosenDate._d || chosenDate,
-								scheduledTime: chosenTime,
-								scheduleEndsAt: new Date(
-									appointmentStarts()[1].replace(" at", "")
-								).toLocaleString(),
-								scheduleStartsAt: new Date(
-									appointmentStarts()[0].replace(" at", "")
-								).toLocaleString(),
-								paymentStatus: false,
-								status: "Scheduled Online / Not Paid",
-								minLoyaltyPointsForAward: 0,
-								onlineServicesFees: 0,
-								phone: convertArabicOrNumericToEnglish(customerPhone),
-								scheduleAppointmentPhoto: null,
-								appointmentComment: "",
-								discountedAmount: discountCash,
-								discountedPercentage: 0,
-								BookedFrom: "Online",
-								transaction_id: "",
-								card_data: "",
-								applyPoints: false,
-								appliedCoupon: "Functionality Not added",
-								// totalwithNoDiscounts: actualPaymentByUser,
-								appliedCouponData: "Not added",
-								firstPurchase: "Not added yet",
-								belongsTo: gettingBelongsTo,
-								sharePaid: false,
-							};
-							var userId = data && data.user && data.user._id;
-
-							setTimeout(function () {
-								createScheduledAppointment(userId, token, createOrderData).then(
-									(response) => {
-										toast.success("Appointment Was Successfully Scheduled");
-										window.scrollTo({ top: 0, behavior: "smooth" });
-										localStorage.removeItem("barber");
-										localStorage.removeItem("pickedServiceFirstAvailable");
-										localStorage.removeItem("chosenDateFromFirstAvailable");
-										localStorage.removeItem("CustomerType");
-
-										// window.location.reload(false);
-									}
-								);
-							}, 1500);
-
-							return setTimeout(function () {
-								window.location.href = `/appointment-successfully-scheduled/YourAppointmentWasSuccesfullyScheduled/${userId}`;
-							}, 2500);
-						}
-					});
-				}
-			});
-		}
-
-		if (user && user.name) {
-			const createOrderData = {
-				employees: [pickedEmployee],
-				scheduledByUserName: scheduledByUserName,
-				scheduledByUserEmail: convertArabicOrNumericToEnglish(customerPhone),
-				amount: Number(totalServicePriceDiscount) - Number(discountCash),
-				paidTip: 0,
-				tipPercentage: 0,
-				servicePrice: totalServicePrice,
-				service: serviceDetailsArray.map((i) => i.serviceName).join(","),
-				serviceDetails: employeeAvailability,
-				serviceDetailsArray: serviceDetailsArrayModified,
-				employeeAvailability: employeeAvailability,
-				serviceDuration: employeeAvailability.totalServiceTime,
-				LoyaltyPoints: 0,
-				scheduledDate: chosenDate._d || chosenDate,
-				scheduledTime: chosenTime,
-				scheduleEndsAt: new Date(
-					appointmentStarts()[1].replace(" at", "")
-				).toLocaleString(),
-				scheduleStartsAt: new Date(
-					appointmentStarts()[0].replace(" at", "")
-				).toLocaleString(),
-				paymentStatus: false,
-				status: "Scheduled Online / Not Paid",
-				minLoyaltyPointsForAward: 0,
-				onlineServicesFees: 0,
-				phone: convertArabicOrNumericToEnglish(customerPhone),
-				scheduleAppointmentPhoto: null,
-				appointmentComment: "",
-				discountedAmount: discountCash,
-				discountedPercentage: 0,
-				BookedFrom: "Online",
-				transaction_id: "",
-				card_data: "",
-				applyPoints: false,
-				appliedCoupon: "Functionality Not added",
-				// totalwithNoDiscounts: actualPaymentByUser,
-				appliedCouponData: "Not added",
-				firstPurchase: "Not added yet",
-				belongsTo: gettingBelongsTo,
-				sharePaid: false,
-			};
-			var userId =
+		const createOrderData = {
+			employees: [pickedEmployee],
+			scheduledByUserName: scheduledByUserName,
+			scheduledByUserEmail: convertArabicOrNumericToEnglish(customerPhone),
+			amount: Number(totalServicePriceDiscount) - Number(discountCash),
+			paidTip: 0,
+			tipPercentage: 0,
+			servicePrice: totalServicePrice,
+			service: serviceDetailsArray.map((i) => i.serviceName).join(","),
+			serviceDetails: employeeAvailability,
+			serviceDetailsArray: serviceDetailsArrayModified,
+			employeeAvailability: employeeAvailability,
+			serviceDuration: employeeAvailability.totalServiceTime,
+			LoyaltyPoints: 0,
+			scheduledDate: chosenDate._d || chosenDate,
+			scheduledTime: chosenTime,
+			scheduleEndsAt: new Date(
+				appointmentStarts()[1].replace(" at", "")
+			).toLocaleString(),
+			scheduleStartsAt: new Date(
+				appointmentStarts()[0].replace(" at", "")
+			).toLocaleString(),
+			paymentStatus: false,
+			status: "Scheduled From Store / Not Paid",
+			minLoyaltyPointsForAward: 0,
+			onlineServicesFees: 0,
+			phone: customerPhone,
+			scheduleAppointmentPhoto: null,
+			appointmentComment: "",
+			discountedAmount: discountCash,
+			discountedPercentage: 0,
+			BookedFrom: "Store",
+			transaction_id: "",
+			card_data: "",
+			applyPoints: false,
+			appliedCoupon: "Functionality Not added",
+			// totalwithNoDiscounts: actualPaymentByUser,
+			appliedCouponData: "Not added",
+			firstPurchase: "Not added yet",
+			belongsTo: userBelongsToModified,
+			sharePaid: false,
+			updatedByUser:
 				isAuthenticated() &&
 				isAuthenticated().user &&
-				isAuthenticated().user._id;
+				isAuthenticated().user._id,
+		};
+		var userId =
+			isAuthenticated() && isAuthenticated().user && isAuthenticated().user._id;
 
-			createScheduledAppointment(userId, token, createOrderData).then(
-				(response) => {
-					toast.success("Appointment Was Successfully Scheduled");
-					window.scrollTo({ top: 0, behavior: "smooth" });
-					localStorage.removeItem("barber");
-					localStorage.removeItem("pickedServiceFirstAvailable");
-					localStorage.removeItem("chosenDateFromFirstAvailable");
-					localStorage.removeItem("CustomerType");
+		createScheduledAppointment(userId, token, createOrderData).then(
+			(response) => {
+				toast.success("Appointment Was Successfully Scheduled");
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				localStorage.removeItem("barber");
+				localStorage.removeItem("pickedServiceFirstAvailable");
+				localStorage.removeItem("chosenDateFromFirstAvailable");
+				localStorage.removeItem("CustomerType");
 
-					// window.location.reload(false);
-				}
-			);
-			return setTimeout(function () {
-				window.location.href = `/appointment-successfully-scheduled/YourAppointmentWasSuccesfullyScheduled/${user._id}`;
-			}, 2000);
-		}
+				// window.location.reload(false);
+			}
+		);
+		return setTimeout(function () {
+			window.location.href = `/store/book-appointment-from-store`;
+		}, 1000);
 	};
 
 	// console.log(chosenDate, "chosenDate");
@@ -691,6 +549,17 @@ const SchedulePageSteps2 = ({ language }) => {
 				</div>
 			) : (
 				<>
+					<DiscountModal
+						modalVisible={modalVisible}
+						setModalVisible={setModalVisible}
+						discountCash={discountCash}
+						setDiscountCash={setDiscountCash}
+					/>
+					<NavbarPOS
+						language={language}
+						setLanguage={setLanguage}
+						onlineStoreName={onlineStoreName}
+					/>
 					{language === "Arabic" ? (
 						<ScheduleFormHelperArabic
 							pickedEmployee={pickedEmployee}
@@ -713,12 +582,8 @@ const SchedulePageSteps2 = ({ language }) => {
 							scheduledHours={scheduledHours}
 							appointmentStarts={appointmentStartsArabic}
 							clickSubmitSchedule_NoPayment={clickSubmitSchedule_NoPayment}
+							setModalVisible={setModalVisible}
 							discountCash={discountCash}
-							password={password}
-							setPassword={setPassword}
-							password2={password2}
-							setPassword2={setPassword2}
-							user={user}
 						/>
 					) : (
 						<ScheduleFormHelper
@@ -742,17 +607,13 @@ const SchedulePageSteps2 = ({ language }) => {
 							scheduledHours={scheduledHours}
 							appointmentStarts={appointmentStarts}
 							clickSubmitSchedule_NoPayment={clickSubmitSchedule_NoPayment}
+							setModalVisible={setModalVisible}
 							discountCash={discountCash}
-							password={password}
-							setPassword={setPassword}
-							password2={password2}
-							setPassword2={setPassword2}
-							user={user}
 						/>
 					)}
 
 					<Link
-						to={`/schedule/${chosenStoreLocalStorage.addStoreName}/${chosenStoreLocalStorage.belongsTo.phone}`}
+						to='/store/book-appointment-from-store'
 						onClick={() => {
 							window.scrollTo({ top: 0, behavior: "smooth" });
 						}}
@@ -769,7 +630,7 @@ const SchedulePageSteps2 = ({ language }) => {
 	);
 };
 
-export default SchedulePageSteps2;
+export default ScheduleFormFinal;
 
 const ScheduleFormFinalWrapper = styled.div`
 	min-height: 1200px;

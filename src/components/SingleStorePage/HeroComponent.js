@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Animated } from "react-animated-css";
+// eslint-disable-next-line
 import FirstAvailableAppointments from "./FirstAvailableAppointments";
 import { showAverageRatingForEntireStore } from "../SingleEmployee/Rating";
 
@@ -65,7 +66,7 @@ const HeroComponent = ({
 							animationOutDuration={1000}
 							isVisible={true}
 						>
-							<div className='firstAppointWrapperSub'>
+							{/* <div className='firstAppointWrapperSub'>
 								<FirstAvailableAppointments
 									onlineStoreName={onlineStoreName}
 									allEmployees={allEmployees}
@@ -82,7 +83,7 @@ const HeroComponent = ({
 									fromLocalStore={fromLocalStore}
 									language={language}
 								/>
-							</div>
+							</div> */}
 						</Animated>
 					</div>
 					<div className='appointment-component col-md-6 requiredComponentBottomLeft'>
@@ -101,7 +102,7 @@ const HeroComponent = ({
 										fontWeight: "bold",
 										color: "white",
 										textTransform: "uppercase",
-										// letterSpacing: "2px",
+										letterSpacing: "2px",
 									}}
 								>
 									{language === "Arabic" ? (

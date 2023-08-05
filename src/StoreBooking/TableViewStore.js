@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const TableViewStore = ({orders}) => {
+const TableViewStore = ({ orders }) => {
 	const [q, setQ] = useState("");
 
 	function search(orders) {
@@ -51,12 +51,12 @@ const TableViewStore = ({orders}) => {
 					Search
 				</label>
 				<input
-					className='p-2 my-5 '
+					className='p-2 mb-5 mt-2'
 					type='text'
 					value={q}
 					onChange={(e) => setQ(e.target.value.toLowerCase())}
 					placeholder='Search By Client Phone, Client Name, Stylist Name or Client Schedule Date'
-					style={{borderRadius: "20px", width: "50%"}}
+					style={{ borderRadius: "20px", width: "95%" }}
 				/>
 			</div>
 			{/* <div className='my-3'>{DownloadExcel()}</div> */}
@@ -69,7 +69,7 @@ const TableViewStore = ({orders}) => {
 			>
 				<table
 					className='table table-bordered table-md-responsive table-hover table-striped'
-					style={{fontSize: "0.75rem"}}
+					style={{ fontSize: "0.75rem" }}
 				>
 					<thead
 					// className='thead-light'
@@ -166,7 +166,7 @@ const TableViewStore = ({orders}) => {
 								<td>{s.paidTip.toFixed(2)}</td>
 								<td>{s.servicePrice}</td>
 								<td>{s.onlineServicesFees}</td>
-								<td style={{fontWeight: "bolder", fontSize: "13px"}}>
+								<td style={{ fontWeight: "bolder", fontSize: "13px" }}>
 									{s.amount.toFixed(2)}
 								</td>
 								<td>{s.applyPoints.toString()}</td>
