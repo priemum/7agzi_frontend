@@ -127,7 +127,6 @@ const AddedStoresMain = () => {
 															"chosenStore",
 															JSON.stringify(p)
 														);
-														window.scrollTo({ top: 0, behavior: "smooth" });
 													}}
 												>
 													<Link
