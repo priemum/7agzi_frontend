@@ -49,6 +49,8 @@ const MyStoreList = ({ language }) => {
 	const getLocation = useCallback(() => {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
+				// lat, long
+				// 31.123883, 29.775421 examples
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
 				allStoresSorted(lat, lon, itemsPerPage, currentPage)

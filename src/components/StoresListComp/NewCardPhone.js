@@ -103,6 +103,8 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 	const allRatingArray = allEmployees && allEmployees.map((i) => i.ratings);
 
 	function convertToMinutes(timeString) {
+		if (!timeString) return 0; // return 0 or a sensible default value if timeString is undefined or null
+
 		const timeArr = timeString.split(" ");
 		let hours = 0;
 		let minutes = 0;
