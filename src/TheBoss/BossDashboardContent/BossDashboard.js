@@ -141,7 +141,6 @@ const BossDashboard = () => {
 			  )
 			: filteredOwnerAccounts;
 
-	console.log(filteredData, "filteredData");
 	return (
 		<BossDashboardWrapper>
 			<Helmet>
@@ -306,6 +305,7 @@ const BossDashboard = () => {
 												<th scope='col'>District</th>
 												<th scope='col'>Address</th>
 												<th scope='col'>Email</th>
+												<th scope='col'>Salon Name</th>
 												<th scope='col'>Agent</th>
 												<th scope='col'>Registered</th>
 												<th scope='col'>Settings?</th>
@@ -344,6 +344,38 @@ const BossDashboard = () => {
 															</td>
 															<td>{o.storeAddress}</td>
 															<td>{o.email}</td>
+															<td>
+																{storeProperties &&
+																storeProperties
+																	.map(
+																		(iii) => iii.belongsTo && iii.belongsTo._id
+																	)
+																	.indexOf(o._id) !== -1 &&
+																storeProperties[
+																	storeProperties &&
+																		storeProperties
+																			.map(
+																				(iii) =>
+																					iii.belongsTo && iii.belongsTo._id
+																			)
+																			.indexOf(o._id)
+																].addStoreName ? (
+																	<span>
+																		{
+																			storeProperties[
+																				storeProperties
+																					.map(
+																						(iii) =>
+																							iii.belongsTo && iii.belongsTo._id
+																					)
+																					.indexOf(o._id)
+																			].addStoreName
+																		}
+																	</span>
+																) : (
+																	o.storeName
+																)}
+															</td>
 															<td>{o.agent && o.agent.name}</td>
 															<td>
 																{moment(o.createdAt).format("DD/MM/YYYY")}
