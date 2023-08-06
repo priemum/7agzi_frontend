@@ -51,7 +51,7 @@ const MyStoreList = ({ language }) => {
 			(position) => {
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
-				allStoresSorted(30.1253197, 31.3768467, itemsPerPage, currentPage)
+				allStoresSorted(lat, lon, itemsPerPage, currentPage)
 					.then((data) => {
 						if (data.error) {
 							setError(data.error);
