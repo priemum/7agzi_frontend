@@ -20,6 +20,8 @@ import SigninForm from "./pages/SigninForm";
 import SignupForm from "./pages/SignupForm";
 import SingleEmployee from "./pages/SingleEmployee";
 import SchedulePageSteps2 from "./pages/SchedulePage/SchedulePageAdjusted/SchedulePageSteps2";
+
+// eslint-disable-next-line
 import StoresList from "./pages/StoresList";
 import SuccessfulSchedule from "./pages/SchedulePage/SuccessfulSchedule";
 import About from "./pages/About";
@@ -88,6 +90,7 @@ import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManag
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
 import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
 import ScheduleFormFinal from "./StoreBooking/POSBook/ScheduleFormFinal";
+import MyStoreList from "./pages/MyStoreList";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -263,10 +266,15 @@ function App() {
 						)}
 					/>
 
-					<Route
+					{/* <Route
 						path='/schedule'
 						exact
 						component={() => <StoresList language={language} />}
+					/> */}
+					<Route
+						path='/schedule'
+						exact
+						component={() => <MyStoreList language={language} />}
 					/>
 
 					<Route

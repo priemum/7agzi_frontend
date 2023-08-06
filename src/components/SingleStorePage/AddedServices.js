@@ -38,7 +38,16 @@ const isActive = (history, path) => {
 	}
 };
 
-const AddedServices = ({ chosenCustomerType, ownerId, language }) => {
+const AddedServices = ({
+	chosenCustomerType,
+	ownerId,
+	language,
+	fromPage,
+	chosenService,
+	setChosenService,
+	setServiceDetailsArray,
+	serviceDetailsArray,
+}) => {
 	const [AllServices, setAllServices] = useState([]);
 	const [clickedMenu, setClickedMenu] = useState("STANDARD");
 	const [checkedService, setCheckedService] = useState(null);
@@ -158,12 +167,56 @@ const AddedServices = ({ chosenCustomerType, ownerId, language }) => {
 													</span>
 												)}
 											</div>
-											<div className='col-2'>
-												<Checkbox
-													checked={checkedService === s._id}
-													onChange={() => setCheckedService(s._id)}
-												/>
-											</div>
+											{fromPage === "SingleStore" ? (
+												<div className='col-2'>
+													<Checkbox
+														checked={
+															checkedService && s && s._id
+																? checkedService.includes(s._id)
+																: false
+														}
+														onChange={(e) => {
+															if (e.target.checked) {
+																setCheckedService((prevChecked) =>
+																	Array.isArray(prevChecked)
+																		? [...prevChecked, s._id]
+																		: [s._id]
+																);
+															} else {
+																setCheckedService((prevChecked) =>
+																	Array.isArray(prevChecked)
+																		? prevChecked.filter((id) => id !== s._id)
+																		: []
+																);
+															}
+															// After setting checked services, let's update the selected services
+															const newCheckedService = e.target.checked
+																? Array.isArray(checkedService)
+																	? [...checkedService, s._id]
+																	: [s._id]
+																: Array.isArray(checkedService)
+																? checkedService.filter((id) => id !== s._id)
+																: [];
+
+															const selectedServices = AllServices
+																? AllServices.filter(
+																		(service) =>
+																			service &&
+																			newCheckedService.includes(service._id)
+																  )
+																: [];
+
+															setServiceDetailsArray(selectedServices);
+															setChosenService(
+																selectedServices &&
+																	selectedServices.map((service) =>
+																		service ? service.serviceName : null
+																	)
+															);
+														}}
+													/>
+												</div>
+											) : null}
 										</div>
 									</div>
 								}

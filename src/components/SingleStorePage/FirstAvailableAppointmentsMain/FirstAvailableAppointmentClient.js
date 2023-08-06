@@ -73,17 +73,7 @@ const FirstAvailableAppointmentClient = ({
 				<DatePicker
 					onChange={handleChangeDate}
 					size='small'
-					// defaultValue={
-					// 	JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-					// 		? moment(
-					// 				new Date(
-					// 					JSON.parse(
-					// 						localStorage.getItem("chosenDateFromFirstAvailable")
-					// 					)
-					// 				)
-					// 		  )
-					// 		: moment()
-					// }
+					defaultValue={moment(chosenDate, "MM/DD/YYYY")}
 					className='inputFieldsFirstAvail py-1'
 					style={{ width: "63%" }}
 					disabledDate={disabledDate}
@@ -133,6 +123,7 @@ const FirstAvailableAppointmentClient = ({
 						</label>
 						<Select
 							mode='multiple'
+							value={serviceDetailsArray.map((i) => i.serviceName)}
 							placeholder='Select Services'
 							className='inputFields'
 							style={{

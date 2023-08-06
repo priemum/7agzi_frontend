@@ -301,6 +301,39 @@ export const allLoyaltyPointsAndStoreStatus = (token) => {
 		.catch((err) => console.log(err));
 };
 
+export const allStoresSorted = (lat, lon, pagination, page) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/store-management/pagination/${lat}/${lon}/${pagination}/${page}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const activeStoresCount = () => {
+	return fetch(`${process.env.REACT_APP_API_URL}/active-stores-count`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const getAllHeros = (token, ownerId) => {
 	return fetch(`${process.env.REACT_APP_API_URL}/heroes/store/${ownerId}`, {
 		method: "GET",

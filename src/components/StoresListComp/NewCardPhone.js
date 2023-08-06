@@ -102,6 +102,25 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 
 	const allRatingArray = allEmployees && allEmployees.map((i) => i.ratings);
 
+	function convertToMinutes(timeString) {
+		const timeArr = timeString.split(" ");
+		let hours = 0;
+		let minutes = 0;
+
+		for (let i = 0; i < timeArr.length; i++) {
+			if (timeArr[i] === "hour" || timeArr[i] === "hours") {
+				hours = parseInt(timeArr[i - 1], 10);
+			}
+
+			if (timeArr[i] === "min" || timeArr[i] === "mins") {
+				minutes = parseInt(timeArr[i - 1], 10);
+			}
+		}
+
+		const totalMinutes = hours * 60 + minutes;
+		return totalMinutes;
+	}
+
 	return (
 		<CardsStorePhoneWrapper>
 			{/* <div className='btn-info p-1 mb-1' style={{ textTransform: "uppercase" }}>
@@ -176,7 +195,11 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 						className='right'
 						style={{ color: "red", fontWeight: "bolder", fontSize: "12px" }}
 					>
-						5 MINS WALKING
+						{Number(convertToMinutes(store.walkingTime)) <= 120 ? (
+							<span>{store.walkingTime} Walking</span>
+						) : (
+							<span>{store.drivingTime} Driving</span>
+						)}
 					</div>
 				</div>
 			</Link>

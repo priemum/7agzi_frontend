@@ -22,11 +22,12 @@ const MainFirstAvailableApp = ({
 	loading,
 	allEmployees,
 	setLoading,
+	serviceDetailsArray,
+	setServiceDetailsArray,
 }) => {
 	const [appointmentFirst, setAppointmentFirst] = useState({
 		firstAvailableTime: null,
 	});
-	const [serviceDetailsArray, setServiceDetailsArray] = useState([]);
 
 	var userBelongsToModified = onlineStoreName.belongsTo._id;
 

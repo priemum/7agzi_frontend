@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import GettingMap from "../components/SingleStorePage/GettingMap";
 import { getPreviousAddedGallary } from "../Owners/apiOwner";
 import MainFirstAvailableApp from "../components/SingleStorePage/FirstAvailableAppointmentsMain/MainFirstAvailableApp";
+import moment from "moment";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -76,9 +77,10 @@ const SingleStorePage = ({ props, language }) => {
 	const [chosenCustomerType, setChosenCustomerType] = useState("");
 	const [chosenCustomerType2, setChosenCustomerType2] = useState("");
 	const [gettingGallary, setGettingGallary] = useState("");
-	const [chosenDate, setChosenDate] = useState("");
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 	const [chosenService, setChosenService] = useState("");
 	const [loading, setLoading] = useState(true);
+	const [serviceDetailsArray, setServiceDetailsArray] = useState([]);
 
 	const handleButtonClick = () => {
 		const firstAvailableApp = document.getElementById("firstAvailableApp");
@@ -92,6 +94,11 @@ const SingleStorePage = ({ props, language }) => {
 			console.log("FirstAvailableAppointments div is not available");
 		}
 	};
+
+	useEffect(() => {
+		setChosenDate(moment().format("MM/DD/YYYY"));
+		// eslint-disable-next-line
+	}, [language]);
 
 	const gettingChosenStore = () => {
 		setLoading(true);
@@ -119,6 +126,10 @@ const SingleStorePage = ({ props, language }) => {
 						setAllCustomerType([
 							...new Set(data && data.map((i) => i.customerType)),
 						]);
+
+						setChosenCustomerType(
+							[...new Set(data && data.map((i) => i.customerType))][0]
+						);
 
 						setChosenCustomerType2(
 							[...new Set(data && data.map((i) => i.customerType))][0]
@@ -411,7 +422,10 @@ const SingleStorePage = ({ props, language }) => {
 											border: "none",
 										}}
 										className='form-control'
-										onChange={(e) => setChosenCustomerType2(e.target.value)}
+										onChange={(e) => {
+											setChosenCustomerType2(e.target.value);
+											setChosenCustomerType(e.target.value);
+										}}
 									>
 										{chosenCustomerType2 ? (
 											<option
@@ -444,6 +458,11 @@ const SingleStorePage = ({ props, language }) => {
 									ownerId={storeChosen.belongsTo._id}
 									chosenCustomerType={chosenCustomerType2}
 									language={language}
+									setServiceDetailsArray={setServiceDetailsArray}
+									setChosenService={setChosenService}
+									chosenService={chosenService}
+									serviceDetailsArray={serviceDetailsArray}
+									fromPage='SingleStore'
 								/>
 							</div>
 						) : null}
@@ -500,6 +519,8 @@ const SingleStorePage = ({ props, language }) => {
 								setChosenService={setChosenService}
 								loading={loading}
 								allEmployees={allEmployees}
+								serviceDetailsArray={serviceDetailsArray}
+								setServiceDetailsArray={setServiceDetailsArray}
 								setLoading={setLoading}
 							/>
 						</div>

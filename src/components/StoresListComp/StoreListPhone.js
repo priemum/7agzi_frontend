@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+// eslint-disable-next-line
 import FiltersPhone from "./FiltersPhone";
 // import CardsStorePhone from "./CardsStorePhone";
 import NewCardPhone from "./NewCardPhone";
@@ -12,10 +13,10 @@ const StoreListPhone = ({
 }) => {
 	return (
 		<StoreListPhoneWrapper>
-			<FiltersPhone
+			{/* <FiltersPhone
 				filtersClicked={filtersClicked}
 				setFiltersClicked={setFiltersClicked}
-			/>
+			/> */}
 			<div className='container'>
 				<div className='row'>
 					{activeStoresOnly &&
