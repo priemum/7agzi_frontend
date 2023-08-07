@@ -1,0 +1,38 @@
+/* SalonsData.css */
+.styledTable .ant-table-thead > tr > th {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.styledTable .ant-table-tbody > tr > td {
+	font-size: 12px;
+}
+
+/* For small screens, to scroll the table horizontally */
+@media (max-width: 768px) {
+	.styledTable .ant-table {
+		overflow-x: auto;
+	}
+}
+
+.update-account-cell {
+	cursor: pointer;
+	font-weight: bolder;
+	color: white;
+	background-color: black;
+	text-align: center; /* Optional: Align the text to the center of the cell */
+}
+
+.update-account-cell:hover {
+	background-color: #006dab !important;
+	color: white;
+}
+
+.update-account-cell a {
+	color: white;
+	text-decoration: underline;
+}
+
+.update-account-cell:hover a {
+	color: white;
+}

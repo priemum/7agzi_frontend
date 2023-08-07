@@ -301,9 +301,19 @@ export const allLoyaltyPointsAndStoreStatus = (token) => {
 		.catch((err) => console.log(err));
 };
 
-export const allStoresSorted = (lat, lon, pagination, page) => {
+export const allStoresSorted = (
+	lat,
+	lon,
+	country,
+	governorate,
+	district,
+	storeType,
+	service,
+	pagination,
+	page
+) => {
 	return fetch(
-		`${process.env.REACT_APP_API_URL}/store-management/pagination/${lat}/${lon}/${pagination}/${page}`,
+		`${process.env.REACT_APP_API_URL}/store-management/pagination/${lat}/${lon}/${country}/${governorate}/${district}/${storeType}/${service}/${pagination}/${page}`,
 		{
 			method: "GET",
 			headers: {
@@ -319,15 +329,24 @@ export const allStoresSorted = (lat, lon, pagination, page) => {
 		.catch((err) => console.log(err));
 };
 
-export const activeStoresCount = () => {
-	return fetch(`${process.env.REACT_APP_API_URL}/active-stores-count`, {
-		method: "GET",
-		headers: {
-			// content type?
-			"Content-Type": "application/json",
-			Accept: "application/json",
-		},
-	})
+export const activeStoresCount = (
+	country,
+	governorate,
+	district,
+	storeType,
+	service
+) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/active-stores-count/${country}/${governorate}/${district}/${storeType}/${service}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
 		.then((response) => {
 			return response.json();
 		})

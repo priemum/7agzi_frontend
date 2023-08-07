@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import MainHeroComp from "../components/HomePage/MainHeroComp";
-import MainOverallServices from "../components/HomePage/MainOverallServices";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { isAuthenticated } from "../auth";
+import FirstSection from "../components/HomePage/FirstSection";
+import SecondSection from "../components/HomePage/SecondSection";
+import ThirdSection from "../components/HomePage/ThirdSection";
+import FourthSection from "../components/HomePage/FourthSection";
+import FifthSection from "../components/HomePage/FifthSection";
+import SixthSection from "../components/HomePage/SixthSection";
+import SeventhSection from "../components/HomePage/SeventhSection";
 
 const Home = ({ language, setLanguage }) => {
 	useEffect(() => {
@@ -19,6 +24,7 @@ const Home = ({ language, setLanguage }) => {
 
 		// eslint-disable-next-line
 	}, []);
+
 	return (
 		<HomeWrapper>
 			<Helmet>
@@ -71,8 +77,15 @@ const Home = ({ language, setLanguage }) => {
 				<Redirect to='/about?ar' />
 			) : null}
 
-			<MainHeroComp language={language} />
-			<MainOverallServices language={language} />
+			<div className=''>
+				<FirstSection language={language} />
+				<SecondSection language={language} />
+				<ThirdSection language={language} />
+				<FourthSection language={language} />
+				<FifthSection language={language} />
+				<SixthSection language={language} />
+				<SeventhSection language={language} />
+			</div>
 		</HomeWrapper>
 	);
 };
@@ -80,8 +93,20 @@ const Home = ({ language, setLanguage }) => {
 export default Home;
 
 const HomeWrapper = styled.div`
-	min-height: 800px;
+	min-height: 1000px;
 	overflow-x: hidden !important;
-
+	color: white;
+	padding-top: 10px;
 	background-color: black;
+
+	.firstSection {
+		margin-top: 10px;
+	}
+
+	.seventhSection {
+		margin-top: 30px;
+		margin-bottom: 60px;
+		min-height: 150px;
+		border: 1px white solid;
+	}
 `;

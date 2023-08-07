@@ -13,11 +13,11 @@ const StoreListPhone = ({
 }) => {
 	return (
 		<StoreListPhoneWrapper>
-			{/* <FiltersPhone
+			<FiltersPhone
 				filtersClicked={filtersClicked}
 				setFiltersClicked={setFiltersClicked}
-			/> */}
-			<div className='container'>
+			/>
+			<div className='container mt-2'>
 				<div className='row'>
 					{activeStoresOnly &&
 						activeStoresOnly.map((p, i) => {
