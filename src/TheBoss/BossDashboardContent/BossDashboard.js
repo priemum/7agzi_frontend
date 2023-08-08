@@ -131,7 +131,7 @@ const BossDashboard = () => {
 			: filteredOwnerAccounts;
 
 	return (
-		<BossDashboardWrapper>
+		<BossDashboardWrapper show={collapsed}>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title dir='rtl'>XLOOK ADMIN DASHBOARD</title>
@@ -518,7 +518,7 @@ const BossDashboardWrapper = styled.div`
 
 	.grid-container {
 		display: grid;
-		grid-template-columns: 11% 92%;
+		grid-template-columns: ${(props) => (props.show ? "2% 100%" : "11% 91%")};
 	}
 
 	.container-fluid {

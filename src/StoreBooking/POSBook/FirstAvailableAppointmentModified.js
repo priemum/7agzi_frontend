@@ -56,61 +56,47 @@ const FirstAvailableAppointmentModified = ({
 	};
 
 	return (
-		<FirstAvailableAppointmentModifiedWrapper dir='ltr'>
-			<div className='mt-3 firstAvailableApp text-center'>
-				Check First Available Appointment on{" "}
-				{new Date(chosenDate).toDateString()}
-			</div>{" "}
-			<div className='horizLine col-6 col-lg-2 col-md-3  mx-auto'></div>
-			<div className='mb-3'>
-				<label
-					style={{ marginRight: "20px" }}
-					className='chooseDateServiceFirstAvail'
-				>
-					Choose a Date
-				</label>
+		<FirstAvailableAppointmentModifiedWrapper dir='ltr' className='ml-2'>
+			<div style={{ fontWeight: "bolder", fontSize: "1rem" }} className='mb-4'>
+				<strong> Date: {new Date(chosenDate).toLocaleDateString()}</strong>
+			</div>
 
+			<div className='mb-2'>
+				<label className='mr-2 chooseDateServiceFirstAvail '>
+					Choose A Different Date
+				</label>
 				<DatePicker
 					onChange={handleChangeDate}
 					size='small'
-					// defaultValue={
-					// 	JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-					// 		? moment(
-					// 				new Date(
-					// 					JSON.parse(
-					// 						localStorage.getItem("chosenDateFromFirstAvailable")
-					// 					)
-					// 				)
-					// 		  )
-					// 		: moment()
-					// }
+					defaultValue={moment(chosenDate, "MM/DD/YYYY")}
 					className='inputFieldsFirstAvail py-1'
-					style={{ width: "63%" }}
+					style={{ width: "70%" }}
 					disabledDate={disabledDate}
 					max
 					showToday={true}
 					// defaultValue={chosenDate || moment()}
-					placeholder='Please pick the desired schedule date'
+					placeholder='Choose a different Date If Needed'
 				/>
 			</div>
 			{chosenDate ? (
 				<div>
-					<label
-						className='mt-3 chooseDateServiceFirstAvail'
-						style={{ marginRight: "35px" }}
-					>
-						Service For
+					<label className='ml-3 mt-3 chooseDateServiceFirstAvail'>
+						Service For:
 					</label>
 					<select
 						onChange={handleChosenCustomerType}
 						placeholder='Please Select'
-						style={{ textTransform: "capitalize", width: "63%" }}
-						className='inputFieldsFirstAvail ml-1'
+						style={{
+							textTransform: "capitalize",
+							width: "70%",
+							marginLeft: "30px",
+						}}
+						className='inputFieldsFirstAvail'
 					>
 						{chosenCustomerType && chosenCustomerType !== "Please Select" ? (
 							<option className='items text-muted'>{chosenCustomerType}</option>
 						) : (
-							<option className='items text-muted'>Please Select</option>
+							<option className='items text-muted'>Please Select </option>
 						)}
 						{allCustomerType &&
 							allCustomerType.map((s, i) => (
@@ -122,23 +108,21 @@ const FirstAvailableAppointmentModified = ({
 					<br />
 				</div>
 			) : null}
-			<div>
+			<div className='mt-3'>
 				{chosenCustomerType ? (
-					<div>
-						<label
-							className='mt-3 chooseDateServiceFirstAvail'
-							style={{ marginRight: "20px" }}
-						>
-							Select Services
+					<React.Fragment>
+						<label className='ml-2 chooseDateServiceFirstAvail'>
+							Choose Set Of Services
 						</label>
 						<Select
 							mode='multiple'
-							placeholder='Select Services'
+							placeholder='Please select the services needed'
 							className='inputFields'
 							style={{
 								borderRadius: "5px",
-								width: "62%",
+								width: "70%",
 								textTransform: "capitalize",
+								marginLeft: "30px",
 							}}
 							onChange={(values) => {
 								const selectedServices = values.map((value) =>
@@ -146,7 +130,7 @@ const FirstAvailableAppointmentModified = ({
 										(service) => service.serviceName === value
 									)
 								);
-								console.log(selectedServices, "selectedServices");
+								console.log(selectedServices);
 
 								setServiceDetailsArray(selectedServices);
 								setChosenService(
@@ -176,9 +160,48 @@ const FirstAvailableAppointmentModified = ({
 										</Option>
 									))}
 						</Select>
-						<br />
-						<br />
-					</div>
+						<div className='my-4' style={{ background: "white" }}>
+							<table className='table table-bordered table-md-responsive table-hover table-striped'>
+								<thead
+								// className='thead-light'
+								// style={{border: "2px black solid"}}
+								>
+									<tr>
+										<th scope='col'>#</th>
+										<th scope='col'>Service</th>
+										<th scope='col'>Duration </th>
+										<th scope='col'>Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									{serviceDetailsArray &&
+										serviceDetailsArray.length > 0 &&
+										serviceDetailsArray.map((d, i) => {
+											return (
+												<tr key={i}>
+													<td>{i + 1}</td>
+													<td>{d.serviceName}</td>
+													<td>{d.serviceTime} Minutes</td>
+													<td>{d.servicePriceDiscount} EGP</td>
+												</tr>
+											);
+										})}
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>
+											{serviceDetailsArray &&
+												serviceDetailsArray.reduce((total, serviceDetail) => {
+													return total + serviceDetail.servicePriceDiscount;
+												}, 0)}{" "}
+											EGP
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</React.Fragment>
 				) : null}
 			</div>
 			{chosenCustomerType &&
@@ -186,17 +209,15 @@ const FirstAvailableAppointmentModified = ({
 			chosenService &&
 			appointmentFirst &&
 			appointmentFirst.firstAvailableTime &&
-			appointmentFirst.Employee &&
-			appointmentFirst.Employee._id &&
 			!loading ? (
-				<div className='message'>
-					The First Available Appointment is with{" "}
+				<div className='message mt-4'>
+					First Available Appointment
 					<strong>
 						{appointmentFirst &&
 							appointmentFirst.Employee &&
-							appointmentFirst.Employee.employeeName}{" "}
-					</strong>
-					AT{" "}
+							appointmentFirst.Employee.employeeName}
+					</strong>{" "}
+					at <strong>{new Date(chosenDate).toLocaleDateString()}</strong>{" "}
 					<strong>
 						{appointmentFirst && appointmentFirst.firstAvailableTime}
 					</strong>
@@ -207,7 +228,6 @@ const FirstAvailableAppointmentModified = ({
 							fontSize: "1.2rem",
 							marginBottom: "10px",
 							marginTop: "10px",
-							// letterSpacing: "5px",
 							textShadow: "1px 2px 4px",
 						}}
 					>
@@ -231,7 +251,7 @@ const FirstAvailableAppointmentModified = ({
 								window.scrollTo(0, 0);
 							}}
 						>
-							Schedule Now...
+							BOOK NOW
 						</Link>
 					</div>
 				</div>
@@ -241,15 +261,10 @@ const FirstAvailableAppointmentModified = ({
 			  !appointmentFirst &&
 			  !appointmentFirst.firstAvailableTime ? (
 				<div className='message'>
-					No Available Times In The Selected Date{" "}
-					{new Date(chosenDate).toDateString()}
+					No Available Appointments
+					{new Date(chosenDate).toLocaleDateString("ar-EG")}
 				</div>
-			) : (
-				<div className='message'>
-					Please select a date and service to check the first available
-					appointment...
-				</div>
-			)}
+			) : null}
 		</FirstAvailableAppointmentModifiedWrapper>
 	);
 };
@@ -257,27 +272,22 @@ const FirstAvailableAppointmentModified = ({
 export default FirstAvailableAppointmentModified;
 
 const FirstAvailableAppointmentModifiedWrapper = styled.div`
-	background: #191919;
 	padding: 30px;
 	border-radius: 20px;
-	text-align: center;
-
-	margin-left: 100px;
-	margin-right: 100px;
 
 	.contentWrapper {
 		position: relative;
 	}
 
+	label {
+		font-size: 15px;
+	}
 	.message {
-		color: wheat;
 		font-weight: bolder;
 		text-align: center;
 	}
 
 	@media (max-width: 1000px) {
 		padding: 5px;
-		margin-left: 1px;
-		margin-right: 1px;
 	}
 `;

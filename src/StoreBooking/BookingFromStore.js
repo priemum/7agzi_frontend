@@ -25,6 +25,7 @@ import {
 } from "../apiCore";
 import FirstAvailableAppointmentModified from "./POSBook/FirstAvailableAppointmentModified";
 import FirstAvailableAppointmentModifiedArabic from "./POSBook/FirstAvailableAppointmentModifiedArabic";
+import moment from "moment";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -63,7 +64,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState(null);
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 	const [orders, setOrders] = useState([]);
 	const [onlineStoreName, setOnlineStoreName] = useState("");
 	const [appointmentFirst, setAppointmentFirst] = useState({
@@ -85,10 +86,16 @@ const BookingFromStore = ({ language, setLanguage }) => {
 				console.log(data.error);
 			} else {
 				setAllCustomerType(data);
+				setChosenCustomerType(data[0].customerType);
 				setLoading(false);
 			}
 		});
 	};
+
+	useEffect(() => {
+		setChosenDate(moment().format("MM/DD/YYYY"));
+		// eslint-disable-next-line
+	}, [language]);
 
 	const loadAllAvailableEmployees = () => {
 		setLoading(true);
@@ -603,7 +610,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 									{allEmployees &&
 										allEmployees.map((i, c) => (
 											<div
-												className='col-md-3 col-5 my-3 mx-auto EmployeesLinks'
+												className='col-md-3 my-3 mx-auto EmployeesLinks'
 												key={c}
 											>
 												{" "}

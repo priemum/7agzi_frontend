@@ -7,6 +7,36 @@ import "./SalonsData.css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "grey",
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			fontSize: "11.5px",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			fontSize: "11.5px",
+			cursor: "pointer",
+			color: "white",
+		};
+	}
+};
+
 const SalonsData = () => {
 	const [storeOwners, setStoreOwners] = useState([]);
 	// eslint-disable-next-line
@@ -17,6 +47,7 @@ const SalonsData = () => {
 	});
 	const [currentPage, setCurrentPage] = useState(1);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [clickedFilter, setClickedFilter] = useState("All");
 
 	const tableRef = useRef(null); // To refer to the table for scrolling
 
@@ -32,7 +63,7 @@ const SalonsData = () => {
 		loadStoreOwners();
 		loadReport();
 		// eslint-disable-next-line
-	}, [pagination, searchQuery]);
+	}, [pagination, searchQuery, clickedFilter]);
 
 	const loadStoreOwners = async () => {
 		const data = await GettingAllSalonOwnersDetails(
@@ -43,7 +74,24 @@ const SalonsData = () => {
 			searchQuery // include search query
 		);
 		if (data) {
-			setStoreOwners(data.users || []);
+			let everyStore = data.users;
+			if (clickedFilter === "All") {
+				setStoreOwners(data.users || []);
+			} else if (clickedFilter === "Unadded Settings") {
+				setStoreOwners(everyStore.filter((i) => i.settings.length === 0) || []);
+			} else if (clickedFilter === "Unadded Services") {
+				setStoreOwners(everyStore.filter((i) => i.services.length === 0) || []);
+			} else if (clickedFilter === "Unadded Employees") {
+				setStoreOwners(
+					everyStore.filter((i) => i.employees.length === 0) || []
+				);
+			} else if (clickedFilter === "Unadded Gallary") {
+				setStoreOwners(
+					everyStore.filter((i) => i.galleries.length === 0) || []
+				);
+			} else {
+				setStoreOwners(data.users || []);
+			}
 		}
 	};
 
@@ -102,9 +150,19 @@ const SalonsData = () => {
 			dataIndex: "storeAddress",
 			key: "storeAddress",
 		},
+		{
+			title: "Salon Name",
+			dataIndex: "storeName",
+			key: "storeName",
+		},
+		{
+			title: "Agent Name",
+			key: "agentName",
+			render: (storeOwner) => storeOwner.agent?.name || "N/A",
+		},
 
 		{
-			title: "Added Settings?",
+			title: "Settings?",
 			key: "settings",
 			render: (storeOwner) => {
 				return storeOwner.settings.length > 0
@@ -123,7 +181,7 @@ const SalonsData = () => {
 			},
 		},
 		{
-			title: "Added Services?",
+			title: "Services?",
 			key: "services",
 			render: (storeOwner) => {
 				return storeOwner.services.length > 0
@@ -142,7 +200,7 @@ const SalonsData = () => {
 			},
 		},
 		{
-			title: "Added Employees?",
+			title: "Employees?",
 			key: "employees",
 			render: (storeOwner) => {
 				return storeOwner.employees.length > 0
@@ -161,7 +219,7 @@ const SalonsData = () => {
 			},
 		},
 		{
-			title: "Added Gallery?",
+			title: "Gallery?",
 			key: "galleries",
 			render: (storeOwner) => {
 				return storeOwner.galleries.length > 0
@@ -180,7 +238,7 @@ const SalonsData = () => {
 			},
 		},
 		{
-			title: "Active Store?",
+			title: "Active?",
 			key: "activeStore",
 			render: (storeOwner) => {
 				return storeOwner.settings.length > 0 &&
@@ -260,7 +318,7 @@ const SalonsData = () => {
 				</div>
 			</div>
 			<div className='row'>
-				<div className='col-2 text-center mx-auto my-2'>
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
 					<div className='card' style={{ background: "#f1416c" }}>
 						<div className='card-body'>
 							<h5 style={{ fontWeight: "bolder", color: "white" }}>
@@ -277,7 +335,7 @@ const SalonsData = () => {
 					</div>
 				</div>
 
-				<div className='col-2 text-center mx-auto my-2'>
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
 					<div className='card' style={{ background: "#009ef7" }}>
 						<div className='card-body'>
 							<h5 style={{ fontWeight: "bolder", color: "white" }}>
@@ -294,7 +352,7 @@ const SalonsData = () => {
 					</div>
 				</div>
 
-				<div className='col-2 text-center mx-auto my-2'>
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
 					<div className='card' style={{ background: "#00f7d5" }}>
 						<div className='card-body'>
 							<h5 style={{ fontWeight: "bolder", color: "white" }}>
@@ -311,7 +369,7 @@ const SalonsData = () => {
 					</div>
 				</div>
 
-				<div className='col-2 text-center mx-auto my-2'>
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
 					<div className='card' style={{ background: "#d500f7" }}>
 						<div className='card-body'>
 							<h5 style={{ fontWeight: "bolder", color: "white" }}>
@@ -330,7 +388,7 @@ const SalonsData = () => {
 			</div>
 
 			<div className='row mt-3'>
-				<div className='col-5 text-center mx-auto my-2'>
+				<div className='col-6 col-md-5 text-center mx-auto my-2'>
 					<div
 						className='card'
 						style={{ background: "#17ab00", textAlign: "center" }}
@@ -349,7 +407,7 @@ const SalonsData = () => {
 						</div>
 					</div>
 				</div>
-				<div className='col-5 text-center mx-auto my-2'>
+				<div className='col-6 col-md-5 text-center mx-auto my-2'>
 					<div
 						className='card'
 						style={{ background: "#f70022", textAlign: "center" }}
@@ -369,7 +427,8 @@ const SalonsData = () => {
 					</div>
 				</div>
 			</div>
-			<div className='mx-auto col-6 my-5'>
+
+			<div className='mx-auto col-md-6 my-5'>
 				<label>
 					{" "}
 					<strong>Search</strong>{" "}
@@ -383,6 +442,77 @@ const SalonsData = () => {
 					placeholder='Search by owner name or phone or governorate store name'
 					style={{ marginBottom: "10px" }}
 				/>
+			</div>
+			<div
+				className=' row'
+				style={{
+					fontSize: "1.3rem",
+					color: "white",
+					background: "#1e1e1e",
+					padding: "5px 0px",
+					textAlign: "center",
+				}}
+			>
+				<div
+					className='mx-auto'
+					style={{
+						textAlign: "center",
+					}}
+				>
+					<strong>FILTERS: </strong>
+				</div>
+			</div>
+			<div
+				className='row'
+				style={{
+					background: "#1e1e1e",
+					padding: "5px 0px",
+				}}
+			>
+				<div
+					className='col-8 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "All")}
+					onClick={() => setClickedFilter("All")}
+				>
+					All
+				</div>
+			</div>
+
+			<div
+				className='row mb-5'
+				style={{
+					background: "#1e1e1e",
+					padding: "5px 0px",
+				}}
+			>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Settings")}
+					onClick={() => setClickedFilter("Unadded Settings")}
+				>
+					Un-Added Settings
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Services")}
+					onClick={() => setClickedFilter("Unadded Services")}
+				>
+					Un-Added Services
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Employees")}
+					onClick={() => setClickedFilter("Unadded Employees")}
+				>
+					Un-Added Employees
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Gallary")}
+					onClick={() => setClickedFilter("Unadded Gallary")}
+				>
+					Un-Added Gallary
+				</div>
 			</div>
 
 			<div
@@ -399,7 +529,7 @@ const SalonsData = () => {
 							pageSize: pagination.pageSize,
 							onChange: handleTableChange,
 						}}
-						className='styledTable' // Added this class for styles
+						className='styledTable my-custom-table' // Added this class for styles
 					/>
 				</div>
 			</div>

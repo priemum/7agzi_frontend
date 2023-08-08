@@ -1,471 +1,574 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { isAuthenticated } from "../auth";
-import { readUser, storesListForAgents } from "./apiAgent";
+import React, { useState, useEffect, useRef } from "react";
+import { Table } from "antd";
 import CountUp from "react-countup";
-import { allLoyaltyPointsAndStoreStatus } from "../TheBoss/apiBoss";
+import { GettingAllSalonOwnersDetails, GettingReportSummary } from "./apiAgent"; // adjust the path accordingly
+import { isAuthenticated } from "../auth";
+import "./SalonsData.css";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
-const AgentDashboard = ({ language }) => {
-	//Read Single User for the agent
-	//Get all related stores for this agent
-	//Check whether related stores are paid for the agent or not
-	//Check if the store is active or not
-	const [currentUser, setCurrentUser] = useState("");
-	const [ownerAccounts, setOwnerAccounts] = useState("");
-	const [storeProperties, setStoreProperties] = useState([]);
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "grey",
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			marginRight: "5px",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			fontSize: "11.5px",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			fontWeight: "bolder",
+			padding: "5px 0px 5px 0px",
+			border: "lightgrey 1px solid",
+			textAlign: "center",
+			borderRadius: "5px",
+			fontSize: "11.5px",
+			cursor: "pointer",
+			color: "white",
+		};
+	}
+};
+
+const AgentDashboard = () => {
+	const [storeOwners, setStoreOwners] = useState([]);
+	// eslint-disable-next-line
+	const [report, setReport] = useState({});
+	const [pagination, setPagination] = useState({
+		current: 1,
+		pageSize: 100, // Or whatever your default page size is
+	});
+	const [currentPage, setCurrentPage] = useState(1);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [clickedFilter, setClickedFilter] = useState("All");
+
+	const tableRef = useRef(null); // To refer to the table for scrolling
+
+	const scrollToTable = () => {
+		if (tableRef.current) {
+			tableRef.current.scrollIntoView({ behavior: "smooth" });
+		}
+	};
 
 	const { user, token } = isAuthenticated();
 
-	const readingCurrentUser = () => {
-		readUser(user._id, token).then((data) => {
-			if (data.error) {
-				console.log("Error getting current User");
+	useEffect(() => {
+		loadStoreOwners();
+		loadReport();
+		// eslint-disable-next-line
+	}, [pagination, searchQuery, clickedFilter]);
+
+	const loadStoreOwners = async () => {
+		const data = await GettingAllSalonOwnersDetails(
+			token,
+			user._id,
+			pagination.pageSize,
+			pagination.current,
+			searchQuery // include search query
+		);
+		if (data) {
+			let everyStore = data.users;
+			if (clickedFilter === "All") {
+				setStoreOwners(data.users || []);
+			} else if (clickedFilter === "Unadded Settings") {
+				setStoreOwners(everyStore.filter((i) => i.settings.length === 0) || []);
+			} else if (clickedFilter === "Unadded Services") {
+				setStoreOwners(everyStore.filter((i) => i.services.length === 0) || []);
+			} else if (clickedFilter === "Unadded Employees") {
+				setStoreOwners(
+					everyStore.filter((i) => i.employees.length === 0) || []
+				);
+			} else if (clickedFilter === "Unadded Gallary") {
+				setStoreOwners(
+					everyStore.filter((i) => i.galleries.length === 0) || []
+				);
 			} else {
-				setCurrentUser(data);
+				setStoreOwners(data.users || []);
 			}
+		}
+	};
+
+	const loadReport = async () => {
+		const data = await GettingReportSummary(token, user._id);
+		if (data) {
+			setReport(data);
+		}
+	};
+
+	const handleTableChange = (pagi) => {
+		setCurrentPage(pagi); // Update the current page state when pagination changes
+		scrollToTable();
+		setPagination({
+			...pagination,
+			current: pagi,
+			pageSize: pagi.pageSize,
 		});
 	};
 
-	const allStoreOwnerAccounts = () => {
-		storesListForAgents(user._id, token).then((data) => {
-			if (data.error) {
-				console.log(data.error);
-			} else {
-				var allOwnerAccounts = data.filter(
-					(i) => i.role === 1000 && i.agent._id === user._id
-				);
-
-				setOwnerAccounts(allOwnerAccounts);
-
-				//
-				//Getting Store Settings
-				allLoyaltyPointsAndStoreStatus().then((data2) => {
-					if (data2.error) {
-						console.log(data2.error);
-					} else {
-						var dataModified = data2.map((i) => {
-							return {
-								...i,
-								storeId: i.belongsTo && i.belongsTo._id,
-								storeCreatedAt: i.belongsTo && i.belongsTo.createdAt,
-							};
-						});
-
-						dataModified.sort(
-							(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-						);
-						// Then, use reduce to construct an object where the keys are storeNames and the values are the corresponding items with the latest date
-						var result = dataModified.reduce((acc, item) => {
-							if (
-								!acc[item.storeId] ||
-								new Date(item.createdAt) > new Date(acc[item.storeId].createdAt)
-							) {
-								acc[item.storeId] = item;
-							}
-							return acc;
-						}, {});
-
-						// Finally, extract the values from the resulting object to get an array of items
-						var uniqueStoresWithLatestDates = Object.values(result);
-						uniqueStoresWithLatestDates.sort(
-							(a, b) => new Date(a.storeCreatedAt) - new Date(b.storeCreatedAt)
-						);
-
-						setStoreProperties(
-							uniqueStoresWithLatestDates.filter((ii) =>
-								data.map((iii) => iii._id).indexOf(ii.belongsTo._id)
-							)
-						);
-					}
-				});
-
-				//End Of Store Settings
-			}
-		});
+	const options = {
+		autoConfig: true,
+		debug: false,
 	};
 
 	useEffect(() => {
-		readingCurrentUser();
-		allStoreOwnerAccounts();
+		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
+
+		ReactPixel.pageView();
 
 		// eslint-disable-next-line
 	}, []);
 
-	const storesWentPro =
-		ownerAccounts && ownerAccounts.filter((i) => i.subscribed === true)
-			? ownerAccounts.filter((i) => i.subscribed === true)
-			: [];
-	const storesNotPro =
-		ownerAccounts && ownerAccounts.filter((i) => i.subscribed === false)
-			? ownerAccounts.filter((i) => i.subscribed === false)
-			: [];
+	const columns = [
+		{
+			title: "#",
+			key: "index",
+			render: (text, record, index) => {
+				return (currentPage - 1) * 100 + index + 1;
+			},
+		},
+		{
+			title: "Owner Name",
+			dataIndex: "name",
+			key: "name",
+		},
+		{
+			title: "Email",
+			dataIndex: "email",
+			key: "email",
+		},
+		{
+			title: "Phone",
+			dataIndex: "phone",
+			key: "phone",
+		},
+		{
+			title: "Governorate",
+			dataIndex: "storeGovernorate",
+			key: "storeGovernorate",
+		},
+		{
+			title: "District",
+			dataIndex: "storeDistrict",
+			key: "storeDistrict",
+		},
+		{
+			title: "Address",
+			dataIndex: "storeAddress",
+			key: "storeAddress",
+		},
+		{
+			title: "Salon Name",
+			dataIndex: "storeName",
+			key: "storeName",
+		},
 
-	const agentPaid =
-		ownerAccounts && ownerAccounts.filter((i) => i.agentPaid === true)
-			? ownerAccounts.filter((i) => i.agentPaid === true)
-			: [];
-	const agentPaidPro =
-		ownerAccounts && ownerAccounts.filter((i) => i.agentPaidPro === true)
-			? ownerAccounts.filter((i) => i.agentPaidPro === true)
-			: [];
+		{
+			title: "Settings?",
+			key: "settings",
+			render: (storeOwner) => {
+				return storeOwner.settings.length > 0
+					? {
+							children: "Yes",
+							props: {
+								style: { background: "darkgreen", color: "white" },
+							},
+					  }
+					: {
+							children: "No",
+							props: {
+								style: { background: "darkred", color: "white" },
+							},
+					  };
+			},
+		},
+		{
+			title: "Services?",
+			key: "services",
+			render: (storeOwner) => {
+				return storeOwner.services.length > 0
+					? {
+							children: "Yes",
+							props: {
+								style: { background: "darkgreen", color: "white" },
+							},
+					  }
+					: {
+							children: "No",
+							props: {
+								style: { background: "darkred", color: "white" },
+							},
+					  };
+			},
+		},
+		{
+			title: "Employees?",
+			key: "employees",
+			render: (storeOwner) => {
+				return storeOwner.employees.length > 0
+					? {
+							children: "Yes",
+							props: {
+								style: { background: "darkgreen", color: "white" },
+							},
+					  }
+					: {
+							children: "No",
+							props: {
+								style: { background: "darkred", color: "white" },
+							},
+					  };
+			},
+		},
+		{
+			title: "Gallery?",
+			key: "galleries",
+			render: (storeOwner) => {
+				return storeOwner.galleries.length > 0
+					? {
+							children: "Yes",
+							props: {
+								style: { background: "darkgreen", color: "white" },
+							},
+					  }
+					: {
+							children: "No",
+							props: {
+								style: { background: "darkred", color: "white" },
+							},
+					  };
+			},
+		},
+		{
+			title: "Active?",
+			key: "activeStore",
+			render: (storeOwner) => {
+				return storeOwner.settings.length > 0 &&
+					storeOwner.settings[storeOwner.settings.length - 1].activeStore
+					? {
+							children: "Yes",
+							props: {
+								style: { background: "darkgreen", color: "white" },
+							},
+					  }
+					: {
+							children: "No",
+							props: {
+								style: { background: "darkred", color: "white" },
+							},
+					  };
+			},
+		},
+
+		{
+			title: "Update Account",
+			dataIndex: "",
+			key: "updateAccount",
+			className: "update-account-cell",
+			render: (text, storeOwner) => (
+				<Link
+					to='#'
+					onClick={() => {
+						ReactGA.event(`Agent ${user.name} is helping ${storeOwner.name}`, {
+							event_category: `Agent ${user.name} is helping ${storeOwner.name}`,
+							event_label: `Agent ${user.name} is helping ${storeOwner.name}`,
+							value: 1, // Optional extra parameters
+						});
+
+						ReactPixel.track(
+							`Agent ${user.name} is helping ${storeOwner.name}`,
+							{
+								content_name: `Agent ${user.name} is helping ${storeOwner.name}`,
+								content_category: `Agent ${user.name} is helping ${storeOwner.name}`,
+								value: "",
+								currency: "",
+							}
+						);
+
+						window.location.href = `/store/admin/settings/agent/help/${storeOwner._id}`;
+					}}
+				>
+					UPDATE ACCOUNT
+				</Link>
+			),
+		},
+	];
+
+	let debounceTimer;
+	const handleSearchChange = (e) => {
+		const value = e.target.value;
+		setSearchQuery(value);
+
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => {
+			loadStoreOwners();
+		}, 300); // 300ms delay
+	};
 
 	return (
 		<AgentDashboardWrapper>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
-					<title dir='rtl'>{user.name} Dashboard</title>
-				) : (
-					<title>{user.name} Dashboard</title>
-				)}
-				<meta
-					name='description'
-					content={
-						language === "Arabic"
-							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
-				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
-				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
-				الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
-							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
-				The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided.
-				The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location.
-				Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
-					}
+				<title dir='rtl'>Agent {user.name} Dashboard</title>
+
+				<link
+					rel='canonical'
+					href={`https://www.xlookpro.com/agent/dashboard`}
 				/>
-				<meta
-					name='keywords'
-					content={
-						language === "Arabic"
-							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
-							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
-					}
-				/>
-				<link rel='canonical' href='https://www.xlookpro.com/agent/dashboard' />
 			</Helmet>
-			{currentUser && currentUser.activeAgent === false ? (
+			<div className='col-8 mx-auto my-2'>
 				<div
-					className='underReview'
-					dir={language === "Arabic" ? "rtl" : "ltr"}
+					className='card'
+					style={{
+						background: "#50cd89",
+						textAlign: "center",
+					}}
 				>
-					{language === "Arabic" ? (
-						<>
-							<h1>
-								<strong>مرحبا {currentUser && currentUser.name}</strong>
-							</h1>
-							<h2>
-								ملفك الشخصي <strong>قيد المراجعة</strong>. عادةً ما تستغرق هذه
-								العملية من 24 إلى 48 ساعة.
-							</h2>
-							<h2>
-								بمجرد مراجعة ملفك الشخصي، سيتواصل معك مدير الموارد البشرية لدينا
-								لإجراء مقابلة سريعة.
-							</h2>
-							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
-								<strong>شكراً لاهتمامك!</strong>
-							</h2>
-							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
-								<strong style={{ color: "darkgreen" }}>حظاً سعيداً!</strong>
-							</h2>
-						</>
-					) : (
-						<>
-							<h1>
-								<strong> HI {currentUser && currentUser.name}</strong>
-							</h1>
-							<h2>
-								Your Profile Is <strong>Under Review</strong>, This Process
-								Usually Takes 24 to 48 hours.
-							</h2>
-							<h2>
-								Once Your Profile Is Reviewed, Our HR Manager Will Reach Out To
-								You For A Quick Interview.
-							</h2>
-							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
-								<strong>THANK YOU FOR SHOWING INTEREST!</strong>
-							</h2>
-							<h2 className='mt-5 text-center' style={{ fontSize: "2rem" }}>
-								<strong style={{ color: "darkgreen" }}>GOOD LUCK!</strong>
-							</h2>
-						</>
-					)}
-				</div>
-			) : null}
-
-			{currentUser && currentUser.activeAgent === true ? (
-				<div>
-					<h1>
-						{" "}
-						<strong> HI AGENT {currentUser && currentUser.name}</strong>
-					</h1>
-					<div className='row' dir={language === "Arabic" ? "rtl" : "ltr"}>
-						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{ background: "#f1416c" }}>
-								<div className='card-body'>
-									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										{language === "Arabic"
-											? "المتاجر التي سجلت بها"
-											: "Stores You Registered"}
-									</h5>
-									<CountUp
-										style={{ color: "white" }}
-										duration={3}
-										delay={0}
-										end={ownerAccounts.length}
-										separator=','
-									/>
-								</div>
-							</div>
-						</div>
-						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{ background: "#009ef7" }}>
-								<div className='card-body'>
-									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										{language === "Arabic"
-											? "المتاجر التي أصبحت برو"
-											: "Stores Went Pro"}
-									</h5>
-									<CountUp
-										style={{ color: "white" }}
-										duration={3}
-										delay={0}
-										end={storesWentPro.length}
-										separator=','
-									/>
-								</div>
-							</div>
-						</div>
-						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{ background: "#50cd89" }}>
-								<div className='card-body'>
-									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										{language === "Arabic" ? "حصتك ($)" : "Your Share ($)"}
-									</h5>
-									<span style={{ color: "white" }}>$</span>{" "}
-									<CountUp
-										style={{ color: "white" }}
-										duration={3}
-										delay={0}
-										end={
-											Number(storesWentPro.length) * 2 +
-											Number(storesNotPro.length)
-										}
-										separator=','
-									/>
-								</div>
-							</div>
-						</div>
-						<div className='col-xl-3 col-lg-6 col-md-11 col-sm-11 text-center mx-auto my-2'>
-							<div className='card' style={{ background: "#185434" }}>
-								<div className='card-body'>
-									<h5 style={{ fontWeight: "bolder", color: "white" }}>
-										{language === "Arabic"
-											? "المبلغ المستلم ($)"
-											: "You Got Paid ($)"}
-									</h5>
-									<span style={{ color: "white" }}>$</span>{" "}
-									<CountUp
-										style={{ color: "white" }}
-										duration={3}
-										delay={0}
-										end={Number(agentPaid.length) + Number(agentPaidPro.length)}
-										separator=','
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div
-						className='mt-5'
-						style={{
-							maxHeight: "800px",
-							overflow: "auto",
-						}}
-					>
-						<h3 style={{ fontWeight: "bolder" }}>
-							Registered Accounts With You:
-						</h3>
-						<table
-							className='table table-bordered table-md-responsive table-hover table-striped'
-							style={{ fontSize: "0.75rem" }}
+					<div className='card-body main-header'>
+						<h5
+							style={{
+								fontWeight: "bolder",
+								color: "white",
+								fontSize: "2rem",
+							}}
 						>
-							<thead
-							// className='thead-light'
-							// style={{border: "2px black solid"}}
-							>
-								<tr dir={language === "Arabic" ? "rtl" : "ltr"}>
-									<th scope='col'>#</th>
-									<th scope='col'>
-										{language === "Arabic" ? "الاسم" : "Name"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "الهاتف" : "Phone"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "المحافظة" : "Governorate"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "العنوان" : "Address"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "اسم المتجر" : "Store Name"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "نوع المتجر" : "Store Type"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic"
-											? "تاريخ الإنشاء"
-											: "Account Created"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "الإعدادات؟" : "Settings?"}
-									</th>
-									<th
-										scope='col'
-										style={{ background: "black", color: "white" }}
-									>
-										{language === "Arabic" ? "المتجر النشط؟" : "Active Store?"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic" ? "الوكيل" : "Agent"}
-									</th>
-									<th
-										scope='col'
-										style={{ background: "darkgoldenrod", color: "white" }}
-									>
-										{language === "Arabic" ? "حساب Pro" : "Pro Account"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic"
-											? "الوكيل قام بالدفع الأولي؟"
-											: "Agent Paid Initial?"}
-									</th>
-									<th scope='col'>
-										{language === "Arabic"
-											? "الوكيل قام بدفع Pro؟"
-											: "Agent Paid Pro?"}
-									</th>
-									<th>HELP!</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								{ownerAccounts &&
-									ownerAccounts.map((o, i) => {
-										const now = new Date();
-										const endDate = new Date(o.createdAt);
-										const diffTime = Math.abs(endDate - now);
-										const diffDays = Math.ceil(
-											diffTime / (1000 * 60 * 60 * 24)
-										);
-
-										// const remainingDays = 30 - diffDays;
-
-										var storeIndex =
-											storeProperties &&
-											storeProperties.length > 0 &&
-											storeProperties.filter(
-												(iiii) => iiii.belongsTo && iiii.belongsTo._id === o._id
-											)[0];
-
-										return (
-											<tr key={i}>
-												<td>{i + 1}</td>
-												<td>{o.name}</td>
-												<td>{o.phone}</td>
-												<td style={{ textTransform: "capitalize" }}>
-													{o.storeGovernorate}
-												</td>
-												<td>{o.storeAddress}</td>
-												<td>{storeIndex && storeIndex.addStoreName}</td>
-												<td style={{ textTransform: "capitalize" }}>
-													{o.storeType}
-												</td>
-												<td>
-													{diffDays}{" "}
-													{Number(diffDays) <= 1 ? "Day Ago" : "Days Ago"}
-												</td>
-												<td
-													style={{
-														background:
-															storeProperties &&
-															storeProperties
-																.map(
-																	(iii) => iii.belongsTo && iii.belongsTo._id
-																)
-																.indexOf(o._id) === -1
-																? "red"
-																: "darkgreen",
-														color:
-															storeProperties &&
-															storeProperties
-																.map(
-																	(iii) => iii.belongsTo && iii.belongsTo._id
-																)
-																.indexOf(o._id) === -1
-																? "white"
-																: "white",
-													}}
-												>
-													{storeProperties &&
-													storeProperties
-														.map((iii) => iii.belongsTo && iii.belongsTo._id)
-														.indexOf(o._id) === -1
-														? "NO"
-														: "YES"}
-												</td>
-												<td>
-													{storeIndex && storeIndex.activeStore
-														? "Active Store"
-														: "Inactive"}
-												</td>
-												<td>{o.agent.name}</td>
-												<td>{o.subscribed ? "PRO" : "NOT PRO"}</td>
-												<td
-													style={{
-														background: o.agentPaid ? "#d4f9d4" : "#f9d4d4",
-														fontWeight: "bold",
-														width: "10%",
-													}}
-												>
-													{o.agentPaid ? "Paid" : "Not Paid"}
-												</td>
-												<td
-													style={{
-														background: o.agentPaidPro ? "#d4f9d4" : "#f9d4d4",
-														fontWeight: "bold",
-														width: "10%",
-													}}
-												>
-													{o.agentPaidPro ? "Paid" : "Not Paid"}
-												</td>
-												<td
-													style={{
-														fontWeight: "bolder",
-														textDecoration: "underline",
-													}}
-												>
-													<Link
-														to={`#`}
-														onClick={() => {
-															window.location.href = `/store/admin/settings/agent/help/${o._id}`;
-														}}
-														// to={`/store/admin/settings/agent/help/${o._id}`}
-													>
-														HELP ACCOUNT
-													</Link>
-												</td>
-											</tr>
-										);
-									})}
-							</tbody>
-						</table>
+							Registered Salons
+						</h5>
+						<CountUp
+							style={{ color: "white" }}
+							duration={2}
+							delay={1}
+							end={report.registeredStores}
+							separator=','
+						/>
 					</div>
 				</div>
-			) : null}
+			</div>
+			<div className='row'>
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
+					<div className='card' style={{ background: "#f1416c" }}>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Added Settings
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.addedSettings}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
+					<div className='card' style={{ background: "#009ef7" }}>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Added Services
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.addedServices}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
+					<div className='card' style={{ background: "#00f7d5" }}>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Added Employees
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.addedEmployees}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className='col-6 col-md-2 text-center mx-auto my-2'>
+					<div className='card' style={{ background: "#d500f7" }}>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Added Gallary
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.addedGallary}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className='row mt-3'>
+				<div className='col-6 col-md-5 text-center mx-auto my-2'>
+					<div
+						className='card'
+						style={{ background: "#17ab00", textAlign: "center" }}
+					>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Active Salons
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.activeStores}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+				<div className='col-6 col-md-5 text-center mx-auto my-2'>
+					<div
+						className='card'
+						style={{ background: "#f70022", textAlign: "center" }}
+					>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Inactive Salons
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={report.notActiveStores}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className='mx-auto col-md-6 my-5'>
+				<label>
+					{" "}
+					<strong>Search</strong>{" "}
+				</label>
+				<br />
+				<input
+					className='form-control'
+					type='text'
+					value={searchQuery}
+					onChange={handleSearchChange}
+					placeholder='Search by owner name or phone or governorate store name'
+					style={{ marginBottom: "10px" }}
+				/>
+			</div>
+			<div
+				className=' row'
+				style={{
+					fontSize: "1.3rem",
+					color: "white",
+					background: "#1e1e1e",
+					padding: "5px 0px",
+					textAlign: "center",
+				}}
+			>
+				<div
+					className='mx-auto'
+					style={{
+						textAlign: "center",
+					}}
+				>
+					<strong>FILTERS: </strong>
+				</div>
+			</div>
+			<div
+				className='row'
+				style={{
+					background: "#1e1e1e",
+					padding: "5px 0px",
+				}}
+			>
+				<div
+					className='col-8 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "All")}
+					onClick={() => setClickedFilter("All")}
+				>
+					All
+				</div>
+			</div>
+
+			<div
+				className='row mb-5'
+				style={{
+					background: "#1e1e1e",
+					padding: "5px 0px",
+				}}
+			>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Settings")}
+					onClick={() => setClickedFilter("Unadded Settings")}
+				>
+					Un-Added Settings
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Services")}
+					onClick={() => setClickedFilter("Unadded Services")}
+				>
+					Un-Added Services
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Employees")}
+					onClick={() => setClickedFilter("Unadded Employees")}
+				>
+					Un-Added Employees
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Unadded Gallary")}
+					onClick={() => setClickedFilter("Unadded Gallary")}
+				>
+					Un-Added Gallary
+				</div>
+			</div>
+
+			<div
+				style={{ maxHeight: "1000px", overflow: "auto", marginBottom: "100px" }}
+			>
+				<div ref={tableRef}>
+					<Table
+						dataSource={storeOwners}
+						columns={columns}
+						rowKey='id'
+						pagination={{
+							position: ["topRight", "bottomRight"],
+							current: pagination.current,
+							pageSize: pagination.pageSize,
+							onChange: handleTableChange,
+						}}
+						className='styledTable my-custom-table' // Added this class for styles
+					/>
+				</div>
+			</div>
 		</AgentDashboardWrapper>
 	);
 };
@@ -473,44 +576,53 @@ const AgentDashboard = ({ language }) => {
 export default AgentDashboard;
 
 const AgentDashboardWrapper = styled.div`
-	min-height: 800px;
-	overflow: hidden;
-	margin-right: 100px;
-	margin-left: 100px;
-
-	.underReview {
-		margin-right: 300px;
-		margin-left: 300px;
-	}
-
-	h1 {
-		font-weight: bolder;
-		text-transform: uppercase;
-		font-size: 2rem;
-		margin-top: 30px;
-		text-align: center;
-	}
-
-	h2 {
-		font-weight: bold;
-		font-size: 1.5rem;
+	.container-fluid {
+		margin-top: 20px;
+		margin-bottom: 20px;
 	}
 
 	.card-body {
 		font-weight: bolder;
 	}
 
-	.card-body span {
-		font-size: 1.5rem;
+	table {
+		overflow: auto;
 	}
 
-	@media (max-width: 1000px) {
-		margin-right: 5px;
-		margin-left: 5px;
+	.tableWrapper {
+		display: none;
+	}
 
-		.underReview {
-			margin-right: 0px;
-			margin-left: 0px;
+	.card-body span {
+		font-size: 2rem;
+	}
+
+	.main-header > span {
+		font-size: 2.5rem;
+	}
+
+	@media (max-width: 1200px) {
+		.grid-container {
+			grid-template-columns: 2% 98%;
+		}
+
+		a {
+			font-size: 13px !important;
+			text-align: center;
+		}
+
+		.container-fluid > div {
+			text-align: center;
+			margin-left: 0px !important;
+		}
+
+		.container-fluid {
+			margin-left: 0px !important;
+			text-align: center;
+		}
+
+		.apexcharts-toolbar {
+			display: none !important;
 		}
 	}
 `;

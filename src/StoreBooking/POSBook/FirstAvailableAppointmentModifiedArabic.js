@@ -56,33 +56,27 @@ const FirstAvailableAppointmentModifiedArabic = ({
 	};
 
 	return (
-		<FirstAvailableAppointmentModifiedWrapper dir='rtl'>
-			<div className='mt-3 firstAvailableApp text-center'>
-				تحقق من أول موعد متاح في{" "}
-				{new Date(chosenDate).toLocaleDateString("ar-EG")}
+		<FirstAvailableAppointmentModifiedWrapper dir='rtl' className='mr-2'>
+			<div
+				style={{ fontWeight: "bolder", fontSize: "1.3rem" }}
+				className='mb-4'
+			>
+				<strong>
+					{" "}
+					التاريخ: {new Date(chosenDate).toLocaleDateString("ar-EG")}
+				</strong>
 			</div>
-			<div className='horizLine col-6 col-lg-2 col-md-3  mx-auto'></div>
 
 			<div className='mb-2'>
 				<label className='ml-3 chooseDateServiceFirstAvail '>
-					اختر تاريخًا
+					اختر تاريخًا آخر
 				</label>
 				<DatePicker
 					onChange={handleChangeDate}
 					size='small'
-					// defaultValue={
-					// 	JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-					// 		? moment(
-					// 				new Date(
-					// 					JSON.parse(
-					// 						localStorage.getItem("chosenDateFromFirstAvailable")
-					// 					)
-					// 				)
-					// 		  )
-					// 		: moment()
-					// }
+					defaultValue={moment(chosenDate, "MM/DD/YYYY")}
 					className='inputFieldsFirstAvail py-1'
-					style={{ width: "75%" }}
+					style={{ width: "70%" }}
 					disabledDate={disabledDate}
 					max
 					showToday={true}
@@ -98,8 +92,12 @@ const FirstAvailableAppointmentModifiedArabic = ({
 					<select
 						onChange={handleChosenCustomerType}
 						placeholder='يرجى الاختيار'
-						style={{ textTransform: "capitalize" }}
-						className='inputFieldsFirstAvail ml-1 w-75'
+						style={{
+							textTransform: "capitalize",
+							width: "70%",
+							marginRight: "30px",
+						}}
+						className='inputFieldsFirstAvail'
 					>
 						{chosenCustomerType && chosenCustomerType !== "Please Select" ? (
 							<option className='items text-muted'>{chosenCustomerType}</option>
@@ -116,21 +114,21 @@ const FirstAvailableAppointmentModifiedArabic = ({
 					<br />
 				</div>
 			) : null}
-
-			<div>
+			<div className='mt-3'>
 				{chosenCustomerType ? (
 					<React.Fragment>
 						<label className='ml-2 chooseDateServiceFirstAvail'>
-							اختر خدمة
+							الخدمات المطلوبة
 						</label>
 						<Select
 							mode='multiple'
-							placeholder='Select Services'
+							placeholder='الخدمات المطلوبة'
 							className='inputFields'
 							style={{
 								borderRadius: "5px",
-								width: "75%",
+								width: "70%",
 								textTransform: "capitalize",
+								marginRight: "30px",
 							}}
 							onChange={(values) => {
 								const selectedServices = values.map((value) =>
@@ -138,7 +136,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 										(service) => service.serviceName === value
 									)
 								);
-								console.log(selectedServices, "selectedServices");
+								console.log(selectedServices);
 
 								setServiceDetailsArray(selectedServices);
 								setChosenService(
@@ -168,6 +166,47 @@ const FirstAvailableAppointmentModifiedArabic = ({
 										</Option>
 									))}
 						</Select>
+						<div className='my-4' style={{ background: "white" }}>
+							<table className='table table-bordered table-md-responsive table-hover table-striped'>
+								<thead
+								// className='thead-light'
+								// style={{border: "2px black solid"}}
+								>
+									<tr>
+										<th scope='col'>#</th>
+										<th scope='col'>الخدمة</th>
+										<th scope='col'>مدة الخدمة</th>
+										<th scope='col'>السعر</th>
+									</tr>
+								</thead>
+								<tbody>
+									{serviceDetailsArray &&
+										serviceDetailsArray.length > 0 &&
+										serviceDetailsArray.map((d, i) => {
+											return (
+												<tr key={i}>
+													<td>{i + 1}</td>
+													<td>{d.serviceNameOtherLanguage}</td>
+													<td>{d.serviceTime} دقيقة</td>
+													<td>{d.servicePriceDiscount} جنيه</td>
+												</tr>
+											);
+										})}
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>
+											{serviceDetailsArray &&
+												serviceDetailsArray.reduce((total, serviceDetail) => {
+													return total + serviceDetail.servicePriceDiscount;
+												}, 0)}{" "}
+											جنيه
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</React.Fragment>
 				) : null}
 			</div>
@@ -177,7 +216,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 			appointmentFirst &&
 			appointmentFirst.firstAvailableTime &&
 			!loading ? (
-				<div className='message'>
+				<div className='message mt-4'>
 					أول موعد متاح مع{" "}
 					<strong>
 						{appointmentFirst &&
@@ -231,11 +270,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 					لا توجد أوقات متاحة في التاريخ المحدد{" "}
 					{new Date(chosenDate).toLocaleDateString("ar-EG")}
 				</div>
-			) : (
-				<div className='message'>
-					الرجاء اختيار تاريخ وخدمة للتحقق من أول موعد متاح...
-				</div>
-			)}
+			) : null}
 		</FirstAvailableAppointmentModifiedWrapper>
 	);
 };
@@ -243,9 +278,9 @@ const FirstAvailableAppointmentModifiedArabic = ({
 export default FirstAvailableAppointmentModifiedArabic;
 
 const FirstAvailableAppointmentModifiedWrapper = styled.div`
-	background: #191919;
 	padding: 30px;
 	border-radius: 20px;
+	text-align: right;
 
 	.contentWrapper {
 		position: relative;
@@ -255,7 +290,6 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 		font-size: 15px;
 	}
 	.message {
-		color: wheat;
 		font-weight: bolder;
 		text-align: center;
 	}
