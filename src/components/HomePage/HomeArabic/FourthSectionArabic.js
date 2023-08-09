@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const FourthSection = () => {
+const FourthSectionArabic = () => {
 	return (
 		<FourthSectionWrapper>
 			<div className='grid-container'>
@@ -11,7 +11,7 @@ const FourthSection = () => {
 						window.location.href = `/schedule`;
 					}}
 				>
-					CLOSEST SALONS...
+					أقرب صالونات...
 				</span>
 				<span
 					className='offers'
@@ -19,14 +19,14 @@ const FourthSection = () => {
 						window.location.href = `/schedule?50`;
 					}}
 				>
-					50 EGP OFFER...
+					عرض 50 جنيه ...
 				</span>
 			</div>
 		</FourthSectionWrapper>
 	);
 };
 
-export default FourthSection;
+export default FourthSectionArabic;
 
 const FourthSectionWrapper = styled.div`
 	display: flex;

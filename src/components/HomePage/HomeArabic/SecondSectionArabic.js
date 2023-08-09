@@ -1,53 +1,53 @@
 import React from "react";
 import styled from "styled-components";
-import HairCutImg from "./HomeImages/hair-dressr-1.png";
-import BeardImg from "./HomeImages/Beard-Shave.png";
-import GroomImg from "./HomeImages/grooms-Eng.png";
+import HairCutImg from "../HomeImages/hair-dressr-ara1.png";
+import BeardImg from "../HomeImages/Beard-Shave-ara.png";
+import GroomImg from "../HomeImages/groo-ara.png";
 // eslint-disable-next-line
-import BrideImg from "./HomeImages/bride-eng.png";
-import BundleImg from "./HomeImages/Bundels-eng.png";
-import OffersImg from "./HomeImages/offers.png";
-import WhatsAppImg from "./HomeImages/kalemna-wats.png";
+import BrideImg from "../HomeImages/bride-eng.png";
+import BundleImg from "../HomeImages/Bundels-ara.png";
+import OffersImg from "../HomeImages/offers.png";
+import WhatsAppImg from "../HomeImages/kalemna-wats.png";
 
-const SecondSection = () => {
+const SecondSectionArabic = () => {
 	return (
 		<SecondSectionWrapper>
 			<div className='grid-container'>
 				<img
 					src={HairCutImg}
-					alt='Book Your Appointment With XLOOK To Get a HAIRCUT'
+					alt='احجز موعدك مع إكسلوك للحصول على حلاقة شعر'
 					onClick={() => {
 						window.location.href = `/schedule?haircut`;
 					}}
 				/>
 				<img
 					src={BeardImg}
-					alt='Book Your Appointment With XLOOK To Get a BEARDCUT'
+					alt='احجز موعدك مع إكسلوك للحصول على حلاقة لحية'
 					onClick={() => {
 						window.location.href = `/schedule?beard shaving`;
 					}}
 				/>
 				<img
 					src={BundleImg}
-					alt='Book Your Appointment With XLOOK To Get Our Latest Hot Offers'
+					alt=' احجز موعدك مع إكسلوك للحصول على أحدث عروضنا الحصرية'
 					onClick={() => {
 						window.location.href = `/schedule?bundle`;
 					}}
 				/>
 				<img
 					src={GroomImg}
-					alt='If you are a groom, check our offers for grooms today'
+					alt='إذا كنت عريسًا، تحقق من عروضنا للعرسان اليوم'
 					onClick={() => {
 						window.location.href = `/schedule?groom`;
 					}}
 				/>
 				<img
 					src={OffersImg}
-					alt='Book Your Appointment With XLOOK To Get Our Latest Hot Offers'
+					alt=' احجز موعدك مع إكسلوك للحصول على أحدث عروضنا الحصرية'
 				/>
 				<img
 					src={WhatsAppImg}
-					alt='Our clients are our first priority, text us on whats app and we will be so happy to support'
+					alt='عملاؤنا هم أولويتنا الأولى، راسلنا على واتساب وسنكون سعداء جدًا بمساعدتك'
 					onClick={() => {
 						window.open(
 							"https://api.whatsapp.com/send?phone=+201098168674",
@@ -60,7 +60,7 @@ const SecondSection = () => {
 	);
 };
 
-export default SecondSection;
+export default SecondSectionArabic;
 
 const SecondSectionWrapper = styled.div`
 	margin: 30px auto;

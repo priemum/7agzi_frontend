@@ -27,6 +27,7 @@ import SalonPreviewAr from "./MenuImages/SalonPreviewAr.png";
 import SalonPreviewEn from "./MenuImages/SalonPreviewEn.png";
 
 import { Link } from "react-router-dom";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -44,19 +45,20 @@ const isActive = (history, path) => {
 };
 
 const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
+	const { chosenLanguage } = useCartContext();
 	return (
 		<OwnerNavmenuWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
-			show2={language === "Arabic"}
+			show2={chosenLanguage === "Arabic"}
 		>
 			<div className='firstGroup'>
 				<div
 					className='firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/dashboard'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={MySalonAr}
 								alt='Powered By Infinite-Apps'
@@ -74,10 +76,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/store-preview'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={SalonPreviewAr}
 								alt='Powered By Infinite-Apps'
@@ -95,10 +97,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/settings'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={SettingsAr}
 								alt='Powered By Infinite-Apps'
@@ -116,10 +118,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/services'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={ServicesAr}
 								alt='Powered By Infinite-Apps'
@@ -137,10 +139,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/employees'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={EmployeeAr}
 								alt='Powered By Infinite-Apps'
@@ -158,10 +160,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/edit-website'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={WebsiteAr}
 								alt='Powered By Infinite-Apps'
@@ -179,10 +181,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='pt-1 firstGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/add-gallary'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={GallaryAr}
 								alt='Powered By Infinite-Apps'
@@ -202,10 +204,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 			<div className='SecondGroup pt-5'>
 				<div
 					className='SecondGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='#'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={CustomerAr}
 								alt='Powered By Infinite-Apps'
@@ -223,10 +225,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className=' SecondGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='#'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={BookingAr}
 								alt='Powered By Infinite-Apps'
@@ -246,10 +248,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 			<div className='ThirdGroup pt-5'>
 				<div
 					className='ThirdGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/branches'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={BranchesAr}
 								alt='Powered By Infinite-Apps'
@@ -267,10 +269,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 
 				<div
 					className='ThirdGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='#'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={CRMAr}
 								alt='Powered By Infinite-Apps'
@@ -287,10 +289,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 				</div>
 				<div
 					className='ThirdGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/book-appointment-from-store'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={CashierAr}
 								alt='Powered By Infinite-Apps'
@@ -310,10 +312,10 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 			<div className='FourthGroup'>
 				<div
 					className='FourthGroupItem'
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
 					<Link to='/store/admin/billing-account'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<img
 								src={BillingAr}
 								alt='Powered By Infinite-Apps'

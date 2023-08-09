@@ -107,11 +107,7 @@ const SingleAppointmentPage = (props) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
-				setStatusValues(
-					singleAppointment && singleAppointment.BookedFrom === "Store"
-						? data.filter((i) => !i.includes("Online") || i === "Cancelled")
-						: data.filter((i) => i.includes("Online") || i === "Cancelled")
-				);
+				setStatusValues(data);
 			}
 		});
 	};

@@ -5,9 +5,12 @@ import { contactUs } from "../auth/index";
 import { ToastContainer, toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
+import { useCartContext } from "../sidebar_context";
 // import ReactGA from "react-ga";
 
 const Contact = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	useEffect(() => {
 		if (window !== "undefined") {
 			localStorage.removeItem("reservationData");
@@ -66,9 +69,9 @@ const Contact = ({ language }) => {
 
 	return (
 		<ContactUsWrapper dir='ltr'>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | اتصل بنا</title>
 				) : (
 					<title>XLOOK | CONTACT US</title>
@@ -76,7 +79,7 @@ const Contact = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? ` XLOOK بدإخل مرص.
 					ىه منصة تضم جميع صالونات إلحالقة ومحالت إلكوإفريإلحريىم و إلبيوت ى
 					إلمنصة تقدم إلخدمات لكل أفرإد إالرسة سوإء سيدإت, آنسات, رجال أو أوالد فللجميع مكان وخدمات مقدمة.

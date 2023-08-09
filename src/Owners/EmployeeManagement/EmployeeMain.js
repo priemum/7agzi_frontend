@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { Helmet } from "react-helmet";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -38,6 +39,7 @@ const isActive = (history, path) => {
 };
 
 const EmployeeMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	// const [collapsed, setCollapsed] = useState(true);
 	const [collapseMenu, setCollapseMenu] = useState(false);
@@ -57,7 +59,7 @@ const EmployeeMain = ({ language }) => {
 
 	return (
 		<EmployeeMainWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
 			<Helmet>
@@ -77,7 +79,7 @@ const EmployeeMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
-						language={language}
+						language={chosenLanguage}
 					/>
 				</div> */}
 
@@ -92,7 +94,7 @@ const EmployeeMain = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='Employees'
 						collapseMenu={collapseMenu}
 					/>
@@ -111,7 +113,9 @@ const EmployeeMain = ({ language }) => {
 									to='/store/admin/employees'
 								>
 									<i className='fa-solid fa-person-dress-burst mr-1'></i>{" "}
-									{language === "Arabic" ? "إضافة موظف جديد" : "New Employee"}
+									{chosenLanguage === "Arabic"
+										? "إضافة موظف جديد"
+										: "New Employee"}
 								</Link>
 							</div>
 							<div
@@ -125,16 +129,18 @@ const EmployeeMain = ({ language }) => {
 									to='/store/admin/employees?update-employee'
 								>
 									<i className='fa-solid fa-pen mr-1'></i>{" "}
-									{language === "Arabic" ? "قائمة الموظفين" : "Employees' List"}
+									{chosenLanguage === "Arabic"
+										? "قائمة الموظفين"
+										: "Employees' List"}
 								</Link>
 							</div>
 						</div>
 					</div>
 					{clickedMenu === "AddEmployee" ? (
-						<AddEmployee language={language} />
+						<AddEmployee language={chosenLanguage} />
 					) : null}
 					{clickedMenu === "UpdateEmployee" ? (
-						<UpdateEmployee language={language} />
+						<UpdateEmployee language={chosenLanguage} />
 					) : null}
 				</div>
 			</div>

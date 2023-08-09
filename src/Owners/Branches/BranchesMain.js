@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 // import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 
 const BranchesMain = ({ language }) => {
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	// const [collapsed, setCollapsed] = useState(false);
+	const { chosenLanguage } = useCartContext();
 
 	return (
-		<BranchesMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<BranchesMainWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
 				{/* <div>
 					<AdminNavbar
@@ -22,9 +24,9 @@ const BranchesMain = ({ language }) => {
 				</div> */}
 
 				<div className='menuWrapper'>
-					<OwnerNavmenu language={language} fromPage='Branches' />
+					<OwnerNavmenu language={chosenLanguage} fromPage='Branches' />
 				</div>
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<div className='messageWrapper mx-auto col-md-6 mt-5 float-right'>
 						<h2 style={{ fontWeight: "bolder" }}>
 							للأسف، لا ندعم حاليًا المتاجر ذات الفروع المتعددة.

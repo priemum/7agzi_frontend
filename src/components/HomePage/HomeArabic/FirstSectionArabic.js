@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa"; // I'm using react-icons for the search icon. You need to install it.
 
-const FirstSection = ({ language, handleInputChange, searchValue }) => {
+const FirstSectionArabic = ({ language, handleInputChange, searchValue }) => {
 	return (
 		<FirstSectionWrapper>
 			<div>
@@ -18,7 +18,7 @@ const FirstSection = ({ language, handleInputChange, searchValue }) => {
 							textAlign: "center",
 						}}
 					>
-						For Men
+						رجالي
 					</div>
 					<div
 						onClick={() => {
@@ -31,14 +31,14 @@ const FirstSection = ({ language, handleInputChange, searchValue }) => {
 							textAlign: "center",
 						}}
 					>
-						For Women
+						سيدات
 					</div>
 					<div className='col-6 search-col my-auto'>
 						<input
 							type='text'
 							value={searchValue}
 							onChange={handleInputChange}
-							placeholder='Search'
+							placeholder='بحث'
 						/>
 						<FaSearch className='search-icon' />
 					</div>
@@ -48,7 +48,7 @@ const FirstSection = ({ language, handleInputChange, searchValue }) => {
 	);
 };
 
-export default FirstSection;
+export default FirstSectionArabic;
 
 const FirstSectionWrapper = styled.div`
 	margin-right: 100px;
@@ -69,6 +69,7 @@ const FirstSectionWrapper = styled.div`
 			&::placeholder {
 				// This targets the placeholder text
 				color: white;
+				padding: 3px;
 			}
 		}
 

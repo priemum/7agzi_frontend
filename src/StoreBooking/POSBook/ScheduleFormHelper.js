@@ -223,7 +223,6 @@ const ScheduleFormHelper = ({
 								const selectedServices = values.map((value) =>
 									AllServices.find((service) => service.serviceName === value)
 								);
-								console.log(selectedServices, "selectedServices");
 
 								setServiceDetailsArray(selectedServices);
 							}}
@@ -323,55 +322,6 @@ const ScheduleFormHelper = ({
 				serviceDetailsArray &&
 				serviceDetailsArray.length > 0 ? (
 					<div>
-						<label
-							className='dataPointsReview'
-							style={{
-								fontWeight: "bold",
-								fontSize: "1.05rem",
-								color: "#32322b",
-							}}
-						>
-							Select An Appointment Time
-							<br />
-							<span>Employee ALL Time Slots</span>
-							<br />
-						</label>
-						<br />
-						<select
-							onChange={(e) => {
-								setChosenTime(e.target.value);
-							}}
-							placeholder='Select a Time'
-							className='inputFields mb-3'
-							style={{
-								paddingTop: "12px",
-								paddingBottom: "12px",
-								// paddingRight: "100px",
-								// textAlign: "center",
-								border: "#cfcfcf solid 1px",
-								borderRadius: "10px",
-								width: "50%",
-								fontSize: "0.9rem",
-								boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
-							}}
-						>
-							{chosenTime && chosenTime !== "Select Time" ? (
-								<option className='items text-muted inputFields'>
-									{chosenTime}
-								</option>
-							) : (
-								<option className='items text-muted inputFields'>
-									Select Time
-								</option>
-							)}
-
-							{scheduledHours &&
-								scheduledHours.map((t, i) => (
-									<option key={i} value={t} className='items'>
-										{t}
-									</option>
-								))}
-						</select>
 						{employeeAvailability &&
 						employeeAvailability.hoursAvailable &&
 						employeeAvailability.hoursAvailable.length > 0 &&

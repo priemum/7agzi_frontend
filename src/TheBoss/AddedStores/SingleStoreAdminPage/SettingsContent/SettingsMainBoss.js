@@ -79,6 +79,8 @@ const SettingsMainBoss = () => {
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
 	const [longitude, setLongitude] = useState("");
 	const [latitude, setLatitude] = useState("");
+	const [salonGrade, setSalonGrade] = useState("");
+	const [workersGender, setWorkersGender] = useState("");
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
@@ -232,6 +234,14 @@ const SettingsMainBoss = () => {
 			return toast.error("Store Name Arabic Required");
 		}
 
+		if (!workersGender) {
+			return toast.error("Please Add Overall Employees Gender");
+		}
+
+		if (!salonGrade) {
+			return toast.error("Please Grade This Salon");
+		}
+
 		LoyaltyPointsAndStoreStatus(ownerId, token, {
 			loyaltyPointsAward: loyaltyPointsAward ? loyaltyPointsAward : 1000000,
 			discountPercentage: discountPercentage ? discountPercentage : 0,
@@ -256,6 +266,8 @@ const SettingsMainBoss = () => {
 			visaPayment: extraData.visaPayment,
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
+			salonGrade,
+			workersGender,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -399,6 +411,10 @@ const SettingsMainBoss = () => {
 							setActiveOnlineBooking={setActiveOnlineBooking}
 							setExtraData={setExtraData}
 							extraData={extraData}
+							salonGrade={salonGrade}
+							setSalonGrade={setSalonGrade}
+							workersGender={workersGender}
+							setWorkersGender={setWorkersGender}
 						/>
 					) : null}
 

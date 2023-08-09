@@ -21,6 +21,7 @@ import EditBanner from "./ModalsForEdit/BannerAndThumb/EditBanner";
 import { Spin } from "antd";
 import SalonNameAndGeneral from "./ModalsForEdit/SalonNameAndGeneral";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -54,6 +55,8 @@ const isActive = (history, path) => {
 };
 
 const StorePreviewMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [clickedMenu, setClickedMenu] = useState("SERVICES");
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
@@ -261,9 +264,9 @@ const StorePreviewMain = ({ language }) => {
 
 	return (
 		<StorePreviewMainWrapper>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>{user.name} | Page Builder</title>
 				) : (
 					<title>{user.name} | Page Builder</title>
@@ -271,7 +274,7 @@ const StorePreviewMain = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
 				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
 				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
@@ -285,7 +288,7 @@ const StorePreviewMain = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
 							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
 					}
@@ -296,7 +299,7 @@ const StorePreviewMain = ({ language }) => {
 				/>
 			</Helmet>
 			<EditBanner
-				language={language}
+				language={chosenLanguage}
 				setLoading={setLoading}
 				modalVisible={modalVisible}
 				setModalVisible={setModalVisible}
@@ -306,7 +309,7 @@ const StorePreviewMain = ({ language }) => {
 				lastSettings={lastSettings}
 			/>
 			<SalonNameAndGeneral
-				language={language}
+				language={chosenLanguage}
 				setLoading={setLoading}
 				modalVisible={modalVisible2}
 				setModalVisible={setModalVisible2}
@@ -335,7 +338,7 @@ const StorePreviewMain = ({ language }) => {
 						modalVisible={modalVisible}
 						setModalVisible2={setModalVisible2}
 						overallAddedSettings={overallAddedSettings}
-						language={language}
+						language={chosenLanguage}
 					/>
 				)}
 			</div>
@@ -353,35 +356,35 @@ const StorePreviewMain = ({ language }) => {
 						style={isActive(clickedMenu, "SERVICES")}
 						onClick={() => setClickedMenu("SERVICES")}
 					>
-						{language === "Arabic" ? "الخدمات" : "SERVICES"}
+						{chosenLanguage === "Arabic" ? "الخدمات" : "SERVICES"}
 					</div>
 					<div
 						className='col-2 navLinks'
 						style={isActive(clickedMenu, "STYLISTS")}
 						onClick={() => setClickedMenu("STYLISTS")}
 					>
-						{language === "Arabic" ? "الفريق" : "TEAM"}
+						{chosenLanguage === "Arabic" ? "الفريق" : "TEAM"}
 					</div>
 					<div
 						className='col-2 navLinks'
 						style={isActive(clickedMenu, "ABOUT")}
 						onClick={() => setClickedMenu("ABOUT")}
 					>
-						{language === "Arabic" ? "عنا" : "ABOUT"}
+						{chosenLanguage === "Arabic" ? "عنا" : "ABOUT"}
 					</div>
 					<div
 						className='col-2 navLinks'
 						style={isActive(clickedMenu, "GALLERY")}
 						onClick={() => setClickedMenu("GALLERY")}
 					>
-						{language === "Arabic" ? "المعرض" : "GALLERY"}
+						{chosenLanguage === "Arabic" ? "المعرض" : "GALLERY"}
 					</div>
 					<div
 						className='col-2 navLinks'
 						style={isActive(clickedMenu, "MAP")}
 						onClick={() => setClickedMenu("MAP")}
 					>
-						{language === "Arabic" ? "الخريطة" : "MAP"}
+						{chosenLanguage === "Arabic" ? "الخريطة" : "MAP"}
 					</div>
 				</div>
 			</div>
@@ -429,7 +432,7 @@ const StorePreviewMain = ({ language }) => {
 					<AddedServicesPreview
 						ownerId={user._id}
 						chosenCustomerType={chosenCustomerType2}
-						language={language}
+						language={chosenLanguage}
 						overallAddedSettings={overallAddedSettings}
 					/>
 				</div>
@@ -441,7 +444,7 @@ const StorePreviewMain = ({ language }) => {
 						storeProperties={lastSettings}
 						contact={contact}
 						filteredResults={allEmployees}
-						language={language}
+						language={chosenLanguage}
 					/>
 				</div>
 			) : null}

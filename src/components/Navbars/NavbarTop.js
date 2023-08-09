@@ -7,25 +7,24 @@ import styled from "styled-components";
 import myLogo from "../../Images/XLookLogo.png";
 import EgyptianFlag from "../../Images/Egypt.png";
 import AmericanFlag from "../../Images/UnitedStates.png";
+import { useCartContext } from "../../sidebar_context";
+
 // import logo from "../pagesImgs/Sinai-I-Logo.jpg";
 
-const Navbar1 = ({
-	history,
-	click,
-	setClick,
-	clickMenu,
-	setClickMenu,
-	language,
-	setLanguage,
-}) => {
-	const handleSidebar = () => {
-		setClick(!click);
-	};
+const Navbar1 = ({ history }) => {
+	const {
+		openSidebar,
+		closeSidebar,
+		isSidebarOpen,
+		chosenLanguageEngish,
+		chosenLanguage,
+		chosenLanguageArabic,
+	} = useCartContext();
 
 	const sideBar = () => {
 		return (
 			<React.Fragment>
-				<SideWrapper show={clickMenu}>
+				<SideWrapper show={isSidebarOpen} show2={chosenLanguage === "Arabic"}>
 					<ul className=''>
 						<li
 							className='mt-3'
@@ -36,16 +35,15 @@ const Navbar1 = ({
 							<Link
 								to='/'
 								className={
-									language === "Arabic" ? "sidebar-linkArabic" : "sidebar-link"
+									chosenLanguage === "Arabic"
+										? "sidebar-linkArabic"
+										: "sidebar-link"
 								}
-								onClick={() => {
-									setClickMenu(false);
-									setClick(false);
-								}}
+								onClick={closeSidebar}
 							>
-								{click && clickMenu ? (
+								{isSidebarOpen && isSidebarOpen ? (
 									<React.Fragment>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span
 												style={{
 													fontFamily: "Droid Arabic Kufi",
@@ -69,16 +67,15 @@ const Navbar1 = ({
 							<Link
 								to='/schedule'
 								className={
-									language === "Arabic" ? " sidebar-linkArabic" : "sidebar-link"
+									chosenLanguage === "Arabic"
+										? " sidebar-linkArabic"
+										: "sidebar-link"
 								}
-								onClick={() => {
-									setClickMenu(false);
-									setClick(false);
-								}}
+								onClick={closeSidebar}
 							>
-								{click && clickMenu ? (
+								{isSidebarOpen && isSidebarOpen ? (
 									<React.Fragment>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span
 												style={{
 													fontFamily: "Droid Arabic Kufi",
@@ -102,16 +99,15 @@ const Navbar1 = ({
 							<Link
 								to='/about'
 								className={
-									language === "Arabic" ? "sidebar-linkArabic" : "sidebar-link"
+									chosenLanguage === "Arabic"
+										? "sidebar-linkArabic"
+										: "sidebar-link"
 								}
-								onClick={() => {
-									setClickMenu(false);
-									setClick(false);
-								}}
+								onClick={closeSidebar}
 							>
-								{click && clickMenu ? (
+								{isSidebarOpen && isSidebarOpen ? (
 									<React.Fragment>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span
 												style={{
 													fontFamily: "Droid Arabic Kufi",
@@ -135,16 +131,15 @@ const Navbar1 = ({
 							<Link
 								to='/contact'
 								className={
-									language === "Arabic" ? "sidebar-linkArabic" : "sidebar-link"
+									chosenLanguage === "Arabic"
+										? "sidebar-linkArabic"
+										: "sidebar-link"
 								}
-								onClick={() => {
-									setClickMenu(false);
-									setClick(false);
-								}}
+								onClick={closeSidebar}
 							>
-								{click && clickMenu ? (
+								{isSidebarOpen && isSidebarOpen ? (
 									<React.Fragment>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span
 												style={{
 													fontFamily: "Droid Arabic Kufi",
@@ -171,10 +166,7 @@ const Navbar1 = ({
 								<Link
 									className='nav-link '
 									to='/dashboard'
-									onClick={() => {
-										setClickMenu(false);
-										setClick(false);
-									}}
+									onClick={closeSidebar}
 								>
 									My Account/Dashboard
 								</Link>
@@ -192,10 +184,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link '
 										to='/store/admin/dashboard'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
 										Your Salon Account
 									</Link>
@@ -231,10 +220,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										to='/book-appointment-from-store'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
 										Store Scheduler
 									</Link>
@@ -253,12 +239,9 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										to='/agent/dashboard'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
-										XLOOK <strong>AGENT</strong>
+										XLOOK <strong>Account Manager</strong>
 									</Link>
 								</li>
 							</React.Fragment>
@@ -275,10 +258,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link'
 										to='/stylist/dashboard'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
 										Stylist Dashboard
 									</Link>
@@ -297,10 +277,7 @@ const Navbar1 = ({
 									<Link
 										className='nav-link '
 										to='/signin'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
 										Login
 									</Link>
@@ -316,12 +293,9 @@ const Navbar1 = ({
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
 										to='/about'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span style={{ fontSize: "1.2rem" }}>كن شريكنا</span>
 										) : (
 											"Be Our Partner"
@@ -339,12 +313,9 @@ const Navbar1 = ({
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
 										to='/agent-guide?ar'
-										onClick={() => {
-											setClickMenu(false);
-											setClick(false);
-										}}
+										onClick={closeSidebar}
 									>
-										{language === "Arabic" ? (
+										{chosenLanguage === "Arabic" ? (
 											<span style={{ fontSize: "1.2rem" }}>
 												قدّم للعمل معنا
 											</span>
@@ -394,20 +365,20 @@ const Navbar1 = ({
 	};
 	return (
 		<Nav
-			dir='ltr'
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			className=' navbar  navbar-expand-sm nav-center py-1'
 			style={{ backgroundColor: "#363636" }}
 		>
-			{click ? (
+			{isSidebarOpen ? (
 				<i
 					className='far fa-window-close nav-icon faaa-bars'
-					onClick={handleSidebar}
+					onClick={closeSidebar}
 					style={{ color: "white", marginLeft: "10px" }}
 				></i>
 			) : (
 				<i
 					className='fa fa-bars nav-icon faaa-bars'
-					onClick={handleSidebar}
+					onClick={openSidebar}
 					style={{ color: "white", marginLeft: "10px" }}
 				></i>
 			)}
@@ -430,13 +401,8 @@ const Navbar1 = ({
 				className='languageFlagsPhone'
 				style={{ padding: "0px", marginLeft: "" }}
 			>
-				{language === "English" ? (
-					<span
-						className=''
-						onClick={() => {
-							setLanguage("Arabic");
-						}}
-					>
+				{chosenLanguage === "English" ? (
+					<span className='' onClick={chosenLanguageArabic}>
 						{" "}
 						<img
 							className='flags'
@@ -449,12 +415,7 @@ const Navbar1 = ({
 					<span
 						className=' '
 						style={{ color: "white" }}
-						onClick={() => {
-							setLanguage("English");
-							if (window.location.search.includes("ar")) {
-								history.push(window.location.pathname);
-							}
-						}}
+						onClick={chosenLanguageEngish}
 					>
 						<img className='flags' src={AmericanFlag} alt='English' />{" "}
 					</span>
@@ -560,7 +521,7 @@ const Navbar1 = ({
 										fontStyle: "italic",
 									}}
 								>
-									{language === "Arabic" ? (
+									{chosenLanguage === "Arabic" ? (
 										<span
 											style={{
 												fontFamily: "Droid Arabic Kufi",
@@ -590,7 +551,7 @@ const Navbar1 = ({
 										fontStyle: "italic",
 									}}
 								>
-									{language === "Arabic" ? (
+									{chosenLanguage === "Arabic" ? (
 										<span
 											style={{
 												fontFamily: "Droid Arabic Kufi",
@@ -641,13 +602,8 @@ const Navbar1 = ({
 						}}
 					>
 						<span className='' style={{ padding: "0px" }}>
-							{language === "English" ? (
-								<span
-									className=''
-									onClick={() => {
-										setLanguage("Arabic");
-									}}
-								>
+							{chosenLanguage === "English" ? (
+								<span className='' onClick={chosenLanguageArabic}>
 									{" "}
 									<img className='flags' src={EgyptianFlag} alt='Arabic' />
 									<span style={{ color: "white" }}>Arabic</span>
@@ -656,12 +612,7 @@ const Navbar1 = ({
 								<span
 									style={{ color: "white" }}
 									className=' '
-									onClick={() => {
-										setLanguage("English");
-										if (window.location.search.includes("ar")) {
-											history.push(window.location.pathname);
-										}
-									}}
+									onClick={chosenLanguageEngish}
 								>
 									<img className='flags' src={AmericanFlag} alt='English' />{" "}
 									English
@@ -797,8 +748,16 @@ const SideWrapper = styled.nav`
 	z-index: 300;
 	border-right: 3px solid var(--darkGrey);
 	transition: 0.5s;
-	transform: ${(props) => (props.show ? "translateX(0)" : "translateX(220%)")};
+	/* transform: ${(props) =>
+		props.show ? "translateX(0)" : "translateX(220%)"}; */
 	background-color: black;
+	transform: ${(props) =>
+		props.show && props.show2
+			? "translateX(68%)"
+			: props.show && !props.show2
+			? "translateX(0)"
+			: "translateX(220%)"};
+
 	/*transform: translateX(-100%);*/ /**this will hide the side bar */
 
 	ul {

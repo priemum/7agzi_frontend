@@ -13,8 +13,11 @@ import styled from "styled-components";
 import StoreFilter from "../components/StoreFilter";
 import CardForStore from "../components/StoresListComp/CardForStore";
 import SideFilter from "../components/StoresListComp/SideFilter";
+import { useCartContext } from "../sidebar_context";
 
 const MyStoreList = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	// eslint-disable-next-line
 	const capturedCountry = JSON.parse(localStorage.getItem("userLocation"));
 
@@ -72,7 +75,45 @@ const MyStoreList = ({ language }) => {
 						if (data.error) {
 							setError(data.error);
 						} else {
-							var uniqueStoresWithLatestDates = data.stores;
+							let queryString = window.location.search;
+							let cleanedString = decodeURIComponent(
+								queryString.slice(1)
+							).trim();
+
+							var uniqueStoresWithLatestDates =
+								cleanedString === "barber shop" ||
+								cleanedString === "hair salon"
+									? data.stores.filter(
+											(i) => i.belongsTo.storeType === cleanedString
+									  )
+									: cleanedString === "beard shaving" ||
+									  cleanedString === "hair cut"
+									? data.stores.filter((store) =>
+											store.services.some(
+												(service) => service.serviceName === cleanedString
+											)
+									  )
+									: cleanedString === "50"
+									? data.stores.filter((store) =>
+											store.services.some(
+												(service) =>
+													Number(service.servicePriceDiscount) <=
+													Number(cleanedString)
+											)
+									  )
+									: cleanedString === "bundle"
+									? data.stores.filter((store) =>
+											store.services.some(
+												(service) => service.bundleService === true
+											)
+									  )
+									: data.stores;
+
+							// console.log(cleanedString, "cleanedString");
+							// console.log(
+							// 	uniqueStoresWithLatestDates,
+							// 	"uniqueStoresWithLatestDates"
+							// );
 
 							if (selectedCountry) {
 								uniqueStoresWithLatestDates =
@@ -284,9 +325,9 @@ const MyStoreList = ({ language }) => {
 
 	return (
 		<MyStoreListWrapper showPagination={selectedGovernorate}>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>دور على أقرب مصفف شعر ومركز تجميل ليك</title>
 				) : (
 					<title>Find Your Closest Stylist And Beauty Center</title>
@@ -294,7 +335,7 @@ const MyStoreList = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `ابحث عن أقرب مصفف للشعر بالقرب منك باستخدام منصتنا السهلة للحجز. اكتشف خبراء تصفيف الشعر المحترفين وأصحاب صالونات الحلاقة والجمال في منطقتك. احجز موعدك بسهولة واستمتع بخدمات عالية الجودة. احصل على الإطلالة التي ترغب فيها بسهولة. ابدأ رحلتك للحصول على تسريحة شعر رائعة اليوم!. Powered By https://infinite-apps.com`
 							: `Find the closest stylist near you with our convenient booking platform. Discover professional hairstylists, barbers, and beauty experts in your area. Book your appointment hassle-free and enjoy quality services. Get the look you desire with ease. Start your journey to a fabulous hairstyle today! Powered By https://infinite-apps.com`
 					}
@@ -302,7 +343,7 @@ const MyStoreList = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، مصفف شعر، صالونات حلاقة، خدمات تجميل , ${
 									allServicesCombined &&
 									allServicesCombined.map((i) => i.serviceNameOtherLanguage)
@@ -384,6 +425,7 @@ const MyStoreList = ({ language }) => {
 					allServicesCombined={allServicesCombined}
 					filtersClicked={filtersClicked}
 					setFiltersClicked={setFiltersClicked}
+					language={chosenLanguage}
 				/>
 			</div>
 			<div

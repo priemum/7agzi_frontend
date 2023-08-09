@@ -20,6 +20,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 	setServiceDetailsArray,
 	serviceDetailsArray,
 	appointmentFirst,
+	formatEnglishDate,
 	loading,
 }) => {
 	const disabledDate = (current) => {
@@ -33,7 +34,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 
 	const handleChangeDate = (date) => {
 		if (date) {
-			const formattedDate = moment(date).format("MM/DD/YYYY");
+			const formattedDate = formatEnglishDate(date);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);
@@ -54,6 +55,8 @@ const FirstAvailableAppointmentModifiedArabic = ({
 		addItem(employee);
 		window.scrollTo(0, 0);
 	};
+
+	console.log(appointmentFirst.message, "appointmentFirst");
 
 	return (
 		<FirstAvailableAppointmentModifiedWrapper dir='rtl' className='mr-2'>
@@ -264,11 +267,10 @@ const FirstAvailableAppointmentModifiedArabic = ({
 			) : chosenCustomerType &&
 			  chosenDate &&
 			  chosenService &&
-			  !appointmentFirst &&
-			  !appointmentFirst.firstAvailableTime ? (
-				<div className='message'>
-					لا توجد أوقات متاحة في التاريخ المحدد{" "}
-					{new Date(chosenDate).toLocaleDateString("ar-EG")}
+			  appointmentFirst &&
+			  appointmentFirst.message === "No available appointments." ? (
+				<div style={{ fontWeight: "bolder", fontSize: "1.2rem" }}>
+					لا توجد أوقات متاحة في التاريخ المحدد
 				</div>
 			) : null}
 		</FirstAvailableAppointmentModifiedWrapper>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import AdminNavbar from "../OwnerNavbar/AdminNavbar";
 import {
 	addingSalonGallary,
 	cloudinaryUpload1,
@@ -8,24 +9,37 @@ import {
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import ImageCard from "./ImageCard";
-import { isAuthenticated } from "../../auth";
 import { toast } from "react-toastify";
-import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
-import { useCartContext } from "../../sidebar_context";
+import { isAuthenticated } from "../../../auth";
+import { useLocation, useParams } from "react-router-dom";
+import { useCartContext } from "../../../sidebar_context";
 
-const GallaryMain = ({ language }) => {
+const GallaryMainAgent = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
+
+	let { ownerId } = useParams();
+	let location = useLocation();
+
+	useEffect(() => {
+		// Log the path of the current URL
+		console.log(location.pathname);
+		// Log the ownerId
+		console.log(ownerId);
+	}, [location, ownerId]);
+	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
+	const [collapsed, setCollapsed] = useState(false);
+
 	const [values, setValues] = useState({ gallaryPhotos: [] });
 	// eslint-disable-next-line
 	const [previousGallary, setPreviousGallary] = useState({});
 	const [loading, setLoading] = useState(true);
-	const [collapseMenu, setCollapseMenu] = useState(false);
 
+	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
 
 	const gettingAllServices = () => {
 		setLoading(true);
-		getPreviousAddedGallary(token, user._id).then((data) => {
+		getPreviousAddedGallary(token, ownerId).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 				setLoading(true);
@@ -70,7 +84,7 @@ const GallaryMain = ({ language }) => {
 			for (let i = 0; i < files.length; i++) {
 				if (files[i].size > 1024 * 1024) {
 					// file size is in bytes
-					alert("File size should be less than 1024kb");
+					alert("File size should be less than 1MB");
 					continue; // skip this file
 				}
 
@@ -78,7 +92,7 @@ const GallaryMain = ({ language }) => {
 					files[i],
 					800,
 					954,
-					"AUTO",
+					"JPEG",
 					100,
 					0,
 					(uri) => {
@@ -133,7 +147,7 @@ const GallaryMain = ({ language }) => {
 
 		addingSalonGallary(user._id, token, {
 			gallaryPhotos: values.gallaryPhotos,
-			belongsTo: user._id,
+			belongsTo: ownerId,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -147,36 +161,15 @@ const GallaryMain = ({ language }) => {
 	};
 
 	return (
-		<GallaryMainWrapper
-			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
-			show={collapseMenu}
-		>
+		<GallaryMainWrapper>
 			<div className='grid-container'>
-				{/* <div>
+				<div>
 					<AdminNavbar
 						fromPage='AddGallary'
 						AdminMenuStatus={AdminMenuStatus}
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
-						language={chosenLanguage}
-					/>
-				</div> */}
-
-				<div className='menuWrapper'>
-					<div
-						className='iconMenu'
-						onClick={() => {
-							setCollapseMenu(!collapseMenu);
-						}}
-					>
-						<i className='fa-solid fa-bars'></i>
-					</div>
-
-					<OwnerNavmenu
-						language={chosenLanguage}
-						fromPage='Gallary'
-						collapseMenu={collapseMenu}
 					/>
 				</div>
 				<div>
@@ -193,9 +186,9 @@ const GallaryMain = ({ language }) => {
 								setValues={setValues}
 								language={chosenLanguage}
 							/>
-							<div className='mt-3 mb-5 mx-auto text-center'>
+							<div className='mt-3 mx-auto text-center'>
 								<button
-									className='btn btn-primary mx-auto w-50'
+									className='btn btn-primary mx-auto w-25'
 									onClick={() => {
 										AddNewGallaryToSalon();
 									}}
@@ -211,13 +204,13 @@ const GallaryMain = ({ language }) => {
 	);
 };
 
-export default GallaryMain;
+export default GallaryMainAgent;
 
 const GallaryMainWrapper = styled.div`
 	min-height: 1000px;
 	.grid-container {
 		display: grid;
-		grid-template-columns: 5% 95%;
+		grid-template-columns: 13% 87%;
 	}
 
 	button {
@@ -226,33 +219,9 @@ const GallaryMainWrapper = styled.div`
 		text-transform: uppercase;
 	}
 
-	.menuWrapper {
-		background-color: ${(props) => (props.show ? "white" : "black")};
-		overflow: auto;
-	}
-	.iconMenu {
-		display: none;
-	}
-
 	@media (max-width: 1200px) {
 		.grid-container {
-			display: grid;
-			/* grid-template-columns: 18% 82%; */
-			grid-template-columns: ${(props) => (props.show ? "3% 97%" : "18% 82%")};
-		}
-
-		.iconMenu {
-			display: block;
-			color: ${(props) => (props.show ? "black" : "white")};
-			position: ${(props) => (props.show ? "absolute" : "")};
-			text-align: right;
-			font-size: 20px;
-			margin-right: ${(props) => (props.show ? "3px" : "5px")};
-		}
-
-		.menuItems {
-			font-size: 12px !important;
-			margin: auto !important;
+			grid-template-columns: 2% 98%;
 		}
 
 		a {

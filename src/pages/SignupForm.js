@@ -18,8 +18,11 @@ import SignupFormComp from "../components/SignupComp/SignupFormComp";
 import { getAllAgents } from "../apiCore";
 import { Helmet } from "react-helmet";
 import { ShipToData } from "../Utils";
+import { useCartContext } from "../sidebar_context";
 
 const SignupForm = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [nextClicked, setNextClicked] = useState(0);
 	const [allAgents, setAllAgents] = useState("");
 	const [allDistricts, setAllDistricts] = useState("");
@@ -274,7 +277,7 @@ const SignupForm = ({ language }) => {
 			password2={password2}
 			nextClicked={nextClicked}
 			setNextClicked={setNextClicked}
-			language={language}
+			language={chosenLanguage}
 			allAgents={allAgents}
 			setAllAgents={setAllAgents}
 			allDistricts={allDistricts}
@@ -285,9 +288,9 @@ const SignupForm = ({ language }) => {
 
 	return (
 		<WholeSignup>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | كن شريكنا | سجل صالونك</title>
 				) : (
 					<title>XLOOK | Be Our Business Partner</title>
@@ -295,7 +298,7 @@ const SignupForm = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `سارع بالتسجيل الآن! لا تفوت الفرصة لعرض نفسك ببراعة أمام مئات الآلاف من الأفراد حول مركز التجميل الخاص بك. إكس لوك، خطوات التسجيل، حجز المواعيد، خدمات التجميل`
 							: `Hurry up and register now! Don't miss the opportunity to showcase yourself brilliantly in front of hundreds of thousands of individuals around your beauty center. XLOOK, Registration Steps, Appointment Booking, Beauty Services`
 					}
@@ -303,13 +306,13 @@ const SignupForm = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `كن شريكنا ، إكس لوك، خطوات التسجيل، حجز المواعيد، خدمات التجميل، التسجيل في موقع إكس لوك`
 							: `XLOOK, Registration, Be Our Partner, Appointment Booking, Beauty Services, Register on XLOOK Website`
 					}
 				/>
 				<link rel='canonical' href='https://www.xlookpro.com/signup' />
-				{language === "Arabic" && (
+				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}
 			</Helmet>

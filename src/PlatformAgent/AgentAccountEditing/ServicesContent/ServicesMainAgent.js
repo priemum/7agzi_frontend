@@ -5,6 +5,7 @@ import AddService from "./AddService";
 import UpdateService from "./UpdateService";
 import { useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -37,6 +38,8 @@ const isActive = (history, path) => {
 const ServicesMainAgent = ({ language }) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
+
+	const { chosenLanguage } = useCartContext();
 
 	useEffect(() => {
 		// Log the path of the current URL
@@ -86,7 +89,7 @@ const ServicesMainAgent = ({ language }) => {
 								onClick={() => setClickedMenu("AddService")}
 							>
 								<i className='fa-brands fa-servicestack mr-1'></i>{" "}
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "إضافة خدمة جديدة"
 									: "Add A New Service"}
 							</div>
@@ -96,15 +99,17 @@ const ServicesMainAgent = ({ language }) => {
 								onClick={() => setClickedMenu("UpdateServices")}
 							>
 								<i className='fa-solid fa-pen mr-1'></i>{" "}
-								{language === "Arabic" ? "قائمة الخدمات" : "Services' List"}
+								{chosenLanguage === "Arabic"
+									? "قائمة الخدمات"
+									: "Services' List"}
 							</div>
 						</div>
 					</div>
 					{clickedMenu === "AddService" ? (
-						<AddService language={language} ownerId={ownerId} />
+						<AddService language={chosenLanguage} ownerId={ownerId} />
 					) : null}
 					{clickedMenu === "UpdateServices" ? (
-						<UpdateService language={language} ownerId={ownerId} />
+						<UpdateService language={chosenLanguage} ownerId={ownerId} />
 					) : null}
 				</div>
 			</div>

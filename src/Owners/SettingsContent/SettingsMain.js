@@ -14,6 +14,7 @@ import AddingWorkingHours from "./AddingWorkingHours";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -45,6 +46,8 @@ const isActive = (history, path) => {
 };
 
 const SettingsMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapseMenu, setCollapseMenu] = useState(false);
 
@@ -275,7 +278,7 @@ const SettingsMain = ({ language }) => {
 
 	return (
 		<SettingsMainWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
 			<Helmet>
@@ -299,7 +302,7 @@ const SettingsMain = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='Settings'
 						collapseMenu={collapseMenu}
 					/>
@@ -314,7 +317,7 @@ const SettingsMain = ({ language }) => {
 								onClick={() => setClickedMenu("AddLogo")}
 							>
 								<i className='fa-brands fa-html5 mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف شعار" : "Add Logo"}
+								{chosenLanguage === "Arabic" ? "أضف شعار" : "Add Logo"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingDays")}
@@ -322,7 +325,7 @@ const SettingsMain = ({ language }) => {
 								onClick={() => setClickedMenu("WorkingDays")}
 							>
 								<i className='fa-solid fa-calendar-days mr-1'></i>{" "}
-								{language === "Arabic" ? "أيام عمل" : "Add Working Days"}
+								{chosenLanguage === "Arabic" ? "أيام عمل" : "Add Working Days"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
@@ -330,7 +333,7 @@ const SettingsMain = ({ language }) => {
 								onClick={() => setClickedMenu("Awards")}
 							>
 								<i className='fa-solid fa-award mr-1'></i>{" "}
-								{language === "Arabic" ? "جوائز" : "Add Awards"}
+								{chosenLanguage === "Arabic" ? "جوائز" : "Add Awards"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingHours")}
@@ -338,7 +341,9 @@ const SettingsMain = ({ language }) => {
 								onClick={() => setClickedMenu("WorkingHours")}
 							>
 								<i className='fa-solid fa-clock mr-1'></i>{" "}
-								{language === "Arabic" ? "ساعات عمل" : "Add Working Hours"}
+								{chosenLanguage === "Arabic"
+									? "ساعات عمل"
+									: "Add Working Hours"}
 							</div>
 						</div>
 					</div>
@@ -366,7 +371,7 @@ const SettingsMain = ({ language }) => {
 							setLoading={setLoading}
 							ownerIdPhoto={ownerIdPhoto}
 							setOwnerIdPhoto={setOwnerIdPhoto}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 
@@ -388,7 +393,7 @@ const SettingsMain = ({ language }) => {
 							setActiveOnlineBooking={setActiveOnlineBooking}
 							setExtraData={setExtraData}
 							extraData={extraData}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 
@@ -407,7 +412,7 @@ const SettingsMain = ({ language }) => {
 							setClickedMenu={setClickedMenu}
 							activeWhatsAppNotification={activeWhatsAppNotification}
 							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 
@@ -426,7 +431,7 @@ const SettingsMain = ({ language }) => {
 							storeThumbnail={storeThumbnail}
 							addStoreName={addStoreName}
 							addStoreNameArabic={addStoreNameArabic}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 				</div>

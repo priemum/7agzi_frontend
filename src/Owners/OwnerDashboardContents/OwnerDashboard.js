@@ -19,6 +19,7 @@ import { Helmet } from "react-helmet";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -50,6 +51,7 @@ const isActive = (history, path) => {
 };
 
 const OwnerDashboard = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	// const [collapsed, setCollapsed] = useState(false);
 	const [currentUser, setCurrentUser] = useState("");
@@ -183,12 +185,12 @@ const OwnerDashboard = ({ language }) => {
 
 	return (
 		<OwnerDashboardWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>{user.name} | Owner Dashboard</title>
 				) : (
 					<title>{user.name} | Owner Dashboard</title>
@@ -196,7 +198,7 @@ const OwnerDashboard = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
 				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
 				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
@@ -210,7 +212,7 @@ const OwnerDashboard = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
 							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
 					}
@@ -222,7 +224,9 @@ const OwnerDashboard = ({ language }) => {
 			</Helmet>
 			<div
 				className={
-					language === "Arabic" ? "grid-container-arabic" : "grid-container"
+					chosenLanguage === "Arabic"
+						? "grid-container-arabic"
+						: "grid-container"
 				}
 			>
 				<div className='menuWrapper'>
@@ -236,7 +240,7 @@ const OwnerDashboard = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='MainPage'
 						collapseMenu={collapseMenu}
 					/>
@@ -247,9 +251,9 @@ const OwnerDashboard = ({ language }) => {
 						className=''
 						style={{
 							top: "70px",
-							right: language === "Arabic" ? "" : "2%",
+							right: chosenLanguage === "Arabic" ? "" : "2%",
 							position: "absolute",
-							left: language === "Arabic" ? "2%" : "",
+							left: chosenLanguage === "Arabic" ? "2%" : "",
 						}}
 					>
 						{currentUser && currentUser.createdAt ? (
@@ -287,7 +291,7 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?calendar'
 								>
 									<i className='fa-brands fa-servicestack mx-1'></i>
-									{language === "Arabic" ? "الجدول" : "Appointments"}
+									{chosenLanguage === "Arabic" ? "الجدول" : "Appointments"}
 								</Link>
 							</div>
 							<div
@@ -301,7 +305,9 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?barber-appointments'
 								>
 									<i className='fa-solid fa-pen mx-1'></i>
-									{language === "Arabic" ? "عمل الموظف" : "Employee Schedule"}
+									{chosenLanguage === "Arabic"
+										? "عمل الموظف"
+										: "Employee Schedule"}
 								</Link>
 							</div>
 							<div
@@ -315,7 +321,9 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?table-view'
 								>
 									<i className='fa-solid fa-table mx-1'></i>
-									{language === "Arabic" ? "جدول المحتويات" : "Table View"}
+									{chosenLanguage === "Arabic"
+										? "جدول المحتويات"
+										: "Table View"}
 								</Link>
 							</div>
 							<div
@@ -331,7 +339,9 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?shop-reports'
 								>
 									<i className='fa-solid fa-chart-pie mx-1'></i>
-									{language === "Arabic" ? "التقارير العامة" : "Shop Reports"}
+									{chosenLanguage === "Arabic"
+										? "التقارير العامة"
+										: "Shop Reports"}
 								</Link>
 							</div>
 							<div
@@ -347,7 +357,7 @@ const OwnerDashboard = ({ language }) => {
 									to='/store/admin/dashboard?customer-reports'
 								>
 									<i className='fa-solid fa-chart-simple mx-1'></i>
-									{language === "Arabic" ? "تقرير العملاء" : "Customers"}
+									{chosenLanguage === "Arabic" ? "تقرير العملاء" : "Customers"}
 								</Link>
 							</div>
 						</div>
@@ -373,7 +383,7 @@ const OwnerDashboard = ({ language }) => {
 									}}
 									to='/store/admin/settings'
 								>
-									{language === "Arabic"
+									{chosenLanguage === "Arabic"
 										? "أضف إعدادات المتجر"
 										: "IMPORTANT => Please Add Salon Settings"}
 								</Link>{" "}
@@ -416,26 +426,26 @@ const OwnerDashboard = ({ language }) => {
 								}}
 								to='/store/admin/employees'
 							>
-								{language === "Arabic" ? "اضافة موظف" : "Add Employee"}
+								{chosenLanguage === "Arabic" ? "اضافة موظف" : "Add Employee"}
 							</Link>{" "}
 						</h2>
 					) : (
 						<>
 							{clickedMenu === "Calendar" ? (
-								<MyCalendar language={language} />
+								<MyCalendar language={chosenLanguage} />
 							) : null}
 							{clickedMenu === "BarberAppointment" ? (
-								<EmployeeAppointments language={language} />
+								<EmployeeAppointments language={chosenLanguage} />
 							) : null}
 
 							{clickedMenu === "TableView" ? (
-								<TableView language={language} />
+								<TableView language={chosenLanguage} />
 							) : null}
 							{clickedMenu === "ShopReports" ? (
-								<ShopReports language={language} />
+								<ShopReports language={chosenLanguage} />
 							) : null}
 							{clickedMenu === "CustomerReports" ? (
-								<UsersReport language={language} />
+								<UsersReport language={chosenLanguage} />
 							) : null}
 						</>
 					)}

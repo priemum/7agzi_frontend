@@ -1,8 +1,8 @@
 /** @format */
 
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
-import {DatePicker, Collapse} from "antd";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { DatePicker, Collapse } from "antd";
 import {
 	readSingleAppointment,
 	getStatusValues,
@@ -17,7 +17,7 @@ import {
 	getServices,
 	readByPhone,
 } from "../apiCore";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import moment from "moment";
 import styled from "styled-components";
@@ -25,10 +25,10 @@ import {
 	updateOrderStylistComment,
 	allLoyaltyPointsAndStoreStatus,
 } from "../Owners/apiOwner";
-import {isAuthenticated} from "../auth";
+import { isAuthenticated } from "../auth";
 
 const StylistSingleSchedulePage = (props) => {
-	const {Panel} = Collapse;
+	const { Panel } = Collapse;
 	const [loading, setLoading] = useState(true);
 	const [singleAppointment, setSingleAppointment] = useState({});
 	// eslint-disable-next-line
@@ -52,7 +52,7 @@ const StylistSingleSchedulePage = (props) => {
 		setAlreadySetLoyaltyPointsManagement,
 	] = useState([]);
 
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const checkLength = (i) => {
 		if (i < 10) {
@@ -150,7 +150,7 @@ const StylistSingleSchedulePage = (props) => {
 				console.log(data.error, "data.error");
 				console.log("Status update failed");
 			} else {
-				window.scrollTo({top: 0, behavior: "smooth"});
+				window.scrollTo({ top: 0, behavior: "smooth" });
 
 				window.setTimeout(() => {
 					window.location.reload(false);
@@ -162,7 +162,25 @@ const StylistSingleSchedulePage = (props) => {
 	const showStatus = (o) => (
 		<React.Fragment>
 			<div className='form-group'>
-				<h3 className='mark mb-4'>Status: {o.status}</h3>
+				<h3 className='' style={{ fontSize: "1.3rem" }}>
+					Status:
+					<div className='mt-2'>
+						<strong
+							style={{
+								background:
+									o.status === "Scheduled From Store / Paid" ||
+									o.status === "Scheduled Online / Paid in Store"
+										? "darkgreen"
+										: "darkred",
+								padding: "5px",
+								color: "white",
+							}}
+						>
+							{o.status}
+						</strong>
+					</div>
+				</h3>
+				<br />
 				<select
 					className='form-control'
 					onChange={(e) => handleStatusChange(e, o._id)}
@@ -175,29 +193,11 @@ const StylistSingleSchedulePage = (props) => {
 					}}
 				>
 					<option>Update Status</option>
-					{singleAppointment &&
-					singleAppointment.status &&
-					singleAppointment.status.includes("Store") ? (
-						<>
-							<option value='Scheduled From Store / Not Paid'>
-								Scheduled From Store / Not Paid
-							</option>
-							<option value='Scheduled From Store / Paid'>
-								Scheduled From Store / Paid
-							</option>
-							<option value='Cancelled'>Cancelled</option>
-						</>
-					) : (
-						<>
-							<option value='Scheduled Online / Not Paid'>
-								Scheduled Online / Not Paid
-							</option>
-							<option value='Scheduled Online / Paid in Store'>
-								Scheduled Online / Paid in Store
-							</option>
-							<option value='Cancelled'>Cancelled</option>
-						</>
-					)}
+					{statusValues.map((status, index) => (
+						<option key={index} value={status}>
+							{status}
+						</option>
+					))}
 				</select>
 			</div>
 		</React.Fragment>
@@ -614,7 +614,7 @@ const StylistSingleSchedulePage = (props) => {
 
 	const updatingTheStylist = () => {
 		return (
-			<div className='form-group' style={{textAlign: "center"}}>
+			<div className='form-group' style={{ textAlign: "center" }}>
 				<div className='mt-3'>
 					<label
 						style={{
@@ -693,7 +693,7 @@ const StylistSingleSchedulePage = (props) => {
 
 	const updatingChosenService = () => {
 		return (
-			<div className='form-group' style={{textAlign: "center"}}>
+			<div className='form-group' style={{ textAlign: "center" }}>
 				<div className='mt-3'>
 					<label
 						style={{
@@ -738,7 +738,7 @@ const StylistSingleSchedulePage = (props) => {
 
 	const updatingCustomerType = () => {
 		return (
-			<div className='form-group' style={{textAlign: "center"}}>
+			<div className='form-group' style={{ textAlign: "center" }}>
 				<div className='mt-3'>
 					<label
 						style={{
@@ -785,7 +785,7 @@ const StylistSingleSchedulePage = (props) => {
 
 	const updatingChosenDate = () => {
 		return (
-			<div style={{textAlign: "center"}}>
+			<div style={{ textAlign: "center" }}>
 				<label
 					style={{
 						fontWeight: "bold",
@@ -798,7 +798,7 @@ const StylistSingleSchedulePage = (props) => {
 					<br />
 					{availableHoursModified() && availableHoursModified().length < 1 && (
 						<React.Fragment>
-							<span style={{fontSize: "0.75rem", color: "black"}}>
+							<span style={{ fontSize: "0.75rem", color: "black" }}>
 								{" "}
 								Please note that {chosenStylist.employeeName} is fully booked
 								for the chosen date.
@@ -810,7 +810,7 @@ const StylistSingleSchedulePage = (props) => {
 							chosenStylist.workingDays &&
 							chosenStylist.workingDays.indexOf(chosenDateName) < 0 && (
 								<React.Fragment>
-									<span style={{fontSize: "0.75rem", color: "black"}}>
+									<span style={{ fontSize: "0.75rem", color: "black" }}>
 										{" "}
 										Please note that {chosenStylist.employeeName} is off on the
 										selected date, Please choose another date.
@@ -874,7 +874,7 @@ const StylistSingleSchedulePage = (props) => {
 
 	const updatingChosenTime = () => {
 		return (
-			<div style={{textAlign: "center"}}>
+			<div style={{ textAlign: "center" }}>
 				{chosenDate &&
 				chosenStylist &&
 				chosenService &&
@@ -1039,7 +1039,7 @@ const StylistSingleSchedulePage = (props) => {
 		) > -1;
 
 	const updateScheduleDateTime = () => {
-		window.scrollTo({top: 0, behavior: "smooth"});
+		window.scrollTo({ top: 0, behavior: "smooth" });
 
 		if (
 			chosenStylist &&
@@ -1162,7 +1162,7 @@ const StylistSingleSchedulePage = (props) => {
 			// console.log(response);
 			console.log("schedule booked");
 
-			window.scrollTo({top: 0, behavior: "smooth"});
+			window.scrollTo({ top: 0, behavior: "smooth" });
 			localStorage.removeItem("barber");
 			window.location.reload(false);
 		});
@@ -1180,7 +1180,7 @@ const StylistSingleSchedulePage = (props) => {
 				<h4 className='text-center'>Customer's History</h4>
 				<table
 					className='table table-bordered table-md-responsive table-hover table-striped'
-					style={{fontSize: "0.75rem"}}
+					style={{ fontSize: "0.75rem" }}
 				>
 					<thead className='thead-light'>
 						<tr>
@@ -1215,7 +1215,7 @@ const StylistSingleSchedulePage = (props) => {
 											<div
 												key={ii}
 												className=' p-3 text-center'
-												style={{border: "1px lightGrey solid"}}
+												style={{ border: "1px lightGrey solid" }}
 											>
 												{e.employeeName}
 											</div>
@@ -1264,7 +1264,7 @@ const StylistSingleSchedulePage = (props) => {
 			if (data.error) {
 				console.log("Status update failed");
 			} else {
-				window.scrollTo({top: 0, behavior: "smooth"});
+				window.scrollTo({ top: 0, behavior: "smooth" });
 				window.location.reload(false);
 			}
 		});
@@ -1293,7 +1293,7 @@ const StylistSingleSchedulePage = (props) => {
 							<Link
 								to='/stylist/dashboard'
 								onClick={() => {
-									window.scrollTo({top: 0, behavior: "smooth"});
+									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}
 							>
 								<div className='backToAdminDashboard'>
@@ -1335,7 +1335,7 @@ const StylistSingleSchedulePage = (props) => {
 										<strong>Appointment Status:</strong>{" "}
 										<span
 											className='alert alert-info'
-											style={{fontWeight: "bold"}}
+											style={{ fontWeight: "bold" }}
 										>
 											{singleAppointment.status}
 										</span>
@@ -1356,7 +1356,7 @@ const StylistSingleSchedulePage = (props) => {
 										<strong>Loyalty Points Status:</strong>{" "}
 										<span
 											className='alert alert-info'
-											style={{fontWeight: "bold"}}
+											style={{ fontWeight: "bold" }}
 										>
 											{singleAppointment.applyPoints.toString()}
 										</span>
@@ -1365,12 +1365,12 @@ const StylistSingleSchedulePage = (props) => {
 										<strong>Service For:</strong>{" "}
 										<span
 											className='alert alert-info'
-											style={{fontWeight: "bold"}}
+											style={{ fontWeight: "bold" }}
 										>
 											{singleAppointment.serviceDetails.customerType}
 										</span>
 									</li>
-									<div className='row mx-2' style={{textAlign: "center"}}>
+									<div className='row mx-2' style={{ textAlign: "center" }}>
 										<div className='col-md-4'>
 											<li className='list-group-item'>
 												Chosen Schedule Date:{" "}
@@ -1512,7 +1512,7 @@ const StylistSingleSchedulePage = (props) => {
 															Service Description:{" "}
 															{chosenServicePrice &&
 																chosenServicePrice.serviceName}{" "}
-															<span className='ml-2' style={{color: "blue"}}>
+															<span className='ml-2' style={{ color: "blue" }}>
 																(
 																{chosenServicePrice &&
 																	chosenServicePrice.serviceTime}{" "}
@@ -1550,7 +1550,7 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-6 mt-3'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold", letterSpacing: "2px"}}
+												style={{ fontWeight: "bold", letterSpacing: "2px" }}
 											>
 												Attached Image:{"  "}
 												<img
@@ -1567,7 +1567,7 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-4 my-auto mx-auto'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold", letterSpacing: "2px"}}
+												style={{ fontWeight: "bold", letterSpacing: "2px" }}
 											>
 												Customer's Comment:
 												<br />
@@ -1584,12 +1584,12 @@ const StylistSingleSchedulePage = (props) => {
 										<div className='col-md-8 my-5 mx-auto'>
 											<li
 												className='list-group-item'
-												style={{fontWeight: "bold"}}
+												style={{ fontWeight: "bold" }}
 											>
 												Stylist Comment:
 												<br />
 												<br />
-												<span style={{letterSpacing: "0px"}}>
+												<span style={{ letterSpacing: "0px" }}>
 													{" "}
 													{singleAppointment &&
 													singleAppointment.commentsByStylist

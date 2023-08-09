@@ -9,8 +9,11 @@ import { authenticate, isAuthenticated, signin, authenticate2 } from "../auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../sidebar_context";
 
 const SigninForm = ({ history, language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
@@ -192,13 +195,13 @@ const SigninForm = ({ history, language }) => {
 		<WholeSignin>
 			<Helmet>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | تسجيل الدخول</title>
 				) : (
 					<title>XLOOK | Signin</title>
 				)}
 
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<meta
 						name='description'
 						content='أفضل برنامج حجز في مصر، خاص بصالونات الحلاقة، صالونات الشعر، مراكز التجميل، وصالونات المساج.'
@@ -213,7 +216,7 @@ const SigninForm = ({ history, language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? "برنامج حجز، صالونات الحلاقة، صالونات الشعر، مراكز التجميل، صالونات المساج"
 							: "booking software, barber shops, hair salons, beauty centers, massage salons"
 					}

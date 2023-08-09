@@ -20,6 +20,7 @@ import SigninForm from "./pages/SigninForm";
 import SignupForm from "./pages/SignupForm";
 import SingleEmployee from "./pages/SingleEmployee";
 import SchedulePageSteps2 from "./pages/SchedulePage/SchedulePageAdjusted/SchedulePageSteps2";
+import MyStoreList from "./pages/MyStoreList";
 
 // eslint-disable-next-line
 import StoresList from "./pages/StoresList";
@@ -63,6 +64,8 @@ import GeneralStats from "./employee/GeneralStats";
 import StoreRoute from "./auth/StoreRoute";
 import BookingFromStore from "./StoreBooking/BookingFromStore";
 import SingleAppointmentPageStore from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentPageStore";
+import SingleAppointmentPageStoreArabic from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentPageStoreArabic";
+import ScheduleFormFinal from "./StoreBooking/POSBook/ScheduleFormFinal";
 
 //Platform Admin routes
 import BossRoute from "./auth/BossRoute";
@@ -80,6 +83,7 @@ import AgentsManagementMain from "./TheBoss/Agents/AgentsManagementMain";
 import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
 import UpdateBusinessAgent from "./TheBoss/AddedStores/SingleStoreAdminPage/OwnerDashboardContents/UpdateBusinessAgent";
 import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryAddition/GallaryMainBoss";
+import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
 
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
@@ -88,9 +92,7 @@ import SettingsMainAgent from "./PlatformAgent/AgentAccountEditing/SettingsConte
 import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesContent/ServicesMainAgent";
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
-import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
-import ScheduleFormFinal from "./StoreBooking/POSBook/ScheduleFormFinal";
-import MyStoreList from "./pages/MyStoreList";
+import GallaryMainAgent from "./PlatformAgent/AgentAccountEditing/GallaryAddition/GallaryMainAgent";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -420,11 +422,20 @@ function App() {
 						)}
 					/>
 
-					<StoreRoute
-						path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
-						exact
-						component={SingleAppointmentPageStore}
-					/>
+					{language === "Arabic" ? (
+						<StoreRoute
+							path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
+							exact
+							component={SingleAppointmentPageStoreArabic}
+						/>
+					) : (
+						<StoreRoute
+							path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
+							exact
+							component={SingleAppointmentPageStore}
+						/>
+					)}
+
 					{/* Platform Agents Routes */}
 					<AgentsRoute
 						path='/agent/dashboard'
@@ -454,6 +465,12 @@ function App() {
 						path='/store/admin/edit-website/agent/help/:ownerId'
 						exact
 						component={() => <EditWebsiteMainAgent language={language} />}
+					/>
+
+					<AgentsRoute
+						path='/store/admin/add-gallary/agent/help/:ownerId'
+						exact
+						component={() => <GallaryMainAgent language={language} />}
 					/>
 
 					{/*End Of Platform Agents Routes */}

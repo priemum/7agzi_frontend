@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
-// import moment from "moment";
+import moment from "moment";
 import styled from "styled-components";
 
 import { Collapse } from "antd";
@@ -78,7 +78,7 @@ const isActive2 = (history, path) => {
 	}
 };
 
-const SingleAppointmentPageStore = (props) => {
+const SingleAppointmentPageStoreArabic = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [clickedMenu, setClickedMenu] = useState("Details");
 	const [singleAppointment, setSingleAppointment] = useState({});
@@ -165,7 +165,7 @@ const SingleAppointmentPageStore = (props) => {
 		<React.Fragment>
 			<div className='form-group'>
 				<h3 className='' style={{ fontSize: "1.3rem" }}>
-					Status:
+					حالة دفع الحجز:
 					<div className='mt-2'>
 						<strong
 							style={{
@@ -174,7 +174,13 @@ const SingleAppointmentPageStore = (props) => {
 								color: "white",
 							}}
 						>
-							{o.status}
+							{o.status === "Paid"
+								? "مدفوع"
+								: o.status === "Not Paid"
+								? "غير مدفوع"
+								: o.status === "Cancelled"
+								? "ملغى"
+								: o.status}
 						</strong>
 					</div>
 				</h3>
@@ -190,10 +196,16 @@ const SingleAppointmentPageStore = (props) => {
 						boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
 					}}
 				>
-					<option>Update Status</option>
+					<option>تحديث الحالة</option>
 					{statusValues.map((status, index) => (
 						<option key={index} value={status}>
-							{status}
+							{status === "Paid"
+								? "مدفوع"
+								: status === "Not Paid"
+								? "غير مدفوع"
+								: status === "Cancelled"
+								? "ملغى"
+								: status}
 						</option>
 					))}
 				</select>
@@ -238,19 +250,19 @@ const SingleAppointmentPageStore = (props) => {
 						<thead className='thead-light'>
 							<tr>
 								<th scope='col'>#</th>
-								<th scope='col'>Booking Loc.</th>
-								<th scope='col'>Barber Name</th>
-								<th scope='col'>Customer Name</th>
-								<th scope='col'>Customer Phone</th>
-								<th scope='col'>Schedule DateTime</th>
-								<th scope='col'>Booked On</th>
-								<th scope='col'>Status</th>
-								<th scope='col'>Receipt #</th>
-								<th scope='col'>Service</th>
-								<th scope='col'>Stylist Comment</th>
-								<th scope='col'>Service Price</th>
-								<th scope='col'>Amount</th>
-								<th scope='col'>Loyalty Points</th>
+								<th scope='col'>مكان الحجز</th>
+								<th scope='col'>اسم الحلاق</th>
+								<th scope='col'>اسم العميل</th>
+								<th scope='col'>هاتف العميل</th>
+								<th scope='col'>توقيت الحجز</th>
+								<th scope='col'>تاريخ الحجز</th>
+								<th scope='col'>الحالة</th>
+								<th scope='col'>رقم الإيصال</th>
+								<th scope='col'>الخدمة</th>
+								<th scope='col'>تعليق الحلاق</th>
+								<th scope='col'>سعر الخدمة</th>
+								<th scope='col'>المبلغ</th>
+								<th scope='col'>نقاط الولاء</th>
 							</tr>
 						</thead>
 
@@ -327,7 +339,7 @@ const SingleAppointmentPageStore = (props) => {
 	};
 
 	return (
-		<SingleAppointmentPageStoreWrapper>
+		<SingleAppointmentPageStoreArabicWrapper dir='rtl'>
 			{loading ? (
 				<div>
 					<div
@@ -404,23 +416,24 @@ const SingleAppointmentPageStore = (props) => {
 										style={isActive(clickedMenu, "Details")}
 										onClick={() => setClickedMenu("Details")}
 									>
-										Details
+										التفاصيل
 									</div>
 									<div
 										className='col-4'
 										style={isActive(clickedMenu, "Update")}
 										onClick={() => setClickedMenu("Update")}
 									>
-										Update
+										تحديث
 									</div>
 									<div
 										className='col-4'
 										style={isActive(clickedMenu, "History")}
 										onClick={() => setClickedMenu("History")}
 									>
-										Customer
+										العميل
 									</div>
 								</div>
+
 								{clickedMenu === "Details" ? (
 									<ul className='list-group my-3'>
 										<li
@@ -444,20 +457,20 @@ const SingleAppointmentPageStore = (props) => {
 										</li>
 
 										<li className='list-group-item'>
-											<strong>Booking Source:</strong>{" "}
+											<strong>مصدر الحجز:</strong>{" "}
 											<span
 												className='alert alert-info'
 												style={{ fontWeight: "bold" }}
 											>
 												{singleAppointment &&
 												singleAppointment.BookedFrom === "Store"
-													? "Store (POS)"
+													? "المتجر (نقطة البيع)"
 													: singleAppointment.BookedFrom}
 											</span>
 										</li>
 
 										<li className='list-group-item'>
-											<strong>Loyalty Points Status:</strong>{" "}
+											<strong>حالة نقاط الولاء:</strong>{" "}
 											<span
 												className='alert alert-info'
 												style={{ fontWeight: "bold" }}
@@ -469,7 +482,7 @@ const SingleAppointmentPageStore = (props) => {
 										<div className='row mx-2' style={{ textAlign: "center" }}>
 											<div className='col-md-4 col-6'>
 												<li className='list-group-item'>
-													Chosen Date:{" "}
+													التاريخ المختار:{" "}
 													<span className='detailsAboutAppointment'>
 														{new Date(
 															singleAppointment.scheduledDate
@@ -479,7 +492,7 @@ const SingleAppointmentPageStore = (props) => {
 											</div>
 											<div className='col-md-4 col-6'>
 												<li className='list-group-item'>
-													Appointment starts at:{" "}
+													بدء الموعد في:{" "}
 													<span className='detailsAboutAppointment'>
 														{singleAppointment.scheduledTime}
 													</span>
@@ -487,7 +500,7 @@ const SingleAppointmentPageStore = (props) => {
 											</div>
 											<div className='col-md-4 mt-3 col-6'>
 												<li className='list-group-item'>
-													Scheduled by Phone:
+													هاتف العميل:
 													<span className='detailsAboutAppointment'>
 														{singleAppointment.phone}
 													</span>
@@ -495,7 +508,7 @@ const SingleAppointmentPageStore = (props) => {
 											</div>
 											<div className='col-md-4 mt-3 col-6'>
 												<li className='list-group-item'>
-													Scheduled by:
+													اسم العميل:
 													<span className='detailsAboutAppointment'>
 														{singleAppointment.scheduledByUserName}
 													</span>
@@ -503,7 +516,7 @@ const SingleAppointmentPageStore = (props) => {
 											</div>
 											<div className='col-md-4 mt-3 col-6'>
 												<li className='list-group-item'>
-													Chosen Service:{" "}
+													الخدمات:{" "}
 													{singleAppointment.employeeAvailability &&
 														singleAppointment.employeeAvailability
 															.servicesPicked &&
@@ -526,7 +539,7 @@ const SingleAppointmentPageStore = (props) => {
 
 											<div className='col-md-4 mt-3 col-6'>
 												<li className='list-group-item'>
-													Receipt Number / Invoice Number:{" "}
+													رقم الإيصال / رقم الفاتورة:{" "}
 													<span className='detailsAboutAppointment'>
 														{singleAppointment.transaction_id === null ||
 														singleAppointment.transaction_id === undefined ||
@@ -536,47 +549,38 @@ const SingleAppointmentPageStore = (props) => {
 													</span>
 												</li>
 											</div>
-
-											{/* <div className='col-md-4 mt-3 col-6'>
-											<li className='list-group-item'>
-												Scheduled by Email:
-												<span className='detailsAboutAppointment'>
-													{singleAppointment.scheduledByUserEmail}
-												</span>
-											</li>
-										</div> */}
-
 											<div className='col-md-4 mt-3 col-6'>
 												<li className='list-group-item'>
-													Booked On:{" "}
+													تاريخ الحجز:{" "}
 													<span className='detailsAboutAppointment'>
 														{new Date(
 															singleAppointment.createdAt
-														).toLocaleDateString()}{" "}
+														).toLocaleDateString("ar-EG")}{" "}
+														({moment(singleAppointment.createdAt).fromNow()})
 													</span>
 												</li>
 											</div>
 											<div className='col-md-2 mt-3 col-6'>
 												<li className='list-group-item'>
-													Service Price:
+													سعر الخدمة:
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.servicePrice} EGP
+														{singleAppointment.servicePrice} جنيه مصري
 													</span>
 												</li>
 											</div>
 											<div className='col-md-2 mt-3 col-6'>
 												<li className='list-group-item'>
-													Paid Tip: {"  "}
+													البقشيش المدفوع: {"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.paidTip.toFixed(2)} EGP
+														{singleAppointment.paidTip.toFixed(2)} جنيه مصري
 													</span>
 												</li>
 											</div>
 											<div className='col-md-3 mt-3 col-6'>
 												<li className='list-group-item'>
-													Online Service Fee:{"  "}
+													رسوم الخدمة عبر الإنترنت:{"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.onlineServicesFees} EGP
+														{singleAppointment.onlineServicesFees} جنيه مصري
 													</span>
 												</li>
 											</div>
@@ -585,18 +589,20 @@ const SingleAppointmentPageStore = (props) => {
 													className='list-group-item'
 													style={{ fontSize: "1.4rem", fontWeight: "bolder" }}
 												>
-													Paid Amount:{"  "}
+													المبلغ المدفوع:{"  "}
 													<span
 														className='detailsAboutAppointment'
 														style={{ fontSize: "1.4rem" }}
 													>
-														<strong>{singleAppointment.amount} EGP</strong>
+														<strong>
+															{singleAppointment.amount} جنيه مصري
+														</strong>
 													</span>
 												</li>
 											</div>
-											<div className='col-md-7  mt-3 mx-auto col-6'>
+											<div className='col-md-7 mt-3 mx-auto col-6'>
 												<li className='list-group-item'>
-													Discounted Amount:{"  "}
+													المبلغ المخصوم:{"  "}
 													<span className='detailsAboutAppointment'>
 														{singleAppointment.discountedAmount &&
 														singleAppointment.discountedAmount !== 0
@@ -604,7 +610,7 @@ const SingleAppointmentPageStore = (props) => {
 															  "    " +
 															  `(${singleAppointment.discountedPercentage}%)`
 															: 0}{" "}
-														{""} EGP
+														{""} جنيه مصري
 													</span>
 												</li>
 											</div>
@@ -617,12 +623,11 @@ const SingleAppointmentPageStore = (props) => {
 															className='list-group-item'
 															style={{
 																fontWeight: "bold",
-																letterSpacing: "7px",
 															}}
 														>
-															Attached Image:{"  "}
+															الصورة المرفقة:{"  "}
 															<img
-																alt='User has not attached...'
+																alt='لم يتم إرفاق صورة من قبل المستخدم...'
 																src={ImageURLForAppointment}
 																style={{
 																	height: "400px",
@@ -637,18 +642,17 @@ const SingleAppointmentPageStore = (props) => {
 															className='list-group-item'
 															style={{
 																fontWeight: "bold",
-																letterSpacing: "7px",
 															}}
 														>
-															Customer's Comment:
+															تعليق العميل:
 															<br />
 															<br />
-															<span style={{ letterSpacing: "2px" }}>
+															<span>
 																{" "}
 																{singleAppointment &&
 																singleAppointment.appointmentComment
 																	? singleAppointment.appointmentComment
-																	: "No Comment was Added By The Customer For This Appointment"}
+																	: "لم يتم إضافة تعليق من العميل لهذا الموعد"}
 															</span>
 														</li>
 													</div>
@@ -658,27 +662,27 @@ const SingleAppointmentPageStore = (props) => {
 											<div className='col-md-8 my-5 mx-auto'>
 												<li
 													className='list-group-item'
-													style={{ fontWeight: "bold", letterSpacing: "7px" }}
+													style={{ fontWeight: "bold" }}
 												>
-													Stylist Comment:
+													تعليق الحلاق:
 													<br />
 													<br />
-													<span style={{ letterSpacing: "2px" }}>
+													<span>
 														{" "}
 														{singleAppointment &&
 														singleAppointment.commentsByStylist
 															? singleAppointment.commentsByStylist
-															: "No Comment was Added By The Stylist For This Appointment"}
+															: "لم يتم إضافة تعليق من قبل الحلاق لهذا الموعد"}
 													</span>
 												</li>
 												<div className='mt-3 mb-2'>
-													Add A Comment For This Appointment About the Client
+													أضف تعليقًا لهذا الموعد حول العميل
 													<textarea
 														type='text'
 														className='form-control'
 														value={stylistComment}
 														onChange={handleStylistComment}
-														placeholder='e.g. This client had a haircut on 2 and beardcut on 4, he/she works at x, etc...'
+														placeholder='مثلًا: قام هذا العميل بقص الشعر على 2 وقص اللحية على 4 ، وهو / هي يعمل في x ، إلخ...'
 													/>
 												</div>
 												<button
@@ -690,7 +694,7 @@ const SingleAppointmentPageStore = (props) => {
 														)
 													}
 												>
-													Add Comment
+													أضف تعليق
 												</button>
 											</div>
 										</div>
@@ -710,13 +714,15 @@ const SingleAppointmentPageStore = (props) => {
 			)}
 
 			{clickedMenu === "History" ? <>{relatedCustomersHistory()}</> : null}
-		</SingleAppointmentPageStoreWrapper>
+		</SingleAppointmentPageStoreArabicWrapper>
 	);
 };
 
-export default SingleAppointmentPageStore;
+export default SingleAppointmentPageStoreArabic;
 
-const SingleAppointmentPageStoreWrapper = styled.div`
+const SingleAppointmentPageStoreArabicWrapper = styled.div`
+	text-align: right;
+
 	@media (max-width: 1200px) {
 		.backToAdminDashboard {
 			width: 90% !important;

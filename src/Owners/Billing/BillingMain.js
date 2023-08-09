@@ -18,6 +18,7 @@ import { updateOwnerProfile } from "../apiOwner";
 import { updateUser } from "../../customer/apiUser";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -49,6 +50,8 @@ const isActive = (history, path) => {
 };
 
 const BillingMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [collapseMenu, setCollapseMenu] = useState(false);
 	const [clickedMenu, setClickedMenu] = useState("PlatformShare");
 	const [updateCardClicked, setUpdateCardClicked] = useState(false);
@@ -343,7 +346,7 @@ const BillingMain = ({ language }) => {
 
 	return (
 		<BillingMainWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
 			<Helmet>
@@ -367,7 +370,7 @@ const BillingMain = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='Payment'
 						collapseMenu={collapseMenu}
 					/>
@@ -377,7 +380,7 @@ const BillingMain = ({ language }) => {
 					<div className='container'>
 						<div className='row mx-auto'>
 							<div
-								dir={language === "Arabic" ? "rtl" : "ltr"}
+								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "PlatformShare")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("PlatformShare")}
@@ -387,11 +390,11 @@ const BillingMain = ({ language }) => {
 									to='/store/admin/billing-account?platform-share'
 								>
 									<i className='fa-sharp fa-solid fa-house'></i>{" "}
-									{language === "Arabic" ? "مشاركة XLOOK" : "XLOOK Share"}
+									{chosenLanguage === "Arabic" ? "مشاركة XLOOK" : "XLOOK Share"}
 								</Link>
 							</div>
 							<div
-								dir={language === "Arabic" ? "rtl" : "ltr"}
+								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "BePro")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("BePro")}
@@ -401,11 +404,11 @@ const BillingMain = ({ language }) => {
 									to='/store/admin/billing-account?be-pro'
 								>
 									<i className='fa-brands fa-servicestack mr-1'></i>{" "}
-									{language === "Arabic" ? "BE PRO" : "BE PRO"}
+									{chosenLanguage === "Arabic" ? "BE PRO" : "BE PRO"}
 								</Link>
 							</div>
 							<div
-								dir={language === "Arabic" ? "rtl" : "ltr"}
+								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
 								className='col-md-3 menuItems'
 								onClick={() => setClickedMenu("SMS => PAY AS YOU GO")}
@@ -415,7 +418,7 @@ const BillingMain = ({ language }) => {
 									to='/store/admin/billing-account?sms-pay'
 								>
 									<i className='fa-solid fa-pen mr-1'></i>{" "}
-									{language === "Arabic"
+									{chosenLanguage === "Arabic"
 										? "SMS الدفع حسب الاستخدام"
 										: "SMS PAY AS YOU GO"}
 								</Link>
@@ -431,7 +434,7 @@ const BillingMain = ({ language }) => {
 							token={token}
 							updateCardClicked={updateCardClicked}
 							setUpdateCardClicked={setUpdateCardClicked}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 					{clickedMenu === "BePro" ? (

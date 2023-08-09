@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useLocation, useParams } from "react-router-dom";
 import { readUser } from "../../../TheBoss/apiBoss";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../../../sidebar_context";
 // import {Redirect} from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -49,6 +50,8 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
 
+	const { chosenLanguage } = useCartContext();
+
 	useEffect(() => {
 		// Log the path of the current URL
 		console.log(location.pathname);
@@ -81,6 +84,8 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [longitude, setLongitude] = useState("");
 	const [latitude, setLatitude] = useState("");
+	const [salonGrade, setSalonGrade] = useState("");
+	const [workersGender, setWorkersGender] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
 	const [extraData, setExtraData] = useState({
 		branchesCount: 1,
@@ -271,6 +276,8 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
 			belongsTo: ownerId,
+			salonGrade,
+			workersGender,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);
@@ -335,7 +342,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 								onClick={() => setClickedMenu("AddLogo")}
 							>
 								<i className='fa-brands fa-html5 mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف شعار" : "Add Logo"}
+								{chosenLanguage === "Arabic" ? "أضف شعار" : "Add Logo"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingDays")}
@@ -343,7 +350,9 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 								onClick={() => setClickedMenu("WorkingDays")}
 							>
 								<i className='fa-solid fa-calendar-days mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف أيام عمل" : "Add Working Days"}
+								{chosenLanguage === "Arabic"
+									? "أضف أيام عمل"
+									: "Add Working Days"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
@@ -351,7 +360,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 								onClick={() => setClickedMenu("Awards")}
 							>
 								<i className='fa-solid fa-award mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف جوائز" : "Add Awards"}
+								{chosenLanguage === "Arabic" ? "أضف جوائز" : "Add Awards"}
 							</div>
 							<div
 								style={isActive(clickedMenu, "WorkingHours")}
@@ -359,7 +368,9 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 								onClick={() => setClickedMenu("WorkingHours")}
 							>
 								<i className='fa-solid fa-clock mr-1'></i>{" "}
-								{language === "Arabic" ? "أضف ساعات عمل" : "Add Working Hours"}
+								{chosenLanguage === "Arabic"
+									? "أضف ساعات عمل"
+									: "Add Working Hours"}
 							</div>
 						</div>
 					</div>
@@ -387,7 +398,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 							setLoading={setLoading}
 							ownerIdPhoto={ownerIdPhoto}
 							setOwnerIdPhoto={setOwnerIdPhoto}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 
@@ -409,7 +420,11 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 							setActiveOnlineBooking={setActiveOnlineBooking}
 							setExtraData={setExtraData}
 							extraData={extraData}
-							language={language}
+							language={chosenLanguage}
+							salonGrade={salonGrade}
+							setSalonGrade={setSalonGrade}
+							workersGender={workersGender}
+							setWorkersGender={setWorkersGender}
 						/>
 					) : null}
 
@@ -428,7 +443,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 							setClickedMenu={setClickedMenu}
 							activeWhatsAppNotification={activeWhatsAppNotification}
 							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
-							language={language}
+							language={chosenLanguage}
 						/>
 					) : null}
 
@@ -447,7 +462,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 							storeThumbnail={storeThumbnail}
 							addStoreName={addStoreName}
 							addStoreNameArabic={addStoreNameArabic}
-							language={language}
+							language={chosenLanguage}
 							ownerId={ownerId}
 						/>
 					) : null}

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 // import AboutPhoto from "../imgs/traffic-3098747_1920.jpg";
 // import AboutPhoto from "../Navbar/RCHDIGIMP_Logo.jpg";
@@ -14,23 +14,16 @@ import Icon4 from "../Images/Icon4.png";
 import Icon5 from "../Images/Icon5.png";
 import AboutHeroFooter from "../components/OtherHeroComp/AboutHeroFooter";
 import { Link } from "react-router-dom";
+import { useCartContext } from "../sidebar_context";
 
 const About = ({ language, setLanguage }) => {
-	useEffect(() => {
-		if (
-			window.location.search.includes("ar") ||
-			window.location.search.includes("Ar")
-		) {
-			setLanguage("Arabic");
-		}
-		// eslint-disable-next-line
-	}, []);
+	const { chosenLanguage } = useCartContext();
 
 	return (
-		<AboutPageWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<AboutPageWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>اكس لوك | من نحن ولماذا اكس لوك</title>
 				) : (
 					<title>XLOOK | WHO & WHY XLOOK</title>
@@ -38,7 +31,7 @@ const About = ({ language, setLanguage }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل الموجودة في مصر.
 				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
 				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
@@ -52,7 +45,7 @@ const About = ({ language, setLanguage }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
 							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
 					}
@@ -61,12 +54,12 @@ const About = ({ language, setLanguage }) => {
 			</Helmet>
 
 			<div className='mb-5'>
-				<AboutHeroComp language={language} />
+				<AboutHeroComp language={chosenLanguage} />
 			</div>
 			<div
 				className='container'
-				dir={language === "Arabic" ? "rtl" : "ltr"}
-				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+				style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 			>
 				<div
 					className=''
@@ -81,20 +74,22 @@ const About = ({ language, setLanguage }) => {
 						style={{
 							color: "white",
 						}}
-						dir={language === "Arabic" ? "rtl" : "ltr"}
+						dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 					>
 						{" "}
 						<strong>
-							{language === "Arabic" ? "ما هو إكس لوك؟" : "What is XLOOK?"}
+							{chosenLanguage === "Arabic"
+								? "ما هو إكس لوك؟"
+								: "What is XLOOK?"}
 						</strong>{" "}
 					</h1>
 					<p
 						style={{
 							color: "white",
 						}}
-						dir={language === "Arabic" ? "rtl" : "ltr"}
+						dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 					>
-						{language === "Arabic"
+						{chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل.`
 							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book services offered by the platform through a special application designed for user registration and booking beauty services.`}
 					</p>
@@ -104,12 +99,12 @@ const About = ({ language, setLanguage }) => {
 				</div>
 				<div
 					className='col-md-10 mx-auto'
-					dir={language === "Arabic" ? "rtl" : "ltr"}
+					dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 				>
-					<h1 dir={language === "Arabic" ? "rtl" : "ltr"}>
+					<h1 dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 						{" "}
 						<strong>
-							{language === "Arabic" ? "لماذا إكس لوك؟" : "Why XLOOK?"}
+							{chosenLanguage === "Arabic" ? "لماذا إكس لوك؟" : "Why XLOOK?"}
 						</strong>{" "}
 					</h1>
 
@@ -118,7 +113,7 @@ const About = ({ language, setLanguage }) => {
 							className='iconImage'
 							src={Icon3}
 							alt={
-								language === "Arabic"
+								chosenLanguage === "Arabic"
 									? "معنا ستزداد توسعاتك وفروعك."
 									: "With us, your expansions and branches will increase."
 							}
@@ -126,12 +121,12 @@ const About = ({ language, setLanguage }) => {
 					</div>
 
 					<h2>
-						{language === "Arabic"
+						{chosenLanguage === "Arabic"
 							? "عملاء جدد، حجوزات أكثر."
 							: "New customers, more bookings"}
 					</h2>
 					<p>
-						{language === "Arabic"
+						{chosenLanguage === "Arabic"
 							? "لدينا آلاف العملاء في منطقتك ينتظرون لحجز موعد في صالونك أو مركز التجميل الخاص بك، فهو مناسب جدًا لهم. لا تتردد في الانضمام الآن."
 							: "We have thousands of customers in your area waiting to make a reservation, and your salon or beauty center suitable for them. Do not hesitate to join now."}
 					</p>
@@ -144,7 +139,7 @@ const About = ({ language, setLanguage }) => {
 								className='iconImage'
 								src={Icon4}
 								alt={
-									language === "Arabic"
+									chosenLanguage === "Arabic"
 										? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
 										: "You'll be discovered even if your location is not on the main street"
 								}
@@ -153,13 +148,13 @@ const About = ({ language, setLanguage }) => {
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "زيادة مصادر الدخل."
 									: "Increase sources of income"}
 							</strong>{" "}
 						</h2>
 						<p>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "سيكون الفرق واضحًا جدًا عند مقارنة دخلك قبل الانضمام إلينا كشريك وبعد الانضمام. ستترك التسويق لنا وتقلل من النفقات على الإعلانات، وستحصل على المزيد من الحجوزات. هنا، ستكون التوفيرات من كلا الجانبين."
 								: "The difference will be very clear when comparing your income before joining us as a partner and after joining. You will leave the marketing to us and reduce expenses on advertisements, and you will receive more bookings. Here, the savings will be from both sides."}
 						</p>
@@ -171,7 +166,7 @@ const About = ({ language, setLanguage }) => {
 								className='iconImage'
 								src={Icon5}
 								alt={
-									language === "Arabic"
+									chosenLanguage === "Arabic"
 										? "تسويق محترف."
 										: "Professional marketing"
 								}
@@ -181,11 +176,13 @@ const About = ({ language, setLanguage }) => {
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic" ? "موقع حصري." : "Exclusive website"}
+								{chosenLanguage === "Arabic"
+									? "موقع حصري."
+									: "Exclusive website"}
 							</strong>{" "}
 						</h2>
 						<p>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
 								: "Your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
 						</p>
@@ -197,20 +194,22 @@ const About = ({ language, setLanguage }) => {
 								className='iconImage'
 								src={Icon2}
 								alt={
-									language === "Arabic" ? "موقع حصري." : "Exclusive website."
+									chosenLanguage === "Arabic"
+										? "موقع حصري."
+										: "Exclusive website."
 								}
 							/>
 						</div>
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "معنا ستزداد توسعاتك وفروعك."
 									: "With us, your expansions and branches will increase"}
 							</strong>{" "}
 						</h2>
 						<p>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "نحرص دائمًا على تأمين حجوزات لك، وذلك سيزيد من حجوزاتك وعدد عملائك من خلال التركيز على تطوير الخدمة المستمر. ونتيجة لذلك، ستزداد قدراتك وفرص توسعك."
 								: "We ensure that you have increased bookings, which will increase your customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
 						</p>
@@ -222,7 +221,7 @@ const About = ({ language, setLanguage }) => {
 								className='iconImage'
 								src={Icon1}
 								alt={
-									language === "Arabic"
+									chosenLanguage === "Arabic"
 										? "زيادة مصادر الدخل."
 										: "Increase sources of income."
 								}
@@ -231,13 +230,13 @@ const About = ({ language, setLanguage }) => {
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "تسويق محترف."
 									: "Professional marketing"}
 							</strong>{" "}
 						</h2>
 						<p>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "قررنا أن نخفف عنك الجهد والتكاليف في التسويق مقابل تقديم خدمات عالية الجودة وتركيز قوي على رضا العملاء ، وهو أمر يعد دائمًا أولوية. تحتاج فقط إلى الحفاظ على تقييمات العملاء الخاصة بك ، وهذا هو نهاية دورك في التسويق. لدينا حجوزات حصرية محجوزة لك لأيام."
 								: "We relieve you of the effort and costs of marketing in exchange for providing high-quality services and a strong focus on customer satisfaction, which is always a priority. You only need to maintain your customer reviews, and that's the end of your marketing role. We have exclusive bookings reserved for you for days."}
 						</p>
@@ -247,13 +246,13 @@ const About = ({ language, setLanguage }) => {
 						<h2>
 							{" "}
 							<strong>
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "ستكتشف حتى إذا لم تكن موقعك على الشارع الرئيسي."
 									: "You'll be discovered even if your location is not on a main street"}
 							</strong>{" "}
 						</h2>
 						<p>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "مع منصة XLOOK ، ستكتشف حتى إذا كان موقعك مخفيًا عن الشارع الرئيسي. بمجرد تفعيل حسابك ، ستكون حقًا جزءًا من المنافسة وسيتم اكتشافك من قبل الجميع في منطقتك."
 								: "With XLOOK platform, you'll be discovered even if your location is hidden from the street. Once you activate your account, you will truly be part of the competition and will be discovered by everyone in your area."}
 						</p>
@@ -349,7 +348,7 @@ const About = ({ language, setLanguage }) => {
 						</ul>
 					)}
 				</div> */}
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<div className='mt-5 text-center'>
 						<strong
 							style={{
@@ -386,7 +385,7 @@ const About = ({ language, setLanguage }) => {
 				)}
 			</div>
 			<div className='mb-5 mt-1 '>
-				<AboutHeroFooter language={language} />
+				<AboutHeroFooter language={chosenLanguage} />
 			</div>
 
 			<div>

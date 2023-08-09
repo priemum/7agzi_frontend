@@ -6,6 +6,7 @@ import UpdateEmployee from "./UpdateEmployee";
 import { Link } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -39,6 +40,8 @@ const isActive = (history, path) => {
 const EmployeeMainAgent = ({ language }) => {
 	let { ownerId } = useParams();
 	let location = useLocation();
+
+	const { chosenLanguage } = useCartContext();
 
 	useEffect(() => {
 		// Log the path of the current URL
@@ -97,7 +100,7 @@ const EmployeeMainAgent = ({ language }) => {
 									to={`/store/admin/employees/agent/help/${ownerId}`}
 								>
 									<i className='fa-solid fa-person-dress-burst mr-1'></i>{" "}
-									{language === "Arabic"
+									{chosenLanguage === "Arabic"
 										? "إضافة موظف جديد"
 										: "Add A New Employee"}
 								</Link>
@@ -113,16 +116,18 @@ const EmployeeMainAgent = ({ language }) => {
 									to={`/store/admin/employees/agent/help/${ownerId}?update-employee`}
 								>
 									<i className='fa-solid fa-pen mr-1'></i>{" "}
-									{language === "Arabic" ? "قائمة الموظفين" : "Employees' List"}
+									{chosenLanguage === "Arabic"
+										? "قائمة الموظفين"
+										: "Employees' List"}
 								</Link>
 							</div>
 						</div>
 					</div>
 					{clickedMenu === "AddEmployee" ? (
-						<AddEmployee language={language} ownerId={ownerId} />
+						<AddEmployee language={chosenLanguage} ownerId={ownerId} />
 					) : null}
 					{clickedMenu === "UpdateEmployee" ? (
-						<UpdateEmployee language={language} ownerId={ownerId} />
+						<UpdateEmployee language={chosenLanguage} ownerId={ownerId} />
 					) : null}
 				</div>
 			</div>

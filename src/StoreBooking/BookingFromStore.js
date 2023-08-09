@@ -26,6 +26,8 @@ import {
 import FirstAvailableAppointmentModified from "./POSBook/FirstAvailableAppointmentModified";
 import FirstAvailableAppointmentModifiedArabic from "./POSBook/FirstAvailableAppointmentModifiedArabic";
 import moment from "moment";
+import TableViewArabic from "./TableViewArabic";
+import { useCartContext } from "../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -57,6 +59,8 @@ const isActive = (history, path) => {
 };
 
 const BookingFromStore = ({ language, setLanguage }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [clickedMenu, setClickedMenu] = useState("NewAppointment");
 	const [allEmployees, setAllEmployees] = useState([]);
 	const [allCustomerType, setAllCustomerType] = useState([]);
@@ -64,7 +68,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 	const [orders, setOrders] = useState([]);
 	const [onlineStoreName, setOnlineStoreName] = useState("");
 	const [appointmentFirst, setAppointmentFirst] = useState({
@@ -74,6 +77,11 @@ const BookingFromStore = ({ language, setLanguage }) => {
 	const [chosenCustomerType, setChosenCustomerType] = useState("");
 	const [chosenService, setChosenService] = useState("");
 	const [serviceDetailsArray, setServiceDetailsArray] = useState([]);
+	const [selectedDate, setSelectedDate] = useState(
+		moment().format("MM/DD/YYYY")
+	);
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
+
 	const { user, token } = isAuthenticated();
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
@@ -92,10 +100,15 @@ const BookingFromStore = ({ language, setLanguage }) => {
 		});
 	};
 
+	const formatEnglishDate = (date) => {
+		return moment(date).locale("en").format("MM/DD/YYYY");
+	};
+
 	useEffect(() => {
-		setChosenDate(moment().format("MM/DD/YYYY"));
+		setChosenDate(formatEnglishDate(moment()));
+		setSelectedDate(formatEnglishDate(moment()));
 		// eslint-disable-next-line
-	}, [language]);
+	}, [chosenLanguage, clickedMenu]);
 
 	const loadAllAvailableEmployees = () => {
 		setLoading(true);
@@ -196,7 +209,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 				date.getMonth() + 1
 			}-${date.getDate()}-${date.getFullYear()}`;
 
-			console.log(date, "date");
 			gettingFirstAppointmentFromBackend(
 				allPickedServices.join(","),
 				chosenCustomerType,
@@ -277,7 +289,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 
 	return (
 		<BookFromStoreWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 			show2={user.role === 1000}
 		>
@@ -291,7 +303,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 				/>
 			</Helmet>
 			<NavbarPOS
-				language={language}
+				language={chosenLanguage}
 				setLanguage={setLanguage}
 				onlineStoreName={onlineStoreName}
 			/>
@@ -309,7 +321,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 						</div>
 
 						<OwnerNavmenu
-							language={language}
+							language={chosenLanguage}
 							fromPage='PointOfSale'
 							collapseMenu={collapseMenu}
 						/>
@@ -321,7 +333,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 				<div className=''>
 					{user && user.role === 1000 ? (
 						<>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<div className='row mx-auto text-center mb-4 mt-2'>
 									<div
 										className='col-md-10 col-10 mx-auto menuItems mt-2'
@@ -361,7 +373,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											قائمة الحجز
+											تقويم
 										</Link>
 									</div>
 
@@ -439,7 +451,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 						</>
 					) : (
 						<>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<div className='row mx-auto text-center mb-3 mt-3 col-md-10'>
 									<div
 										className='col-md-4 col-4 mx-auto menuItems'
@@ -465,7 +477,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											قائمة الحجز
+											تقويم
 										</Link>
 									</div>
 									<div
@@ -538,10 +550,10 @@ const BookingFromStore = ({ language, setLanguage }) => {
 								animationOutDuration={1000}
 								isVisible={true}
 							>
-								{language === "Arabic" ? (
+								{chosenLanguage === "Arabic" ? (
 									<FirstAvailableAppointmentModifiedArabic
 										user={user}
-										language={language}
+										language={chosenLanguage}
 										chosenDate={chosenDate}
 										setChosenDate={setChosenDate}
 										allCustomerType={allCustomerType}
@@ -554,11 +566,12 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										loading={loading}
 										setServiceDetailsArray={setServiceDetailsArray}
 										serviceDetailsArray={serviceDetailsArray}
+										formatEnglishDate={formatEnglishDate}
 									/>
 								) : (
 									<FirstAvailableAppointmentModified
 										user={user}
-										language={language}
+										language={chosenLanguage}
 										chosenDate={chosenDate}
 										setChosenDate={setChosenDate}
 										allCustomerType={allCustomerType}
@@ -571,6 +584,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										loading={loading}
 										setServiceDetailsArray={setServiceDetailsArray}
 										serviceDetailsArray={serviceDetailsArray}
+										formatEnglishDate={formatEnglishDate}
 									/>
 								)}
 							</Animated>
@@ -578,7 +592,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 								<div className='col-md-10 mx-auto'>
 									<hr />
 								</div>
-								{language === "Arabic" ? (
+								{chosenLanguage === "Arabic" ? (
 									<div
 										className='my-2'
 										style={{
@@ -652,7 +666,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 																	).toLocaleDateString() ===
 																		new Date().toLocaleDateString()
 															).length}{" "}
-														{language === "Arabic"
+														{chosenLanguage === "Arabic"
 															? "حجوزات اليوم"
 															: "Appoint. Today"}{" "}
 														)
@@ -671,7 +685,15 @@ const BookingFromStore = ({ language, setLanguage }) => {
 					) : null}
 					{clickedMenu === "TableView" ? (
 						<>
-							<TableViewStore orders={orders} />
+							{chosenLanguage === "Arabic" ? (
+								<TableViewArabic
+									orders={orders}
+									selectedDate={selectedDate}
+									setSelectedDate={setSelectedDate}
+								/>
+							) : (
+								<TableViewStore orders={orders} />
+							)}
 						</>
 					) : null}
 					{clickedMenu === "POSAccount" ? (

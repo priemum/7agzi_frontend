@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+import { useCartContext } from "../../sidebar_context";
 
 const EcommerceMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
 	return (
-		<EcommerceMainWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<EcommerceMainWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
 				<div>
 					<AdminNavbar
@@ -16,10 +19,10 @@ const EcommerceMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
-						language={language}
+						language={chosenLanguage}
 					/>
 				</div>
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<div className='messageWrapper mx-auto col-md-6 mt-5'>
 						<h2 style={{ fontWeight: "bolder" }}>
 							للأسف، الخطة الحالية التي لديك لا تدعم إضافة متجر إلكتروني إلى

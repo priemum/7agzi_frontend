@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 // import ReactGA from "react-ga";
 import Helmet from "react-helmet";
@@ -9,23 +9,16 @@ import StepsHeroFooter from "../components/OtherHeroComp/StepsHeroFooter";
 import IconStep1 from "../Images/IconStep1.png";
 import IconStep2 from "../Images/IconStep2.png";
 import IconStep3 from "../Images/IconStep3.png";
+import { useCartContext } from "../sidebar_context";
 
 const RegisterSteps = ({ language, setLanguage }) => {
-	useEffect(() => {
-		if (
-			window.location.search.includes("ar") ||
-			window.location.search.includes("Ar")
-		) {
-			setLanguage("Arabic");
-		}
-		// eslint-disable-next-line
-	}, []);
+	const { chosenLanguage } = useCartContext();
 
 	return (
-		<RegisterStepsWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<RegisterStepsWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | خطوات التسجيل</title>
 				) : (
 					<title>XLOOK | Registration Steps</title>
@@ -33,7 +26,7 @@ const RegisterSteps = ({ language, setLanguage }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `سارع بالتسجيل الآن! لا تفوت الفرصة لعرض نفسك ببراعة أمام مئات الآلاف من الأفراد حول مركز التجميل الخاص بك. موقع XLOOK، خطوات التسجيل، حجز مواعيد، خدمات التجميل`
 							: `Hurry up and register now! Don't miss the opportunity to showcase yourself brilliantly in front of hundreds of thousands of individuals around your beauty center. XLOOK, Registration Steps, Appointment Booking, Beauty Services`
 					}
@@ -41,26 +34,26 @@ const RegisterSteps = ({ language, setLanguage }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، خطوات التسجيل، حجز مواعيد، خدمات التجميل، التسجيل في موقع XLOOK`
 							: `XLOOK, Registration Steps, Appointment Booking, Beauty Services, Register on XLOOK Website`
 					}
 				/>
 				<link rel='canonical' href='https://www.xlookpro.com/steps' />
-				{language === "Arabic" && (
+				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}
 			</Helmet>
 
 			<div className='my-3 text-center'>
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<h1 className='m-0'>خطوات التسجيل</h1>
 				) : (
 					<h1 className='m-0'>Registration Steps</h1>
 				)}
 				<span>
 					<strong>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<div style={{ color: "darkred" }}>
 								لأصحاب الصالونات ومراكز التجميل
 							</div>
@@ -73,20 +66,20 @@ const RegisterSteps = ({ language, setLanguage }) => {
 				</span>
 			</div>
 			<div className='mb-5'>
-				<StepsHeroComp language={language} />
+				<StepsHeroComp language={chosenLanguage} />
 			</div>
 			<div
 				className='container'
-				dir={language === "Arabic" ? "rtl" : "ltr"}
-				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+				style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 			>
 				<h2 className='beforeRegis'>
-					{language === "Arabic"
+					{chosenLanguage === "Arabic"
 						? "أولا ما قبل التسجيل"
 						: "First, what is required before registration"}
 				</h2>
 				<p>
-					{language === "Arabic" ? (
+					{chosenLanguage === "Arabic" ? (
 						<p>
 							طبعًا بيشرفنا وجودك كشريك في منصة <strong>XLOOK</strong> كعضو نشط.
 							<ul className='mr-4'>
@@ -123,7 +116,7 @@ const RegisterSteps = ({ language, setLanguage }) => {
 					)}
 				</p>
 				<div className='mt-5 accountManagerSection'>
-					{language === "Arabic" ? (
+					{chosenLanguage === "Arabic" ? (
 						<>
 							<h3 style={{ color: "white" }}>من هو مدير العملاء؟</h3>
 
@@ -183,7 +176,7 @@ const RegisterSteps = ({ language, setLanguage }) => {
 				</div>
 
 				<div className='mt-5'>
-					{language === "Arabic" ? (
+					{chosenLanguage === "Arabic" ? (
 						<>
 							<h3 style={{ fontWeight: "bolder", textAlign: "center" }}>
 								خطوات التسجيل{" "}
@@ -386,7 +379,7 @@ const RegisterSteps = ({ language, setLanguage }) => {
 			</div>
 
 			<div className='mb-5 mt-3'>
-				<StepsHeroFooter language={language} />
+				<StepsHeroFooter language={chosenLanguage} />
 			</div>
 		</RegisterStepsWrapper>
 	);

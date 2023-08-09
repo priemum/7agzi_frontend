@@ -121,21 +121,22 @@ const StylistCalendar = () => {
 				color:
 					i.status === "Cancelled"
 						? "#ff9595"
-						: i.status === "Scheduled From Store / Not Paid"
+						: i.status === "Not Paid" && i.BookedFrom === "Store"
 						? "#82feff"
-						: i.status === "Scheduled From Store / Paid"
+						: i.status === "Paid" && i.BookedFrom === "Store"
 						? "#82ffc2"
-						: i.status === "Scheduled Online / Paid" ||
-						  i.status === "Scheduled Online / Paid in Store"
+						: (i.status === "Paid" && i.BookedFrom === "Online") ||
+						  (i.status === "Scheduled Online / Paid in Store" &&
+								i.BookedFrom === "Store")
 						? "#caff95"
 						: "#092049",
 				textColor:
 					i.status === "Cancelled"
 						? "black"
-						: i.status === "Scheduled Online / Paid" ||
-						  i.status === "Scheduled Online / Paid in Store" ||
-						  i.status === "Scheduled From Store / Not Paid" ||
-						  i.status === "Scheduled From Store / Paid"
+						: (i.status === "Paid" && i.BookedFrom === "Online") ||
+						  (i.status === "Paid" && i.BookedFrom === "Online") ||
+						  (i.status === "Not Paid" && i.BookedFrom === "Store") ||
+						  (i.status === "Paid" && i.BookedFrom === "Store")
 						? "black"
 						: "white",
 			};

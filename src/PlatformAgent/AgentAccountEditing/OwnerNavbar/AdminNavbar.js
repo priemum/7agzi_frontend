@@ -82,8 +82,9 @@ const items = [
 		"sub5",
 		<ShopOutlined />
 	),
+
 	getItem(
-		<Link to='/store/admin/add-gallary/agent/help'>Gallary</Link>,
+		<Link to={`/store/admin/add-gallary/agent/help/${ownerId}`}>Gallary</Link>,
 		"sub12",
 		<HomeTwoTone />
 	),

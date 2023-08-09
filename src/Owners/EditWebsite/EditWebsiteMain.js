@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { Helmet } from "react-helmet";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -39,6 +40,8 @@ const isActive = (history, path) => {
 };
 
 const EditWebsiteMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	// const [collapsed, setCollapsed] = useState(false);
 	const [collapseMenu, setCollapseMenu] = useState(false);
@@ -63,7 +66,7 @@ const EditWebsiteMain = ({ language }) => {
 
 	return (
 		<EditWebsiteMainWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
 			<Helmet>
@@ -84,7 +87,7 @@ const EditWebsiteMain = ({ language }) => {
 						setAdminMenuStatus={setAdminMenuStatus}
 						collapsed={collapsed}
 						setCollapsed={setCollapsed}
-						language={language}
+						language={chosenLanguage}
 					/>
 				</div> */}
 
@@ -99,14 +102,14 @@ const EditWebsiteMain = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='EditWebsite'
 						collapseMenu={collapseMenu}
 					/>
 				</div>
 				<div>
 					<div className='container'>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<div className='row mx-auto'>
 								<div
 									style={isActive(clickedMenu, "AboutUs")}

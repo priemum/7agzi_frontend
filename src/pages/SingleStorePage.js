@@ -26,6 +26,7 @@ import GettingMap from "../components/SingleStorePage/GettingMap";
 import { getPreviousAddedGallary } from "../Owners/apiOwner";
 import MainFirstAvailableApp from "../components/SingleStorePage/FirstAvailableAppointmentsMain/MainFirstAvailableApp";
 import moment from "moment";
+import { useCartContext } from "../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -61,6 +62,7 @@ const isActive = (history, path) => {
 const SingleStorePage = ({ props, language }) => {
 	let { storeName } = useParams();
 	let { phone } = useParams();
+	const { chosenLanguage } = useCartContext();
 
 	const [clickedMenu, setClickedMenu] = useState("SERVICES");
 	const [storeChosen, setStoreChosen] = useState("");
@@ -95,10 +97,14 @@ const SingleStorePage = ({ props, language }) => {
 		}
 	};
 
+	const formatEnglishDate = (date) => {
+		return moment(date).locale("en").format("MM/DD/YYYY");
+	};
+
 	useEffect(() => {
-		setChosenDate(moment().format("MM/DD/YYYY"));
+		setChosenDate(formatEnglishDate(moment()));
 		// eslint-disable-next-line
-	}, [language]);
+	}, [chosenLanguage, clickedMenu]);
 
 	const gettingChosenStore = () => {
 		setLoading(true);
@@ -300,7 +306,7 @@ const SingleStorePage = ({ props, language }) => {
 						chosenService={chosenService}
 						handleChosenCustomerType={handleChosenCustomerType}
 						fromLocalStore={storeChosen}
-						language={language}
+						language={chosenLanguage}
 					/>
 
 					<div className='deskTopContent'>
@@ -347,38 +353,38 @@ const SingleStorePage = ({ props, language }) => {
 								style={isActive(clickedMenu, "SERVICES")}
 								onClick={() => setClickedMenu("SERVICES")}
 							>
-								{language === "Arabic" ? "الخدمات" : "SERVICES"}
+								{chosenLanguage === "Arabic" ? "الخدمات" : "SERVICES"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "STYLISTS")}
 								onClick={() => setClickedMenu("STYLISTS")}
 							>
-								{language === "Arabic" ? "الفريق" : "TEAM"}
+								{chosenLanguage === "Arabic" ? "الفريق" : "TEAM"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "ABOUT")}
 								onClick={() => setClickedMenu("ABOUT")}
 							>
-								{language === "Arabic" ? "عنا" : "ABOUT"}
+								{chosenLanguage === "Arabic" ? "عنا" : "ABOUT"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "GALLERY")}
 								onClick={() => setClickedMenu("GALLERY")}
 							>
-								{language === "Arabic" ? "المعرض" : "GALLERY"}
+								{chosenLanguage === "Arabic" ? "المعرض" : "GALLERY"}
 							</div>
 							<div
 								className='col-2 navLinks'
 								style={isActive(clickedMenu, "MAP")}
 								onClick={() => setClickedMenu("MAP")}
 							>
-								{language === "Arabic" ? "الخريطة" : "MAP"}
+								{chosenLanguage === "Arabic" ? "الخريطة" : "MAP"}
 							</div>
 						</div>
-						{language === "Arabic" ? (
+						{chosenLanguage === "Arabic" ? (
 							<div className='text-center mt-2'>
 								<Link
 									onClick={handleButtonClick}
@@ -457,7 +463,7 @@ const SingleStorePage = ({ props, language }) => {
 								<AddedServices
 									ownerId={storeChosen.belongsTo._id}
 									chosenCustomerType={chosenCustomerType2}
-									language={language}
+									language={chosenLanguage}
 									setServiceDetailsArray={setServiceDetailsArray}
 									setChosenService={setChosenService}
 									chosenService={chosenService}
@@ -473,7 +479,7 @@ const SingleStorePage = ({ props, language }) => {
 									storeProperties={storeChosen}
 									contact={contact}
 									filteredResults={allEmployees}
-									language={language}
+									language={chosenLanguage}
 								/>
 							</div>
 						) : null}
@@ -508,7 +514,7 @@ const SingleStorePage = ({ props, language }) => {
 							<MainFirstAvailableApp
 								onlineStoreName={storeChosen}
 								user={storeChosen}
-								language={language}
+								language={chosenLanguage}
 								chosenDate={chosenDate}
 								setChosenDate={setChosenDate}
 								allCustomerType={allCustomerType}

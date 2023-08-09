@@ -6,6 +6,7 @@ import UpdateService from "./UpdateService";
 import { Helmet } from "react-helmet";
 import { isAuthenticated } from "../../auth";
 import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -36,6 +37,7 @@ const isActive = (history, path) => {
 };
 
 const ServicesMain = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	// const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	// const [collapsed, setCollapsed] = useState(true);
 	const [collapseMenu, setCollapseMenu] = useState(false);
@@ -52,7 +54,7 @@ const ServicesMain = ({ language }) => {
 
 	return (
 		<ServicesMainWrapper
-			dir={language === "Arabic" ? "rtl" : "ltr"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			show={collapseMenu}
 		>
 			<Helmet>
@@ -76,7 +78,7 @@ const ServicesMain = ({ language }) => {
 					</div>
 
 					<OwnerNavmenu
-						language={language}
+						language={chosenLanguage}
 						fromPage='Services'
 						collapseMenu={collapseMenu}
 					/>
@@ -90,7 +92,7 @@ const ServicesMain = ({ language }) => {
 								onClick={() => setClickedMenu("AddService")}
 							>
 								<i className='fa-brands fa-servicestack mr-1'></i>{" "}
-								{language === "Arabic"
+								{chosenLanguage === "Arabic"
 									? "إضافة خدمة جديدة"
 									: "Add A New Service"}
 							</div>
@@ -100,15 +102,17 @@ const ServicesMain = ({ language }) => {
 								onClick={() => setClickedMenu("UpdateServices")}
 							>
 								<i className='fa-solid fa-pen mr-1'></i>{" "}
-								{language === "Arabic" ? "قائمة الخدمات" : "Services' List"}
+								{chosenLanguage === "Arabic"
+									? "قائمة الخدمات"
+									: "Services' List"}
 							</div>
 						</div>
 					</div>
 					{clickedMenu === "AddService" ? (
-						<AddService language={language} />
+						<AddService language={chosenLanguage} />
 					) : null}
 					{clickedMenu === "UpdateServices" ? (
-						<UpdateService language={language} />
+						<UpdateService language={chosenLanguage} />
 					) : null}
 				</div>
 			</div>

@@ -571,7 +571,7 @@ const SchedulePageSteps2 = ({ language }) => {
 									appointmentStarts()[0].replace(" at", "")
 								).toLocaleString(),
 								paymentStatus: false,
-								status: "Scheduled Online / Not Paid",
+								status: "Not Paid",
 								minLoyaltyPointsForAward: 0,
 								onlineServicesFees: 0,
 								phone: convertArabicOrNumericToEnglish(customerPhone),
@@ -640,7 +640,7 @@ const SchedulePageSteps2 = ({ language }) => {
 					appointmentStarts()[0].replace(" at", "")
 				).toLocaleString(),
 				paymentStatus: false,
-				status: "Scheduled Online / Not Paid",
+				status: "Not Paid",
 				minLoyaltyPointsForAward: 0,
 				onlineServicesFees: 0,
 				phone: convertArabicOrNumericToEnglish(customerPhone),

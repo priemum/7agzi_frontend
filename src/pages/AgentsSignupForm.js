@@ -13,8 +13,11 @@ import AgentsSignupFormComp from "../components/SignupComp/AgentsSignupFormComp"
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../sidebar_context";
 
 const AgentsSignupForm = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [nextClicked, setNextClicked] = useState(0);
 	const [values, setValues] = useState({
 		name: "",
@@ -378,7 +381,7 @@ const AgentsSignupForm = ({ language }) => {
 			password2={password2}
 			nextClicked={nextClicked}
 			setNextClicked={setNextClicked}
-			language={language}
+			language={chosenLanguage}
 			handleImageRemove2={handleImageRemove2}
 			fileUploadAndResizeStoreThumbnail={fileUploadAndResizeStoreThumbnail}
 			handleImageRemovePersonal={handleImageRemovePersonal}
@@ -389,9 +392,9 @@ const AgentsSignupForm = ({ language }) => {
 	return (
 		<AgentsSignupFormWrapper>
 			{/* <Redirect to='/agents-signup-form2' /> */}
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | التوظيف | سجل الآن</title>
 				) : (
 					<title>XLOOK | Recruitment and Employment | Apply Now</title>
@@ -399,7 +402,7 @@ const AgentsSignupForm = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `منصة إكس لوك هي منصة تجمع بين صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل. تُستخدم منصة إكس لوك لاختيار وحجز موعد في صالون الشعر أو مركز التجميل. يمكن للزوار التسجيل وحجز الخدمات المقدمة من خلال تطبيق مخصص للمستخدمين والباحثين عن خدمات التجميل. تقدم المنصة خدمات لجميع أفراد الأسرة بما في ذلك السيدات والفتيات والرجال والأطفال، بخدمات متخصصة ومحترفة. يجب أن يكون المتقدمون جادين ومهذبين ولديهم مظهر جيد. مدعوم بواسطة https://infinite-apps.com`
 							: `The XLOOK platform is a platform that brings together barbershops, women's beauty salons, and beauty centers. The XLOOK platform is used to choose and book an appointment at a hair salon or beauty center. Visitors can register and book the services offered through a dedicated application for users and beauty service seekers. The platform provides services for all members of the family, including ladies, girls, men, and children, with specialized and professional services. Applicants should be serious, well-mannered, and have a good appearance. Powered By https://infinite-apps.com`
 					}
@@ -407,7 +410,7 @@ const AgentsSignupForm = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? "إكس لوك، دليل الوكلاء، مديري الحسابات، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، خدمات التجميل"
 							: "XLOOK, AGENTS, ACCOUNT MANAGERS, barbershops, women's beauty salons, beauty centers, beauty services"
 					}

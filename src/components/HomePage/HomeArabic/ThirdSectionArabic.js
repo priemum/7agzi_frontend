@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
 
-const ThirdSection = ({
+const ThirdSectionArabic = ({
 	language,
 	stores,
 	loading,
@@ -47,14 +47,14 @@ const ThirdSection = ({
 	if (loadError || error) {
 		return (
 			<div className='spinner-container'>
-				<Spin size='large' tip='Loading...' />
+				<Spin size='large' tip='جار التحميل...' />
 				<div>
-					This app requires access to your location. Please enable it in your
-					browser settings, or{" "}
+					تحتاج هذه التطبيق إلى الوصول إلى موقعك. من فضلك قم بتفعيله في إعدادات
+					المتصفح الخاص بك، أو{" "}
 					<Link href='#' onClick={handleRetryClick}>
-						click here
+						انقر هنا
 					</Link>{" "}
-					to retry.
+					لإعادة المحاولة.
 				</div>
 			</div>
 		);
@@ -64,7 +64,7 @@ const ThirdSection = ({
 		<ThirdSectionWrapper>
 			{loading ? (
 				<div style={{ textAlign: "center", margin: "auto" }}>
-					<Spin size='large' tip='Loading...' />
+					<Spin size='large' tip='جار التحميل...' />
 				</div>
 			) : (
 				<div className='carousel thirdSection'>
@@ -91,16 +91,16 @@ const ThirdSection = ({
 					</div>
 
 					<div className='row quickLinks'>
-						<div className='col-3 mx-auto'>Favourites</div>
-						<div className='col-3 mx-auto'>Closest</div>
-						<div className='col-3 mx-auto'>Last Visit</div>
+						<div className='col-3 mx-auto'>المفضلة</div>
+						<div className='col-3 mx-auto'>الأقرب</div>
+						<div className='col-3 mx-auto'>آخر زيارة</div>
 						<div
 							className='col-3 mx-auto'
 							onClick={() => {
 								window.location.href = `/schedule`;
 							}}
 						>
-							See All
+							رؤية الكل
 						</div>
 					</div>
 				</div>
@@ -109,7 +109,7 @@ const ThirdSection = ({
 	);
 };
 
-export default ThirdSection;
+export default ThirdSectionArabic;
 
 const ThirdSectionWrapper = styled.div`
 	.thirdSection {

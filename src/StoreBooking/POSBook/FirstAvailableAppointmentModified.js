@@ -130,7 +130,6 @@ const FirstAvailableAppointmentModified = ({
 										(service) => service.serviceName === value
 									)
 								);
-								console.log(selectedServices);
 
 								setServiceDetailsArray(selectedServices);
 								setChosenService(

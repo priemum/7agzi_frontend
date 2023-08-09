@@ -2,19 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import EgyptianFlag from "../../Images/Egypt.png";
 import AmericanFlag from "../../Images/UnitedStates.png";
+import { useCartContext } from "../../sidebar_context";
 
 const NavbarPOS = ({ onlineStoreName, language, setLanguage }) => {
+	const { chosenLanguageEngish, chosenLanguage, chosenLanguageArabic } =
+		useCartContext();
+
 	return (
 		<NavbarPOSWrapper>
 			<div className='left'>
 				<span className='languageFlagsPhone'>
-					{language === "English" ? (
-						<span
-							className=''
-							onClick={() => {
-								setLanguage("Arabic");
-							}}
-						>
+					{chosenLanguage === "English" ? (
+						<span className='' onClick={chosenLanguageArabic}>
 							{" "}
 							<img
 								className='flags'
@@ -27,9 +26,7 @@ const NavbarPOS = ({ onlineStoreName, language, setLanguage }) => {
 						<span
 							className=' '
 							style={{ color: "white" }}
-							onClick={() => {
-								setLanguage("English");
-							}}
+							onClick={chosenLanguageEngish}
 						>
 							<img className='flags' src={AmericanFlag} alt='English' />{" "}
 						</span>

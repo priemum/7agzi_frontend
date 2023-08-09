@@ -18,6 +18,10 @@ const Adding2DaysClosed = ({
 	setExtraData,
 	extraData,
 	language,
+	salonGrade,
+	setSalonGrade,
+	workersGender,
+	setWorkersGender,
 }) => {
 	const pushToAllDates = (e) => {
 		e.preventDefault();
@@ -401,6 +405,44 @@ const Adding2DaysClosed = ({
 								placeholder='Chairs Count'
 							/>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className='row'>
+				<div className='col-md-6'>
+					<div className='form-group mx-auto'>
+						<label className='text-muted'>Please Grade The Salon</label>
+						<select
+							className='form-control'
+							value={salonGrade}
+							onChange={(e) => {
+								setSalonGrade(e.target.value);
+							}}
+						>
+							<option value=''>Please Select</option>
+							<option value='a'>A</option>
+							<option value='b'>B</option>
+							<option value='c'>C</option>
+						</select>
+					</div>
+				</div>
+
+				<div className='col-md-6'>
+					<div className='form-group  mx-auto'>
+						<label className='text-muted'>Overall Employee Gender Status</label>
+						<select
+							className='form-control'
+							value={workersGender}
+							onChange={(e) => {
+								setWorkersGender(e.target.value);
+							}}
+						>
+							<option value=''>Please Select</option>
+							<option value='men'>MEN ONLY ARE WORKING</option>
+							<option value='women'>WOMEN ONLY ARE WORKING</option>
+							<option value='mixed'>MIXED (WOMEN & MEN)</option>
+						</select>
 					</div>
 				</div>
 			</div>

@@ -1,24 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import AgentGuideComp from "../components/OtherHeroComp/AgentGuideComp";
+import { useCartContext } from "../sidebar_context";
 
 const AgentGuide = ({ language, setLanguage }) => {
-	useEffect(() => {
-		if (
-			window.location.search.includes("ar") ||
-			window.location.search.includes("Ar")
-		) {
-			setLanguage("Arabic");
-		}
-		// eslint-disable-next-line
-	}, []);
+	const { chosenLanguage } = useCartContext();
 
 	return (
 		<AgentGuideWrapper>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | دليل الوكلاء ومديري الحسابات</title>
 				) : (
 					<title>XLOOK | AGENTS & ACCOUNT MANAGERS GUIDE</title>
@@ -26,7 +19,7 @@ const AgentGuide = ({ language, setLanguage }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `منصة إكس لوك هي منصة تجمع بين صالونات الحلاقة وصالونات تجميل النساء ومراكز التجميل. تُستخدم منصة إكس لوك لاختيار وحجز موعد في صالون الشعر أو مركز التجميل. يمكن للزوار التسجيل وحجز الخدمات المقدمة من خلال تطبيق مخصص للمستخدمين والباحثين عن خدمات التجميل. تقدم المنصة خدمات لجميع أفراد الأسرة بما في ذلك السيدات والفتيات والرجال والأطفال، بخدمات متخصصة ومحترفة. يجب أن يكون المتقدمون جادين ومهذبين ولديهم مظهر جيد. مدعوم بواسطة https://infinite-apps.com`
 							: `The XLOOK platform is a platform that brings together barbershops, women's beauty salons, and beauty centers. The XLOOK platform is used to choose and book an appointment at a hair salon or beauty center. Visitors can register and book the services offered through a dedicated application for users and beauty service seekers. The platform provides services for all members of the family, including ladies, girls, men, and children, with specialized and professional services. Applicants should be serious, well-mannered, and have a good appearance. Powered By https://infinite-apps.com`
 					}
@@ -34,7 +27,7 @@ const AgentGuide = ({ language, setLanguage }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? "إكس لوك، دليل الوكلاء، مديري الحسابات، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، خدمات التجميل"
 							: "XLOOK, AGENTS, ACCOUNT MANAGERS, barbershops, women's beauty salons, beauty centers, beauty services"
 					}
@@ -43,11 +36,11 @@ const AgentGuide = ({ language, setLanguage }) => {
 			</Helmet>
 
 			<div className='mb-5'>
-				<AgentGuideComp language={language} />
+				<AgentGuideComp language={chosenLanguage} />
 			</div>
 
 			<div className='container my-5'>
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<div className='Arabic' dir='rtl'>
 						<div className='section1Wrapper'>
 							<h1 dir='rtl'>ما هى منصة XLOOK ؟</h1>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
 
-const FifthSection = () => {
+const FifthSectionArabic = () => {
 	const options = {
 		autoConfig: true,
 		debug: false,
@@ -12,10 +12,9 @@ const FifthSection = () => {
 	useEffect(() => {
 		ReactPixel.init(process.env.REACT_APP_FACEBOOK_PIXEL_ID, options);
 
-		ReactPixel.pageView();
-
 		// eslint-disable-next-line
 	}, []);
+
 	return (
 		<FifthSectionWrapper>
 			<div className='bannerAd fifthSection'>
@@ -44,7 +43,7 @@ const FifthSection = () => {
 	);
 };
 
-export default FifthSection;
+export default FifthSectionArabic;
 
 const FifthSectionWrapper = styled.div`
 	.fifthSection {

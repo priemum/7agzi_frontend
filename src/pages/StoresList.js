@@ -14,9 +14,11 @@ import { Spin } from "antd";
 import StoreListPhone from "../components/StoresListComp/StoreListPhone";
 import SideFilter from "../components/StoresListComp/SideFilter";
 import { Helmet } from "react-helmet";
+import { useCartContext } from "../sidebar_context";
 // import { Helmet } from "react-helmet";
 
 const StoresList = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	const [loading, setLoading] = useState(true);
 	const [storeProperties, setStoreProperties] = useState([]);
 	// eslint-disable-next-line
@@ -380,9 +382,9 @@ const StoresList = ({ language }) => {
 	// console.log(allServicesCombined, "allServicesCombined");
 	return (
 		<StoresListWrapper>
-			<Helmet dir={language === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
-				{language === "Arabic" ? (
+				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>دور على أقرب مصفف شعر ومركز تجميل ليك</title>
 				) : (
 					<title>Find Your Closest Stylist And Beauty Center</title>
@@ -390,7 +392,7 @@ const StoresList = ({ language }) => {
 				<meta
 					name='description'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `ابحث عن أقرب مصفف للشعر بالقرب منك باستخدام منصتنا السهلة للحجز. اكتشف خبراء تصفيف الشعر المحترفين وأصحاب صالونات الحلاقة والجمال في منطقتك. احجز موعدك بسهولة واستمتع بخدمات عالية الجودة. احصل على الإطلالة التي ترغب فيها بسهولة. ابدأ رحلتك للحصول على تسريحة شعر رائعة اليوم!. Powered By https://infinite-apps.com`
 							: `Find the closest stylist near you with our convenient booking platform. Discover professional hairstylists, barbers, and beauty experts in your area. Book your appointment hassle-free and enjoy quality services. Get the look you desire with ease. Start your journey to a fabulous hairstyle today! Powered By https://infinite-apps.com`
 					}
@@ -398,7 +400,7 @@ const StoresList = ({ language }) => {
 				<meta
 					name='keywords'
 					content={
-						language === "Arabic"
+						chosenLanguage === "Arabic"
 							? `إكس لوك، مصفف شعر، صالونات حلاقة، خدمات تجميل , ${
 									allServicesCombined &&
 									allServicesCombined.map((i) => i.serviceNameOtherLanguage)
