@@ -61,7 +61,7 @@ const ThirdSectionArabic = ({
 	}
 
 	return (
-		<ThirdSectionWrapper>
+		<ThirdSectionWrapper dir='ltr'>
 			{loading ? (
 				<div style={{ textAlign: "center", margin: "auto" }}>
 					<Spin size='large' tip='جار التحميل...' />

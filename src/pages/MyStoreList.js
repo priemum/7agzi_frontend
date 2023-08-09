@@ -5,6 +5,7 @@ import {
 	allStoresSorted,
 	activeStoresCount,
 	getCountriesDistrictsGov,
+	// eslint-disable-next-line
 	allStoresSorted2,
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
@@ -62,7 +63,7 @@ const MyStoreList = ({ language }) => {
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
 
-				allStoresSorted2(
+				allStoresSorted(
 					lat,
 					lon,
 					"egypt",

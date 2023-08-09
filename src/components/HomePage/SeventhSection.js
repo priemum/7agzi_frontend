@@ -1,74 +1,18 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { allStoresSorted } from "../../apiCore";
 import { Spin } from "antd";
 import { Link } from "react-router-dom";
-import { useJsApiLoader } from "@react-google-maps/api";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
 
-const SeventhSection = ({ language }) => {
-	const [loading, setLoading] = useState(true);
-	const [stores, setStores] = useState([]);
-
-	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(20);
-
-	// eslint-disable-next-line
-	const [currentPage, setCurrentPage] = useState(1);
-	const [error, setError] = useState(null);
-
-	const { isLoaded, loadError } = useJsApiLoader({
-		id: "google-map-script",
-		googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
-	});
-	const getLocation = useCallback(() => {
-		setLoading(true);
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				// lat, long
-				// 31.123883, 29.775421 examples
-				// eslint-disable-next-line
-				const { latitude: lat, longitude: lon } = position.coords;
-
-				allStoresSorted(
-					lat,
-					lon,
-					"egypt",
-					undefined,
-					undefined,
-					undefined,
-					undefined,
-					itemsPerPage,
-					currentPage
-				)
-					.then((data) => {
-						if (data.error) {
-							setError(data.error);
-						} else {
-							var uniqueStoresWithLatestDates = data.stores;
-
-							setStores(uniqueStoresWithLatestDates);
-							setLoading(false);
-						}
-					})
-					.catch((err) => setError(err));
-			},
-			() => setError("Could not get location")
-		);
-	}, [currentPage, itemsPerPage]);
-
-	useEffect(() => {
-		if (!isLoaded) return;
-		getLocation();
-
-		// eslint-disable-next-line
-	}, [isLoaded, currentPage, , getLocation]);
-
-	const handleRetryClick = () => {
-		window.location.reload();
-	};
-
+const SeventhSection = ({
+	language,
+	stores,
+	loading,
+	handleRetryClick,
+	loadError,
+	error,
+}) => {
 	const settings = {
 		dots: true,
 		infinite: true,

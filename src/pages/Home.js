@@ -24,8 +24,6 @@ import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSecti
 import { useCartContext } from "../sidebar_context";
 
 const Home = ({ language, setLanguage }) => {
-	const { chosenLanguage } = useCartContext();
-
 	const [stores, setStores] = useState([]);
 	const [searchValue, setSearchValue] = useState("");
 	const [loading, setLoading] = useState(true);
@@ -33,7 +31,8 @@ const Home = ({ language, setLanguage }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [error, setError] = useState(null);
 	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(20);
+	const [itemsPerPage, setItemPerPage] = useState(12);
+	const { chosenLanguage } = useCartContext();
 
 	const handleInputChange = (event) => {
 		setSearchValue(event.target.value);
@@ -77,14 +76,14 @@ const Home = ({ language, setLanguage }) => {
 			},
 			() => setError("Could not get location")
 		);
-	}, [currentPage, itemsPerPage]);
+	}, [currentPage, itemsPerPage, chosenLanguage]);
 
 	useEffect(() => {
 		if (!isLoaded) return;
 		getLocation();
 
 		// eslint-disable-next-line
-	}, [isLoaded, currentPage, , getLocation]);
+	}, [isLoaded, currentPage, , getLocation, chosenLanguage]);
 
 	const handleRetryClick = () => {
 		window.location.reload();
@@ -106,7 +105,7 @@ const Home = ({ language, setLanguage }) => {
 	// console.log(stores, "stores");
 
 	return (
-		<HomeWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+		<HomeWrapper dir='ltr'>
 			<Helmet>
 				<meta charSet='utf-8' />
 				{chosenLanguage === "Arabic" ? (
@@ -219,9 +218,25 @@ const Home = ({ language, setLanguage }) => {
 				)}
 
 				{chosenLanguage === "Arabic" ? (
-					<SeventhSectionArabic language={chosenLanguage} />
+					<SeventhSectionArabic
+						language={chosenLanguage}
+						stores={stores}
+						loading={loading}
+						handleRetryClick={handleRetryClick}
+						loadError={loadError}
+						searchValue={searchValue}
+						error={error}
+					/>
 				) : (
-					<SeventhSection language={chosenLanguage} />
+					<SeventhSection
+						language={chosenLanguage}
+						stores={stores}
+						loading={loading}
+						handleRetryClick={handleRetryClick}
+						loadError={loadError}
+						searchValue={searchValue}
+						error={error}
+					/>
 				)}
 			</div>
 		</HomeWrapper>
