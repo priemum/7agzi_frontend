@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 import {
+	// eslint-disable-next-line
 	allStoresSorted,
 	activeStoresCount,
 	getCountriesDistrictsGov,
+	allStoresSorted2,
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
 import { Link } from "react-router-dom";
@@ -60,7 +62,7 @@ const MyStoreList = ({ language }) => {
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
 
-				allStoresSorted(
+				allStoresSorted2(
 					lat,
 					lon,
 					"egypt",

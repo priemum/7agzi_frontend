@@ -329,6 +329,34 @@ export const allStoresSorted = (
 		.catch((err) => console.log(err));
 };
 
+export const allStoresSorted2 = (
+	lat,
+	lon,
+	country,
+	governorate,
+	district,
+	storeType,
+	service,
+	pagination,
+	page
+) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/store-management2/pagination2/${lat}/${lon}/${country}/${governorate}/${district}/${storeType}/${service}/${pagination}/${page}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const activeStoresCount = (
 	country,
 	governorate,

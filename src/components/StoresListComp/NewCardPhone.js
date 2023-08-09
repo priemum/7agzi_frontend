@@ -192,17 +192,18 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 							</div>
 						</div>
 					</div>
-
-					<div
-						className='right'
-						style={{ color: "red", fontWeight: "bolder", fontSize: "12px" }}
-					>
-						{Number(convertToMinutes(store.walkingTime)) <= 120 ? (
-							<span>{store.walkingTime} Walking</span>
-						) : (
-							<span>{store.drivingTime} Driving</span>
-						)}
-					</div>
+					{store.walking || store.drivingTime ? (
+						<div
+							className='right'
+							style={{ color: "red", fontWeight: "bolder", fontSize: "12px" }}
+						>
+							{Number(convertToMinutes(store.walkingTime)) <= 120 ? (
+								<span>{store.walkingTime} Walking</span>
+							) : (
+								<span>{store.drivingTime} Driving</span>
+							)}
+						</div>
+					) : null}
 				</div>
 			</Link>
 		</CardsStorePhoneWrapper>

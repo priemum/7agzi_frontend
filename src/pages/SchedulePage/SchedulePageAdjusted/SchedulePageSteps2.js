@@ -44,6 +44,10 @@ const SchedulePageSteps2 = ({ language }) => {
 
 	const { user, token } = isAuthenticated();
 
+	const formatEnglishDate = (date) => {
+		return moment(date).locale("en").format("MM/DD/YYYY");
+	};
+
 	const checkLength = (i) => {
 		if (i < 10) {
 			i = "0" + i;
@@ -74,6 +78,8 @@ const SchedulePageSteps2 = ({ language }) => {
 		}
 		// eslint-disable-next-line
 	}, []);
+
+	console.log(chosenDate, "chosenDateAgain");
 
 	const loadPickedEmployee = (
 		employeeId,
@@ -215,9 +221,13 @@ const SchedulePageSteps2 = ({ language }) => {
 			localStorage.getItem("chosenDateFromFirstAvailable")
 		);
 		if (pickedDateFirstAvailable) {
-			setChosenDate(new Date(pickedDateFirstAvailable).toLocaleDateString());
+			setChosenDate(
+				formatEnglishDate(
+					new Date(pickedDateFirstAvailable).toLocaleDateString()
+				)
+			);
 		} else {
-			setChosenDate(new Date().toLocaleDateString());
+			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
 		}
 		// eslint-disable-next-line
 	}, []);

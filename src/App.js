@@ -98,7 +98,7 @@ function App() {
 	const [click, setClick] = useState(false);
 	const [clickMenu, setClickMenu] = useState(false);
 	const [language, setLanguage] = useState("English");
-
+	// const { chosenLanguage } = useCartContext();
 	// eslint-disable-next-line
 	const { user } = isAuthenticated();
 

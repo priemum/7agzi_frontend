@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
-import { allStoresSorted } from "../apiCore";
+
+// eslint-disable-next-line
+import { allStoresSorted, allStoresSorted2 } from "../apiCore";
 import { useJsApiLoader } from "@react-google-maps/api";
 import FirstSection from "../components/HomePage/FirstSection";
 import SecondSection from "../components/HomePage/SecondSection";
@@ -50,7 +52,7 @@ const Home = ({ language, setLanguage }) => {
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
 
-				allStoresSorted(
+				allStoresSorted2(
 					lat,
 					lon,
 					"egypt",
