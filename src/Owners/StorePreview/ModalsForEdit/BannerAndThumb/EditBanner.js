@@ -85,10 +85,10 @@ const EditBanner = ({
 		let allUploadedFiles = thumbnail;
 		if (files) {
 			for (let i = 0; i < files.length; i++) {
-				if (files[i].size > 1024 * 1024) {
+				if (files[i].size > 2024 * 1024) {
 					setLoading2(true);
 					// file size is in bytes
-					alert("File size should be less than 500kb");
+					alert("File size should be less than 2MB");
 					continue; // skip this file
 				}
 				Resizer.imageFileResizer(
