@@ -302,8 +302,68 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 								</td>
 							</tr>
 						))}
+						<tr className='grey-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "1" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='white-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "2" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='grey-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "3" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='white-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "4" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
 					</tbody>
 				</table>
+				<div
+					style={{
+						fontSize: "1.4rem",
+						fontWeight: "bolder",
+						textAlign: "center",
+						color: "white",
+					}}
+				>
+					{!q && ordersFiltered && ordersFiltered.length === 0
+						? "لا يوجد حجوزات"
+						: ""}
+				</div>
 			</div>
 		</TableViewStoreWrapper>
 	);

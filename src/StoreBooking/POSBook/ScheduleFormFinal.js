@@ -16,6 +16,7 @@ import NavbarPOS from "../NavbarPOS/NavbarPOS";
 import { allLoyaltyPointsAndStoreStatus } from "../../Owners/apiOwner";
 import ScheduleFormHelperArabic from "./ScheduleFormHelperArabic";
 import DiscountModal from "./DiscountModal";
+import { useCartContext } from "../../sidebar_context";
 
 const ScheduleFormFinal = ({ language, setLanguage }) => {
 	const [pickedEmployee, setPickedEmployee] = useState("");
@@ -32,6 +33,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 	const [scheduledByUserName, setScheduledByUserName] = useState("");
 	const [discountCash, setDiscountCash] = useState(0);
 	const [customerPhone, setCustomerPhone] = useState(null);
+	const { chosenLanguage } = useCartContext();
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
 	// eslint-disable-next-line
@@ -39,6 +41,10 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
+
+	const formatEnglishDate = (date) => {
+		return moment(date).locale("en").format("MM/DD/YYYY");
+	};
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
 
@@ -64,7 +70,6 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 		// Can not select days before today and today
 		return current < moment();
 	};
-
 	const loadPickedEmployee = (
 		employeeId,
 		pickedServiceFirstAvailable,
@@ -199,9 +204,13 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			localStorage.getItem("chosenDateFromFirstAvailable")
 		);
 		if (pickedDateFirstAvailable) {
-			setChosenDate(new Date(pickedDateFirstAvailable).toLocaleDateString());
+			setChosenDate(
+				formatEnglishDate(
+					new Date(pickedDateFirstAvailable).toLocaleDateString()
+				)
+			);
 		} else {
-			setChosenDate(new Date().toLocaleDateString());
+			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
 		}
 		// eslint-disable-next-line
 	}, []);
@@ -542,7 +551,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 
 	// console.log(chosenDate, "chosenDate");
 	return (
-		<ScheduleFormFinalWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<ScheduleFormFinalWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			{loading ? (
 				<div className='text-center mx-auto mt-5'>
 					<Spin size='large' tip='LOADING...' />
@@ -556,11 +565,11 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 						setDiscountCash={setDiscountCash}
 					/>
 					<NavbarPOS
-						language={language}
+						language={chosenLanguage}
 						setLanguage={setLanguage}
 						onlineStoreName={onlineStoreName}
 					/>
-					{language === "Arabic" ? (
+					{chosenLanguage === "Arabic" ? (
 						<ScheduleFormHelperArabic
 							pickedEmployee={pickedEmployee}
 							chosenDate={chosenDate}
@@ -619,7 +628,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 						}}
 					>
 						<div className='continueShoppingEmpty  my-5 mx-auto text-center'>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "تغيير الموظف "
 								: "Change Selected Stylist..."}
 						</div>

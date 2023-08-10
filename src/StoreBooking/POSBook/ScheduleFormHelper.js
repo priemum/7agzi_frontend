@@ -30,8 +30,13 @@ const ScheduleFormHelper = ({
 	discountCash,
 }) => {
 	const handleChangeDate = (date) => {
+		const formatEnglishDate = (date) => {
+			return moment(date).locale("en").format("MM/DD/YYYY");
+		};
 		if (date) {
-			const formattedDate = moment(date).format("MM/DD/YYYY");
+			const formattedDate = formatEnglishDate(
+				moment(date).format("MM/DD/YYYY")
+			);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);

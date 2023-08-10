@@ -16,7 +16,7 @@ const FifthSectionArabic = () => {
 	}, []);
 
 	return (
-		<FifthSectionWrapper>
+		<FifthSectionWrapper dir='rtl'>
 			<div className='bannerAd fifthSection'>
 				<img
 					src='https://res.cloudinary.com/infiniteapps/image/upload/v1689014644/GQ_B2B/1689014644113.jpg'

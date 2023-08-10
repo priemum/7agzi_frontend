@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
-const TableViewStore = ({ orders }) => {
+const TableViewStore = ({ orders, selectedDate }) => {
 	const [q, setQ] = useState("");
 
 	function search(orders) {
@@ -35,6 +36,14 @@ const TableViewStore = ({ orders }) => {
 		localStorage.removeItem("chosenStylistUpdate");
 		// eslint-disable-next-line
 	}, []);
+
+	const ordersFiltered =
+		orders &&
+		orders.filter((i) =>
+			moment(i.scheduledDate, "MM/DD/YYYY").isSame(
+				moment(selectedDate, "MM/DD/YYYY")
+			)
+		);
 
 	return (
 		<TableViewStoreWrapper>
@@ -172,8 +181,69 @@ const TableViewStore = ({ orders }) => {
 								<td>{s.applyPoints.toString()}</td>
 							</tr>
 						))}
+
+						<tr className='grey-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "1" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='white-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "2" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='grey-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "3" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
+						<tr className='white-row'>
+							<td className='text-end'>
+								{!q && ordersFiltered && ordersFiltered.length === 0 ? "4" : ""}
+							</td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+							<td className='text-end'></td>
+						</tr>
 					</tbody>
 				</table>
+				<div
+					style={{
+						fontSize: "1.4rem",
+						fontWeight: "bolder",
+						textAlign: "center",
+						color: "white",
+					}}
+				>
+					{!q && ordersFiltered && ordersFiltered.length === 0
+						? "No Reservations"
+						: ""}
+				</div>
 			</div>
 		</TableViewStoreWrapper>
 	);

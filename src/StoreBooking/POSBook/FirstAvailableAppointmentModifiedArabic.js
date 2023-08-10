@@ -20,7 +20,6 @@ const FirstAvailableAppointmentModifiedArabic = ({
 	setServiceDetailsArray,
 	serviceDetailsArray,
 	appointmentFirst,
-	formatEnglishDate,
 	loading,
 }) => {
 	const disabledDate = (current) => {
@@ -33,8 +32,13 @@ const FirstAvailableAppointmentModifiedArabic = ({
 	};
 
 	const handleChangeDate = (date) => {
+		const formatEnglishDate = (date) => {
+			return moment(date).locale("en").format("MM/DD/YYYY");
+		};
 		if (date) {
-			const formattedDate = formatEnglishDate(date);
+			const formattedDate = formatEnglishDate(
+				moment(date).format("MM/DD/YYYY")
+			);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);

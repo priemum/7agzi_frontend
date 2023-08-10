@@ -11,7 +11,7 @@ import WhatsAppImg from "../HomeImages/kalemna-wats.png";
 
 const SecondSectionArabic = () => {
 	return (
-		<SecondSectionWrapper>
+		<SecondSectionWrapper dir='rtl'>
 			<div className='grid-container'>
 				<img
 					src={HairCutImg}

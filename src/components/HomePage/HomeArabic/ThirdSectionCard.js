@@ -48,7 +48,7 @@ const ThirdSectionCard = ({
 		salon && salon.addStoreName && salon.addStoreName.split(" ").join("-");
 
 	return (
-		<ThirdSectionCardWrapper>
+		<ThirdSectionCardWrapper dir='ltr'>
 			<div className='card'>
 				<div className='card-body'>
 					<div className='card-img-top center'>

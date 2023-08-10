@@ -30,8 +30,13 @@ const ScheduleFormHelperArabic = ({
 	discountCash,
 }) => {
 	const handleChangeDate = (date) => {
+		const formatEnglishDate = (date) => {
+			return moment(date).locale("en").format("MM/DD/YYYY");
+		};
 		if (date) {
-			const formattedDate = moment(date).format("MM/DD/YYYY");
+			const formattedDate = formatEnglishDate(
+				moment(date).format("MM/DD/YYYY")
+			);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);
@@ -223,7 +228,6 @@ const ScheduleFormHelperArabic = ({
 								const selectedServices = values.map((value) =>
 									AllServices.find((service) => service.serviceName === value)
 								);
-								console.log(selectedServices, "selectedServices");
 
 								setServiceDetailsArray(selectedServices);
 							}}
@@ -464,7 +468,7 @@ const ScheduleFormHelperArabic = ({
 											setModalVisible(true);
 										}}
 									>
-										<strong>Add Discount...</strong>
+										<strong>إضافة خصم ...</strong>
 									</div>
 								</div>
 							</div>
@@ -479,6 +483,7 @@ const ScheduleFormHelperArabic = ({
 						chosenTime &&
 						scheduledByUserName &&
 						customerPhone &&
+						customerPhone.length > 9 &&
 						chosenDate &&
 						chosenTime ? (
 							<div

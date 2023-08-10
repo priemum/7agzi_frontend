@@ -58,10 +58,41 @@ const isActive = (history, path) => {
 	}
 };
 
+const isActive2 = (history, path) => {
+	if (history === path) {
+		return {
+			background: "#2c2c2c",
+			fontWeight: "bold",
+			borderRadius: "5px",
+			fontSize: "1.1rem",
+			textAlign: "center",
+			padding: "10px",
+			color: "white",
+			transition: "var(--mainTransition)",
+
+			// textDecoration: "underline",
+		};
+	} else {
+		return {
+			backgroundColor: "grey",
+			padding: "10px",
+			borderRadius: "5px",
+			fontSize: "0.9rem",
+			fontWeight: "bold",
+			textAlign: "center",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			color: "white",
+		};
+	}
+};
+
 const BookingFromStore = ({ language, setLanguage }) => {
 	const { chosenLanguage } = useCartContext();
 
 	const [clickedMenu, setClickedMenu] = useState("NewAppointment");
+	const [clickedMenu2, setClickedMenu2] = useState("FirstAppointment");
+	const [chosenEmployee, setChosenEmployee] = useState({ employeeName: "" });
 	const [allEmployees, setAllEmployees] = useState([]);
 	const [allCustomerType, setAllCustomerType] = useState([]);
 	const [allActiveServices, setAllActiveServices] = useState([]);
@@ -220,7 +251,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 					console.log(data.error);
 				} else {
 					setAppointmentFirst(data);
-					console.log(data, "first Available time");
+					// console.log(data, "first Available time");
 					setLoading(false);
 				}
 			});
@@ -286,6 +317,16 @@ const BookingFromStore = ({ language, setLanguage }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	// console.log(chosenEmployee, "chosenEmp");
+
+	const addItem = (item = [], next = (f) => f) => {
+		let barber = [];
+		barber = item._id;
+
+		localStorage.setItem("barber", JSON.stringify(barber));
+		next();
+	};
 
 	return (
 		<BookFromStoreWrapper
@@ -542,140 +583,220 @@ const BookingFromStore = ({ language, setLanguage }) => {
 
 					{clickedMenu === "NewAppointment" ? (
 						<>
-							<Animated
-								animationIn='bounceInLeft'
-								animationOut='zoomOut'
-								animationInDuration={2000}
-								animationInDelay={0}
-								animationOutDuration={1000}
-								isVisible={true}
-							>
-								{chosenLanguage === "Arabic" ? (
-									<FirstAvailableAppointmentModifiedArabic
-										user={user}
-										language={chosenLanguage}
-										chosenDate={chosenDate}
-										setChosenDate={setChosenDate}
-										allCustomerType={allCustomerType}
-										allActiveServices={allActiveServices}
-										chosenCustomerType={chosenCustomerType}
-										setChosenCustomerType={setChosenCustomerType}
-										chosenService={chosenService}
-										setChosenService={setChosenService}
-										appointmentFirst={appointmentFirst}
-										loading={loading}
-										setServiceDetailsArray={setServiceDetailsArray}
-										serviceDetailsArray={serviceDetailsArray}
-										formatEnglishDate={formatEnglishDate}
-									/>
-								) : (
-									<FirstAvailableAppointmentModified
-										user={user}
-										language={chosenLanguage}
-										chosenDate={chosenDate}
-										setChosenDate={setChosenDate}
-										allCustomerType={allCustomerType}
-										allActiveServices={allActiveServices}
-										chosenCustomerType={chosenCustomerType}
-										setChosenCustomerType={setChosenCustomerType}
-										chosenService={chosenService}
-										setChosenService={setChosenService}
-										appointmentFirst={appointmentFirst}
-										loading={loading}
-										setServiceDetailsArray={setServiceDetailsArray}
-										serviceDetailsArray={serviceDetailsArray}
-										formatEnglishDate={formatEnglishDate}
-									/>
-								)}
-							</Animated>
-							<div style={{ marginBottom: "300px" }}>
-								<div className='col-md-10 mx-auto'>
-									<hr />
+							<div className='row mx-1 my-3'>
+								<div
+									className='col-6 mx-auto text-center'
+									style={isActive2(clickedMenu2, "FirstAppointment")}
+									onClick={() => setClickedMenu2("FirstAppointment")}
+								>
+									أول حجز متاح
 								</div>
-								{chosenLanguage === "Arabic" ? (
-									<div
-										className='my-2'
-										style={{
-											fontWeight: "bolder",
-											fontSize: "1.8rem",
-											color: "#7a0909",
-											textAlign: "center",
-										}}
-									>
-										<strong>جميع المصففين (انقر للحجز):</strong>
-									</div>
-								) : (
-									<div
-										className='my-2'
-										style={{
-											fontWeight: "bolder",
-											fontSize: "1.2rem",
-											// textShadow: "3px 3px 6px",
-											letterSpacing: "2px",
-											color: "#7a0909",
-											textAlign: "center",
-										}}
-									>
-										<strong>All Stylists (Click To Book):</strong>
-									</div>
-								)}
-
-								<div className='row text-center my-2'>
-									{allEmployees &&
-										allEmployees.map((i, c) => (
-											<div
-												className='col-md-3 my-3 mx-auto EmployeesLinks'
-												key={c}
-											>
-												{" "}
-												<Link
-													to={`/store/book-appointment-from-store2/employee/${i._id}`}
-													onClick={() => {
-														localStorage.setItem(
-															"barber",
-															JSON.stringify(i._id)
-														);
-													}}
-													style={{
-														fontWeight: "bold",
-														textTransform: "capitalize",
-													}}
-												>
-													{i.employeeName}
-													<span style={{ color: "black" }}>
-														{" "}
-														(
-														{orders &&
-															orders.filter(
-																(ii) =>
-																	ii.employees &&
-																	ii.employees[0] &&
-																	ii.employees[0]._id === i._id &&
-																	new Date(
-																		ii.scheduledDate
-																	).toLocaleDateString() ===
-																		new Date(chosenDate).toLocaleDateString()
-															) &&
-															orders.filter(
-																(ii) =>
-																	ii.employees &&
-																	ii.employees[0] &&
-																	ii.employees[0]._id === i._id &&
-																	new Date(
-																		ii.scheduledDate
-																	).toLocaleDateString() ===
-																		new Date().toLocaleDateString()
-															).length}{" "}
-														{chosenLanguage === "Arabic"
-															? "حجوزات اليوم"
-															: "Appoint. Today"}{" "}
-														)
-													</span>
-												</Link>
-											</div>
-										))}
+								<div
+									className='col-6 mx-auto text-center'
+									style={isActive2(clickedMenu2, "SpecificEmp")}
+									onClick={() => setClickedMenu2("SpecificEmp")}
+								>
+									احجز مع موظف معين
 								</div>
 							</div>
+							{clickedMenu2 === "FirstAppointment" ? (
+								<>
+									<Animated
+										animationIn='bounceInLeft'
+										animationOut='zoomOut'
+										animationInDuration={2000}
+										animationInDelay={0}
+										animationOutDuration={1000}
+										isVisible={true}
+									>
+										{chosenLanguage === "Arabic" ? (
+											<FirstAvailableAppointmentModifiedArabic
+												user={user}
+												language={chosenLanguage}
+												chosenDate={chosenDate}
+												setChosenDate={setChosenDate}
+												allCustomerType={allCustomerType}
+												allActiveServices={allActiveServices}
+												chosenCustomerType={chosenCustomerType}
+												setChosenCustomerType={setChosenCustomerType}
+												chosenService={chosenService}
+												setChosenService={setChosenService}
+												appointmentFirst={appointmentFirst}
+												loading={loading}
+												setServiceDetailsArray={setServiceDetailsArray}
+												serviceDetailsArray={serviceDetailsArray}
+												formatEnglishDate={formatEnglishDate}
+											/>
+										) : (
+											<FirstAvailableAppointmentModified
+												user={user}
+												language={chosenLanguage}
+												chosenDate={chosenDate}
+												setChosenDate={setChosenDate}
+												allCustomerType={allCustomerType}
+												allActiveServices={allActiveServices}
+												chosenCustomerType={chosenCustomerType}
+												setChosenCustomerType={setChosenCustomerType}
+												chosenService={chosenService}
+												setChosenService={setChosenService}
+												appointmentFirst={appointmentFirst}
+												loading={loading}
+												setServiceDetailsArray={setServiceDetailsArray}
+												serviceDetailsArray={serviceDetailsArray}
+												formatEnglishDate={formatEnglishDate}
+											/>
+										)}
+									</Animated>
+								</>
+							) : null}
+
+							{clickedMenu2 === "SpecificEmp" ? (
+								<div style={{ marginBottom: "300px" }}>
+									<div className='col-md-10 mx-auto'>
+										<hr />
+									</div>
+									{chosenLanguage === "Arabic" ? (
+										<div
+											className='my-2'
+											style={{
+												fontWeight: "bolder",
+												fontSize: "1.8rem",
+												color: "#7a0909",
+												textAlign: "center",
+											}}
+										>
+											<strong>جميع المصففين </strong>
+										</div>
+									) : (
+										<div
+											className='my-2'
+											style={{
+												fontWeight: "bolder",
+												fontSize: "1.2rem",
+												// textShadow: "3px 3px 6px",
+												letterSpacing: "2px",
+												color: "#7a0909",
+												textAlign: "center",
+											}}
+										>
+											<strong>All Stylists </strong>
+										</div>
+									)}
+
+									<Animated
+										animationIn='bounceInLeft'
+										animationOut='zoomOut'
+										animationInDuration={2000}
+										animationInDelay={0}
+										animationOutDuration={1000}
+										isVisible={true}
+									>
+										<div className='text-center'>
+											<label style={{ fontSize: "1rem", fontWeight: "bolder" }}>
+												{" "}
+												{chosenLanguage === "Arabic"
+													? " اختر ستايليست "
+													: "Choose A Stylist"}{" "}
+											</label>
+											<select
+												onChange={(e) => {
+													var indexOfEmployee = allEmployees
+														.map((i) => i.employeeName)
+														.indexOf(e.target.value);
+													setChosenEmployee(allEmployees[indexOfEmployee]);
+												}}
+												placeholder='Select a Service'
+												className='inputFields'
+												style={{
+													paddingTop: "12px",
+													paddingBottom: "12px",
+													paddingRight: "5px",
+													border: "#cfcfcf solid 1px",
+													borderRadius: "10px",
+													width: "90%",
+													textTransform: "capitalize",
+													fontSize: "0.9rem",
+													boxShadow: "2px 2px 2px 2px rgb(0,0,0,0.2)",
+												}}
+											>
+												<option value='' className='text-muted'>
+													{chosenLanguage === "Arabic"
+														? "اختر  "
+														: "Select A Stylist"}
+												</option>
+
+												{allEmployees &&
+													allEmployees.map((e, i) => {
+														return (
+															<option
+																className='text-muted'
+																value={e.employeeName}
+																key={i}
+															>
+																{e.employeeNameOtherLanguage} |{" "}
+																<span style={{ color: "black" }}>
+																	{" "}
+																	(
+																	{orders &&
+																		orders.filter(
+																			(ii) =>
+																				ii.employees &&
+																				ii.employees[0] &&
+																				ii.employees[0]._id === i._id &&
+																				new Date(
+																					ii.scheduledDate
+																				).toLocaleDateString() ===
+																					new Date(
+																						chosenDate
+																					).toLocaleDateString()
+																		) &&
+																		orders.filter(
+																			(ii) =>
+																				ii.employees &&
+																				ii.employees[0] &&
+																				ii.employees[0]._id === i._id &&
+																				new Date(
+																					ii.scheduledDate
+																				).toLocaleDateString() ===
+																					new Date().toLocaleDateString()
+																		).length}{" "}
+																	{chosenLanguage === "Arabic"
+																		? "حجوزات اليوم"
+																		: "Appoint. Today"}{" "}
+																	)
+																</span>
+															</option>
+														);
+													})}
+											</select>
+											{chosenEmployee &&
+											chosenEmployee.employeeName &&
+											chosenEmployee._id ? (
+												<div className='my-5 mx-auto text-center'>
+													<button
+														style={{
+															fontSize: "1.1rem",
+															fontWeight: "bolder",
+															background: "black",
+															color: "white",
+														}}
+														onClick={() => {
+															addItem(chosenEmployee);
+															window.location.href = `/store/book-appointment-from-store2/employee/${chosenEmployee._id}`;
+														}}
+														className='btn'
+													>
+														{" "}
+														{chosenLanguage === "Arabic"
+															? "احجز الآن"
+															: "BOOK NOW"}{" "}
+													</button>
+												</div>
+											) : null}
+										</div>
+									</Animated>
+								</div>
+							) : null}
 						</>
 					) : null}
 					{clickedMenu === "OverAllCalendar" ? (
@@ -692,7 +813,10 @@ const BookingFromStore = ({ language, setLanguage }) => {
 									setSelectedDate={setSelectedDate}
 								/>
 							) : (
-								<TableViewStore orders={orders} />
+								<TableViewStore
+									orders={orders}
+									setSelectedDate={setSelectedDate}
+								/>
 							)}
 						</>
 					) : null}
@@ -728,6 +852,7 @@ const BookFromStoreWrapper = styled.div`
 	.menuWrapper {
 		background-color: ${(props) => (props.show ? "white" : "black")};
 		overflow: auto;
+		min-height: 1000px;
 	}
 	.iconMenu {
 		display: none;

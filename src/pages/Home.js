@@ -76,7 +76,7 @@ const Home = ({ language, setLanguage }) => {
 			},
 			() => setError("Could not get location")
 		);
-	}, [currentPage, itemsPerPage, chosenLanguage]);
+	}, [currentPage, itemsPerPage]);
 
 	useEffect(() => {
 		if (!isLoaded) return;
