@@ -1,25 +1,67 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import imageImage from "../../../../Images/UploadImageImage.jpg";
 import ImageCard2 from "./ImageCard2";
 import { Spin } from "antd";
+import { isAuthenticated } from "../../../../auth";
+import { cloudinaryUpload1 } from "../../../apiOwner";
 
 const ImageCardHero = ({
 	thumbnail,
 	setThumbnail,
 	handleImageRemove,
-	fileUploadAndResizeThumbNail,
 	language,
 	handleImageRemove2,
 	storeThumbnail,
 	setStoreThumbnail,
-	setLoading2,
-	loading2,
 	setLoading3,
 	loading3,
 }) => {
+	const [loading, setLoading] = useState(false);
+
+	const { user, token } = isAuthenticated();
+
+	const fileUploadAndResizeThumbNail = (e) => {
+		setLoading(true);
+
+		let files = e.target.files;
+		let allUploadedFiles =
+			thumbnail &&
+			thumbnail.images &&
+			thumbnail.images[0] &&
+			thumbnail.images[0].url
+				? [...thumbnail.images]
+				: [];
+
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				let reader = new FileReader();
+				reader.readAsDataURL(files[i]);
+				reader.onload = (event) => {
+					cloudinaryUpload1(user._id, token, { image: event.target.result })
+						.then((data) => {
+							allUploadedFiles.push(data);
+
+							setThumbnail({
+								...thumbnail,
+								images: allUploadedFiles,
+							});
+						})
+						.catch((err) => {
+							setLoading(false);
+							console.log("CLOUDINARY UPLOAD ERR", err);
+						});
+				};
+			}
+
+			setTimeout(() => {
+				setLoading(false);
+			}, 1500);
+		}
+	};
+
 	return (
 		<ImageCardHeroWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			<div className='row'>
@@ -76,7 +118,7 @@ const ImageCardHero = ({
 										})}
 								</div>
 								<>
-									{loading2 ? (
+									{loading ? (
 										<div
 											style={{
 												textAlign: "center",
