@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Modal } from "antd";
+// eslint-disable-next-line
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { cloudinaryUpload1, createEmployee } from "../../../apiOwner";
