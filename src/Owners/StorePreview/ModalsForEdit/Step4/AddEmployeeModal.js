@@ -68,29 +68,24 @@ const AddEmployeeModal = ({
 					continue; // skip this file
 				}
 
-				Resizer.imageFileResizer(
-					files[i],
-					800,
-					954,
-					"AUTO",
-					100,
-					0,
-					(uri) => {
-						cloudinaryUpload1(user._id, token, { image: uri })
-							.then((data) => {
-								allUploadedFiles.push(data);
-								setLoading(false);
+				// Read the file as data URL
+				let reader = new FileReader();
+				reader.readAsDataURL(files[i]);
+				reader.onload = (e) => {
+					let uri = e.target.result;
+					cloudinaryUpload1(user._id, token, { image: uri })
+						.then((data) => {
+							allUploadedFiles.push(data);
+							setLoading(false);
 
-								setValues({ ...values, workPhotos: allUploadedFiles });
-							})
-							.catch((err) => {
-								setLoading(false);
+							setValues({ ...values, workPhotos: allUploadedFiles });
+						})
+						.catch((err) => {
+							setLoading(false);
 
-								console.log("CLOUDINARY UPLOAD ERR", err);
-							});
-					},
-					"base64"
-				);
+							console.log("CLOUDINARY UPLOAD ERR", err);
+						});
+				};
 			}
 		}
 	};
