@@ -175,7 +175,7 @@ const AddEmployeeModal = ({
 		}
 
 		createEmployee(user._id, token, values).then((data) => {
-			if (data.error) {
+			if (data && data.error) {
 				console.log(data.error);
 			} else {
 				toast.success("Stylist Was Successfully Added");
