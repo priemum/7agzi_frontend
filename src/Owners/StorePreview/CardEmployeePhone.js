@@ -7,14 +7,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import { showAverageRating2 } from "../../components/SingleEmployee/Rating";
 import StarRating from "react-star-ratings";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const CardEmployeePhone = ({
 	employee,
 	storeProperties,
 	contact,
 	language,
+	setPickedEmployee,
+	setModalVisible,
+	setEmployeeServices,
 }) => {
 	const scheduleAppointmentbtn = () => {
+		// console.log(employee, "employee");
 		return (
 			<div>
 				<button
@@ -26,6 +32,25 @@ const CardEmployeePhone = ({
 					}}
 					type='button'
 					className='btn '
+					onClick={() => {
+						setPickedEmployee(employee);
+						console.log(employee.services, "employee.services");
+						ReactGA.event("Account_Wants_To_Edit_Stylist", {
+							event_category: "Account_Wants_To_Edit_Stylist",
+							event_label: "Account_Wants_To_Edit_Stylist",
+							value: 0, // Optional extra parameters
+						});
+
+						ReactPixel.track("Account_Wants_To_Edit_Stylist", {
+							content_name: "Account_Wants_To_Edit_Stylist",
+							content_category: "Account_Wants_To_Edit_Stylist",
+							value: "",
+							currency: "",
+						});
+
+						setEmployeeServices(employee.services);
+						setModalVisible(true);
+					}}
 				>
 					{language === "Arabic" ? "تعديل الموظف" : "EDIT EMPLOYEE"}
 				</button>

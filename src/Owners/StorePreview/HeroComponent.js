@@ -14,6 +14,7 @@ const HeroComponent = ({
 	setModalVisible,
 	setModalVisible2,
 	overallAddedSettings,
+	clickedOnPos,
 }) => {
 	const [offsetY, setOffsetY] = useState(0);
 	const handleScroll = () => setOffsetY(window.scrollY);
@@ -69,7 +70,10 @@ const HeroComponent = ({
 					width: window.innerWidth >= 1000 ? "100vw" : "104vw", // change this line
 				}}
 			>
-				{overallAddedSettings && overallAddedSettings.length > 1 ? (
+				{overallAddedSettings &&
+				overallAddedSettings.length > 1 &&
+				AllServices2.length > 0 &&
+				allEmployees.length > 0 ? (
 					<div
 						style={{
 							position: "absolute",
@@ -77,17 +81,59 @@ const HeroComponent = ({
 							left: 15, // adjust to fit your needs
 						}}
 					>
+						<>
+							{overallAddedSettings &&
+							overallAddedSettings.length > 1 &&
+							AllServices2.length > 0 &&
+							allEmployees.length > 0 &&
+							!clickedOnPos ? (
+								<div
+									style={{
+										position: "absolute",
+										top: "-25px", // adjust this to fit your needs
+										left: "140%", // adjust this to center the arrow above the button
+										animation: "moveArrow2 1s infinite",
+										transform: "translateX(-50%)",
+										fontWeight: "bolder",
+										fontSize: "1.8rem",
+										color: "#ff7676",
+										background: "black",
+										padding: "5px",
+										borderRadius: "10px",
+									}}
+								>
+									← #5
+								</div>
+							) : null}
+						</>
 						<button
 							style={{
 								border: "3px dotted white",
 								borderRadius: "10px",
 								backgroundColor: "darkred",
 								color: "white",
+								fontSize: "1.5rem",
+								marginLeft: "20px",
+								fontWeight: "bolder",
 							}}
 							type='button'
 							className='btn  p-1'
 							onClick={() => {
-								window.location.href = "/store/admin/dashboard";
+								localStorage.setItem("ClickedPOS", "ClickedPOS");
+								ReactGA.event("Account_Clicked_To_POS", {
+									event_category: "Account_Clicked_To_POS",
+									event_label: "Account_Clicked_To_POS",
+									value: 0, // Optional extra parameters
+								});
+
+								ReactPixel.track("Account_Clicked_To_POS", {
+									content_name: "Account_Clicked_To_POS",
+									content_category: "Account_Clicked_To_POS",
+									value: "",
+									currency: "",
+								});
+
+								window.location.href = "/store/book-appointment-from-store";
 							}}
 						>
 							{language === "Arabic" ? "الصفحة الرئيسية" : "Owner Dashboard"}

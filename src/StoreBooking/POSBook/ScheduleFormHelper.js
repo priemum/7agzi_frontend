@@ -319,7 +319,19 @@ const ScheduleFormHelper = ({
 								))}
 						</select>
 					</>
-				) : null}
+				) : (
+					<div
+						style={{
+							fontWeight: "bolder",
+							color: "white",
+							marginTop: "20px",
+							textAlign: "center",
+						}}
+					>
+						No Available Appointments On The Selected Date, Please Choose
+						Another One.
+					</div>
+				)}
 				{employeeAvailability &&
 				employeeAvailability.hoursAvailable &&
 				employeeAvailability.hoursAvailable.length > 0 &&

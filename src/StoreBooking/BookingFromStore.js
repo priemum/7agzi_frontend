@@ -403,6 +403,19 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											موعد جديد
 										</Link>
 									</div>
+									<div
+										className='col-md-3 col-4 mx-auto menuItems mt-2'
+										style={isActive(clickedMenu, "TableView")}
+										onClick={() => setClickedMenu("TableView")}
+									>
+										<Link
+											style={isActive(clickedMenu, "TableView")}
+											to='/store/book-appointment-from-store?table-view'
+										>
+											<i className='fa-brands fa-servicestack mr-1'></i>
+											الكاشير
+										</Link>
+									</div>
 
 									<div
 										className='col-md-3 col-4 mx-auto menuItems mt-2'
@@ -415,20 +428,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
 											تقويم
-										</Link>
-									</div>
-
-									<div
-										className='col-md-3 col-4 mx-auto menuItems mt-2'
-										style={isActive(clickedMenu, "TableView")}
-										onClick={() => setClickedMenu("TableView")}
-									>
-										<Link
-											style={isActive(clickedMenu, "TableView")}
-											to='/store/book-appointment-from-store?table-view'
-										>
-											<i className='fa-brands fa-servicestack mr-1'></i>
-											الكاشير
 										</Link>
 									</div>
 								</div>
@@ -461,7 +460,18 @@ const BookingFromStore = ({ language, setLanguage }) => {
 											New Appoint.
 										</Link>
 									</div>
-
+									<div
+										className='col-md-3 col-4 mx-auto menuItems'
+										style={isActive(clickedMenu, "TableView")}
+										onClick={() => setClickedMenu("TableView")}
+									>
+										<Link
+											style={isActive(clickedMenu, "TableView")}
+											to='/store/book-appointment-from-store?table-view'
+										>
+											<i className='fa-brands fa-servicestack mr-1'></i> Cashier
+										</Link>
+									</div>
 									<div
 										className='col-md-3 col-4 mx-auto menuItems'
 										style={isActive(clickedMenu, "OverAllCalendar")}
@@ -473,18 +483,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
 											Calendar
-										</Link>
-									</div>
-									<div
-										className='col-md-3 col-4 mx-auto menuItems'
-										style={isActive(clickedMenu, "TableView")}
-										onClick={() => setClickedMenu("TableView")}
-									>
-										<Link
-											style={isActive(clickedMenu, "TableView")}
-											to='/store/book-appointment-from-store?table-view'
-										>
-											<i className='fa-brands fa-servicestack mr-1'></i> Cashier
 										</Link>
 									</div>
 								</div>
@@ -510,19 +508,6 @@ const BookingFromStore = ({ language, setLanguage }) => {
 
 									<div
 										className='col-md-4 col-4 mx-auto menuItems'
-										style={isActive(clickedMenu, "OverAllCalendar")}
-										onClick={() => setClickedMenu("OverAllCalendar")}
-									>
-										<Link
-											style={isActive(clickedMenu, "OverAllCalendar")}
-											to='/store/book-appointment-from-store?overall-calendar'
-										>
-											<i className='fa-brands fa-servicestack mr-1'></i>
-											تقويم
-										</Link>
-									</div>
-									<div
-										className='col-md-4 col-4 mx-auto menuItems'
 										style={isActive(clickedMenu, "TableView")}
 										onClick={() => setClickedMenu("TableView")}
 									>
@@ -532,6 +517,20 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
 											الكاشير
+										</Link>
+									</div>
+
+									<div
+										className='col-md-4 col-4 mx-auto menuItems'
+										style={isActive(clickedMenu, "OverAllCalendar")}
+										onClick={() => setClickedMenu("OverAllCalendar")}
+									>
+										<Link
+											style={isActive(clickedMenu, "OverAllCalendar")}
+											to='/store/book-appointment-from-store?overall-calendar'
+										>
+											<i className='fa-brands fa-servicestack mr-1'></i>
+											تقويم
 										</Link>
 									</div>
 								</div>
@@ -626,6 +625,11 @@ const BookingFromStore = ({ language, setLanguage }) => {
 												setServiceDetailsArray={setServiceDetailsArray}
 												serviceDetailsArray={serviceDetailsArray}
 												formatEnglishDate={formatEnglishDate}
+												allEmployees={allEmployees}
+												addItem={addItem}
+												chosenEmployee={chosenEmployee}
+												setChosenEmployee={setChosenEmployee}
+												orders={orders}
 											/>
 										) : (
 											<FirstAvailableAppointmentModified

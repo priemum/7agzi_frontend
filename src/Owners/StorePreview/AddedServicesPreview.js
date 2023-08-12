@@ -1,11 +1,21 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Collapse, Checkbox } from "antd";
+import styled, { keyframes } from "styled-components";
+import { Collapse } from "antd";
 import { getServices } from "../apiOwner";
+import EditServiceModal from "./ModalsForEdit/Step3/EditServiceModal";
 
 const { Panel } = Collapse;
+
+const drawCircle = keyframes`
+  from {
+    stroke-dashoffset: 157;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+`;
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -40,13 +50,17 @@ const isActive = (history, path) => {
 };
 
 const AddedServicesPreview = ({
+	language,
 	chosenCustomerType,
 	ownerId,
 	overallAddedSettings,
+	setModalVisible,
+	setModalVisible2,
+	modalVisible2,
 }) => {
 	const [AllServices, setAllServices] = useState([]);
 	const [clickedMenu, setClickedMenu] = useState("STANDARD");
-	const [checkedService, setCheckedService] = useState(null);
+	const [pickedService, setPickedService] = useState("");
 
 	const getAllService = (chosenCustomerTypeFromFirstAvailable) => {
 		getServices("Token", ownerId).then((data) => {
@@ -115,14 +129,18 @@ const AddedServicesPreview = ({
 							<Panel
 								key={i}
 								header={
-									<div>
+									<div dir={language === "Arabic" ? "rtl" : "ltr"}>
 										<div className='row'>
 											<div className='col-4'>
 												<span
 													className=''
 													style={{ color: "white", fontSize: "11px" }}
 												>
-													{s.serviceName}{" "}
+													{language === "Arabic" ? (
+														<span> {s.serviceNameOtherLanguage}</span>
+													) : (
+														<span> {s.serviceName}</span>
+													)}{" "}
 												</span>
 											</div>
 											<div className='col-3'>
@@ -138,14 +156,26 @@ const AddedServicesPreview = ({
 													className=''
 													style={{ color: "white", fontSize: "11px" }}
 												>
-													{s.serviceTime} mins
+													{s.serviceTime} دقيقة
 												</span>
 											</div>
-											<div className='col-2'>
-												<Checkbox
-													checked={checkedService === s._id}
-													onChange={() => setCheckedService(s._id)}
-												/>
+											<div
+												className='col-2'
+												onClick={() => {
+													setPickedService(s);
+													setModalVisible2(true);
+												}}
+												style={{
+													// background: "#3d6791",
+													borderRadius: "5px",
+													textAlign: "center",
+													fontSize: language === "Arabic" ? "1rem" : "",
+												}}
+											>
+												{language === "Arabic" ? "تعديل" : "Edit"}
+												<svg width='50' height='50'>
+													<circle cx='20' cy='20' r='20' />
+												</svg>
 											</div>
 										</div>
 									</div>
@@ -185,6 +215,14 @@ const AddedServicesPreview = ({
 
 	return (
 		<AddedServicesStyling>
+			<EditServiceModal
+				language={language}
+				setModalVisible={setModalVisible2}
+				modalVisible={modalVisible2}
+				pickedService={pickedService}
+				setPickedService={setPickedService}
+			/>
+
 			<div className='row my-3 ml-3'>
 				<div
 					className='col-3'
@@ -230,7 +268,8 @@ const AddedServicesPreview = ({
 
 						<button
 							onClick={() => {
-								window.location.href = "/store/admin/services";
+								// window.location.href = "/store/admin/services";
+								setModalVisible(true);
 							}}
 							style={{
 								border: "3px dotted black",
@@ -240,7 +279,11 @@ const AddedServicesPreview = ({
 							type='button'
 							className='btn btn-info p-1 float-right'
 						>
-							Edit Services
+							{language === "Arabic" ? (
+								<span style={{ fontSize: "1rem" }}> أضف الخدمات</span>
+							) : (
+								"Add Services"
+							)}
 						</button>
 					</div>
 				) : null}
@@ -297,6 +340,21 @@ const AddedServicesStyling = styled.div`
 		100% {
 			transform: translateX(-70%);
 		}
+	}
+
+	svg {
+		position: absolute;
+		top: -30%;
+		left: 20%;
+	}
+
+	circle {
+		fill: none;
+		stroke: #3d6791;
+		stroke-width: 2;
+		stroke-dasharray: 157; /* Approximate value for circle with 25 radius */
+		stroke-dashoffset: 157;
+		animation: ${drawCircle} 10s forwards; /* 2s is the duration, change as needed */
 	}
 
 	@media (max-width: 1000px) {

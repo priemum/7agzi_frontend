@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { getSingleUser, isAuthenticated } from "../../auth";
 import CardForEmployeesList from "./CardForEmployeesList";
 import CardEmployeePhone from "./CardEmployeePhone";
+import EditEmployeeModal from "./ModalsForEdit/Step4/EditEmployeeModal";
 // import { Helmet } from "react-helmet";
 
 const EmployeesListPreview = ({
@@ -14,10 +15,16 @@ const EmployeesListPreview = ({
 	contact,
 	filteredResults,
 	language,
+	setModalVisible,
+	allWorkingHours,
+	allServices,
 }) => {
 	// eslint-disable-next-line
 	const [updatedUser, setUpdatedUser] = useState({});
 	const [loading, setLoading] = useState(true);
+	const [modalVisible2, setModalVisible2] = useState(false);
+	const [pickedEmployee, setPickedEmployee] = useState("");
+	const [employeeServices, setEmployeeServices] = useState([]);
 
 	const { token } = isAuthenticated();
 
@@ -57,6 +64,19 @@ const EmployeesListPreview = ({
 
 	return (
 		<ScheduleStyling>
+			{modalVisible2 ? (
+				<EditEmployeeModal
+					modalVisible={modalVisible2}
+					setModalVisible={setModalVisible2}
+					language={language}
+					pickedEmployee={pickedEmployee}
+					setPickedEmployee={setPickedEmployee}
+					allWorkingHours={allWorkingHours}
+					employeeServices={employeeServices}
+					allServices={allServices}
+				/>
+			) : null}
+
 			<React.Fragment>
 				{loading ? (
 					<div
@@ -94,6 +114,9 @@ const EmployeesListPreview = ({
 						<div className='row '>
 							<div className='mb-3 text-center mx-auto'>
 								<button
+									onClick={() => {
+										setModalVisible(true);
+									}}
 									style={{
 										border: "3px dotted white",
 										borderRadius: "10px",
@@ -113,6 +136,9 @@ const EmployeesListPreview = ({
 										storeProperties={storeProperties}
 										contact={contact}
 										language={language}
+										setModalVisible={setModalVisible2}
+										setPickedEmployee={setPickedEmployee}
+										setEmployeeServices={setEmployeeServices}
 									/>
 								</div>
 							))}

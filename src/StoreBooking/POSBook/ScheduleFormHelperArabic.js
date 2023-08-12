@@ -90,6 +90,8 @@ const ScheduleFormHelperArabic = ({
 		servicesPicked &&
 		servicesPicked.reduce((sum, service) => sum + service.servicePrice, 0);
 
+	console.log(employeeAvailability, "employeeAvailability");
+
 	return (
 		<ScheduleFormHelperWrapper dir='rtl'>
 			<>
@@ -319,7 +321,24 @@ const ScheduleFormHelperArabic = ({
 								))}
 						</select>
 					</>
-				) : null}
+				) : (
+					<div
+						style={{
+							fontWeight: "bolder",
+							color: "white",
+							marginTop: "20px",
+							textAlign: "center",
+							fontSize: "1.5rem",
+						}}
+					>
+						{employeeAvailability &&
+						employeeAvailability.availability === "Unavailable" &&
+						serviceDetailsArray &&
+						serviceDetailsArray.length > 0
+							? "	لا توجد مواعيد متاحة في التاريخ المحدد، يرجى اختيار تاريخ آخر."
+							: ""}
+					</div>
+				)}
 				{employeeAvailability &&
 				employeeAvailability.hoursAvailable &&
 				employeeAvailability.hoursAvailable.length > 0 &&

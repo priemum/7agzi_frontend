@@ -370,3 +370,36 @@ body {
 .slick-initialized {
 	z-index: 20 !important;
 }
+
+.service-name-col {
+	width: 15% !important;
+}
+.price-col {
+	width: 40% !important;
+}
+.time-col {
+	width: 40% !important;
+}
+.delete-col {
+	width: 5% !important;
+}
+
+.slide-enter {
+	transform: translateX(0);
+	opacity: 1;
+}
+
+.slide-enter-active {
+	transform: translateX(0);
+	opacity: 1;
+	transition: all 500ms ease-in-out;
+}
+
+.slide-exit {
+	transform: translateX(0);
+}
+
+.slide-exit-active {
+	transform: translateX(100%);
+	transition: transform 0.5s ease-in-out;
+}

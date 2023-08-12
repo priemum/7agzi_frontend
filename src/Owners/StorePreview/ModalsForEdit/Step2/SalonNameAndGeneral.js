@@ -8,11 +8,11 @@ import {
 	LoyaltyPointsAndStoreStatus,
 	allLoyaltyPointsAndStoreStatus,
 	getPreviousScheduledHours,
-} from "../../apiOwner";
-import { isAuthenticated } from "../../../auth";
+} from "../../../apiOwner";
+import { isAuthenticated } from "../../../../auth";
 import { DatePicker } from "antd";
 import moment from "moment";
-import StoreTimePicker from "../StoreTimePicker";
+import StoreTimePicker from "./StoreTimePicker";
 import { toast } from "react-toastify";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
@@ -508,7 +508,7 @@ const SalonNameAndGeneral = ({
 							<div className='form-group'>
 								<label className='text-muted'>
 									{language === "Arabic"
-										? "أضف التواريخ التي تكون فيها المتجر مغلقًا (مثل العطلات، يوم العمل، وما إلى ذلك)؟"
+										? "أضف التواريخ التي تكون فيها المتجر مغلقًا (مثل العطلات، عيد العمال ، وما إلى ذلك)؟"
 										: "Add dates your store is closed (e.g. Holidays, labor day, etc...)"}
 								</label>
 								<br />
@@ -523,7 +523,11 @@ const SalonNameAndGeneral = ({
 									max
 									showToday={true}
 									// defaultValue={moment()}
-									placeholder='Please pick the desired store closing date'
+									placeholder={
+										language === "Arabic"
+											? "الرجاء اختيار مواعيد إغلاق الصالون المطلوبة"
+											: "Please pick the desired store closing date"
+									}
 								/>
 								<div className='ml-5 mb-1'>
 									<button

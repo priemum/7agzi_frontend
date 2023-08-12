@@ -8,6 +8,7 @@ import {
 	getContacts,
 	getEmployees,
 	getPreviousAddedGallary,
+	getPreviousScheduledHours,
 	getServices,
 } from "../apiOwner";
 import { isAuthenticated } from "../../auth";
@@ -19,9 +20,13 @@ import ContactUs from "./ContactUs";
 import AboutUs from "./AboutUs";
 import EditBanner from "./ModalsForEdit/BannerAndThumb/EditBanner";
 import { Spin } from "antd";
-import SalonNameAndGeneral from "./ModalsForEdit/SalonNameAndGeneral";
+import SalonNameAndGeneral from "./ModalsForEdit/Step2/SalonNameAndGeneral";
 import { Helmet } from "react-helmet";
 import { useCartContext } from "../../sidebar_context";
+import ServicesModal from "./ModalsForEdit/Step3/ServicesModal";
+import AddEmployeeModal from "./ModalsForEdit/Step4/AddEmployeeModal";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -77,9 +82,13 @@ const StorePreviewMain = ({ language }) => {
 	const [chosenCustomerType2, setChosenCustomerType2] = useState("");
 	const [allCustomerType, setAllCustomerType] = useState([]);
 	const [storeThumbnail, setStoreThumbnail] = useState([]);
+	const [allWorkingHours, setAllWorkingHours] = useState([]);
 
 	const [modalVisible, setModalVisible] = useState(false);
 	const [modalVisible2, setModalVisible2] = useState(false);
+	const [modalVisible3, setModalVisible3] = useState(false);
+	const [modalVisible4, setModalVisible4] = useState(false);
+	const [modalVisible5, setModalVisible5] = useState(false);
 
 	const { user, token } = isAuthenticated();
 
@@ -251,6 +260,27 @@ const StorePreviewMain = ({ language }) => {
 		});
 	};
 
+	const gettingAllWorkingHours = () => {
+		setLoading(true);
+		getPreviousScheduledHours(user._id, token).then((data) => {
+			if (data.error) {
+				console.log(data.error);
+			} else {
+				// console.log(data, "data from API");
+				var allAddedHours_Settings =
+					data &&
+					data[data.length - 1] &&
+					data[data.length - 1].hoursCanBeScheduled.map(
+						(workinghour) => workinghour
+					);
+
+				setAllWorkingHours(allAddedHours_Settings);
+
+				setLoading(false);
+			}
+		});
+	};
+
 	useEffect(() => {
 		gettingAllServices();
 		gettingAllAbouts();
@@ -259,8 +289,11 @@ const StorePreviewMain = ({ language }) => {
 		gettingAllEmployees();
 		getStoreGallary();
 		gettingPreviousLoyaltyPointsManagement();
+		gettingAllWorkingHours();
 		// eslint-disable-next-line
 	}, []);
+
+	const clickedOnPos = localStorage.getItem("ClickedPOS") === "ClickedPOS";
 
 	return (
 		<StorePreviewMainWrapper>
@@ -316,6 +349,25 @@ const StorePreviewMain = ({ language }) => {
 				setStoreThumbnail={setStoreThumbnail}
 				lastSettings={lastSettings}
 			/>
+
+			<ServicesModal
+				language={chosenLanguage}
+				setLoading={setLoading}
+				modalVisible={modalVisible3}
+				setModalVisible={setModalVisible3}
+				setModalVisible2={setModalVisible4}
+				modalVisible2={modalVisible4}
+			/>
+
+			<AddEmployeeModal
+				modalVisible={modalVisible5}
+				setModalVisible={setModalVisible5}
+				language={chosenLanguage}
+				user={user}
+				lastAddedSettings={lastSettings}
+				allWorkingHours={allWorkingHours}
+				allServices={AllServices}
+			/>
 			<div>
 				{loading ? (
 					<div
@@ -339,6 +391,7 @@ const StorePreviewMain = ({ language }) => {
 						setModalVisible2={setModalVisible2}
 						overallAddedSettings={overallAddedSettings}
 						language={chosenLanguage}
+						clickedOnPos={clickedOnPos}
 					/>
 				)}
 			</div>
@@ -358,10 +411,29 @@ const StorePreviewMain = ({ language }) => {
 					>
 						{chosenLanguage === "Arabic" ? "الخدمات" : "SERVICES"}
 					</div>
+
 					<div
 						className='col-2 navLinks'
 						style={isActive(clickedMenu, "STYLISTS")}
-						onClick={() => setClickedMenu("STYLISTS")}
+						onClick={() => {
+							setClickedMenu("STYLISTS");
+							if (allEmployees && allEmployees.length <= 1) {
+								setModalVisible5(true);
+							}
+
+							ReactGA.event("Account_Clicked_To_Add_Stylists", {
+								event_category: "Account_Clicked_To_Add_Stylists",
+								event_label: "Account_Clicked_To_Add_Stylists",
+								value: 0, // Optional extra parameters
+							});
+
+							ReactPixel.track("Account_Clicked_To_Add_Stylists", {
+								content_name: "Account_Clicked_To_Add_Stylists",
+								content_category: "Account_Clicked_To_Add_Stylists",
+								value: "",
+								currency: "",
+							});
+						}}
 					>
 						{chosenLanguage === "Arabic" ? "الفريق" : "TEAM"}
 					</div>
@@ -429,11 +501,44 @@ const StorePreviewMain = ({ language }) => {
 								})}
 						</select>
 					</div>
+
+					<div
+						style={{
+							transform: "rotate(-30deg)",
+							transformOrigin: "center",
+							zIndex: "10000000",
+							background: "white",
+						}}
+					>
+						{overallAddedSettings &&
+						overallAddedSettings.length >= 2 &&
+						AllServices &&
+						AllServices.length > 0 &&
+						allEmployees &&
+						allEmployees.length <= 1 ? (
+							<div
+								style={{
+									position: "absolute",
+									right: "190px",
+									top: "-150px",
+									animation: "moveArrow 1s infinite",
+									fontWeight: "bolder",
+									fontSize: "3rem",
+									color: "#ff7676",
+								}}
+							>
+								#4 →
+							</div>
+						) : null}
+					</div>
 					<AddedServicesPreview
 						ownerId={user._id}
 						chosenCustomerType={chosenCustomerType2}
 						language={chosenLanguage}
 						overallAddedSettings={overallAddedSettings}
+						setModalVisible={setModalVisible3}
+						setModalVisible2={setModalVisible4}
+						modalVisible2={modalVisible4}
 					/>
 				</div>
 			) : null}
@@ -445,6 +550,10 @@ const StorePreviewMain = ({ language }) => {
 						contact={contact}
 						filteredResults={allEmployees}
 						language={chosenLanguage}
+						modalVisible={modalVisible5}
+						setModalVisible={setModalVisible5}
+						allWorkingHours={allWorkingHours}
+						allServices={AllServices}
 					/>
 				</div>
 			) : null}
@@ -487,6 +596,18 @@ const StorePreviewMainWrapper = styled.div`
 
 	.phoneContent {
 		display: none;
+	}
+
+	@keyframes moveArrow {
+		0% {
+			transform: translateX(-70%);
+		}
+		50% {
+			transform: translateX(-40%);
+		}
+		100% {
+			transform: translateX(-70%);
+		}
 	}
 
 	@media (max-width: 800px) {
