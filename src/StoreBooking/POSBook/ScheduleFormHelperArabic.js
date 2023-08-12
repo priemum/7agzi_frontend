@@ -46,13 +46,13 @@ const ScheduleFormHelperArabic = ({
 
 	const hoursModifiedFunction = () => {
 		// Assuming you have 'chosenDate' available in this scope.
-		let now = moment.tz("Africa/Cairo"); // Current date & time in the Egyptian time zone
-		let chosenDateHelper = moment.tz(chosenDate, "Africa/Cairo"); // Make sure this is in the correct date format. If it is a string, you might need to parse it first.
+		let now = moment.tz("Africa/Cairo").locale("en"); // Current date & time in the Egyptian time zone, set to English locale
+		let chosenDateHelper = moment.tz(chosenDate, "Africa/Cairo").locale("en"); // Make sure this is in the correct date format. If it is a string, you might need to parse it first.
 
 		// Check if chosenDate is today.
 		if (now.isSame(chosenDateHelper, "day")) {
 			// Current hour in HH:mm format in the Egyptian time zone
-			let currentHour = moment.tz("Africa/Cairo").format("HH:mm");
+			let currentHour = moment.tz("Africa/Cairo").locale("en").format("HH:mm");
 			// Check that employeeAvailability is not null or undefined before accessing hoursAvailable
 			if (employeeAvailability && employeeAvailability.hoursAvailable) {
 				// Filter hoursAvailable to only include times that are later than the current time
@@ -74,6 +74,7 @@ const ScheduleFormHelperArabic = ({
 		// Return empty array if employeeAvailability or hoursAvailable is undefined or null
 		return [];
 	};
+
 	const servicesPicked =
 		employeeAvailability && employeeAvailability.servicesPicked;
 
