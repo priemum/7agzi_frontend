@@ -21,6 +21,8 @@ import SignupForm from "./pages/SignupForm";
 import SingleEmployee from "./pages/SingleEmployee";
 import SchedulePageSteps2 from "./pages/SchedulePage/SchedulePageAdjusted/SchedulePageSteps2";
 import MyStoreList from "./pages/MyStoreList";
+import Forgot from "./auth/Forgot";
+import Reset from "./auth/Reset";
 
 // eslint-disable-next-line
 import StoresList from "./pages/StoresList";
@@ -216,6 +218,15 @@ function App() {
 						exact
 						component={() => <SignupForm language={language} />}
 					/>
+
+					<Route
+						path='/auth/password/forgot'
+						exact
+						component={() => <Forgot language={language} />}
+					/>
+
+					<Route path='/auth/password/reset/:token' exact component={Reset} />
+
 					<Route
 						path='/about'
 						exact
@@ -284,6 +295,7 @@ function App() {
 						exact
 						component={SuccessfulSchedule}
 					/>
+
 					{/* <Route
 						path='/agents-signup-form'
 						exact

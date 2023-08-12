@@ -494,6 +494,7 @@ const OwnerDashboardWrapper = styled.div`
 
 	.menuWrapper {
 		background-color: ${(props) => (props.show ? "" : "black")};
+		min-height: 1200px;
 		overflow: auto;
 	}
 	.iconMenu {

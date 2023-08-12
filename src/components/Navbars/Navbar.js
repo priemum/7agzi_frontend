@@ -171,8 +171,8 @@ const Navbar = ({ history, language }) => {
 						<li className='nav-item ml-4'>
 							<Link
 								className='nav-link'
-								style={isActive2(history, "/store/admin/dashboard")}
-								to='/store/admin/dashboard'
+								style={isActive2(history, "/store/book-appointment-from-store")}
+								to='/store/book-appointment-from-store'
 								onClick={() => {
 									window.scrollTo({ top: 90, behavior: "smooth" });
 								}}

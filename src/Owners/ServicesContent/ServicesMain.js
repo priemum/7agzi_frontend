@@ -137,6 +137,7 @@ const ServicesMainWrapper = styled.div`
 
 	.menuWrapper {
 		background-color: ${(props) => (props.show ? "white" : "black")};
+		min-height: 1200px;
 		overflow: auto;
 	}
 	.iconMenu {

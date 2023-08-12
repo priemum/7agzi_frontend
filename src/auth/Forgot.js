@@ -1,14 +1,18 @@
 /** @format */
 
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import styled from "styled-components";
+import { useCartContext } from "../sidebar_context";
 
-const Forgot = () => {
+const Forgot = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	const [values, setValues] = useState({
 		email: "",
-		buttonText: "Reset Link",
+		buttonText:
+			chosenLanguage === "Arabic" ? "اعد ضبط كلمه السر" : "Reset Link",
 	});
 
 	const { email, buttonText } = values;
@@ -18,13 +22,27 @@ const Forgot = () => {
 		setValues({ ...values, [name]: event.target.value });
 	};
 
+	// Check if the input is a valid email or phone number
+	let username;
+	const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+	const phonePattern = /^\d+$/;
+
+	if (emailPattern.test(email)) {
+		username = email; // It's an email
+	} else if (phonePattern.test(email)) {
+		username = email; // It's a phone number
+	} else {
+		setValues({ ...values, error: true, loading: false });
+		return toast.error("Please fill in the correct phone or email");
+	}
+
 	const clickSubmit = (event) => {
 		event.preventDefault();
 		setValues({ ...values, buttonText: "Submitting" });
 		axios({
 			method: "PUT",
 			url: `${process.env.REACT_APP_API_URL}/forgot-password`,
-			data: { email },
+			data: { username },
 		})
 			.then((response) => {
 				console.log("FORGOT PASSWORD SUCCESS", response);
@@ -41,7 +59,7 @@ const Forgot = () => {
 	const passwordForgotForm = () => (
 		<form>
 			<div className='form-group'>
-				<label className='text-muted'>Email</label>
+				<label className='text-muted'>Email OR Phone #</label>
 				<input
 					onChange={handleChange("email")}
 					value={email}
@@ -54,7 +72,34 @@ const Forgot = () => {
 				<button
 					className='btn btn-primary'
 					onClick={clickSubmit}
-					disabled={!email}>
+					disabled={!email}
+				>
+					{buttonText}
+				</button>
+			</div>
+		</form>
+	);
+
+	const passwordForgotFormArabic = () => (
+		<form dir='rtl' style={{ textAlign: "right" }}>
+			<div className='form-group'>
+				<label className='text-muted' style={{ fontSize: "1.1rem" }}>
+					<strong> عنوان البريد الإلكتروني أو رقم الهاتف</strong>
+				</label>
+				<input
+					onChange={handleChange("email")}
+					value={email}
+					type='email'
+					className='form-control'
+				/>
+			</div>
+
+			<div>
+				<button
+					className='btn btn-primary'
+					onClick={clickSubmit}
+					disabled={!email}
+				>
 					{buttonText}
 				</button>
 			</div>
@@ -62,31 +107,39 @@ const Forgot = () => {
 	);
 
 	return (
-		<Fragment>
+		<FogotWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<div
 				className='col-md-6 offset-md-3 my-5 p-4'
-				style={{ borderRadius: "50px", border: "2px black solid" }}>
+				style={{ borderRadius: "10px", border: "1px #c1d3e5 solid" }}
+			>
 				<ToastContainer />
 				<div
-					className='text-center my-3 p-2'
+					className='text-center mt-2 mb-5 p-2'
 					style={{
 						fontSize: "1.6rem",
 						fontWeight: "bold",
 						fontStyle: "italic",
 						color: "white",
-						border: "2px black solid",
-						marginLeft: "100px",
-						marginRight: "100px",
-						borderRadius: "50px",
-						backgroundColor: "#00264c",
-						boxShadow: "2px 2px 5px 5px rgba(0,0,0,0.5)",
-					}}>
-					Forgot password
+						backgroundColor: "#0f1923",
+						// boxShadow: "2px 2px 5px 5px rgba(0,0,0,0.5)",
+						boxShadow: "1px 1px 1px 1px rgba(0,0,0,0.5)",
+					}}
+				>
+					{chosenLanguage === "Arabic"
+						? "نسيت كلمة السر؟"
+						: "Forgot Your Password?"}
 				</div>
-				{passwordForgotForm()}
+				{chosenLanguage === "Arabic"
+					? passwordForgotFormArabic()
+					: passwordForgotForm()}
+				{}
 			</div>
-		</Fragment>
+		</FogotWrapper>
 	);
 };
 
 export default Forgot;
+
+const FogotWrapper = styled.div`
+	min-height: 1000px;
+`;

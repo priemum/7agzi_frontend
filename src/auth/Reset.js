@@ -1,13 +1,9 @@
-/** @format */
-
-import React, { useState, useEffect, Fragment } from "react";
-import jwt from "jsonwebtoken";
+import React, { useState, Fragment } from "react";
 import axios from "axios";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-const Reset = ({ match, history }) => {
+const Reset = ({ match }) => {
 	// props.match from react router dom
 	const [values, setValues] = useState({
 		name: "",
@@ -15,16 +11,6 @@ const Reset = ({ match, history }) => {
 		newPassword: "",
 		buttonText: "Reset password",
 	});
-
-	useEffect(() => {
-		let token = match.params.token;
-		let { name } = jwt.decode(token);
-		// console.log(name);
-		if (token) {
-			setValues({ ...values, name, token });
-		}
-		// eslint-disable-next-line
-	}, []);
 
 	const { name, token, newPassword, buttonText } = values;
 
@@ -44,9 +30,6 @@ const Reset = ({ match, history }) => {
 				console.log("RESET PASSWORD SUCCESS", response);
 				toast.success(response.data.message);
 				setValues({ ...values, buttonText: "Done" });
-				setTimeout(function () {
-					history.push("/signin");
-				}, 3000);
 			})
 			.catch((error) => {
 				console.log("RESET PASSWORD ERROR", error.response.data);
@@ -70,10 +53,7 @@ const Reset = ({ match, history }) => {
 			</div>
 
 			<div>
-				<button
-					className='btn btn-primary'
-					onClick={clickSubmit}
-					disabled={!newPassword}>
+				<button className='btn btn-primary' onClick={clickSubmit}>
 					{buttonText}
 				</button>
 			</div>
@@ -82,26 +62,9 @@ const Reset = ({ match, history }) => {
 
 	return (
 		<Fragment>
-			<div
-				className='col-md-6 offset-md-3 my-5 p-4'
-				style={{ borderRadius: "50px", border: "2px black solid" }}>
+			<div className='col-md-6 offset-md-3' style={{ marginTop: "100px" }}>
 				<ToastContainer />
-				<div
-					className='text-center mt-2 mb-4 p-2'
-					style={{
-						fontSize: "1.6rem",
-						fontWeight: "bold",
-						fontStyle: "italic",
-						color: "white",
-						border: "2px black solid",
-						marginLeft: "100px",
-						marginRight: "100px",
-						borderRadius: "50px",
-						backgroundColor: "#00264c",
-						boxShadow: "2px 2px 5px 5px rgba(0,0,0,0.5)",
-					}}>
-					Hey {name}, Please Type your new password
-				</div>
+				<h1 className='p-5 text-center'>Hey {name}, Type your new password</h1>
 				{passwordResetForm()}
 			</div>
 		</Fragment>

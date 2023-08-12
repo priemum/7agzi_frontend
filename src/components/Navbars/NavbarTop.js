@@ -183,7 +183,7 @@ const Navbar1 = ({ history }) => {
 								>
 									<Link
 										className='nav-link '
-										to='/store/admin/dashboard'
+										to='/store/book-appointment-from-store'
 										onClick={closeSidebar}
 									>
 										Your Salon Account
@@ -223,6 +223,25 @@ const Navbar1 = ({ history }) => {
 										onClick={closeSidebar}
 									>
 										Store Scheduler
+									</Link>
+								</li>
+							</React.Fragment>
+						)}
+
+						{isAuthenticated() && isAuthenticated().user.role === 10000 && (
+							<React.Fragment>
+								<li
+									className='nav-item ml-5 mt-3'
+									onClick={() => {
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
+									<Link
+										className='nav-link'
+										to='/boss/admin/dashboard'
+										onClick={closeSidebar}
+									>
+										XLOOK ADMIN
 									</Link>
 								</li>
 							</React.Fragment>
@@ -345,13 +364,14 @@ const Navbar1 = ({ history }) => {
 											color: "red",
 											fontStyle: "italic",
 										}}
-										onClick={() =>
+										onClick={() => {
+											closeSidebar();
 											signout(() => {
 												history.push("/");
 												localStorage.removeItem("userHistoryPurchases");
 												localStorage.removeItem("order");
-											})
-										}
+											});
+										}}
 									>
 										Signout
 									</span>
@@ -468,7 +488,7 @@ const Navbar1 = ({ history }) => {
 						<li className='nav-item'>
 							<Link
 								className='nav-link'
-								to='/store/admin/dashboard'
+								to='/store/book-appointment-from-store'
 								onClick={() => {
 									window.scrollTo({ top: 0, behavior: "smooth" });
 								}}

@@ -46,7 +46,22 @@ const SigninForm = ({ history, language }) => {
 	const clickSubmit = (event) => {
 		event.preventDefault();
 		setValues({ ...values, error: false, loading: true });
-		signin({ email, password }).then((data) => {
+
+		// Check if the input is a valid email or phone number
+		let username;
+		const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		const phonePattern = /^\d+$/;
+
+		if (emailPattern.test(email)) {
+			username = email; // It's an email
+		} else if (phonePattern.test(email)) {
+			username = email; // It's a phone number
+		} else {
+			setValues({ ...values, error: true, loading: false });
+			return toast.error("Please fill in the correct phone or email");
+		}
+
+		signin({ username, password }).then((data) => {
 			if (data.error) {
 				setValues({ ...values, error: data.error, loading: false });
 				toast.error(data.error);
