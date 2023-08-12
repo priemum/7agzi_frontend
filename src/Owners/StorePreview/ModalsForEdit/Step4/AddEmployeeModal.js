@@ -312,8 +312,8 @@ const AddEmployeeModal = ({
 								<input
 									type='checkbox'
 									id='one'
-									onChange={() => {
-										handleQueryChange();
+									onChange={(e) => {
+										handleQueryChange(e);
 										ReactGA.event(`Account_Added_Working_Days_Saturday`, {
 											event_category: "Account_Added_Working_Days_Saturday",
 											event_label: "Account_Added_Working_Days_Saturday",
@@ -337,8 +337,8 @@ const AddEmployeeModal = ({
 								<input
 									type='checkbox'
 									id='two'
-									onChange={() => {
-										handleQueryChange();
+									onChange={(e) => {
+										handleQueryChange(e);
 										ReactGA.event(`Account_Added_Working_Days_Sunday`, {
 											event_category: "Account_Added_Working_Days_Sunday",
 											event_label: "Account_Added_Working_Days_Sunday",
@@ -362,8 +362,8 @@ const AddEmployeeModal = ({
 								<input
 									type='checkbox'
 									id='three'
-									onChange={() => {
-										handleQueryChange();
+									onChange={(e) => {
+										handleQueryChange(e);
 										ReactGA.event(`Account_Added_Working_Days_Monday`, {
 											event_category: "Account_Added_Working_Days_Monday",
 											event_label: "Account_Added_Working_Days_Monday",
