@@ -157,8 +157,8 @@ const StorePreviewMain = ({ language }) => {
 	const getStoreGallary = () => {
 		setLoading(true);
 		getPreviousAddedGallary(token, user._id).then((data) => {
-			if (data.error) {
-				console.log(data.error);
+			if (data && data.error) {
+				console.log(data && data.error);
 				setLoading(true);
 			} else {
 				var lastAdded = data[data.length - 1];
@@ -220,7 +220,7 @@ const StorePreviewMain = ({ language }) => {
 		setLoading(true);
 
 		getEmployees(user._id).then((data) => {
-			if (data.error) {
+			if (data && data.error) {
 				console.log(data.error);
 			} else {
 				setAllEmployees(data);
@@ -232,8 +232,8 @@ const StorePreviewMain = ({ language }) => {
 	const gettingPreviousLoyaltyPointsManagement = () => {
 		setLoading(true);
 		allLoyaltyPointsAndStoreStatus(token, user._id).then((data) => {
-			if (data.error) {
-				console.log(data.error);
+			if (data && data.error) {
+				console.log(data && data.error);
 			} else {
 				var lastAddedSettings;
 
@@ -263,8 +263,8 @@ const StorePreviewMain = ({ language }) => {
 	const gettingAllWorkingHours = () => {
 		setLoading(true);
 		getPreviousScheduledHours(user._id, token).then((data) => {
-			if (data.error) {
-				console.log(data.error);
+			if (data && data.error) {
+				console.log(data && data.error);
 			} else {
 				// console.log(data, "data from API");
 				var allAddedHours_Settings =
