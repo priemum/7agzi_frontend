@@ -21,12 +21,18 @@ const AddEmployeeModal = ({
 	allWorkingHours,
 	allServices,
 }) => {
+	function generateElevenDigitNumber() {
+		return (
+			Math.floor(Math.random() * (9 * Math.pow(10, 10))) + Math.pow(10, 10)
+		);
+	}
+
 	const [loading, setLoading] = useState(false);
 	const [values, setValues] = useState({
 		employeeName: "",
 		employeeNameOtherLanguage: "",
 		employeeAddress: "",
-		employeePhone: "",
+		employeePhone: generateElevenDigitNumber(),
 		employeeWorkingAt: "",
 		description: "",
 		description1: "",
