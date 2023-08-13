@@ -224,6 +224,18 @@ const OwnerDashboardBoss = ({ language }) => {
 							Update Business Partner <strong>AGENT</strong>
 						</Link>
 					</div>
+					<div className='mt-2 ml-5'>
+						<Link
+							style={{
+								fontSize: "2rem",
+								fontWeight: "bolder",
+								textDecoration: "underline",
+							}}
+							to={`/boss/store/admin/update-profile/${ownerId}`}
+						>
+							Update Business Partner <strong>Password</strong>
+						</Link>
+					</div>
 					<div
 						className=''
 						style={{ top: "70px", right: "2%", position: "absolute" }}

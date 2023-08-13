@@ -106,6 +106,14 @@ const items = [
 	),
 
 	getItem(
+		<Link to={`/boss/store/admin/update-profile/${ownerId}`}>
+			Update Account Password
+		</Link>,
+		"sub14",
+		<ShopOutlined />
+	),
+
+	getItem(
 		<Link to={`/boss/store/admin/add-gallary/${ownerId}`}>Gallary</Link>,
 		"sub12",
 		<HomeTwoTone />
@@ -200,6 +208,8 @@ const AdminNavbar = ({
 						? "sub5"
 						: fromPage === "AddGallary"
 						? "sub12"
+						: fromPage === "UpdateProfile"
+						? "sub14"
 						: "sub1"
 				}
 				defaultOpenKeys={[

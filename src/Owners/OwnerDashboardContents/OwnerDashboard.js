@@ -58,7 +58,7 @@ const OwnerDashboard = ({ language }) => {
 	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
-	const [clickedMenu, setClickedMenu] = useState("Calendar");
+	const [clickedMenu, setClickedMenu] = useState("ShopReports");
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
 

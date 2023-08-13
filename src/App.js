@@ -95,6 +95,8 @@ import ServicesMainAgent from "./PlatformAgent/AgentAccountEditing/ServicesConte
 import EmployeeMainAgent from "./PlatformAgent/AgentAccountEditing/EmployeeManagement/EmployeeMainAgent";
 import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsite/EditWebsiteMainAgent";
 import GallaryMainAgent from "./PlatformAgent/AgentAccountEditing/GallaryAddition/GallaryMainAgent";
+import ProfileUpdateOwner from "./Owners/ProfileUpdateOwner";
+import ProfileUpdateBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/ProfileUpdateBoss";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -387,6 +389,12 @@ function App() {
 						component={() => <GallaryMain language={language} />}
 					/>
 
+					<OwnerRoute
+						path='/profile-update-owner/:userId'
+						exact
+						component={ProfileUpdateOwner}
+					/>
+
 					<PrivateRoute
 						path='/profile-update/:userId'
 						exact
@@ -532,6 +540,12 @@ function App() {
 						path='/boss/store/admin/employees/:ownerId'
 						exact
 						component={EmployeeMainBoss}
+					/>
+
+					<BossRoute
+						path='/boss/store/admin/update-profile/:ownerId'
+						exact
+						component={ProfileUpdateBoss}
 					/>
 
 					<BossRoute

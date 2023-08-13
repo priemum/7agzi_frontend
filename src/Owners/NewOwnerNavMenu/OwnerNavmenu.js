@@ -28,6 +28,7 @@ import SalonPreviewEn from "./MenuImages/SalonPreviewEn.png";
 
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../sidebar_context";
+import { isAuthenticated } from "../../auth";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -46,6 +47,8 @@ const isActive = (history, path) => {
 
 const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 	const { chosenLanguage } = useCartContext();
+
+	const { user } = isAuthenticated();
 	return (
 		<OwnerNavmenuWrapper
 			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
@@ -198,6 +201,19 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 							/>
 						)}
 					</Link>
+				</div>
+
+				<div
+					className='pt-1 firstGroupItem manualItem'
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
+				>
+					<div style={isActive("ProfileUpdate", fromPage)}>
+						<Link to={`/profile-update-owner/${user._id}`}>
+							<i className='fa-solid fa-pen-nib'></i>
+							<br />
+							تعديل كلمة المرور
+						</Link>
+					</div>
 				</div>
 			</div>
 
@@ -401,6 +417,28 @@ const OwnerNavmenuWrapper = styled.div`
 
 	*::-webkit-scrollbar-thumb:hover {
 		background-color: #555; /* Color of the thumb on hover */
+	}
+
+	i {
+		color: white;
+		text-align: center;
+		font-size: 2.3rem;
+		padding-top: 5px;
+	}
+
+	.manualItem {
+		color: white;
+		text-align: center;
+	}
+
+	.manualItem > div {
+		text-align: center;
+		margin: auto;
+	}
+
+	.manualItem > div > a {
+		color: white;
+		font-size: 12px;
 	}
 
 	@media (max-width: 1000px) {
