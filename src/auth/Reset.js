@@ -51,6 +51,30 @@ const Reset = ({ match }) => {
 
 	const clickSubmit = (event) => {
 		event.preventDefault();
+
+		// Check if the password has at least one digit
+		const hasDigit = /\d/.test(newPassword);
+		if (!hasDigit) {
+			return toast.error(
+				`${
+					chosenLanguage === "Arabic"
+						? "من فضلك، ضمن وجود رقم واحد على الأقل في كلمة السر الجديدة"
+						: "Please include at least one number in your new password"
+				}`
+			);
+		}
+
+		// Check if the password is at least 6 characters long
+		if (newPassword.length < 6) {
+			return toast.error(
+				`${
+					chosenLanguage === "Arabic"
+						? "يجب أن تكون كلمة السر ٦ أحرف أو أكثر، من فضلك حاول مرة أخرى!"
+						: "Passwords should be 6 characters or more, Please try again!"
+				}`
+			);
+		}
+
 		setValues({ ...values, buttonText: "Submitting" });
 		axios({
 			method: "PUT",
