@@ -81,7 +81,7 @@ const Forgot = ({ language }) => {
 	);
 
 	const passwordForgotFormArabic = () => (
-		<form dir='rtl' style={{ textAlign: "right" }}>
+		<form dir='rtl' style={{ textAlign: "center" }}>
 			<div className='form-group'>
 				<label className='text-muted' style={{ fontSize: "1.1rem" }}>
 					<strong> عنوان البريد الإلكتروني أو رقم الهاتف</strong>
@@ -109,7 +109,7 @@ const Forgot = ({ language }) => {
 	return (
 		<FogotWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<div
-				className='col-md-6 offset-md-3 my-5 p-4'
+				className='col-md-6 offset-md-3 my-5 p-4 mx-auto'
 				style={{ borderRadius: "10px", border: "1px #c1d3e5 solid" }}
 			>
 				<ToastContainer />
@@ -140,5 +140,7 @@ const Forgot = ({ language }) => {
 export default Forgot;
 
 const FogotWrapper = styled.div`
+	text-align: center;
+	margin: 20px auto;
 	min-height: 1000px;
 `;

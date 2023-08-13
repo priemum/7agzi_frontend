@@ -14,8 +14,10 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { allLoyaltyPointsAndStoreStatus } from "../../../apiCore";
 import ScheduleFormHelperArabic from "./ScheduleFormHelperArabic";
+import { useCartContext } from "../../../sidebar_context";
 
 const SchedulePageSteps2 = ({ language }) => {
+	const { chosenLanguage } = useCartContext();
 	const chosenStoreLocalStorage = JSON.parse(
 		localStorage.getItem("chosenStore")
 	);
@@ -694,14 +696,14 @@ const SchedulePageSteps2 = ({ language }) => {
 
 	// console.log(chosenDate, "chosenDate");
 	return (
-		<ScheduleFormFinalWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
+		<ScheduleFormFinalWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			{loading ? (
 				<div className='text-center mx-auto mt-5'>
 					<Spin size='large' tip='LOADING...' />
 				</div>
 			) : (
 				<>
-					{language === "Arabic" ? (
+					{chosenLanguage === "Arabic" ? (
 						<ScheduleFormHelperArabic
 							pickedEmployee={pickedEmployee}
 							chosenDate={chosenDate}
@@ -768,7 +770,7 @@ const SchedulePageSteps2 = ({ language }) => {
 						}}
 					>
 						<div className='continueShoppingEmpty  my-5 mx-auto text-center'>
-							{language === "Arabic"
+							{chosenLanguage === "Arabic"
 								? "تغيير الموظف "
 								: "Change Selected Stylist..."}
 						</div>
