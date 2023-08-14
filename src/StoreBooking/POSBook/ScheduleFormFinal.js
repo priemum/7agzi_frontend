@@ -490,6 +490,9 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			0
 		);
 
+		const startDate = new Date(appointmentStarts()[0].replace(" at", ""));
+		const endDate = new Date(appointmentStarts()[1].replace(" at", ""));
+
 		const createOrderData = {
 			employees: [pickedEmployee],
 			scheduledByUserName: scheduledByUserName,
@@ -506,8 +509,8 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			LoyaltyPoints: 0,
 			scheduledDate: chosenDate._d || chosenDate,
 			scheduledTime: chosenTime,
-			scheduleEndsAt: new Date(appointmentStarts()[1].replace(" at", "")),
-			scheduleStartsAt: new Date(appointmentStarts()[0].replace(" at", "")),
+			scheduleEndsAt: endDate.toISOString(),
+			scheduleStartsAt: startDate.toISOString(),
 			paymentStatus: false,
 			status: "Not Paid",
 			minLoyaltyPointsForAward: 0,
