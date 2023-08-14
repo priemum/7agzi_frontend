@@ -37,7 +37,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState("");
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
