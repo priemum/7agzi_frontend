@@ -84,6 +84,7 @@ const SettingsMainBoss = () => {
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [activeProp, setActiveProp] = useState(false);
 	const [extraData, setExtraData] = useState({
 		branchesCount: 1,
 		stylistsCount: 2,
@@ -181,6 +182,7 @@ const SettingsMainBoss = () => {
 					);
 
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
+					setActiveProp(lastAddedSettings && lastAddedSettings.activeStore);
 					setAddStoreNameArabic(
 						lastAddedSettings && lastAddedSettings.addStoreNameArabic
 					);
@@ -266,6 +268,7 @@ const SettingsMainBoss = () => {
 			visaPayment: extraData.visaPayment,
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
+			activeStore: activeProp,
 			salonGrade,
 			workersGender,
 		}).then((data) => {

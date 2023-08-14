@@ -74,6 +74,7 @@ const SettingsMain = ({ language }) => {
 	const [longitude, setLongitude] = useState("");
 	const [latitude, setLatitude] = useState("");
 	const [activeOnlineBooking, setActiveOnlineBooking] = useState(true);
+	const [activeProp, setActiveProp] = useState(false);
 	const [extraData, setExtraData] = useState({
 		branchesCount: 1,
 		stylistsCount: 2,
@@ -171,6 +172,7 @@ const SettingsMain = ({ language }) => {
 					);
 					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
 					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
+					setActiveProp(lastAddedSettings && lastAddedSettings.activeStore);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
 					);
@@ -243,6 +245,7 @@ const SettingsMain = ({ language }) => {
 			visaPayment: extraData.visaPayment,
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
+			activeStore: activeProp,
 			belongsTo: isAuthenticated().user._id,
 		}).then((data) => {
 			if (data.error) {
