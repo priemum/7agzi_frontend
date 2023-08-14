@@ -210,7 +210,7 @@ const ScheduleFormHelperArabic = ({
 							inputReadOnly
 							placeholder='اختر خدمة'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
-							className='inputFields'
+							className='inputFields no-input'
 							style={{
 								border: "#cfcfcf solid 1px",
 								borderRadius: "10px",
@@ -548,6 +548,12 @@ const ScheduleFormHelperWrapper = styled.div`
 	input {
 		width: 50% !important;
 		margin: auto;
+	}
+
+	.no-input {
+		> div > div > input {
+			pointer-events: none !important;
+		}
 	}
 
 	@media (max-width: 1200px) {
