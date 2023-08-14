@@ -109,7 +109,7 @@ const OwnerDashboard = ({ language }) => {
 		} else if (window.location.search.includes("customer-reports")) {
 			setClickedMenu("CustomerReports");
 		} else {
-			setClickedMenu("Calendar");
+			setClickedMenu("ShopReports");
 		}
 		getOnlineStoreName();
 		gettingCurrentUser();
