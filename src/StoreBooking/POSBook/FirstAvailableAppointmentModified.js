@@ -33,12 +33,10 @@ const FirstAvailableAppointmentModified = ({
 
 	const handleChangeDate = (date) => {
 		const formatEnglishDate = (date) => {
-			return moment(date).locale("en").format("MM/DD/YYYY");
+			return moment(date).locale("en").format("M/DD/YYYY");
 		};
 		if (date) {
-			const formattedDate = formatEnglishDate(
-				moment(date).format("MM/DD/YYYY")
-			);
+			const formattedDate = formatEnglishDate(moment(date).format("M/DD/YYYY"));
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);
@@ -73,7 +71,7 @@ const FirstAvailableAppointmentModified = ({
 				<DatePicker
 					onChange={handleChangeDate}
 					size='small'
-					defaultValue={moment(chosenDate, "MM/DD/YYYY")}
+					defaultValue={moment(chosenDate, "M/DD/YYYY")}
 					className='inputFieldsFirstAvail py-1'
 					style={{ width: "70%" }}
 					disabledDate={disabledDate}
@@ -250,7 +248,7 @@ const FirstAvailableAppointmentModified = ({
 								);
 
 								const formatEnglishDate = (date) => {
-									return moment(date).locale("en").format("MM/DD/YYYY");
+									return moment(date).locale("en").format("M/DD/YYYY");
 								};
 
 								localStorage.setItem(

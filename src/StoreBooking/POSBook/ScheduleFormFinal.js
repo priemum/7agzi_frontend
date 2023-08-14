@@ -37,13 +37,13 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
+	const [chosenDate, setChosenDate] = useState(moment().format("M/DD/YYYY"));
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
 
 	const formatEnglishDate = (date) => {
-		return moment(date).locale("en").format("MM/DD/YYYY");
+		return moment(date).locale("en").format("M/DD/YYYY");
 	};
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
@@ -203,7 +203,16 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 		const pickedDateFirstAvailable = JSON.parse(
 			localStorage.getItem("chosenDateFromFirstAvailable")
 		);
+
+		console.log(pickedDateFirstAvailable, "pickedDateFirstAvailable");
+
 		if (pickedDateFirstAvailable) {
+			console.log(
+				formatEnglishDate(
+					new Date(pickedDateFirstAvailable).toLocaleDateString()
+				),
+				"useEffect"
+			);
 			setChosenDate(
 				formatEnglishDate(
 					new Date(pickedDateFirstAvailable).toLocaleDateString()
@@ -213,7 +222,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
 		}
 		// eslint-disable-next-line
-	}, [chosenDate]);
+	}, []);
 
 	const getEmployeeFreeSlots = (
 		employeeId,
