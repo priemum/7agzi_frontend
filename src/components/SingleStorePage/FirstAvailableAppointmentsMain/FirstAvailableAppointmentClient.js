@@ -32,8 +32,13 @@ const FirstAvailableAppointmentClient = ({
 	};
 
 	const handleChangeDate = (date) => {
+		const formatEnglishDate = (date) => {
+			return moment(date).locale("en").format("MM/DD/YYYY");
+		};
 		if (date) {
-			const formattedDate = moment(date).format("MM/DD/YYYY");
+			const formattedDate = formatEnglishDate(
+				moment(date).format("MM/DD/YYYY")
+			);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);
@@ -121,11 +126,12 @@ const FirstAvailableAppointmentClient = ({
 						>
 							Select Services
 						</label>
+
 						<Select
 							mode='multiple'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
 							placeholder='Select Services'
-							className='inputFields'
+							className='inputFields no-input-keyboard'
 							style={{
 								borderRadius: "5px",
 								width: "62%",
@@ -262,6 +268,10 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 
 	.contentWrapper {
 		position: relative;
+	}
+
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@media (max-width: 1000px) {

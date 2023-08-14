@@ -203,12 +203,13 @@ const ScheduleFormHelper = ({
 							Select A Service
 						</label>
 						<br />
+
 						<Select
 							mode='multiple'
 							inputReadOnly
 							placeholder='Select a Service'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
-							className='inputFields no-input'
+							className='inputFields no-input no-input-keyboard'
 							style={{
 								border: "#cfcfcf solid 1px",
 								borderRadius: "10px",
@@ -536,6 +537,10 @@ const ScheduleFormHelperWrapper = styled.div`
 		> div > div > input {
 			pointer-events: none !important;
 		}
+	}
+
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@media (max-width: 1200px) {

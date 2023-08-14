@@ -13,7 +13,7 @@ import {
 	getAllUsers,
 	getEmployees,
 } from "../apiOwner";
-import Countdown from "./Countdown";
+// import Countdown from "./Countdown";
 import AddSettingsGuideVideo from "../Videos/AddSettingsGuide.mp4";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga4";
@@ -247,7 +247,7 @@ const OwnerDashboard = ({ language }) => {
 				</div>
 
 				<div>
-					<div
+					{/* <div
 						className=''
 						style={{
 							top: "70px",
@@ -277,7 +277,7 @@ const OwnerDashboard = ({ language }) => {
 								<strong>متبقى {remainingDays} يوم</strong>{" "}
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className='container-fluid col-lg-12  text-center mt-5'>
 						<div className='row text-center ml-5 my-5'>
 							<div

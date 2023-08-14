@@ -32,8 +32,13 @@ const FirstAvailableAppointmentClientArabic = ({
 	};
 
 	const handleChangeDate = (date) => {
+		const formatEnglishDate = (date) => {
+			return moment(date).locale("en").format("MM/DD/YYYY");
+		};
 		if (date) {
-			const formattedDate = moment(date).format("MM/DD/YYYY");
+			const formattedDate = formatEnglishDate(
+				moment(date).format("MM/DD/YYYY")
+			);
 			setChosenDate(formattedDate);
 		} else {
 			setChosenDate(null);
@@ -113,11 +118,12 @@ const FirstAvailableAppointmentClientArabic = ({
 						<label className='ml-2 chooseDateServiceFirstAvail'>
 							اختر خدمة
 						</label>
+
 						<Select
 							mode='multiple'
 							placeholder='Select Services'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
-							className='inputFields'
+							className='inputFields no-input-keyboard'
 							style={{
 								borderRadius: "5px",
 								width: "75%",
@@ -248,6 +254,10 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 
 	.contentWrapper {
 		position: relative;
+	}
+
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@media (max-width: 1000px) {

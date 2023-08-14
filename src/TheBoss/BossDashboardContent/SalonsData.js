@@ -89,6 +89,14 @@ const SalonsData = () => {
 				setStoreOwners(
 					everyStore.filter((i) => i.galleries.length === 0) || []
 				);
+			} else if (clickedFilter === "Added Settings") {
+				setStoreOwners(everyStore.filter((i) => i.settings.length > 0) || []);
+			} else if (clickedFilter === "Added Services") {
+				setStoreOwners(everyStore.filter((i) => i.services.length > 0) || []);
+			} else if (clickedFilter === "Added Employees") {
+				setStoreOwners(everyStore.filter((i) => i.employees.length > 0) || []);
+			} else if (clickedFilter === "Added Gallary") {
+				setStoreOwners(everyStore.filter((i) => i.galleries.length > 0) || []);
 			} else {
 				setStoreOwners(data.users || []);
 			}
@@ -479,7 +487,7 @@ const SalonsData = () => {
 			</div>
 
 			<div
-				className='row mb-5'
+				className='row mb-2'
 				style={{
 					background: "#1e1e1e",
 					padding: "5px 0px",
@@ -512,6 +520,43 @@ const SalonsData = () => {
 					onClick={() => setClickedFilter("Unadded Gallary")}
 				>
 					Un-Added Gallary
+				</div>
+			</div>
+
+			<div
+				className='row mb-5'
+				style={{
+					background: "darkgreen",
+					padding: "5px 0px",
+				}}
+			>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Added Settings")}
+					onClick={() => setClickedFilter("Added Settings")}
+				>
+					Added Settings
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Added Services")}
+					onClick={() => setClickedFilter("Added Services")}
+				>
+					Added Services
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Added Employees")}
+					onClick={() => setClickedFilter("Added Employees")}
+				>
+					Added Employees
+				</div>
+				<div
+					className='col-3 mx-auto mb-2 navLinks'
+					style={isActive(clickedFilter, "Added Gallary")}
+					onClick={() => setClickedFilter("Added Gallary")}
+				>
+					Added Gallary
 				</div>
 			</div>
 

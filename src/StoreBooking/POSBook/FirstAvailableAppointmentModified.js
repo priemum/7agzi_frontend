@@ -120,11 +120,12 @@ const FirstAvailableAppointmentModified = ({
 						<label className='ml-2 chooseDateServiceFirstAvail'>
 							Choose Set Of Services
 						</label>
+
 						<Select
 							mode='multiple'
 							inputReadOnly
 							placeholder='Please select the services needed'
-							className='inputFields'
+							className='inputFields no-input-keyboard'
 							style={{
 								borderRadius: "5px",
 								width: "70%",
@@ -291,6 +292,10 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 	.message {
 		font-weight: bolder;
 		text-align: center;
+	}
+
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@media (max-width: 1000px) {

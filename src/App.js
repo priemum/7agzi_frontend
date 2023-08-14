@@ -530,6 +530,7 @@ function App() {
 						exact
 						component={() => <StorePreviewMainBoss language={language} />}
 					/>
+
 					<BossRoute
 						path='/boss/store/admin/services/:ownerId'
 						exact

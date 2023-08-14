@@ -139,20 +139,11 @@ const ScheduleFormHelperArabic = ({
 						className='inputFields'
 						onChange={handleChangeDate}
 						disabledDate={disabledDate}
+						inputReadOnly
 						max
 						size='small'
 						showToday={true}
-						defaultValue={
-							JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-								? moment(
-										new Date(
-											JSON.parse(
-												localStorage.getItem("chosenDateFromFirstAvailable")
-											)
-										)
-								  )
-								: moment()
-						}
+						defaultValue={chosenDate ? moment(chosenDate, "MM/DD/YYYY") : null}
 						placeholder='الرجاء اختيار التاريخ المطلوب'
 						style={{
 							height: "auto",
@@ -242,7 +233,7 @@ const ScheduleFormHelperArabic = ({
 							mode='multiple'
 							placeholder='اختر خدمة'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
-							className='inputFields'
+							className='inputFields no-input-keyboard'
 							style={{
 								border: "#cfcfcf solid 1px",
 								borderRadius: "10px",
@@ -656,6 +647,10 @@ const ScheduleFormHelperWrapper = styled.div`
 
 	.slide-right {
 		animation: slideRight 0.5s forwards;
+	}
+
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@keyframes slideInLeft {

@@ -132,11 +132,11 @@ const FirstAvailableAppointmentModifiedArabic = ({
 						<label className='ml-2 chooseDateServiceFirstAvail'>
 							الخدمات المطلوبة
 						</label>
+
 						<Select
 							mode='multiple'
-							inputReadOnly
 							placeholder='الخدمات المطلوبة'
-							className='inputFields no-input'
+							className='inputFields no-input no-input-keyboard'
 							style={{
 								borderRadius: "5px",
 								width: "70%",
@@ -409,10 +409,8 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 		text-align: center;
 	}
 
-	.no-input {
-		> div > div > input {
-			pointer-events: none !important;
-		}
+	.no-input-keyboard .ant-select-selector input {
+		pointer-events: none !important;
 	}
 
 	@media (max-width: 1000px) {

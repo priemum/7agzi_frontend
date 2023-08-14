@@ -42,7 +42,7 @@ const SchedulePageSteps2 = ({ language }) => {
 	const [customerPhone, setCustomerPhone] = useState(null);
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
-	const [chosenDate, setChosenDate] = useState("");
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 
 	const { user, token } = isAuthenticated();
 
@@ -223,13 +223,9 @@ const SchedulePageSteps2 = ({ language }) => {
 			localStorage.getItem("chosenDateFromFirstAvailable")
 		);
 		if (pickedDateFirstAvailable) {
-			setChosenDate(
-				formatEnglishDate(
-					new Date(pickedDateFirstAvailable).toLocaleDateString()
-				)
-			);
+			setChosenDate(formatEnglishDate(pickedDateFirstAvailable));
 		} else {
-			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
+			setChosenDate(formatEnglishDate(moment()));
 		}
 		// eslint-disable-next-line
 	}, []);
