@@ -213,7 +213,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
 		}
 		// eslint-disable-next-line
-	}, []);
+	}, [chosenDate]);
 
 	const getEmployeeFreeSlots = (
 		employeeId,

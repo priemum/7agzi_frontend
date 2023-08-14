@@ -78,6 +78,7 @@ const FirstAvailableAppointmentModified = ({
 					style={{ width: "70%" }}
 					disabledDate={disabledDate}
 					max
+					inputReadOnly
 					showToday={true}
 					// defaultValue={chosenDate || moment()}
 					placeholder='Choose a different Date If Needed'
@@ -248,10 +249,17 @@ const FirstAvailableAppointmentModified = ({
 									JSON.stringify(chosenCustomerType)
 								);
 
+								const formatEnglishDate = (date) => {
+									return moment(date).locale("en").format("MM/DD/YYYY");
+								};
+
 								localStorage.setItem(
 									"chosenDateFromFirstAvailable",
-									JSON.stringify(chosenDate)
+									JSON.stringify(
+										formatEnglishDate(new Date(chosenDate).toLocaleDateString())
+									)
 								);
+
 								window.scrollTo(0, 0);
 							}}
 						>
