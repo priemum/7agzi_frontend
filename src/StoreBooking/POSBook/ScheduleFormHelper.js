@@ -125,20 +125,11 @@ const ScheduleFormHelper = ({
 						className='inputFields'
 						onChange={handleChangeDate}
 						disabledDate={disabledDate}
+						inputReadOnly
 						max
 						size='small'
 						showToday={true}
-						defaultValue={
-							JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-								? moment(
-										new Date(
-											JSON.parse(
-												localStorage.getItem("chosenDateFromFirstAvailable")
-											)
-										)
-								  )
-								: moment()
-						}
+						defaultValue={chosenDate ? moment(chosenDate, "MM/DD/YYYY") : null}
 						placeholder='Please pick the desired schedule date'
 						style={{
 							height: "auto",
@@ -214,6 +205,7 @@ const ScheduleFormHelper = ({
 						<br />
 						<Select
 							mode='multiple'
+							inputReadOnly
 							placeholder='Select a Service'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
 							className='inputFields'

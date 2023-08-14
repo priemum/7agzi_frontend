@@ -37,13 +37,13 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
 	// eslint-disable-next-line
-	const [chosenDate, setChosenDate] = useState(moment().format("M/DD/YYYY"));
+	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
 
 	// eslint-disable-next-line
 	const { user, token } = isAuthenticated();
 
 	const formatEnglishDate = (date) => {
-		return moment(date).locale("en").format("M/DD/YYYY");
+		return moment(date).locale("en").format("MM/DD/YYYY");
 	};
 
 	var userBelongsToModified = user.role === 1000 ? user._id : user.belongsTo;
@@ -70,6 +70,19 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 		// Can not select days before today and today
 		return current < moment();
 	};
+
+	useEffect(() => {
+		const pickedDateFirstAvailable = JSON.parse(
+			localStorage.getItem("chosenDateFromFirstAvailable")
+		);
+		if (pickedDateFirstAvailable) {
+			setChosenDate(formatEnglishDate(pickedDateFirstAvailable));
+		} else {
+			setChosenDate(formatEnglishDate(moment()));
+		}
+		// eslint-disable-next-line
+	}, []);
+
 	const loadPickedEmployee = (
 		employeeId,
 		pickedServiceFirstAvailable,
@@ -199,31 +212,6 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 		// eslint-disable-next-line
 	}, [chosenCustomerType]);
 
-	useEffect(() => {
-		const pickedDateFirstAvailable = JSON.parse(
-			localStorage.getItem("chosenDateFromFirstAvailable")
-		);
-
-		console.log(pickedDateFirstAvailable, "pickedDateFirstAvailable");
-
-		if (pickedDateFirstAvailable) {
-			console.log(
-				formatEnglishDate(
-					new Date(pickedDateFirstAvailable).toLocaleDateString()
-				),
-				"useEffect"
-			);
-			setChosenDate(
-				formatEnglishDate(
-					new Date(pickedDateFirstAvailable).toLocaleDateString()
-				)
-			);
-		} else {
-			setChosenDate(formatEnglishDate(new Date().toLocaleDateString()));
-		}
-		// eslint-disable-next-line
-	}, []);
-
 	const getEmployeeFreeSlots = (
 		employeeId,
 		customerType,
@@ -257,11 +245,21 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			serviceDetailsArray.length > 0
 		) {
 			// Format date to "MM-DD-YYYY"
-			const date = new Date(chosenDate);
-			const formattedDate = `${
-				date.getMonth() + 1
-			}-${date.getDate()}-${date.getFullYear()}`;
+			const inputDate = chosenDate.replace(/\//g, "-"); // Replace slashes with dashes
+			const date = new Date(inputDate);
 
+			if (isNaN(date.getTime())) {
+				console.error("Invalid Date");
+				return;
+			}
+
+			const month = String(date.getMonth() + 1).padStart(2, "0"); // Add leading zero if needed
+			const day = String(date.getDate()).padStart(2, "0"); // Add leading zero if needed
+			const year = date.getFullYear();
+
+			const formattedDate = `${month}-${day}-${year}`;
+
+			// console.log(formattedDate, "chosenDate");
 			let allPickedServices =
 				serviceDetailsArray && serviceDetailsArray.map((i) => i.serviceName);
 			getEmployeeFreeSlots(

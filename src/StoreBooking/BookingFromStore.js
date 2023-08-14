@@ -89,6 +89,7 @@ const isActive2 = (history, path) => {
 
 const BookingFromStore = ({ language, setLanguage }) => {
 	const { chosenLanguage } = useCartContext();
+	moment.locale("en");
 
 	const [clickedMenu, setClickedMenu] = useState("NewAppointment");
 	const [clickedMenu2, setClickedMenu2] = useState("FirstAppointment");

@@ -91,7 +91,7 @@ const ScheduleFormHelperArabic = ({
 		servicesPicked &&
 		servicesPicked.reduce((sum, service) => sum + service.servicePrice, 0);
 
-	console.log(employeeAvailability, "employeeAvailability");
+	// console.log(employeeAvailability, "employeeAvailability");
 
 	return (
 		<ScheduleFormHelperWrapper dir='rtl'>
@@ -127,20 +127,11 @@ const ScheduleFormHelperArabic = ({
 						className='inputFields'
 						onChange={handleChangeDate}
 						disabledDate={disabledDate}
+						inputReadOnly
 						max
 						size='small'
 						showToday={true}
-						defaultValue={
-							JSON.parse(localStorage.getItem("chosenDateFromFirstAvailable"))
-								? moment(
-										new Date(
-											JSON.parse(
-												localStorage.getItem("chosenDateFromFirstAvailable")
-											)
-										)
-								  )
-								: moment()
-						}
+						defaultValue={chosenDate ? moment(chosenDate, "MM/DD/YYYY") : null}
 						placeholder='الرجاء اختيار التاريخ المطلوب'
 						style={{
 							height: "auto",
@@ -216,6 +207,7 @@ const ScheduleFormHelperArabic = ({
 						<br />
 						<Select
 							mode='multiple'
+							inputReadOnly
 							placeholder='اختر خدمة'
 							value={serviceDetailsArray.map((i) => i.serviceName)}
 							className='inputFields'
@@ -226,6 +218,7 @@ const ScheduleFormHelperArabic = ({
 								textTransform: "capitalize",
 								fontSize: "0.9rem",
 								boxShadow: "2px 2px 2px 2px rgba(0,0,0,0.2)",
+								textAlign: "right",
 							}}
 							onChange={(values) => {
 								const selectedServices = values.map((value) =>
@@ -239,6 +232,7 @@ const ScheduleFormHelperArabic = ({
 								className='items text-muted inputFields'
 								value=''
 								disabled
+								style={{ textAlign: "right" }}
 							>
 								اختر خدمة
 							</Option>
@@ -252,6 +246,7 @@ const ScheduleFormHelperArabic = ({
 											key={i}
 											value={s.serviceName}
 											className='items inputFields'
+											style={{ textAlign: "right" }}
 										>
 											{s.serviceNameOtherLanguage}
 										</Option>

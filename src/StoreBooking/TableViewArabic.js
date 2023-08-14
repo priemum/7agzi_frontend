@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import "moment/locale/ar";
 import { DatePicker } from "antd";
+import "moment/locale/ar";
 
 const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 	const [q, setQ] = useState("");
