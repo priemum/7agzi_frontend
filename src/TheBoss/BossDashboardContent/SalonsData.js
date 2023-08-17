@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Table } from "antd";
 import CountUp from "react-countup";
-import { GettingAllSalonOwnersDetails, GettingReportSummary } from "../apiBoss"; // adjust the path accordingly
+import {
+	GettingAllSalonOwnersDetails,
+	GettingReportSummary,
+	updateStoreStatus,
+} from "../apiBoss"; // adjust the path accordingly
 import { isAuthenticated } from "../../auth";
 import "./SalonsData.css";
 import styled from "styled-components";
@@ -118,6 +122,23 @@ const SalonsData = () => {
 			current: pagi,
 			pageSize: pagi.pageSize,
 		});
+	};
+
+	const handleStatusChange = (e, storeId) => {
+		const storeStatus = e.target.value === "true" ? "Activate" : "Deactivate";
+
+		if (window.confirm(`Are You Sure You Want To ${storeStatus} Store?`)) {
+			updateStoreStatus(user._id, token, storeId, e.target.value).then(
+				(data) => {
+					if (data.error) {
+						console.log("Status update failed");
+					} else {
+						window.scrollTo({ top: 0, behavior: "smooth" });
+						window.location.reload(false);
+					}
+				}
+			);
+		}
 	};
 
 	const columns = [
@@ -281,6 +302,55 @@ const SalonsData = () => {
 					UPDATE ACCOUNT
 				</Link>
 			),
+		},
+
+		{
+			title: "Activate Store",
+			key: "activateStore",
+			render: (storeOwner) => {
+				var storeActivationStatus =
+					storeOwner.settings &&
+					storeOwner.settings.length > 0 &&
+					storeOwner.settings[storeOwner.settings.length - 1].activeStore ===
+						true
+						? true
+						: false;
+
+				var salonId =
+					storeOwner.settings &&
+					storeOwner.settings.length > 0 &&
+					storeOwner.settings[storeOwner.settings.length - 1]._id
+						? storeOwner.settings[storeOwner.settings.length - 1]._id
+						: null;
+				return {
+					children: (
+						<select
+							style={{ background: "black" }}
+							onChange={(e) => handleStatusChange(e, salonId)}
+						>
+							{salonId ? (
+								<>
+									{storeActivationStatus ? (
+										<option value='true'>Activate</option>
+									) : (
+										<option value='false'>Deactivate</option>
+									)}
+									<option value='true'>Activate</option>
+									<option value='false'>Deactivate</option>
+								</>
+							) : (
+								"No Settings"
+							)}
+						</select>
+					),
+					props: {
+						style: {
+							background: storeActivationStatus ? "darkgreen" : "darkred",
+							color: "white",
+						},
+					},
+				};
+			},
 		},
 	];
 

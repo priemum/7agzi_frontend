@@ -116,6 +116,7 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 								background: "#214221",
 								color: "white",
 								padding: "1px 15px",
+								cursor: "pointer",
 							}}
 						>
 							السابق
@@ -135,6 +136,7 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 								background: "#214221",
 								color: "white",
 								padding: "1px 15px",
+								cursor: "pointer",
 							}}
 						>
 							التالي

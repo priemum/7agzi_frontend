@@ -16,6 +16,7 @@ const FirstSectionArabic = ({ language, handleInputChange, searchValue }) => {
 							background: "#001427",
 							padding: "4px",
 							textAlign: "center",
+							cursor: "pointer",
 						}}
 					>
 						رجالي
@@ -29,6 +30,7 @@ const FirstSectionArabic = ({ language, handleInputChange, searchValue }) => {
 							background: "#270000",
 							padding: "4px",
 							textAlign: "center",
+							cursor: "pointer",
 						}}
 					>
 						سيدات

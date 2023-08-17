@@ -30,10 +30,11 @@ const Navbar1 = ({ history }) => {
 							className='mt-3'
 							onClick={() => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
+								window.location.href = "/";
 							}}
 						>
 							<Link
-								to='/'
+								to='#'
 								className={
 									chosenLanguage === "Arabic"
 										? "sidebar-linkArabic"
@@ -367,7 +368,7 @@ const Navbar1 = ({ history }) => {
 										onClick={() => {
 											closeSidebar();
 											signout(() => {
-												history.push("/");
+												history.push("/home");
 												localStorage.removeItem("userHistoryPurchases");
 												localStorage.removeItem("order");
 											});
@@ -405,7 +406,7 @@ const Navbar1 = ({ history }) => {
 			{sideBar()}
 			<div className='logo-type'>
 				<Link
-					to='/about?ar'
+					to='/home'
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}
@@ -601,7 +602,7 @@ const Navbar1 = ({ history }) => {
 								}}
 								onClick={() =>
 									signout(() => {
-										history.push("/");
+										history.push("/home");
 										localStorage.removeItem("userHistoryPurchases");
 										localStorage.removeItem("order");
 										window.scrollTo({ top: 0, behavior: "smooth" });

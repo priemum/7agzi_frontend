@@ -1,4 +1,10 @@
-import { SIDEBAR_OPEN, SIDEBAR_CLOSE, IS_ARABIC, IS_ENGLISH } from "./actions";
+import {
+	SIDEBAR_OPEN,
+	SIDEBAR_CLOSE,
+	IS_ARABIC,
+	IS_ENGLISH,
+	USER_LOCATION,
+} from "./actions";
 
 const cart_reducer = (state, action) => {
 	if (action.type === SIDEBAR_OPEN) {
@@ -20,6 +26,20 @@ const cart_reducer = (state, action) => {
 			...state,
 			chosenLanguageEngish: "English",
 			chosenLanguage: "English",
+		};
+	}
+
+	if (action.type === USER_LOCATION) {
+		const { country, countryState, longitude, latitude } = action.payload;
+
+		return {
+			...state,
+			userLocation: {
+				country: country,
+				state: countryState,
+				longitude: longitude,
+				latitude: latitude,
+			},
 		};
 	}
 

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 /* eslint-disable import/no-webpack-loader-syntax */
 import "antd/dist/antd.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import axios from "axios";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
+import axios from "axios";
 import { isAuthenticated } from "./auth";
 
 //Regular Routes
@@ -97,11 +99,13 @@ import EditWebsiteMainAgent from "./PlatformAgent/AgentAccountEditing/EditWebsit
 import GallaryMainAgent from "./PlatformAgent/AgentAccountEditing/GallaryAddition/GallaryMainAgent";
 import ProfileUpdateOwner from "./Owners/ProfileUpdateOwner";
 import ProfileUpdateBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/ProfileUpdateBoss";
+import IntroPage from "./pages/IntroPage";
 
 function App() {
 	const [click, setClick] = useState(false);
 	const [clickMenu, setClickMenu] = useState(false);
 	const [language, setLanguage] = useState("English");
+
 	// const { chosenLanguage } = useCartContext();
 	// eslint-disable-next-line
 	const { user } = isAuthenticated();
@@ -176,6 +180,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
+			{}
 			<React.Fragment>
 				<React.Fragment>
 					{/* {allAdsCombined && allAdsCombined.show_ad ? <NavbarAds /> : null} */}
@@ -183,9 +188,8 @@ function App() {
 						<DarkBackground setClick={setClick} setClickMenu={setClickMenu} />
 					) : null}
 					<>
-						{window.location.pathname.includes(
-							"book-appointment-from-store"
-						) ? null : (
+						{window.location.pathname.includes("book-appointment-from-store") ||
+						window.location.pathname === "/" ? null : (
 							<>
 								<NavbarTop
 									click={click}
@@ -204,12 +208,13 @@ function App() {
 				<ToastContainer />
 				<Switch>
 					<Route
-						path='/'
+						path='/home'
 						exact
 						component={() => (
 							<Home language={language} setLanguage={setLanguage} />
 						)}
 					/>
+					<Route path='/' exact component={() => <IntroPage />} />
 					<Route
 						path='/signin'
 						exact

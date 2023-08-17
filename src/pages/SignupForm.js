@@ -210,7 +210,7 @@ const SignupForm = ({ language }) => {
 				setValues({ ...values, success: false });
 				return toast.info(data1.error);
 			} else
-				signin({ email, password }).then((data) => {
+				signin({ username: email, password }).then((data) => {
 					if (data.error) {
 						setValues({ ...values, loading: false });
 					} else {

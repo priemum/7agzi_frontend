@@ -2,11 +2,23 @@
 
 import React, { useContext, useReducer } from "react";
 import reducer from "./sidebar_reducer";
-import { SIDEBAR_OPEN, SIDEBAR_CLOSE, IS_ARABIC, IS_ENGLISH } from "./actions";
+import {
+	SIDEBAR_OPEN,
+	SIDEBAR_CLOSE,
+	IS_ARABIC,
+	IS_ENGLISH,
+	USER_LOCATION,
+} from "./actions";
 
 const initialState = {
 	isSidebarOpen: false,
 	chosenLanguage: "Arabic",
+	userLocation: {
+		country: "",
+		state: "",
+		latitude: "",
+		longitude: "",
+	},
 };
 
 const CartContext = React.createContext();
@@ -28,6 +40,18 @@ export const CartProvider = ({ children }) => {
 		dispatch({ type: IS_ENGLISH });
 	};
 
+	const capturingUserLocation = (
+		country,
+		countryState,
+		longitude,
+		latitude
+	) => {
+		dispatch({
+			type: USER_LOCATION,
+			payload: { country, countryState, longitude, latitude },
+		});
+	};
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -36,6 +60,7 @@ export const CartProvider = ({ children }) => {
 				closeSidebar,
 				chosenLanguageArabic,
 				chosenLanguageEngish,
+				capturingUserLocation,
 			}}
 		>
 			{children}

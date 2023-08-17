@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+// eslint-disable-next-line
 import { Redirect } from "react-router-dom";
+// eslint-disable-next-line
 import { isAuthenticated } from "../auth";
 
 // eslint-disable-next-line
@@ -135,7 +137,7 @@ const Home = ({ language, setLanguage }) => {
 				)}
 			</Helmet>
 
-			{isAuthenticated() &&
+			{/* {isAuthenticated() &&
 			isAuthenticated().user &&
 			isAuthenticated().user.role === 2000 ? (
 				<Redirect to='/agent/dashboard' />
@@ -154,7 +156,7 @@ const Home = ({ language, setLanguage }) => {
 
 			{!isAuthenticated() && !isAuthenticated().user ? (
 				<Redirect to='/about?ar' />
-			) : null}
+			) : null} */}
 
 			<div className=''>
 				{chosenLanguage === "Arabic" ? (

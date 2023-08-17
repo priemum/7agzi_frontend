@@ -41,7 +41,7 @@ const CardForStorePendingApp = ({ store }) => {
 		store && store.addStoreName && store.addStoreName.split(" ").join("-");
 
 	const handleStatusChange = (e, storeId) => {
-		if (window.confirm("Are You Sure Your Want To Activate Store?")) {
+		if (window.confirm(`Are You Sure Your Want To Activate Store?`)) {
 			updateStoreStatus(
 				user._id,
 				token,

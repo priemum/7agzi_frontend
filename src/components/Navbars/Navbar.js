@@ -48,8 +48,8 @@ const Navbar = ({ history, language }) => {
 					<li className='nav-item'>
 						<Link
 							className='nav-link'
-							style={isActive(history, "/")}
-							to='/'
+							style={isActive(history, "/home")}
+							to='/home'
 							onClick={() => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
