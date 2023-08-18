@@ -44,6 +44,8 @@ const IntroPage = () => {
 		sliderRef.current.slickNext();
 	};
 
+	console.log(chosenGender, "chosenGender");
+
 	return (
 		<IntroPageWrapper
 			show={chosenLanguage === "Arabic"}
@@ -136,6 +138,58 @@ const IntroPage = () => {
 									}
 								/>
 							</div>
+							{chosenGender === "AlreadyHaveAccount" ? (
+								<AlreadyHaveAccount chosenLanguage={chosenLanguage} />
+							) : null}
+
+							{chosenGender === "AlreadyHaveAccount" ? (
+								<div
+									className='haveAnAccount mt-5'
+									onClick={() => {
+										setChosenGender("BackToRegister");
+									}}
+								>
+									{chosenLanguage === "Arabic" ? (
+										<p className='arabicP'>
+											{" "}
+											<strong>تسجيل حساب جديد</strong>{" "}
+										</p>
+									) : (
+										<p>
+											{" "}
+											<strong>REGISTER NOW</strong>{" "}
+										</p>
+									)}
+								</div>
+							) : (
+								<div
+									className='haveAnAccount mt-2'
+									onClick={() => {
+										setChosenGender("AlreadyHaveAccount");
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
+									{chosenLanguage === "Arabic" ? (
+										<p
+											className='arabicP'
+											style={{
+												color: "white",
+												textAlign: "center",
+											}}
+										>
+											{" "}
+											<strong>إذا كان لديك حساب، اضغط هنا...</strong>{" "}
+										</p>
+									) : (
+										<p>
+											{" "}
+											<strong>
+												Already Have An Account, Click Here...
+											</strong>{" "}
+										</p>
+									)}
+								</div>
+							)}
 
 							{chosenGender !== "AlreadyHaveAccount" ? (
 								<>
@@ -189,53 +243,6 @@ const IntroPage = () => {
 									)}
 								</>
 							) : null}
-
-							{chosenGender === "AlreadyHaveAccount" ? (
-								<AlreadyHaveAccount chosenLanguage={chosenLanguage} />
-							) : null}
-
-							{chosenGender === "AlreadyHaveAccount" ? (
-								<div
-									className='haveAnAccount mt-5'
-									onClick={() => {
-										setChosenGender("BackToRegister");
-									}}
-								>
-									{chosenLanguage === "Arabic" ? (
-										<p className='arabicP'>
-											{" "}
-											<strong>تسجيل حساب جديد</strong>{" "}
-										</p>
-									) : (
-										<p>
-											{" "}
-											<strong>REGISTER NOW</strong>{" "}
-										</p>
-									)}
-								</div>
-							) : (
-								<div
-									className='haveAnAccount'
-									onClick={() => {
-										setChosenGender("AlreadyHaveAccount");
-										window.scrollTo({ top: 0, behavior: "smooth" });
-									}}
-								>
-									{chosenLanguage === "Arabic" ? (
-										<p className='arabicP'>
-											{" "}
-											<strong>إذا كان لديك حساب، اضغط هنا...</strong>{" "}
-										</p>
-									) : (
-										<p>
-											{" "}
-											<strong>
-												Already Have An Account, Click Here...
-											</strong>{" "}
-										</p>
-									)}
-								</div>
-							)}
 						</div>
 					</>
 				)}
@@ -272,12 +279,12 @@ const IntroPage = () => {
 export default IntroPage;
 
 const IntroPageWrapper = styled.div`
-	min-height: 1000px;
+	min-height: 1300px;
 	background-image: url(${BackgroundImage});
 	background-size: cover; // this will make sure the image covers the entire container
 	background-repeat: no-repeat;
 	background-position: center; // this will center the background image
-	min-height: 110vh; // this will make the div take up at least the full height of the viewport
+	min-height: 100vh; // this will make the div take up at least the full height of the viewport
 	width: 100%; // this will make the div take up the full width of the viewport
 	overflow: hidden;
 
@@ -292,7 +299,7 @@ const IntroPageWrapper = styled.div`
 		color: white;
 		font-size: 2rem;
 		text-transform: uppercase;
-		margin-top: 100px;
+		margin-top: 30px;
 	}
 
 	.textTitle {
@@ -300,7 +307,7 @@ const IntroPageWrapper = styled.div`
 		color: white;
 		font-size: 1.5rem;
 		text-transform: uppercase;
-		margin-top: 100px;
+		margin-top: 30px;
 	}
 
 	.choices > div {
@@ -329,7 +336,6 @@ const IntroPageWrapper = styled.div`
 		font-size: 1.3rem;
 		text-decoration: underline;
 		cursor: pointer;
-		margin-top: 0px;
 		text-align: center;
 	}
 

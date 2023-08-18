@@ -114,6 +114,41 @@ const FirstStep = ({
 					</div>
 				</div>
 			)}
+
+			{chosenLanguage === "Arabic" ? (
+				<div
+					style={{
+						color: "white",
+						textAlign: "center",
+						fontWeight: "bolder",
+						cursor: "pointer",
+						textDecoration: "underline",
+						fontSize: "1.1rem",
+					}}
+					className='mt-4'
+					onClick={() => {
+						window.location.href = "/about";
+					}}
+				>
+					<strong>لأصحاب الصالونات، قم بتسجيل صالونك بالضغط هنا...</strong>
+				</div>
+			) : (
+				<div
+					style={{
+						color: "white",
+						textAlign: "center",
+						fontWeight: "bolder",
+						cursor: "pointer",
+						textDecoration: "underline",
+					}}
+					className='mt-4'
+					onClick={() => {
+						window.location.href = "/about";
+					}}
+				>
+					For Salon Owners, Register Your Salon By Clicking Here...
+				</div>
+			)}
 		</FirstStepWrapper>
 	);
 };

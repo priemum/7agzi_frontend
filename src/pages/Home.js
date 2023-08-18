@@ -24,6 +24,7 @@ import FifthSectionArabic from "../components/HomePage/HomeArabic/FifthSectionAr
 import SixthSectionArabic from "../components/HomePage/HomeArabic/SixthSectionArabic";
 import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSectionArabic";
 import { useCartContext } from "../sidebar_context";
+import axios from "axios";
 
 const Home = ({ language, setLanguage }) => {
 	const [stores, setStores] = useState([]);
@@ -105,6 +106,43 @@ const Home = ({ language, setLanguage }) => {
 	}, []);
 
 	// console.log(stores, "stores");
+
+	useEffect(() => {
+		if (!navigator.geolocation) {
+			console.log("Geolocation is not supported by your browser");
+		} else {
+			navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+		}
+
+		function successFunction(position) {
+			const lat = position.coords.latitude;
+			const lon = position.coords.longitude;
+
+			axios
+				.get(
+					`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+				)
+				.then((response) => {
+					const { address } = response.data;
+					const { country, state, city } = address;
+
+					const userLocation = {
+						country,
+						state,
+						city,
+					};
+
+					localStorage.setItem("userLocation", JSON.stringify(userLocation));
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+
+		function errorFunction(error) {
+			console.log(error);
+		}
+	}, []);
 
 	return (
 		<HomeWrapper dir='ltr'>

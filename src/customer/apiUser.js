@@ -70,7 +70,7 @@ export const userlike = (userId, token, productId) => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({userId, productId}),
+		body: JSON.stringify({ userId, productId }),
 	})
 		.then((response) => {
 			return response.json();
@@ -86,7 +86,7 @@ export const userunlike = (userId, token, productId) => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({userId, productId}),
+		body: JSON.stringify({ userId, productId }),
 	})
 		.then((response) => {
 			return response.json();
@@ -156,7 +156,7 @@ export const updateOrderStatus = (
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({status, scheduleorderId, updatedByUser}),
+			body: JSON.stringify({ status, scheduleorderId, updatedByUser }),
 		}
 	)
 		.then((response) => {
@@ -182,6 +182,23 @@ export const UpdateScheduledAppointment = (
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(appointment),
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const getUserBookings = (phone, userId, token) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/user/booking/${phone}/${userId}`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 		}
 	)
 		.then((response) => {

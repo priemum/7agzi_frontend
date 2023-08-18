@@ -22,8 +22,9 @@ const SuccessfulSchedule = () => {
 					fontWeight: "bold",
 					letterSpacing: "2px",
 					color: "#000034",
-				}}>
-				Thank you for choosing Hair Salon.
+				}}
+			>
+				Thank you for choosing XLOOK!
 			</div>
 			<div
 				className='mt-3'
@@ -32,27 +33,31 @@ const SuccessfulSchedule = () => {
 					textAlign: "center",
 					fontWeight: "bold",
 					color: "#670000",
-				}}>
+				}}
+			>
 				Your appointment was successfully scheduled.
 			</div>
 
 			<div
 				className='container mt-3 '
-				style={{ borderBottom: "3px solid black" }}>
+				style={{ borderBottom: "3px solid black" }}
+			>
 				<span
 					style={{
 						fontSize: "1rem",
 						fontStyle: "italic",
 						fontWeight: "bold",
 						color: "#814100",
-					}}>
+					}}
+				>
 					Please check your dashboard for more details!
 				</span>
 				<Link
 					to='/dashboard'
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
-					}}>
+					}}
+				>
 					<div className='continueShoppingEmpty mx-auto my-4'>
 						Check your dashboard
 					</div>
@@ -61,7 +66,8 @@ const SuccessfulSchedule = () => {
 					to='/schedule'
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
-					}}>
+					}}
+				>
 					<div className='continueShoppingEmpty2 mx-auto my-4'>
 						Schedule Another Appointment
 					</div>

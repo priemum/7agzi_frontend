@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
+// eslint-disable-next-line
 import axios from "axios";
 import { isAuthenticated } from "./auth";
 
@@ -115,46 +116,46 @@ function App() {
 		// eslint-disable-next-line
 	}, [click, clickMenu]);
 
-	useEffect(() => {
-		if (!navigator.geolocation) {
-			console.log("Geolocation is not supported by your browser");
-		} else {
-			navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
-		}
+	// useEffect(() => {
+	// 	if (!navigator.geolocation) {
+	// 		console.log("Geolocation is not supported by your browser");
+	// 	} else {
+	// 		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+	// 	}
 
-		function successFunction(position) {
-			const lat = position.coords.latitude;
-			const lon = position.coords.longitude;
+	// 	function successFunction(position) {
+	// 		const lat = position.coords.latitude;
+	// 		const lon = position.coords.longitude;
 
-			axios
-				.get(
-					`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
-				)
-				.then((response) => {
-					const { address } = response.data;
-					const { country, state, city } = address;
+	// 		axios
+	// 			.get(
+	// 				`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+	// 			)
+	// 			.then((response) => {
+	// 				const { address } = response.data;
+	// 				const { country, state, city } = address;
 
-					if (country.toLowerCase() === "egypt") {
-						setLanguage("Arabic");
-					}
+	// 				if (country.toLowerCase() === "egypt") {
+	// 					setLanguage("Arabic");
+	// 				}
 
-					const userLocation = {
-						country,
-						state,
-						city,
-					};
+	// 				const userLocation = {
+	// 					country,
+	// 					state,
+	// 					city,
+	// 				};
 
-					localStorage.setItem("userLocation", JSON.stringify(userLocation));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
+	// 				localStorage.setItem("userLocation", JSON.stringify(userLocation));
+	// 			})
+	// 			.catch((error) => {
+	// 				console.log(error);
+	// 			});
+	// 	}
 
-		function errorFunction(error) {
-			console.log(error);
-		}
-	}, []);
+	// 	function errorFunction(error) {
+	// 		console.log(error);
+	// 	}
+	// }, []);
 
 	useEffect(() => {
 		ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
