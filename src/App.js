@@ -101,6 +101,7 @@ import GallaryMainAgent from "./PlatformAgent/AgentAccountEditing/GallaryAdditio
 import ProfileUpdateOwner from "./Owners/ProfileUpdateOwner";
 import ProfileUpdateBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/ProfileUpdateBoss";
 import IntroPage from "./pages/IntroPage";
+import BusinessPartnersReportsMain from "./TheBoss/BusinessPartnersReports/BusinessPartnersReportsMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -511,6 +512,12 @@ function App() {
 						path='/boss/admin/added-stores'
 						exact
 						component={AddedStoresMain}
+					/>
+
+					<BossRoute
+						path='/boss/admin/business-partners-reports'
+						exact
+						component={BusinessPartnersReportsMain}
 					/>
 
 					<BossRoute

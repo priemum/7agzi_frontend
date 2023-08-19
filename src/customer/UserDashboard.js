@@ -14,6 +14,8 @@ import { getUserBookings } from "./apiUser";
 import ClientBookingSummary from "./ClientBookingSummary";
 import ProfileUpdate from "./ProfileUpdate";
 import PointsAndPayments from "./PointsAndPayments";
+import PreviousStoreList from "./PreviousStoreList";
+import Slider from "react-slick";
 
 const { Panel } = Collapse;
 
@@ -62,16 +64,96 @@ const customExpandIcon = (props) => {
 const UserDashboard = () => {
 	const [activeKey, setActiveKey] = useState("2");
 	const [allBookings, setAllBookings] = useState("");
+	const [allPendingBookings, setAllPendingBookings] = useState([]);
+	const [allSuccessfulBookings, setAllSuccessfulBookings] = useState([]);
+	const [allCancelledBookings, setAllCancelledBookings] = useState([]);
+	const [totalPointsAndPayments, setTotalPointsAndPayments] = useState([]);
 	const { chosenLanguage } = useCartContext();
 
 	const { user, token } = isAuthenticated();
 
+	// Get today's date without time for accurate comparison
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+
 	const allUsersBooking = () => {
+		function aggregateLoyaltyPoints(allBookings) {
+			const aggregatedPoints = {};
+
+			// Filter out bookings with status "Cancelled"
+			const validBookings =
+				allBookings &&
+				allBookings.filter((booking) => booking.status !== "Cancelled");
+
+			validBookings.forEach((booking) => {
+				const belongsToId = booking.belongsTo.storeName;
+				const servicesPicked = booking.serviceDetails.servicesPicked || [];
+				let totalForThisBookingLoyaltyPoints = 0;
+				let totalForThisBookingPriceAfterDiscount = 0;
+
+				servicesPicked.forEach((service) => {
+					totalForThisBookingLoyaltyPoints += service.serviceLoyaltyPoints || 0;
+					totalForThisBookingPriceAfterDiscount +=
+						service.servicePriceDiscount || 0;
+				});
+
+				// If the belongsToId is already in the aggregatedPoints, add to its value
+				// Otherwise, create a new object with loyalty points and price after discount
+				if (!aggregatedPoints[belongsToId]) {
+					aggregatedPoints[belongsToId] = {
+						TotalLoyaltyPoints: totalForThisBookingLoyaltyPoints,
+						TotalPriceAfterDiscount: totalForThisBookingPriceAfterDiscount,
+					};
+				} else {
+					aggregatedPoints[belongsToId].TotalLoyaltyPoints +=
+						totalForThisBookingLoyaltyPoints;
+					aggregatedPoints[belongsToId].TotalPriceAfterDiscount +=
+						totalForThisBookingPriceAfterDiscount;
+				}
+			});
+
+			// Convert the object to the desired array format
+			return Object.entries(aggregatedPoints).map(([belongsTo, data]) => ({
+				belongsTo,
+				...data,
+			}));
+		}
 		getUserBookings(user.phone, user._id, token).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {
 				setAllBookings(data);
+
+				// Filter out all pending orders
+				const allPending = data.filter((booking) => {
+					// Convert scheduledDate to a Date object for comparison
+					const scheduledDate = new Date(booking.scheduledDate);
+
+					return scheduledDate >= today && booking.status === "Not Paid";
+				});
+
+				// Filter out all successful orders
+				const allSuccess = data.filter((booking) => {
+					// Convert scheduledDate to a Date object for comparison
+					const scheduledDate = new Date(booking.scheduledDate);
+
+					return scheduledDate < today && booking.status !== "Cancelled";
+				});
+
+				// Filter out all Cancelled orders
+				const allCancelled = data.filter((booking) => {
+					return booking.status === "Cancelled";
+				});
+
+				//Aggregating Loyalty Bookings
+
+				setAllPendingBookings(allPending);
+				setAllSuccessfulBookings(allSuccess);
+				setAllCancelledBookings(allCancelled);
+
+				setTotalPointsAndPayments(
+					aggregateLoyaltyPoints(data.length > 0 ? data : [])
+				);
 			}
 		});
 	};
@@ -80,6 +162,37 @@ const UserDashboard = () => {
 		allUsersBooking();
 		// eslint-disable-next-line
 	}, []);
+
+	const settings = {
+		dots: true,
+		infinite: true,
+		autoplay: true,
+		arrows: true,
+		speed: 1000,
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		autoplaySpeed: 3000,
+		pauseOnHover: true,
+		adaptiveHeight: true,
+
+		responsive: [
+			{
+				breakpoint: 1200,
+				settings: {
+					dots: true,
+					infinite: true,
+					autoplay: true,
+					arrows: true,
+					speed: 1000,
+					slidesToShow: 1,
+					slidesToScroll: 1,
+					autoplaySpeed: 3000,
+					pauseOnHover: true,
+					adaptiveHeight: true,
+				},
+			},
+		],
+	};
 
 	return (
 		<UserDashboardOverall dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
@@ -92,12 +205,79 @@ const UserDashboard = () => {
 					<div>{user.name}</div>
 					<div>{user.email}</div>
 					<div>{user.phone}</div>
-					<div className='row pt-3 menuItems'>
-						<div className='col-3'>Pending</div>
-						<div className='col-3'>Successful</div>
-						<div className='col-3'>Cancelled</div>
-						<div className='col-3'>Points</div>
-					</div>
+					{chosenLanguage === "Arabic" ? (
+						<div className='row pt-3 menuItems'>
+							<div className='col-4'>
+								حجوزات جارية
+								<div>{allPendingBookings && allPendingBookings.length}</div>
+							</div>
+							<div className='col-4'>
+								حجوزات ناجحة
+								<div>
+									{allSuccessfulBookings && allSuccessfulBookings.length}
+								</div>
+							</div>
+							<div className='col-2'>
+								ألغيت
+								<div style={{ color: "#edb9b9" }}>
+									{" "}
+									<strong>
+										{allCancelledBookings && allCancelledBookings.length}
+									</strong>{" "}
+								</div>
+							</div>
+							<div className='col-2'>
+								النقاط
+								<div style={{ color: "lightgreen", fontWeight: "bolder" }}>
+									{totalPointsAndPayments &&
+										totalPointsAndPayments.reduce(
+											(accumulatedSum, currentObject) => {
+												return (
+													accumulatedSum + currentObject.TotalLoyaltyPoints
+												);
+											},
+											0
+										)}
+								</div>
+							</div>
+						</div>
+					) : (
+						<div className='row pt-3 menuItems'>
+							<div className='col-3'>
+								Pending
+								<div>{allPendingBookings && allPendingBookings.length}</div>
+							</div>
+							<div className='col-3'>
+								Successful
+								<div>
+									{allSuccessfulBookings && allSuccessfulBookings.length}
+								</div>
+							</div>
+							<div className='col-3'>
+								Cancelled
+								<div style={{ color: "#edb9b9" }}>
+									{" "}
+									<strong>
+										{allCancelledBookings && allCancelledBookings.length}
+									</strong>{" "}
+								</div>
+							</div>
+							<div className='col-3'>
+								Points
+								<div style={{ color: "lightgreen", fontWeight: "bolder" }}>
+									{totalPointsAndPayments &&
+										totalPointsAndPayments.reduce(
+											(accumulatedSum, currentObject) => {
+												return (
+													accumulatedSum + currentObject.TotalLoyaltyPoints
+												);
+											},
+											0
+										)}
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 
 				{chosenLanguage === "Arabic" ? (
@@ -173,7 +353,31 @@ const UserDashboard = () => {
 									marginTop: "5px",
 								}}
 							>
-								<p>المحتوى لـ "الصالونات التي قمت بالحجز بها"</p>
+								<div className='container-fluid'>
+									<Slider {...settings}>
+										{allBookings &&
+											allBookings.map((b, i) => (
+												<div
+													className='img-fluid images'
+													key={i}
+													onClick={() => {
+														localStorage.setItem(
+															"chosenStore",
+															JSON.stringify(b.settings)
+														);
+														window.scrollTo({ top: 0, behavior: "smooth" });
+													}}
+												>
+													<PreviousStoreList
+														i={i}
+														salon={b}
+														key={i}
+														language={chosenLanguage}
+													/>
+												</div>
+											))}
+									</Slider>
+								</div>
 							</Panel>
 							<Panel
 								header={
@@ -198,7 +402,10 @@ const UserDashboard = () => {
 								}}
 							>
 								{allBookings && allBookings.length > 0 ? (
-									<PointsAndPayments allBookings={allBookings} />
+									<PointsAndPayments
+										totalPointsAndPayments={totalPointsAndPayments}
+										allBookings={allBookings}
+									/>
 								) : null}
 							</Panel>
 						</Collapse>
@@ -225,7 +432,7 @@ const UserDashboard = () => {
 									marginTop: "30px",
 								}}
 							>
-								<p>Content for "Update My Account"</p>
+								<ProfileUpdate userId={user._id} />
 							</Panel>
 							<Panel
 								header={
@@ -238,7 +445,7 @@ const UserDashboard = () => {
 									marginTop: "5px",
 								}}
 							>
-								<p>Content for "My Bookings Summary"</p>
+								<ClientBookingSummary allBookings={allBookings} />
 							</Panel>
 							<Panel
 								header={
@@ -251,7 +458,31 @@ const UserDashboard = () => {
 									marginTop: "5px",
 								}}
 							>
-								<p>Content for "Salons I Booked With"</p>
+								<div className='container-fluid'>
+									<Slider {...settings}>
+										{allBookings &&
+											allBookings.map((b, i) => (
+												<div
+													className='img-fluid images'
+													key={i}
+													onClick={() => {
+														localStorage.setItem(
+															"chosenStore",
+															JSON.stringify(b.settings)
+														);
+														window.scrollTo({ top: 0, behavior: "smooth" });
+													}}
+												>
+													<PreviousStoreList
+														i={i}
+														salon={b}
+														key={i}
+														language={chosenLanguage}
+													/>
+												</div>
+											))}
+									</Slider>
+								</div>
 							</Panel>
 							<Panel
 								header={
@@ -268,7 +499,12 @@ const UserDashboard = () => {
 									paddingBottom: "10px",
 								}}
 							>
-								<p>Content for "Payments and Loyalty Points"</p>
+								{allBookings && allBookings.length > 0 ? (
+									<PointsAndPayments
+										totalPointsAndPayments={totalPointsAndPayments}
+										allBookings={allBookings}
+									/>
+								) : null}
 							</Panel>
 						</Collapse>
 					</div>

@@ -318,3 +318,21 @@ export const updateUser = (user, next) => {
 		}
 	}
 };
+
+export const summaryByGovernorate = (userId, token) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/admin/governorate-stats/${userId}`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

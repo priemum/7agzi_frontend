@@ -141,7 +141,7 @@ const AdminNavbar = ({
 						? "sub4"
 						: fromPage === "StoreBilling"
 						? "sub10"
-						: fromPage === "EditWebsite"
+						: fromPage === "BusinessReport"
 						? "sub5"
 						: "sub1"
 				}

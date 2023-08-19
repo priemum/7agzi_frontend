@@ -1,54 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const PointsAndPayments = ({ allBookings }) => {
-	function aggregateLoyaltyPoints(allBookings) {
-		const aggregatedPoints = {};
-
-		// Filter out bookings with status "Cancelled"
-		const validBookings =
-			allBookings &&
-			allBookings.filter((booking) => booking.status !== "Cancelled");
-
-		validBookings.forEach((booking) => {
-			const belongsToId = booking.belongsTo.storeName;
-			const servicesPicked = booking.serviceDetails.servicesPicked || [];
-			let totalForThisBookingLoyaltyPoints = 0;
-			let totalForThisBookingPriceAfterDiscount = 0;
-
-			servicesPicked.forEach((service) => {
-				totalForThisBookingLoyaltyPoints += service.serviceLoyaltyPoints || 0;
-				totalForThisBookingPriceAfterDiscount +=
-					service.servicePriceDiscount || 0;
-			});
-
-			// If the belongsToId is already in the aggregatedPoints, add to its value
-			// Otherwise, create a new object with loyalty points and price after discount
-			if (!aggregatedPoints[belongsToId]) {
-				aggregatedPoints[belongsToId] = {
-					TotalLoyaltyPoints: totalForThisBookingLoyaltyPoints,
-					TotalPriceAfterDiscount: totalForThisBookingPriceAfterDiscount,
-				};
-			} else {
-				aggregatedPoints[belongsToId].TotalLoyaltyPoints +=
-					totalForThisBookingLoyaltyPoints;
-				aggregatedPoints[belongsToId].TotalPriceAfterDiscount +=
-					totalForThisBookingPriceAfterDiscount;
-			}
-		});
-
-		// Convert the object to the desired array format
-		return Object.entries(aggregatedPoints).map(([belongsTo, data]) => ({
-			belongsTo,
-			...data,
-		}));
-	}
-
-	var PointsSummary = aggregateLoyaltyPoints(
-		allBookings && allBookings.length > 0 ? allBookings : []
-	);
-	console.log(PointsSummary);
-
+const PointsAndPayments = ({ totalPointsAndPayments, allBookings }) => {
 	return (
 		<PointsAndPaymentsWrapper>
 			<div
@@ -71,8 +24,8 @@ const PointsAndPayments = ({ allBookings }) => {
 					</thead>
 
 					<tbody className='my-auto  arabic-table'>
-						{PointsSummary &&
-							PointsSummary.map((s, i) => (
+						{totalPointsAndPayments &&
+							totalPointsAndPayments.map((s, i) => (
 								<tr key={i}>
 									<td className='text-end'>{i + 1}</td>
 									<td className='text-end'>{s.belongsTo}</td>
