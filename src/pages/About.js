@@ -15,6 +15,9 @@ import Icon5 from "../Images/Icon5.png";
 import AboutHeroFooter from "../components/OtherHeroComp/AboutHeroFooter";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../sidebar_context";
+import AdSense from "../components/AdSense";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const About = ({ language, setLanguage }) => {
 	const { chosenLanguage } = useCartContext();
@@ -186,6 +189,25 @@ const About = ({ language, setLanguage }) => {
 								? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
 								: "Your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
 						</p>
+					</div>
+
+					<div
+						onClick={() => {
+							ReactGA.event("Ads_Clicked", {
+								event_category: "Ads_Clicked",
+								event_label: "Ads_Clicked",
+								value: 1, // Optional extra parameters
+							});
+
+							ReactPixel.track("Ads_Clicked", {
+								content_name: "Ads_Clicked",
+								content_category: "Ads_Clicked",
+								value: "",
+								currency: "",
+							});
+						}}
+					>
+						<AdSense adSlot='5842698744' />
 					</div>
 
 					<div className='col-md-4 mx-auto mt-5 mb-3'>

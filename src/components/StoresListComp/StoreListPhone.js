@@ -4,6 +4,9 @@ import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
 // import CardsStorePhone from "./CardsStorePhone";
 import NewCardPhone from "./NewCardPhone";
+import AdSense from "../AdSense";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const StoreListPhone = ({
 	activeStoresOnly,
@@ -34,6 +37,27 @@ const StoreListPhone = ({
 										store={p}
 										allServicesCombined={allServicesCombined}
 									/>
+
+									{i === 5 ? (
+										<div
+											onClick={() => {
+												ReactGA.event("Ads_Clicked", {
+													event_category: "Ads_Clicked",
+													event_label: "Ads_Clicked",
+													value: 1, // Optional extra parameters
+												});
+
+												ReactPixel.track("Ads_Clicked", {
+													content_name: "Ads_Clicked",
+													content_category: "Ads_Clicked",
+													value: "",
+													currency: "",
+												});
+											}}
+										>
+											<AdSense adSlot='5842698744' />
+										</div>
+									) : null}
 								</div>
 							);
 						})}

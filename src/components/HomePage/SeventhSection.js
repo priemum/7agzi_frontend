@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
+import AdSense from "../AdSense";
 
 const SeventhSection = ({
 	language,
@@ -62,6 +63,7 @@ const SeventhSection = ({
 
 	return (
 		<ThirdSectionWrapper>
+			<AdSense adSlot='5842698744' />
 			{loading ? (
 				<div style={{ textAlign: "center", margin: "auto" }}>
 					<Spin size='large' tip='Loading...' />

@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
+import AdSense from "../AdSense";
 
 const ThirdSection = ({
 	language,
@@ -103,6 +104,8 @@ const ThirdSection = ({
 							See All
 						</div>
 					</div>
+
+					<AdSense adSlot='5842698744' />
 				</div>
 			)}
 		</ThirdSectionWrapper>

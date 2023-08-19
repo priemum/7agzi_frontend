@@ -27,6 +27,9 @@ import { getPreviousAddedGallary } from "../Owners/apiOwner";
 import MainFirstAvailableApp from "../components/SingleStorePage/FirstAvailableAppointmentsMain/MainFirstAvailableApp";
 import moment from "moment";
 import { useCartContext } from "../sidebar_context";
+import AdSense from "../components/AdSense";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -533,6 +536,25 @@ const SingleStorePage = ({ props, language }) => {
 					</div>
 				</React.Fragment>
 			)}
+
+			<div
+				onClick={() => {
+					ReactGA.event("Ads_Clicked", {
+						event_category: "Ads_Clicked",
+						event_label: "Ads_Clicked",
+						value: 1, // Optional extra parameters
+					});
+
+					ReactPixel.track("Ads_Clicked", {
+						content_name: "Ads_Clicked",
+						content_category: "Ads_Clicked",
+						value: "",
+						currency: "",
+					});
+				}}
+			>
+				<AdSense adSlot='5842698744' />
+			</div>
 		</SingleStorePageWrapper>
 	);
 };

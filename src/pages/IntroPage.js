@@ -17,6 +17,7 @@ import AmericanFlag from "../Images/UnitedStates.png";
 import SecondStep from "../components/IntroPageComp/SecondStep";
 import AlreadyHaveAccount from "../components/IntroPageComp/AlreadyHaveAccount";
 import VideoIntro from "../components/IntroPageComp/VideoIntro";
+import PWAInstallButton from "../components/IntroPageComp/PWAInstallButton";
 
 const IntroPage = () => {
 	const { chosenLanguageEngish, chosenLanguage, chosenLanguageArabic } =
@@ -141,6 +142,7 @@ const IntroPage = () => {
 							{chosenGender === "AlreadyHaveAccount" ? (
 								<AlreadyHaveAccount chosenLanguage={chosenLanguage} />
 							) : null}
+							<PWAInstallButton />
 
 							{chosenGender === "AlreadyHaveAccount" ? (
 								<div
