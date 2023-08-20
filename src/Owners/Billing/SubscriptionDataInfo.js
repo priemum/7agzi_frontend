@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
-import {getSubscriptionData, getStoredPaymentData} from "../../apiCore";
+import React, { useState, useEffect } from "react";
+import { getSubscriptionData, getStoredPaymentData } from "../../apiCore";
 import styled from "styled-components";
 
-const SubscriptionDataInfo = ({user, token}) => {
+const SubscriptionDataInfo = ({ user, token }) => {
 	const [subscriptionInfo, setSubscriptionInfo] = useState({});
 	const [paymentInfo, setPaymentInfo] = useState({});
 

@@ -208,6 +208,7 @@ const AddService = ({ language }) => {
 			catchyPhraseOtherLanguage: catchyPhraseOtherLanguage,
 			bundleService: bundleService,
 			bundleServicesAdded: bundleServicesAdded,
+			activeService: true,
 		}).then((data) => {
 			if (data.error) {
 				setError(data.error);

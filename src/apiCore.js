@@ -544,7 +544,7 @@ export const retriggerPayment = (userId, token, paymentData) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({ amount: paymentData.amount }),
+			body: JSON.stringify(paymentData),
 		}
 	)
 		.then((response) => {

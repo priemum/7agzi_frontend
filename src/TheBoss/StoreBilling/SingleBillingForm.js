@@ -52,24 +52,13 @@ const SingleBillingForm = ({
 											.totalOnlineServicesFees}{" "}
 									EGP
 								</strong>{" "}
-								which is equivalent to{" "}
-								<strong style={{ color: "darkgreen" }}>
-									$
-									{allAppointmentsNotPaid &&
-										allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid] &&
-										Number(
-											Number(
-												allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid]
-													.totalOnlineServicesFees
-											) / 32
-										).toFixed(2)}{" "}
-								</strong>
-								.
 							</h3>
 
 							<h3>
 								{" "}
-								<strong>Would you like to customize this amount?</strong>{" "}
+								<strong>
+									Would you like to customize this amount in EGP?
+								</strong>{" "}
 							</h3>
 
 							<div className='form-check form-check-inline'>
@@ -107,13 +96,13 @@ const SingleBillingForm = ({
 									<label>
 										Fill In The Desired Amount in{" "}
 										<strong style={{ color: "green", fontSize: "1.1rem" }}>
-											DOLLAR
+											EGP
 										</strong>{" "}
 									</label>
 									<input
 										type='number'
 										className='form-control'
-										placeholder='amount should be in dollars'
+										placeholder='amount should be in EGP'
 										value={customizedAmount}
 										onChange={(e) => setCustomizedAmount(e.target.value)}
 									/>
@@ -145,6 +134,7 @@ const SingleBillingForm = ({
 								onClick={() => {
 									// Adjust the amount according to your requirement
 									const paymentData = {
+										country: store.belongsTo.storeCountry,
 										amount: !customizeClicked
 											? allAppointmentsNotPaid &&
 											  allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid] &&
@@ -157,7 +147,7 @@ const SingleBillingForm = ({
 											  ).toFixed(2)
 											: Number(customizedAmount), // Replace 30 with the amount you want to charge the customer
 
-										paymentMethodToken: "", //Should add payment method token for the user
+										paymentMethodToken: store.belongsTo.platFormShareToken, //Should add payment method token for the user
 									};
 
 									retriggerPayment(store.belongsTo._id, token, paymentData)
@@ -199,7 +189,7 @@ const SingleBillingForm = ({
 							>
 								Charge Store With Amount{" "}
 								<strong className='ml-2' style={{ fontSize: "1.5rem" }}>
-									$
+									EGP{" "}
 									{!customizeClicked
 										? allAppointmentsNotPaid &&
 										  allAppointmentsNotPaid[theIndexOfAppointmentsNotPaid] &&

@@ -20,6 +20,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 	{
 		serviceName: "Children's haircut",
@@ -38,6 +39,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -57,6 +59,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 	{
 		serviceName: "Beard shaving",
@@ -75,6 +78,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -94,6 +98,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -113,6 +118,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -132,6 +138,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -151,6 +158,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -170,6 +178,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -189,6 +198,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -208,6 +218,7 @@ export const MaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 ];
 
@@ -229,6 +240,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 	{
 		serviceName: "Facial Threading",
@@ -247,6 +259,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -266,6 +279,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 	{
 		serviceName: "Eyebrows",
@@ -284,6 +298,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -303,6 +318,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -322,6 +338,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -341,6 +358,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -360,6 +378,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -379,6 +398,7 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 
 	{
@@ -398,5 +418,6 @@ export const FemaleStandardServices = [
 		catchyPhraseOtherLanguage: "",
 		bundleService: false,
 		bundleServicesAdded: [],
+		activeService: true,
 	},
 ];

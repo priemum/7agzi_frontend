@@ -95,7 +95,7 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 100,
+					amount: 200,
 					email: user.email,
 					customerId: user._id,
 					planId: "One Time Payment",
@@ -182,7 +182,7 @@ const BillingMain = ({ language }) => {
 					amount: 15,
 					email: user.email,
 					customerId: user._id,
-					planId: "monthly_plan",
+					planId: "monthly_plan_egy",
 				};
 
 				processPayment_Subscription(user._id, token, paymentData)

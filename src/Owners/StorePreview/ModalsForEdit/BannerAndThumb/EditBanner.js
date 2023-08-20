@@ -26,6 +26,7 @@ const EditBanner = ({
 	setStoreThumbnail,
 	lastSettings,
 	hero1,
+	activeProp,
 }) => {
 	const [thumbnail, setThumbnail] = useState([]);
 	// eslint-disable-next-line
@@ -281,6 +282,7 @@ const EditBanner = ({
 			parking:
 				lastSettings && lastSettings.parking ? lastSettings.parking : true,
 			belongsTo: user._id,
+			activeStore: activeProp,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);

@@ -82,6 +82,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 	const [datesStoreClosed, setDatesStoreClosed] = useState("");
 	const [query, setQuery] = useState([]);
 	const [oneDateStoreOff, setOneDateStoreOff] = useState("");
+	const [activeProp, setActiveProp] = useState(false);
 	const [longitude, setLongitude] = useState("");
 	const [latitude, setLatitude] = useState("");
 	const [salonGrade, setSalonGrade] = useState("");
@@ -100,7 +101,6 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 		useState(true);
 	const [loading, setLoading] = useState(false);
 	const [currentOwner, setCurrentOwner] = useState("");
-
 	//Checking whether services were added or not
 	const [allServices, setAllServices] = useState([]);
 
@@ -202,6 +202,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 					);
 					setLongitude(lastAddedSettings && lastAddedSettings.longitude);
 					setLatitude(lastAddedSettings && lastAddedSettings.latitude);
+					setActiveProp(lastAddedSettings && lastAddedSettings.activeStore);
 					setActiveOnlineBooking(
 						lastAddedSettings && lastAddedSettings.activeOnlineBooking
 					);
@@ -275,6 +276,7 @@ const SettingsMainAgent = ({ language, setLanuage }) => {
 			visaPayment: extraData.visaPayment,
 			airConditioned: extraData.airConditioned,
 			parking: extraData.parking,
+			activeStore: activeProp,
 			belongsTo: ownerId,
 			salonGrade,
 			workersGender,

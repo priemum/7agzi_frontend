@@ -36,6 +36,7 @@ const SalonNameAndGeneral = ({
 	const [openTime, setOpenTime] = useState(null);
 	const [closeTime, setCloseTime] = useState(null);
 	const [allHours, setAllHours] = useState([]);
+	const [activeProp, setActiveProp] = useState(false);
 
 	const { user, token } = isAuthenticated();
 
@@ -62,7 +63,7 @@ const SalonNameAndGeneral = ({
 					setDatesStoreClosed(
 						lastAddedSettings && lastAddedSettings.datesStoreClosed
 					);
-
+					setActiveProp(lastAddedSettings && lastAddedSettings.activeStore);
 					setAddStoreName(lastAddedSettings && lastAddedSettings.addStoreName);
 					setAddStoreNameArabic(
 						lastAddedSettings && lastAddedSettings.addStoreNameArabic
@@ -230,6 +231,7 @@ const SalonNameAndGeneral = ({
 			parking:
 				lastSettings && lastSettings.parking ? lastSettings.parking : true,
 			belongsTo: user._id,
+			activeStore: activeProp,
 		}).then((data) => {
 			if (data.error) {
 				console.log(data.error);

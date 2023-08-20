@@ -89,6 +89,7 @@ const StorePreviewMain = ({ language }) => {
 	const [modalVisible3, setModalVisible3] = useState(false);
 	const [modalVisible4, setModalVisible4] = useState(false);
 	const [modalVisible5, setModalVisible5] = useState(false);
+	const [activeProp, setActiveProp] = useState(false);
 
 	const { user, token } = isAuthenticated();
 
@@ -245,6 +246,7 @@ const StorePreviewMain = ({ language }) => {
 				} else {
 					lastAddedSettings = data && data[data.length - 1];
 					setLastSettings(lastAddedSettings);
+					setActiveProp(lastAddedSettings && lastAddedSettings.activeStore);
 					setOverallAddedSettings(data);
 					setStoreThumbnail(
 						lastAddedSettings &&
@@ -340,6 +342,7 @@ const StorePreviewMain = ({ language }) => {
 				storeThumbnail={storeThumbnail}
 				setStoreThumbnail={setStoreThumbnail}
 				lastSettings={lastSettings}
+				activeProp={activeProp}
 			/>
 			<SalonNameAndGeneral
 				language={chosenLanguage}
