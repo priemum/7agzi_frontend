@@ -64,7 +64,7 @@ const FirstAvailableAppointmentModifiedArabic = ({
 		window.scrollTo(0, 0);
 	};
 
-	console.log(allEmployees, "allEmployees");
+	// console.log(allEmployees, "allEmployees");
 
 	return (
 		<FirstAvailableAppointmentModifiedWrapper dir='rtl' className='mr-2'>

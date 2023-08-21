@@ -544,7 +544,7 @@ const OwnerDashboardWrapper = styled.div`
 		}
 
 		.dashboardLinks {
-			font-size: 0.75rem !important;
+			font-size: 10px !important;
 		}
 	}
 

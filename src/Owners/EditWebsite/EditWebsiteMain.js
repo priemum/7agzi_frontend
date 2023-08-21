@@ -242,8 +242,8 @@ const EditWebsiteMainWrapper = styled.div`
 			margin-right: ${(props) => (props.show ? "3px" : "5px")};
 		}
 
-		.menuItems {
-			font-size: 12px !important;
+		.menuItems > a {
+			font-size: 9px !important;
 			margin: auto !important;
 		}
 

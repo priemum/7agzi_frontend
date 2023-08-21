@@ -189,7 +189,7 @@ const EmployeeMainWrapper = styled.div`
 		}
 
 		.menuItems > a {
-			font-size: 12px !important;
+			font-size: 10px !important;
 			margin: auto !important;
 		}
 

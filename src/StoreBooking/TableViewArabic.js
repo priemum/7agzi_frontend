@@ -110,8 +110,8 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 								)
 							}
 							style={{
-								fontSize: "14px",
-								marginRight: "8px",
+								fontSize: "12px",
+								marginRight: "3px",
 								fontWeight: "bolder",
 								background: "#214221",
 								color: "white",
@@ -130,8 +130,8 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 								)
 							}
 							style={{
-								fontSize: "14px",
-								marginRight: "8px",
+								fontSize: "12px",
+								marginRight: "5px",
 								fontWeight: "bolder",
 								background: "#214221",
 								color: "white",
@@ -192,7 +192,7 @@ const TableViewArabic = ({ orders, setSelectedDate, selectedDate }) => {
 			</div>
 			<div className=' mb-3 form-group mx-3 text-center'>
 				<label
-					className='mt-3 mx-1'
+					className='mt-0 mx-1'
 					style={{
 						fontWeight: "bold",
 						fontSize: "1.05rem",

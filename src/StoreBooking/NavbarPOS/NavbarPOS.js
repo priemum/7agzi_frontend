@@ -41,7 +41,7 @@ const NavbarPOS = ({ onlineStoreName, language, setLanguage }) => {
 				) : null}
 			</div>
 			<div className='right'>
-				<span>{onlineStoreName.addStoreName}</span>
+				<span>{onlineStoreName && onlineStoreName.addStoreNameArabic}</span>
 			</div>
 		</NavbarPOSWrapper>
 	);

@@ -491,7 +491,7 @@ const AddEmployeeWrapper = styled.div`
 		margin: 30px 5px 140px 5px !important;
 
 		.menuItems {
-			font-size: 15px !important;
+			font-size: 11px !important;
 		}
 	}
 `;

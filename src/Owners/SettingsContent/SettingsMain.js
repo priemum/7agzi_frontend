@@ -316,7 +316,7 @@ const SettingsMain = ({ language }) => {
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddLogo")}
-								className='col-3 mx-auto col-md-3 menuItems'
+								className='col-4 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("AddLogo")}
 							>
 								<i className='fa-brands fa-html5 mr-1'></i>{" "}
@@ -332,10 +332,10 @@ const SettingsMain = ({ language }) => {
 							</div>
 							<div
 								style={isActive(clickedMenu, "Awards")}
-								className='col-3 mx-auto col-md-3 menuItems'
+								className='col-2 mx-auto col-md-3 menuItems'
 								onClick={() => setClickedMenu("Awards")}
 							>
-								<i className='fa-solid fa-award mr-1'></i>{" "}
+								{/* <i className='fa-solid fa-award mr-1'></i>{" "} */}
 								{chosenLanguage === "Arabic" ? "جوائز" : "Add Awards"}
 							</div>
 							<div
@@ -492,7 +492,7 @@ const SettingsMainWrapper = styled.div`
 		}
 
 		.menuItems {
-			font-size: 13px !important;
+			font-size: 10px !important;
 			margin: auto;
 		}
 	}

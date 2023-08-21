@@ -60,7 +60,12 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 					className='firstGroupItem'
 					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
-					<Link to='/store/admin/dashboard'>
+					<Link
+						to='#'
+						onClick={() => {
+							window.location.href = "/store/admin/dashboard";
+						}}
+					>
 						{chosenLanguage === "Arabic" ? (
 							<img
 								src={MySalonAr}
@@ -307,7 +312,12 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 					className='ThirdGroupItem'
 					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
 				>
-					<Link to='/store/book-appointment-from-store'>
+					<Link
+						to='#'
+						onClick={() => {
+							window.location.href = "/store/book-appointment-from-store";
+						}}
+					>
 						{chosenLanguage === "Arabic" ? (
 							<img
 								src={CashierAr}

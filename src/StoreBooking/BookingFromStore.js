@@ -35,7 +35,7 @@ const isActive = (history, path) => {
 			background: "#2c2c2c",
 			fontWeight: "bold",
 			borderRadius: "5px",
-			fontSize: "1.1rem",
+			fontSize: "0.9rem",
 			textAlign: "center",
 			padding: "10px",
 			color: "white",
@@ -48,7 +48,7 @@ const isActive = (history, path) => {
 			backgroundColor: "grey",
 			padding: "10px",
 			borderRadius: "5px",
-			fontSize: "1.1rem",
+			fontSize: "0.9rem",
 			fontWeight: "bold",
 			textAlign: "center",
 			cursor: "pointer",
@@ -64,7 +64,7 @@ const isActive2 = (history, path) => {
 			background: "#2c2c2c",
 			fontWeight: "bold",
 			borderRadius: "5px",
-			fontSize: "1.1rem",
+			fontSize: "0.8rem",
 			textAlign: "center",
 			padding: "10px",
 			color: "white",
@@ -77,7 +77,7 @@ const isActive2 = (history, path) => {
 			backgroundColor: "grey",
 			padding: "10px",
 			borderRadius: "5px",
-			fontSize: "0.9rem",
+			fontSize: "0.7rem",
 			fontWeight: "bold",
 			textAlign: "center",
 			cursor: "pointer",
@@ -890,7 +890,7 @@ const BookFromStoreWrapper = styled.div`
 		}
 
 		.menuItems > a {
-			font-size: 13px !important;
+			font-size: 11px !important;
 			padding: 2px !important;
 			width: 100% !important;
 		}
