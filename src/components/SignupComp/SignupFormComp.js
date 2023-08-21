@@ -718,7 +718,13 @@ const SignupFormComp = ({
 										fontSize: "1rem",
 									}}
 								>
-									<Link to='/signin' className='btn btn-sm btn-outline-primary'>
+									<Link
+										to='/signin'
+										className='btn btn-sm btn-outline-primary'
+										onClick={() => {
+											window.scrollTo({ top: 0, behavior: "smooth" });
+										}}
+									>
 										Login Here
 									</Link>
 								</strong>

@@ -95,6 +95,7 @@ const AddService = ({ language }) => {
 		setServicePriceDiscount(e.target.value);
 	};
 
+	// eslint-disable-next-line
 	const handleChange10 = (e) => {
 		setError("");
 		setCatchyPhrase(e.target.value);
@@ -105,6 +106,7 @@ const AddService = ({ language }) => {
 		setServiceDescriptionOtherLanguage(e.target.value);
 	};
 
+	// eslint-disable-next-line
 	const handleChange14 = (e) => {
 		setError("");
 		setCatchyPhraseOtherLanguage(e.target.value);
@@ -183,9 +185,51 @@ const AddService = ({ language }) => {
 			return toast.error("Please Add Your Custom Service");
 		}
 
-		var words = catchyPhrase.split(" ");
-		if (words.length > 10) {
-			return toast.error("Catchy Phrase Should be 10 words or less.");
+		function containsArabicNumerals(str) {
+			// Regular expression to match Arabic numerals
+			const arabicNumeralsRegex = /[\u0660-\u0669]/;
+			return arabicNumeralsRegex.test(str);
+		}
+
+		function removeNonNumericCharacters(str) {
+			// Regular expression to remove non-numeric characters
+			const numericOnlyRegex = /\D/g;
+			return str.replace(numericOnlyRegex, "");
+		}
+
+		function convertArabicToEnglishNumerals(arabicNumber) {
+			const arabicNumeralsMap = {
+				"٠": "0",
+				"١": "1",
+				"٢": "2",
+				"٣": "3",
+				"٤": "4",
+				"٥": "5",
+				"٦": "6",
+				"٧": "7",
+				"٨": "8",
+				"٩": "9",
+			};
+
+			// Convert Arabic numerals to English numerals
+			return arabicNumber.replace(
+				/[\u0660-\u0669]/g,
+				(match) => arabicNumeralsMap[match]
+			);
+		}
+
+		function convertArabicOrNumericToEnglish(arabicNumber) {
+			// Remove non-numeric characters (including '+') from the input
+			const numericOnly = removeNonNumericCharacters(arabicNumber);
+
+			// Check if the input contains Arabic numerals
+			if (containsArabicNumerals(arabicNumber)) {
+				// If it contains Arabic numerals, convert to English numerals
+				return convertArabicToEnglishNumerals(numericOnly);
+			}
+
+			// Return the numericOnly string as is (English numerals)
+			return numericOnly;
 		}
 
 		setError("");
@@ -196,10 +240,12 @@ const AddService = ({ language }) => {
 			serviceNameOtherLanguage,
 			customerType,
 			customerTypeOtherLanguage,
-			servicePrice,
-			servicePriceDiscount,
-			serviceTime,
-			serviceLoyaltyPoints,
+			servicePrice: convertArabicOrNumericToEnglish(servicePrice),
+			servicePriceDiscount:
+				convertArabicOrNumericToEnglish(servicePriceDiscount),
+			serviceTime: convertArabicOrNumericToEnglish(serviceTime),
+			serviceLoyaltyPoints:
+				convertArabicOrNumericToEnglish(serviceLoyaltyPoints),
 			serviceType,
 			serviceDescription: serviceDescriptionCombined,
 			serviceDescriptionOtherLanguage: serviceDescriptionCombinedOtherLanguage,
@@ -473,55 +519,59 @@ const AddService = ({ language }) => {
 					</>
 				) : null}
 
-				<div
-					className='form-group col-md-6 mx-auto'
-					style={{
-						textAlign: language === "Arabic" ? "right" : "",
-						fontWeight: language === "Arabic" ? "bolder" : "",
-					}}
-				>
-					<label className='text-muted'>
-						{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
-					</label>
-					<input
-						type='number'
-						className='form-control'
-						onChange={handleChange2}
-						value={servicePrice}
-						placeholder={
-							language === "Arabic"
-								? "يجب أن تكون أرقام فقط"
-								: "Should be digits only"
-						}
-						required
-					/>
+				<div className='row'>
+					<div
+						className='form-group col-md-6 mx-auto col-4'
+						style={{
+							textAlign: language === "Arabic" ? "right" : "",
+							fontWeight: language === "Arabic" ? "bolder" : "",
+						}}
+					>
+						<label className='text-muted'>
+							{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
+						</label>
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange2}
+							value={servicePrice}
+							placeholder={
+								language === "Arabic"
+									? "يجب أن تكون أرقام فقط"
+									: "Should be digits only"
+							}
+							required
+						/>
+					</div>
+
+					<div
+						className='form-group col-md-6 mx-auto col-7'
+						style={{
+							textAlign: language === "Arabic" ? "right" : "",
+							fontWeight: language === "Arabic" ? "bolder" : "",
+						}}
+					>
+						<label className='text-muted'>
+							{language === "Arabic"
+								? "سعر الخدمة بعد الخصم"
+								: "Service Price After Discount"}
+						</label>
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange9}
+							value={servicePriceDiscount}
+							placeholder={
+								language === "Arabic"
+									? "يجب أن تكون أرقام فقط"
+									: "Should be digits only"
+							}
+							required
+						/>
+					</div>
 				</div>
-				<div
-					className='form-group col-md-6 mx-auto'
-					style={{
-						textAlign: language === "Arabic" ? "right" : "",
-						fontWeight: language === "Arabic" ? "bolder" : "",
-					}}
-				>
-					<label className='text-muted'>
-						{language === "Arabic"
-							? "سعر الخدمة بعد الخصم"
-							: "Service Price After Discount"}
-					</label>
-					<input
-						type='number'
-						className='form-control'
-						onChange={handleChange9}
-						value={servicePriceDiscount}
-						placeholder={
-							language === "Arabic"
-								? "يجب أن تكون أرقام فقط"
-								: "Should be digits only"
-						}
-						required
-					/>
-				</div>
-				<div
+
+				{/* <div
 					className='form-group col-md-8 mx-auto'
 					style={{
 						textAlign: language === "Arabic" ? "right" : "",
@@ -544,8 +594,8 @@ const AddService = ({ language }) => {
 								: "e.g. For the first, 20% off your haircut today!"
 						}
 					/>
-				</div>
-				<div
+				</div> */}
+				{/* <div
 					className='form-group col-md-8 mx-auto'
 					style={{
 						textAlign: language === "Arabic" ? "right" : "",
@@ -568,9 +618,12 @@ const AddService = ({ language }) => {
 								: "e.g. For the first, 20% off your haircut today!"
 						}
 					/>
-				</div>
+				</div> */}
 			</div>
-			<div className='row'>
+			<div
+				className='row'
+				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+			>
 				<div className='col-md-6 mx-auto'>
 					<div>
 						{serviceDescriptionCombined &&
@@ -620,7 +673,7 @@ const AddService = ({ language }) => {
 					</div>
 					<label className='text-muted'>
 						{language === "Arabic"
-							? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceName}"`
+							? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceName}" باللغة الإنجليزية`
 							: `Add set of services connected to "${serviceName}"`}
 					</label>
 					<input
@@ -660,7 +713,10 @@ const AddService = ({ language }) => {
 				</div>
 			</div>
 
-			<div className='row'>
+			<div
+				className='row'
+				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+			>
 				<div className='col-md-6 mx-auto'>
 					<div>
 						{serviceDescriptionCombinedOtherLanguage &&
@@ -752,9 +808,9 @@ const AddService = ({ language }) => {
 				</div>
 			</div>
 
-			<div className='row'>
+			<div className='row my-3'>
 				<div
-					className='form-group col-md-6 mx-auto'
+					className='form-group col-md-6 mx-auto col-7'
 					style={{
 						textAlign: language === "Arabic" ? "right" : "",
 						fontWeight: language === "Arabic" ? "bolder" : "",
@@ -779,7 +835,7 @@ const AddService = ({ language }) => {
 					/>
 				</div>
 				<div
-					className='form-group col-md-6 mx-auto'
+					className='form-group col-md-6 mx-auto col-5'
 					style={{
 						textAlign: language === "Arabic" ? "right" : "",
 						fontWeight: language === "Arabic" ? "bolder" : "",
@@ -802,9 +858,11 @@ const AddService = ({ language }) => {
 					/>
 				</div>
 			</div>
-			<button className='btn btn-outline-primary mb-3'>
-				{language === "Arabic" ? "إضافة خدمة" : "Add a Service"}
-			</button>
+			<div className='text-center'>
+				<button className='btn btn-outline-primary mb-3'>
+					{language === "Arabic" ? "إضافة خدمة" : "Add a Service"}
+				</button>
+			</div>
 		</form>
 	);
 
@@ -839,6 +897,9 @@ const AddServiceWrapper = styled.div`
 	@media (max-width: 1000px) {
 		.serviceFormWrapper {
 			margin-left: 0px !important;
+		}
+		label {
+			font-size: 0.8rem !important;
 		}
 	}
 `;

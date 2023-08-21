@@ -787,6 +787,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 														}}
 														onClick={() => {
 															addItem(chosenEmployee);
+															window.scrollTo({ top: 0, behavior: "smooth" });
 															window.location.href = `/store/book-appointment-from-store2/employee/${chosenEmployee._id}`;
 														}}
 														className='btn'

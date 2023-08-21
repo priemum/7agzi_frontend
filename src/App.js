@@ -68,8 +68,6 @@ import GeneralStats from "./employee/GeneralStats";
 //StoreBooking
 import StoreRoute from "./auth/StoreRoute";
 import BookingFromStore from "./StoreBooking/BookingFromStore";
-import SingleAppointmentPageStore from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentPageStore";
-import SingleAppointmentPageStoreArabic from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentPageStoreArabic";
 import ScheduleFormFinal from "./StoreBooking/POSBook/ScheduleFormFinal";
 
 //Platform Admin routes
@@ -102,6 +100,7 @@ import ProfileUpdateOwner from "./Owners/ProfileUpdateOwner";
 import ProfileUpdateBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/ProfileUpdateBoss";
 import IntroPage from "./pages/IntroPage";
 import BusinessPartnersReportsMain from "./TheBoss/BusinessPartnersReports/BusinessPartnersReportsMain";
+import SingleAppointmentMain from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -243,6 +242,7 @@ function App() {
 							<About language={language} setLanguage={setLanguage} />
 						)}
 					/>
+
 					<Route
 						path='/steps'
 						exact
@@ -449,19 +449,11 @@ function App() {
 						)}
 					/>
 
-					{language === "Arabic" ? (
-						<StoreRoute
-							path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
-							exact
-							component={SingleAppointmentPageStoreArabic}
-						/>
-					) : (
-						<StoreRoute
-							path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
-							exact
-							component={SingleAppointmentPageStore}
-						/>
-					)}
+					<StoreRoute
+						path='/store/single-appointment-details-store/:AppointmentId/:employeeId'
+						exact
+						component={SingleAppointmentMain}
+					/>
 
 					{/* Platform Agents Routes */}
 					<AgentsRoute

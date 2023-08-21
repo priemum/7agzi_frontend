@@ -109,9 +109,51 @@ const UpdateService = ({ language }) => {
 			return toast.error("Please Add Your Custom Service");
 		}
 
-		var words = catchyPhrase.split(" ");
-		if (words.length > 10) {
-			return toast.error("Catchy Phrase Should be 10 words or less.");
+		function containsArabicNumerals(str) {
+			// Regular expression to match Arabic numerals
+			const arabicNumeralsRegex = /[\u0660-\u0669]/;
+			return arabicNumeralsRegex.test(str);
+		}
+
+		function removeNonNumericCharacters(str) {
+			// Regular expression to remove non-numeric characters
+			const numericOnlyRegex = /\D/g;
+			return str.replace(numericOnlyRegex, "");
+		}
+
+		function convertArabicToEnglishNumerals(arabicNumber) {
+			const arabicNumeralsMap = {
+				"٠": "0",
+				"١": "1",
+				"٢": "2",
+				"٣": "3",
+				"٤": "4",
+				"٥": "5",
+				"٦": "6",
+				"٧": "7",
+				"٨": "8",
+				"٩": "9",
+			};
+
+			// Convert Arabic numerals to English numerals
+			return arabicNumber.replace(
+				/[\u0660-\u0669]/g,
+				(match) => arabicNumeralsMap[match]
+			);
+		}
+
+		function convertArabicOrNumericToEnglish(arabicNumber) {
+			// Remove non-numeric characters (including '+') from the input
+			const numericOnly = removeNonNumericCharacters(arabicNumber);
+
+			// Check if the input contains Arabic numerals
+			if (containsArabicNumerals(arabicNumber)) {
+				// If it contains Arabic numerals, convert to English numerals
+				return convertArabicToEnglishNumerals(numericOnly);
+			}
+
+			// Return the numericOnly string as is (English numerals)
+			return numericOnly;
 		}
 
 		if (activeService === "0") {
@@ -125,10 +167,12 @@ const UpdateService = ({ language }) => {
 					serviceNameOtherLanguage,
 					customerType,
 					customerTypeOtherLanguage,
-					servicePrice,
-					servicePriceDiscount,
+					servicePrice: convertArabicOrNumericToEnglish(servicePrice),
+					servicePriceDiscount:
+						convertArabicOrNumericToEnglish(servicePriceDiscount),
 					serviceTime,
-					serviceLoyaltyPoints,
+					serviceLoyaltyPoints:
+						convertArabicOrNumericToEnglish(serviceLoyaltyPoints),
 					serviceType,
 					serviceDescription: serviceDescriptionCombined,
 					serviceDescriptionOtherLanguage:
@@ -156,10 +200,12 @@ const UpdateService = ({ language }) => {
 				serviceNameOtherLanguage,
 				customerType,
 				customerTypeOtherLanguage,
-				servicePrice,
-				servicePriceDiscount,
-				serviceTime,
-				serviceLoyaltyPoints,
+				servicePrice: convertArabicOrNumericToEnglish(servicePrice),
+				servicePriceDiscount:
+					convertArabicOrNumericToEnglish(servicePriceDiscount),
+				serviceTime: convertArabicOrNumericToEnglish(serviceTime),
+				serviceLoyaltyPoints:
+					convertArabicOrNumericToEnglish(serviceLoyaltyPoints),
 				serviceType,
 				serviceDescription: serviceDescriptionCombined,
 				serviceDescriptionOtherLanguage:
@@ -310,6 +356,7 @@ const UpdateService = ({ language }) => {
 		setActiveService(e.target.value);
 	};
 
+	// eslint-disable-next-line
 	const handleChange11 = (e) => {
 		setCatchyPhrase(e.target.value);
 	};
@@ -318,6 +365,7 @@ const UpdateService = ({ language }) => {
 		setServiceDescriptionOtherLanguage(e.target.value);
 	};
 
+	// eslint-disable-next-line
 	const handleChange14 = (e) => {
 		setCatchyPhraseOtherLanguage(e.target.value);
 	};
@@ -353,10 +401,23 @@ const UpdateService = ({ language }) => {
 	};
 
 	const newServiceForm = () => (
-		<form onSubmit={clickSubmit} className='col-md-10'>
+		<form
+			onSubmit={clickSubmit}
+			className='col-md-10'
+			dir={language === "Arabic" ? "rtl" : "ltr"}
+		>
 			<div className='row'>
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Service For</label>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{" "}
+						{language === "Arabic" ? "الخدمة لـ" : "Service For"}
+					</label>
 					<select
 						className='form-control'
 						value={JSON.stringify({
@@ -372,8 +433,17 @@ const UpdateService = ({ language }) => {
 						))}
 					</select>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Service Name</label>
+				<div
+					className='form-group col-md-6 mx-auto'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{language === "Arabic" ? "اسم الخدمة" : "Service Name"}
+					</label>
+
 					<select
 						className='form-control'
 						value={JSON.stringify({
@@ -385,7 +455,9 @@ const UpdateService = ({ language }) => {
 						{serviceName ? (
 							<option value=''>{serviceName}</option>
 						) : (
-							<option value=''>Select a service</option>
+							<option value=''>
+								{language === "Arabic" ? "اختر خدمة" : "Select a service"}
+							</option>
 						)}
 						{possibleServices.map((service, index) => (
 							<option key={index} value={JSON.stringify(service)}>
@@ -397,10 +469,21 @@ const UpdateService = ({ language }) => {
 
 				{customServicePicked || bundleService ? (
 					<>
-						<div className='form-group col-md-6 mx-auto'>
+						<div
+							className='form-group col-md-6 mx-auto'
+							style={{
+								textAlign: language === "Arabic" ? "right" : "",
+								fontWeight: language === "Arabic" ? "bolder" : "",
+							}}
+						>
 							<label className='text-muted'>
-								{" "}
-								{bundleService ? "Bundle" : "Custom"} Service Name
+								{bundleService
+									? language === "Arabic"
+										? "اسم الحزمة"
+										: "Bundle Service Name"
+									: language === "Arabic"
+									? "اسم الخدمة المخصصة"
+									: "Custom Service Name"}
 							</label>
 							<input
 								type='text'
@@ -455,29 +538,59 @@ const UpdateService = ({ language }) => {
 					</>
 				) : null}
 
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Service Price</label>
-					<input
-						type='number'
-						className='form-control'
-						onChange={handleChange2}
-						value={servicePrice}
-						placeholder='Should be digits only'
-						required
-					/>
+				<div className='row'>
+					<div
+						className='form-group col-md-6 mx-auto col-4'
+						style={{
+							textAlign: language === "Arabic" ? "right" : "",
+							fontWeight: language === "Arabic" ? "bolder" : "",
+						}}
+					>
+						<label className='text-muted'>
+							{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
+						</label>
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange2}
+							value={servicePrice}
+							placeholder={
+								language === "Arabic"
+									? "يجب أن تكون أرقام فقط"
+									: "Should be digits only"
+							}
+							required
+						/>
+					</div>
+
+					<div
+						className='form-group col-md-6 mx-auto col-7'
+						style={{
+							textAlign: language === "Arabic" ? "right" : "",
+							fontWeight: language === "Arabic" ? "bolder" : "",
+						}}
+					>
+						<label className='text-muted'>
+							{language === "Arabic"
+								? "سعر الخدمة بعد الخصم"
+								: "Service Price After Discount"}
+						</label>
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange9}
+							value={servicePriceDiscount}
+							placeholder={
+								language === "Arabic"
+									? "يجب أن تكون أرقام فقط"
+									: "Should be digits only"
+							}
+							required
+						/>
+					</div>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Service Price After Discount</label>
-					<input
-						type='number'
-						className='form-control'
-						onChange={handleChange9}
-						value={servicePriceDiscount}
-						placeholder='Should be digits only'
-						required
-					/>
-				</div>
-				<div className='form-group col-md-8 mx-auto'>
+
+				{/* <div className='form-group col-md-8 mx-auto'>
 					<label className='text-muted'>
 						Catchy Phrase For This Service (10 words)
 					</label>
@@ -503,7 +616,7 @@ const UpdateService = ({ language }) => {
 						placeholder='e.g. For the first, 20% off your haircut today!'
 						// required
 					/>
-				</div>
+				</div> */}
 			</div>
 			<div className='row'>
 				<div className='col-md-6 mx-auto'>
@@ -511,7 +624,9 @@ const UpdateService = ({ language }) => {
 						{serviceDescriptionCombined &&
 							serviceDescriptionCombined.length > 0 && (
 								<React.Fragment>
-									Added Descriptions:
+									{language === "Arabic"
+										? "الوصف المضاف:"
+										: "Added Descriptions:"}
 									<ul>
 										{serviceDescriptionCombined &&
 											serviceDescriptionCombined.map((i, e) => (
@@ -592,7 +707,9 @@ const UpdateService = ({ language }) => {
 						{serviceDescriptionCombinedOtherLanguage &&
 							serviceDescriptionCombinedOtherLanguage.length > 0 && (
 								<React.Fragment>
-									Added Descriptions Arabic:
+									{language === "Arabic"
+										? "الوصف المضاف باللغة العربية:"
+										: "Added Descriptions Arabic:"}
 									<ul>
 										{serviceDescriptionCombinedOtherLanguage &&
 											serviceDescriptionCombinedOtherLanguage.map((i, e) => (
@@ -669,44 +786,94 @@ const UpdateService = ({ language }) => {
 				</div>
 			</div>
 
-			<div className='row'>
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Service Estimated Time</label>
+			<div className='row my-3'>
+				<div
+					className='form-group col-md-6 mx-auto col-7'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? "الوقت المقدر للخدمة"
+							: "Service Estimated Time"}
+					</label>
 					<input
 						type='number'
 						className='form-control'
 						onChange={handleChange3}
 						value={serviceTime}
 						required
-						placeholder='Please add a numerical value (minutes)'
+						placeholder={
+							language === "Arabic"
+								? "يرجى إضافة قيمة رقمية (بالدقائق)"
+								: "Please add a numerical value (minutes)"
+						}
 					/>
 				</div>
-				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Loyalty Points</label>
+				<div
+					className='form-group col-md-6 mx-auto col-5'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{language === "Arabic" ? "نقاط الولاء" : "Loyalty Points"}
+					</label>
 					<input
 						type='number'
 						className='form-control'
 						onChange={handleChange4}
 						value={serviceLoyaltyPoints}
 						required
-						placeholder='Please Add Loyalty Points Can Be Gained By Customer (Digits Only)'
+						placeholder={
+							language === "Arabic"
+								? "يرجى إضافة نقاط الولاء التي يمكن للعميل الحصول عليها (أرقام فقط)"
+								: "Please Add Loyalty Points Can Be Gained By Customer (Digits Only)"
+						}
 					/>
 				</div>
+			</div>
+
+			<div
+				className='row'
+				style={{
+					textAlign: language === "Arabic" ? "right" : "",
+					fontWeight: language === "Arabic" ? "bolder" : "",
+				}}
+			>
 				<div className='form-group col-md-6 mx-auto'>
-					<label className='text-muted'>Active Service?</label>
+					<label className='text-muted'>
+						{" "}
+						{language === "Arabic" ? "تفعيل الخدمة" : "Active Service?"}{" "}
+					</label>
 					<select
 						onChange={handleChange10}
 						className='form-control'
 						style={{ fontSize: "0.80rem" }}
 					>
 						<option>Please select / Required*</option>
-						<option value='0'>Deactivate Service</option>
-						<option value='1'>Activate Service</option>
+						<option value='0'>
+							{" "}
+							{language === "Arabic"
+								? "إلغاء الخدمة"
+								: "Deactivate Service"}{" "}
+						</option>
+						<option value='1'>
+							{" "}
+							{language === "Arabic" ? "تفعيل الخدمة" : "Activate Service"}{" "}
+						</option>
 					</select>
 				</div>
 			</div>
-
-			<button className='btn btn-outline-primary mb-3'>Update Service</button>
+			<div className='text-center mt-4'>
+				<button className='btn btn-outline-primary mb-3'>
+					{" "}
+					{language === "Arabic" ? "تعديل الخدمة" : "Update Service"}{" "}
+				</button>
+			</div>
 		</form>
 	);
 
@@ -717,65 +884,90 @@ const UpdateService = ({ language }) => {
 					Total of {allServices.length} Added Services{" "}
 					<strong style={{ textTransform: "uppercase" }}>
 						{" "}
-						(Click To Update)
+						{language === "Arabic"
+							? "  (اضغط على الخدمة للتعديل)"
+							: "(Click To Update)"}
 					</strong>
 				</h3>
 			) : null}
 
 			{!serviceClicked ? (
-				<ul className='list-group col-md-10 mx-auto'>
+				<ul className='list-group col-md-10 pr-3 pl-2' dir='ltr'>
 					{allServices.map((s, i) => (
 						<div
 							style={{ textTransform: "capitalize", cursor: "pointer" }}
 							key={i}
 						>
 							<div
-								className='row'
+								className='row py-4'
+								style={{
+									fontSize: "13px",
+									border: "2px lightgray solid",
+								}}
 								onClick={() => {
 									setServiceClicked(true);
 									setChosenService(s);
 									window.scrollTo({ top: 150, behavior: "smooth" });
 								}}
 							>
-								<li
-									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center col-md-6'
-									style={{ fontSize: "0.75rem" }}
-								>
-									<strong>
-										{i + 1}-{"  "} {s.serviceName}
-									</strong>
+								<div className='col-6'>
 									<strong>
 										{" "}
 										Service For:{" "}
 										<span
 											style={{ color: "darkred", textTransform: "capitalize" }}
 										>
-											{s.customerType} {s.bundleService ? " | (Bundle)" : null}
+											{language === "Arabic"
+												? s.customerTypeOtherLanguage
+												: s.customerType}{" "}
+											{s.bundleService ? " | (Bundle)" : null}
 										</span>
 									</strong>{" "}
-								</li>
-								<li
-									className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-2'
-									style={{ fontSize: "0.75rem" }}
-								>
+								</div>
+								<div className='col-2'></div>
+								<div className='col-4 mb-2'>
+									<button
+										style={{ fontSize: "13px" }}
+										className='btn btn-outline-info'
+									>
+										{" "}
+										<strong>
+											{" "}
+											{language === "Arabic" ? "تعديل" : "EDIT"}{" "}
+										</strong>{" "}
+									</button>
+								</div>
+								<div className='col-6'>
+									<strong>
+										{i + 1}-{"  "}{" "}
+										{language === "Arabic"
+											? s.serviceNameOtherLanguage
+											: s.serviceName}
+									</strong>
+								</div>
+								<div className='col-6 mx-auto'>
 									<strong>{s.servicePrice} EGP</strong>,
 									<strong style={{ color: "green" }}>
+										{" "}
 										{s.servicePriceDiscount} EGP
 									</strong>
-								</li>
-								{!s.activeService && (
-									<li
-										className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-3'
-										style={{
-											fontSize: "0.7rem",
-											color: "red",
-											fontWeight: "bold",
-										}}
-									>
-										<strong>Deactivated</strong>
-									</li>
-								)}
+								</div>
+								<div className='col-6'>
+									{!s.activeService && (
+										<li
+											className='list-group-item d-flex my-1 py-4 justify-content-between align-items-center  col-md-3'
+											style={{
+												fontSize: "0.7rem",
+												color: "red",
+												fontWeight: "bold",
+											}}
+										>
+											<strong>Deactivated</strong>
+										</li>
+									)}
+								</div>
 							</div>
+							<br />
 						</div>
 					))}
 				</ul>
@@ -792,10 +984,21 @@ const UpdateService = ({ language }) => {
 						}}
 					>
 						<i className='fa-sharp fa-solid fa-arrow-left mr-2'></i>
-						Back to Services List...
+						{language === "Arabic"
+							? "العودة إلى قائمة الخدمات ..."
+							: "Back to Services List..."}
 					</h5>
 					<h3 className='mt-3'>
-						Update Service ({chosenService && chosenService.serviceName})
+						{language === "Arabic" ? (
+							<span>
+								تعديل الخدمة (
+								{chosenService && chosenService.serviceNameOtherLanguage})
+							</span>
+						) : (
+							<span>
+								Update Service ({chosenService && chosenService.serviceName})
+							</span>
+						)}
 					</h3>
 					<div
 						className='col-md-8 col-sm-6  mt-5 p-3'
@@ -837,6 +1040,10 @@ const UpdateServiceWrapper = styled.div`
 
 	@media (max-width: 1000px) {
 		margin-left: 10px;
+
+		label {
+			font-size: 0.8rem !important;
+		}
 
 		h5 {
 			margin-left: 15px;

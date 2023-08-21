@@ -309,6 +309,7 @@ const OverallCalendarStore = () => {
 	};
 	const handleEventClick = (clickInfo) => {
 		// console.log(clickInfo.event._def.extendedProps.employeeId, "clickInfo");
+		window.scrollTo({ top: 0, behavior: "smooth" });
 		return (window.location.href = `/store/single-appointment-details-store/${clickInfo.event._def.publicId}/${clickInfo.event._def.extendedProps.employeeId}`);
 	};
 

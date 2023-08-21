@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
 import AdSense from "../AdSense";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 
 const ThirdSection = ({
 	language,
@@ -104,8 +106,24 @@ const ThirdSection = ({
 							See All
 						</div>
 					</div>
+					<div
+						onClick={() => {
+							ReactGA.event("Ads_Clicked_From_Home", {
+								event_category: "Ads_Clicked_From_Home",
+								event_label: "Ads_Clicked_From_Home",
+								value: 1, // Optional extra parameters
+							});
 
-					<AdSense adSlot='5842698744' />
+							ReactPixel.track("Ads_Clicked_From_Home", {
+								content_name: "Ads_Clicked_From_Home",
+								content_category: "Ads_Clicked_From_Home",
+								value: "",
+								currency: "",
+							});
+						}}
+					>
+						<AdSense adSlot='5842698744' />
+					</div>
 				</div>
 			)}
 		</ThirdSectionWrapper>

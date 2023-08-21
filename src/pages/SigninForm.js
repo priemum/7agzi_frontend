@@ -1,19 +1,15 @@
-/** @format */
-
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
-// eslint-disable-next-line
-import { authenticate, isAuthenticated, signin, authenticate2 } from "../auth";
-// import Google from "../auth/Google";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-import { Helmet } from "react-helmet";
+import { authenticate, isAuthenticated, signin } from "../auth";
+import { toast } from "react-toastify";
 import { useCartContext } from "../sidebar_context";
+import BackgroundImage from "../Images/back-empty.png";
+import { Link } from "react-router-dom";
 
-const SigninForm = ({ history, language }) => {
+// import LetterX from "../../Images/LetterX.png";
+
+const SigninForm = () => {
 	const { chosenLanguage } = useCartContext();
-
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
@@ -21,27 +17,18 @@ const SigninForm = ({ history, language }) => {
 		redirectToReferrer: false,
 	});
 
-	const { email, password, loading, redirectToReferrer } = values;
+	const [showPassword, setShowPassword] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevShow) => !prevShow);
+	};
+
+	const { email, password, redirectToReferrer } = values;
 	const { user } = isAuthenticated();
 
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
-
-	// const informParent = (response) => {
-	// 	setValues({ ...values, error: false, loading: true });
-	// 	if (response.error) {
-	// 		setValues({ ...values, error: response.error, loading: false });
-	// 		toast.error(response.error);
-	// 	} else {
-	// 		authenticate2(response, () => {
-	// 			setValues({
-	// 				...values,
-	// 				redirectToReferrer: true,
-	// 			});
-	// 		});
-	// 	}
-	// };
 
 	const clickSubmit = (event) => {
 		event.preventDefault();
@@ -82,220 +69,229 @@ const SigninForm = ({ history, language }) => {
 		});
 	};
 
-	const showLoading = () =>
-		loading && (
-			<div className='alert alert-info'>
-				<h2>Loading...</h2>
-			</div>
-		);
-
 	const redirectUser = () => {
-		let intendedDestination =
-			history && history.location && history.location.state;
-		if (intendedDestination && redirectToReferrer) {
-			return <Redirect to={intendedDestination.from} />;
-		} else {
-			if (redirectToReferrer) {
-				if (user && user.role === 1) {
-					return <Redirect to='/store/admin/dashboard' />;
-				} else if (user && user.role === 3) {
-					return <Redirect to='/store/book-appointment-from-store' />;
-				} else if (user && user.role === 1000) {
-					return <Redirect to='/store/admin/store-preview' />;
-				} else if (user && user.role === 2) {
-					return <Redirect to='/stylist/dashboard' />;
-				} else if (user && user.role === 10000) {
-					return <Redirect to='/boss/admin/dashboard' />;
-				} else if (user && user.role === 2000) {
-					return <Redirect to='/agent/dashboard' />;
-				} else {
-					return <Redirect to='/dashboard' />;
-				}
+		if (redirectToReferrer) {
+			if (user && user.role === 1) {
+				return (window.location.href = "/store/admin/dashboard");
+			} else if (user && user.role === 3) {
+				return (window.location.href = "/store/book-appointment-from-store");
+			} else if (user && user.role === 1000) {
+				return (window.location.href = "/store/admin/store-preview");
+			} else if (user && user.role === 2) {
+				return (window.location.href = "/stylist/dashboard");
+			} else if (user && user.role === 10000) {
+				return (window.location.href = "/boss/admin/dashboard");
+			} else if (user && user.role === 2000) {
+				return (window.location.href = "/agent/dashboard");
+			} else {
+				return (window.location.href = "/home");
 			}
 		}
 
 		if (isAuthenticated()) {
-			return <Redirect to='/' />;
+			return (window.location.href = "/home");
 		}
 	};
 
-	const signinForm = () => (
-		<FormSignin>
-			<div className='row justify-content-md-center mt-4'>
-				<div className='col-md-5 col-sm-12 '>
-					<div className='form-container text-center'>
-						<h1 className='mb-3'>
-							Account <span className='text-primary'>Login</span>
-						</h1>
-						{/* <Google informParent={informParent} /> */}
-
-						<form onSubmit={clickSubmit}>
-							<div className='form-group' style={{ marginTop: "25px" }}>
-								<label style={{ fontWeight: "bold" }}>Phone/ Email</label>
-								<input
-									type='text'
-									name='email'
-									value={email}
-									onChange={handleChange("email")}
-								/>
-							</div>
-							<div className='form-group ' style={{ marginTop: "25px" }}>
-								<label htmlFor='password' style={{ fontWeight: "bold" }}>
-									Password
-								</label>
-								<input
-									type='password'
-									name='password'
-									value={password}
-									onChange={handleChange("password")}
-								/>
-							</div>
-							<input
-								type='submit'
-								value='login'
-								className='btn btn-primary w-75 btn-block mx-auto'
-								//onClick={sendEmail}
-							/>
-						</form>
-						<hr />
-						<p
-							style={{
-								fontSize: "0.9rem",
-								textAlign: "center",
-							}}
-						>
-							Don't have an account, Please{" "}
-							<strong
-								style={{
-									textDecoration: "underline",
-									fontStyle: "italic",
-									fontSize: "1rem",
-								}}
-							>
-								<Link to='/signup' className='btn btn-sm btn-outline-primary'>
-									Register Here
-								</Link>
-							</strong>
-						</p>
-						<hr />
-						<p
-							style={{
-								fontSize: "0.9rem",
-								textAlign: "center",
-							}}
-						>
-							Forgot Your Password, Please{" "}
-							<strong
-								style={{
-									textDecoration: "underline",
-									fontStyle: "italic",
-									fontSize: "1rem",
-								}}
-							>
-								<Link
-									to='/auth/password/forgot'
-									className='btn btn-sm btn-outline-danger'
-								>
-									Reset Your Password
-								</Link>
-							</strong>
-						</p>
-					</div>
-				</div>
-			</div>
-		</FormSignin>
-	);
-
 	return (
-		<WholeSignin>
-			<Helmet>
-				<meta charSet='utf-8' />
-				{chosenLanguage === "Arabic" ? (
-					<title dir='rtl'>إكس لوك | تسجيل الدخول</title>
-				) : (
-					<title>XLOOK | Signin</title>
-				)}
-
-				{chosenLanguage === "Arabic" ? (
-					<meta
-						name='description'
-						content='أفضل برنامج حجز في مصر، خاص بصالونات الحلاقة، صالونات الشعر، مراكز التجميل، وصالونات المساج.'
+		<AlreadyHaveAccountWrapper
+			show={chosenLanguage === "Arabic"}
+			dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+		>
+			<div className='container'>
+				<form
+					onSubmit={clickSubmit}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
+				>
+					<div className='form-group' style={{ marginTop: "25px" }}>
+						<label style={{ fontWeight: "bold" }}>
+							{" "}
+							{chosenLanguage === "Arabic"
+								? "الهاتف أو البريد الإلكتروني"
+								: "Phone OR Email"}{" "}
+						</label>
+						<input
+							className='custom-input'
+							type='text'
+							name='email'
+							value={email}
+							placeholder='email or phone'
+							required
+							onChange={handleChange("email")}
+						/>
+					</div>
+					<div className='form-group ' style={{ marginTop: "25px" }}>
+						<label htmlFor='password' style={{ fontWeight: "bold" }}>
+							{chosenLanguage === "Arabic" ? "كلمة المرور" : "Password"}
+						</label>
+						<div style={{ position: "relative" }}>
+							<input
+								className='custom-input'
+								type={showPassword ? "text" : "password"}
+								name='password'
+								value={password}
+								required
+								placeholder='password'
+								onChange={handleChange("password")}
+							/>
+							<div
+								style={{
+									position: "absolute",
+									right: chosenLanguage === "Arabic" ? "" : "10px",
+									left: chosenLanguage === "Arabic" ? "10px" : "",
+									top: "50%",
+									transform: "translateY(-50%)",
+									color: "white",
+									background: "#4a4a4a",
+								}}
+								onClick={(e) => {
+									e.preventDefault();
+									togglePasswordVisibility();
+								}}
+							>
+								{showPassword ? (
+									<i className='fa-solid fa-eye'></i>
+								) : (
+									<i className='fa-solid fa-eye-slash'></i>
+								)}
+							</div>
+						</div>
+					</div>
+					<input
+						type='submit'
+						value='login'
+						className='btn btn-primary w-75 btn-block mx-auto'
+						//onClick={sendEmail}
 					/>
-				) : (
-					<meta
-						name='description'
-						content='The best booking software in Egypt, specially designed for barber shops, hair salons, beauty centers, and massage salons.'
-					/>
-				)}
+				</form>
+			</div>
 
-				<meta
-					name='keywords'
-					content={
-						chosenLanguage === "Arabic"
-							? "برنامج حجز، صالونات الحلاقة، صالونات الشعر، مراكز التجميل، صالونات المساج"
-							: "booking software, barber shops, hair salons, beauty centers, massage salons"
-					}
-				/>
+			{chosenLanguage === "Arabic" ? (
+				<div className='mt-5'>
+					<p
+						style={{
+							fontSize: "0.9rem",
+							textAlign: "center",
+						}}
+					>
+						ليس لديك حساب، من فضلك{" "}
+						<strong
+							style={{
+								textDecoration: "underline",
+								fontStyle: "italic",
+								fontSize: "1rem",
+							}}
+						>
+							<Link to='/signup' className='btn btn-sm btn-outline-primary'>
+								سجل هنا
+							</Link>
+						</strong>
+					</p>
+					<hr />
 
-				<link rel='canonical' href='https://xlookpro.com/signin' />
-			</Helmet>
-			<ToastContainer />
-			{showLoading()}
-			{signinForm()}
+					<p
+						style={{
+							fontSize: "0.9rem",
+							textAlign: "center",
+						}}
+					>
+						نسيت كلمة المرور، من فضلك{" "}
+						<strong
+							style={{
+								textDecoration: "underline",
+								fontStyle: "italic",
+								fontSize: "1rem",
+							}}
+						>
+							<Link
+								to='/auth/password/forgot'
+								className='btn btn-sm btn-outline-danger'
+							>
+								إعادة تعيين كلمة المرور
+							</Link>
+						</strong>
+					</p>
+				</div>
+			) : (
+				<div className='mt-5'>
+					<p
+						style={{
+							fontSize: "0.9rem",
+							textAlign: "center",
+						}}
+					>
+						Don't have an account, Please{" "}
+						<strong
+							style={{
+								textDecoration: "underline",
+								fontStyle: "italic",
+								fontSize: "1rem",
+							}}
+						>
+							<Link to='/signup' className='btn btn-sm btn-outline-primary'>
+								Register Here
+							</Link>
+						</strong>
+					</p>
+					<hr />
+					<p
+						style={{
+							fontSize: "0.9rem",
+							textAlign: "center",
+						}}
+					>
+						Forgot Your Password, Please{" "}
+						<strong
+							style={{
+								textDecoration: "underline",
+								fontStyle: "italic",
+								fontSize: "1rem",
+							}}
+						>
+							<Link
+								to='/auth/password/forgot'
+								className='btn btn-sm btn-outline-danger'
+							>
+								Reset Your Password
+							</Link>
+						</strong>
+					</p>
+				</div>
+			)}
+
 			{redirectUser()}
-		</WholeSignin>
+		</AlreadyHaveAccountWrapper>
 	);
 };
 
 export default SigninForm;
 
-const FormSignin = styled.div`
-	margin-top: 5%;
-	min-height: 700px;
+const AlreadyHaveAccountWrapper = styled.div`
+	color: white;
+	min-height: 1300px;
+	background-image: url(${BackgroundImage});
+	background-size: cover; // this will make sure the image covers the entire container
+	background-repeat: no-repeat;
+	background-position: center; // this will center the background image
+	min-height: 100vh; // this will make the div take up at least the full height of the viewport
+	width: 100%; // this will make the div take up the full width of the viewport
+	overflow: hidden;
 
 	form {
-		background-color: white;
-		padding: 20px;
+		padding-top: 100px;
+	}
+
+	label {
+		color: white;
+	}
+
+	.custom-input {
+		width: 100%; /* Fill the entire width */
+		background-color: #4a4a4a; /* Background color */
+		color: white; /* Text color */
+		padding: 5px 8px; /* Increase padding for more space */
+		border: none; /* Remove any border if you don't want it */
+		outline: none; /* Remove focus outline if desired */
 		border-radius: 5px;
-		margin-bottom: 50px;
-		min-height: 350px;
 	}
-
-	input[type="text"],
-	input[type="number"],
-	input[type="email"],
-	input[type="password"],
-	input[type="date"],
-	select,
-	textarea {
-		display: block;
-		width: 100%;
-		padding: 0.5rem;
-		font-size: 1rem;
-		border: 1px solid #ccc;
-	}
-	input[type="text"]:focus,
-	input[type="number"]:focus,
-	input[type="email"]:focus,
-	input[type="password"]:focus,
-	input[type="date"]:focus,
-	select:focus,
-	textarea:focus,
-	label:focus {
-		outline: none;
-		border: 1px solid var(--primaryColor);
-
-		box-shadow: 5px 8px 3px 0px rgba(0, 0, 0, 0.3);
-		transition: var(--mainTransition);
-		font-weight: bold;
-	}
-
-	.form-container {
-		margin-left: 50px;
-		margin-right: 50px;
-	}
-`;
-
-const WholeSignin = styled.div`
-	overflow: hidden;
 `;

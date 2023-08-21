@@ -271,7 +271,7 @@ const SingleStorePage = ({ props, language }) => {
 	var screenWidth = typeof window !== "undefined" ? window.innerWidth : null;
 
 	return (
-		<SingleStorePageWrapper>
+		<SingleStorePageWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			{loading && !storeChosen && !storeChosen.belongsTo ? (
 				<div></div>
 			) : (
@@ -348,7 +348,8 @@ const SingleStorePage = ({ props, language }) => {
 							style={{
 								background: "#1e1e1e",
 								padding: "5px 0px",
-								paddingLeft: "20px",
+								paddingLeft: chosenLanguage === "Arabic" ? "" : "20px",
+								paddingRight: chosenLanguage === "Arabic" ? "20px" : "",
 							}}
 						>
 							<div
@@ -539,15 +540,15 @@ const SingleStorePage = ({ props, language }) => {
 
 			<div
 				onClick={() => {
-					ReactGA.event("Ads_Clicked", {
-						event_category: "Ads_Clicked",
+					ReactGA.event("Ads_Clicked_From_Salon", {
+						event_category: "Ads_Clicked_From_Salon",
 						event_label: "Ads_Clicked",
 						value: 1, // Optional extra parameters
 					});
 
-					ReactPixel.track("Ads_Clicked", {
-						content_name: "Ads_Clicked",
-						content_category: "Ads_Clicked",
+					ReactPixel.track("Ads_Clicked_From_Salon", {
+						content_name: "Ads_Clicked_From_Salon",
+						content_category: "Ads_Clicked_From_Salon",
 						value: "",
 						currency: "",
 					});

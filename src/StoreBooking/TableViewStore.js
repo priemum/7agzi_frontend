@@ -128,7 +128,11 @@ const TableViewStore = ({ orders, selectedDate }) => {
 							>
 								<td>{i + 1}</td>
 								<td>{s.BookedFrom}</td>
-								<td>
+								<td
+									onClick={() => {
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
 									<Link
 										to={`/store/single-appointment-details-store/${s._id}/${
 											s && s.employees && s.employees[0] && s.employees[0]._id

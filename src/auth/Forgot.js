@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import styled from "styled-components";
 import { useCartContext } from "../sidebar_context";
+import { Helmet } from "react-helmet";
 
 const Forgot = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
@@ -108,6 +109,14 @@ const Forgot = ({ language }) => {
 
 	return (
 		<FogotWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet>
+				<meta charSet='utf-8' />
+				{chosenLanguage === "Arabic" ? (
+					<title dir='rtl'>XLOOK | هل نسيت كلمة السر </title>
+				) : (
+					<title>XLOOK | Forgot Password</title>
+				)}
+			</Helmet>
 			<div
 				className='col-md-6 offset-md-3 my-5 p-4 mx-auto'
 				style={{ borderRadius: "10px", border: "1px #c1d3e5 solid" }}

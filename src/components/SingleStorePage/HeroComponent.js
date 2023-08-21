@@ -102,7 +102,7 @@ const HeroComponent = ({
 										fontWeight: "bold",
 										color: "white",
 										textTransform: "uppercase",
-										letterSpacing: "2px",
+										// letterSpacing: "2px",
 									}}
 								>
 									{language === "Arabic" ? (

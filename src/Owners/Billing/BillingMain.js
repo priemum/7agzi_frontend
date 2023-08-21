@@ -179,7 +179,7 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 15,
+					amount: 500,
 					email: user.email,
 					customerId: user._id,
 					planId: "monthly_plan_egy",

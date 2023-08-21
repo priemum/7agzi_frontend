@@ -333,5 +333,8 @@ const AddedServicesStyling = styled.div`
 		.ant-collapse-header {
 			font-size: 12px;
 		}
+		.ArabicStyling {
+			font-size: 0.7rem !important;
+		}
 	}
 `;

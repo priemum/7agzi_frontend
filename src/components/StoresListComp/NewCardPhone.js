@@ -8,10 +8,16 @@ import {
 	getEmployees,
 	getFirstAvailableAppointmentEmployee,
 } from "../../apiCore";
+import { useCartContext } from "../../sidebar_context";
+import useFadeInOnScroll from "./useFadeInOnScroll";
 
 const NewCardPhone = ({ store, allServicesCombined }) => {
+	const { chosenLanguage } = useCartContext();
+
 	const [allEmployees, setAllEmployees] = useState("");
 	const [firstAvailable, setFirstAvailable] = useState("");
+	// Use the hook
+	const [cardRef, cardVisible] = useFadeInOnScroll();
 
 	const gettingAllEmployees = () => {
 		getEmployees(store.belongsTo._id).then((data) => {
@@ -124,7 +130,7 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 	}
 
 	return (
-		<CardsStorePhoneWrapper>
+		<CardsStorePhoneWrapper ref={cardRef} isVisible={cardVisible}>
 			{/* <div className='btn-info p-1 mb-1' style={{ textTransform: "uppercase" }}>
 				{servicesForStore[0]}
 			</div> */}
@@ -143,23 +149,39 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 						</div>
 
 						<div
+							dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 							className='store-info'
 							style={{
-								color: "black",
+								color: "white",
 								fontWeight: "bolder",
 								textTransform: "uppercase",
 								letterSpacing: "0px",
 								fontSize: "12px",
+								textAlign: chosenLanguage === "Arabic" ? "right" : "",
+								marginRight: chosenLanguage === "Arabic" ? "13px" : "",
 							}}
 						>
-							<strong>
-								{store &&
-									store.addStoreName &&
-									store.addStoreName.substring(0, 16)}{" "}
-								{store && store.addStoreName && store.addStoreName.length > 16
-									? "..."
-									: ""}
-							</strong>
+							{chosenLanguage === "Arabic" ? (
+								<strong>
+									{store &&
+										store.addStoreNameArabic &&
+										store.addStoreNameArabic.substring(0, 16)}{" "}
+									{store &&
+									store.addStoreNameArabic &&
+									store.addStoreNameArabic.length > 16
+										? "..."
+										: ""}
+								</strong>
+							) : (
+								<strong>
+									{store &&
+										store.addStoreName &&
+										store.addStoreName.substring(0, 16)}{" "}
+									{store && store.addStoreName && store.addStoreName.length > 16
+										? "..."
+										: ""}
+								</strong>
+							)}
 
 							<div className=''>
 								{showAverageRatingForEntireStore(
@@ -168,7 +190,7 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 									"FromList"
 								)}
 							</div>
-							<div>
+							<div style={{ color: "white" }}>
 								{" "}
 								{store && store.belongsTo && store.belongsTo.storeDistrict}
 							</div>
@@ -180,9 +202,16 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 								}}
 							>
 								{firstAvailable && firstAvailable.EgyptDate ? (
-									<span>AVAILABLE</span>
+									<span>
+										{chosenLanguage === "Arabic" ? "متاح" : "AVAILABLE"}
+									</span>
 								) : (
-									<span style={{ color: "red" }}>Unavailable</span>
+									<span style={{ color: "red" }}>
+										{" "}
+										{chosenLanguage === "Arabic"
+											? "غير متاح"
+											: "Unavailable"}{" "}
+									</span>
 								)}
 								<div style={{ color: "darkgrey" }}>
 									{firstAvailable && firstAvailable.EgyptDate}
@@ -212,29 +241,34 @@ const NewCardPhone = ({ store, allServicesCombined }) => {
 
 export default NewCardPhone;
 
-const CardsStorePhoneWrapper = styled.div`
+const CardsStorePhoneWrapper = styled.div.attrs((props) => ({
+	style: {
+		opacity: props.isVisible ? 1 : 0,
+		transition: "opacity 1s ease-in-out",
+	},
+}))`
 	margin-top: 20px;
 	margin-bottom: 20px;
 	width: 100%;
-	border-radius: 5px;
+	border-radius: 3px;
 
 	.row {
-		background-color: white;
+		background-color: #222222;
 		margin: 0px 0px;
 		padding: 5px;
-		border-radius: 10px;
-		border: 3px solid #17a2b8;
+		border-radius: 4px;
+		/* border: 1px solid grey; */
 	}
 
 	.grid {
 		display: grid;
 		grid-template-columns: auto 1fr;
 		gap: 10px;
-		background-color: white;
+		background-color: #222222;
 		margin: 0px 0px;
 		padding: 5px;
-		border-radius: 10px;
-		border: 3px solid #17a2b8;
+		border-radius: 4px;
+		/* border: 1px solid grey; */
 		min-height: 170px;
 		max-height: 200px;
 		align-items: center; /* Center items vertically */
@@ -243,7 +277,7 @@ const CardsStorePhoneWrapper = styled.div`
 	.left {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 20px;
+		gap: 10px;
 		align-items: center; /* Center items vertically */
 	}
 

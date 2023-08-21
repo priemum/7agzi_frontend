@@ -78,7 +78,7 @@ const isActive2 = (history, path) => {
 	}
 };
 
-const SingleAppointmentPageStoreArabic = (props) => {
+const SingleAppointmentPageStoreArabic = ({ props }) => {
 	const [loading, setLoading] = useState(true);
 	const [clickedMenu, setClickedMenu] = useState("Details");
 	const [singleAppointment, setSingleAppointment] = useState({});

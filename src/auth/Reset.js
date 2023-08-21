@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import styled from "styled-components";
 import { useCartContext } from "../sidebar_context";
+import { Helmet } from "react-helmet";
 
 const decodeJwt = (token) => {
 	try {
@@ -25,12 +26,19 @@ const decodeJwt = (token) => {
 
 const Reset = ({ match }) => {
 	const { chosenLanguage } = useCartContext();
+	const [showPassword, setShowPassword] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setShowPassword((prevShow) => !prevShow);
+	};
+
 	// props.match from react router dom
 	const [values, setValues] = useState({
 		name: "",
 		token: match.params.token, // Assuming the token is part of the URL path
 		newPassword: "",
-		buttonText: "Reset password",
+		buttonText:
+			chosenLanguage === "Arabic" ? "تعديل كلمة المرور" : "Reset password",
 	});
 
 	const { name, token, newPassword, buttonText } = values;
@@ -97,8 +105,11 @@ const Reset = ({ match }) => {
 	};
 
 	const passwordResetForm = () => (
-		<form>
-			<div className='form-group'>
+		<form dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"} className='mt-5'>
+			<div
+				className='form-group'
+				style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
+			>
 				<label className='text-muted'>
 					{" "}
 					{chosenLanguage === "Arabic"
@@ -108,14 +119,36 @@ const Reset = ({ match }) => {
 				<input
 					onChange={handleChange}
 					value={newPassword}
-					type='password'
+					type={showPassword ? "text" : "password"}
 					className='form-control'
 					placeholder='Type new password'
 					required
 				/>
+				<div
+					className='toggelingShow'
+					style={{
+						position: "absolute",
+						right: chosenLanguage === "Arabic" ? "" : "25px",
+						left: chosenLanguage === "Arabic" ? "25px" : "",
+						top: "77%",
+						transform: "translateY(-50%)",
+						color: "white",
+						background: "#4a4a4a",
+					}}
+					onClick={(e) => {
+						e.preventDefault();
+						togglePasswordVisibility();
+					}}
+				>
+					{showPassword ? (
+						<i className='fa-solid fa-eye'></i>
+					) : (
+						<i className='fa-solid fa-eye-slash'></i>
+					)}
+				</div>
 			</div>
 
-			<div>
+			<div className='mx-auto text-center'>
 				<button className='btn btn-primary' onClick={clickSubmit}>
 					{buttonText}
 				</button>
@@ -125,9 +158,19 @@ const Reset = ({ match }) => {
 
 	return (
 		<ResetWrapper>
+			<Helmet>
+				<meta charSet='utf-8' />
+				{chosenLanguage === "Arabic" ? (
+					<title dir='rtl'>XLOOK | إعادة تعيين كلمة المرور {name} </title>
+				) : (
+					<title>XLOOK | Reset Password {name}</title>
+				)}
+			</Helmet>
 			<div className='col-md-6 offset-md-3' style={{ marginTop: "50px" }}>
 				<ToastContainer />
-				<h1 className='p-5 text-center'>Hey {name}, Type your new password</h1>
+				<h1 className='p-5 text-center message'>
+					Hey {name}, Type your new password
+				</h1>
 				{passwordResetForm()}
 			</div>
 		</ResetWrapper>
@@ -138,4 +181,14 @@ export default Reset;
 
 const ResetWrapper = styled.div`
 	min-height: 900px;
+
+	@media (max-width: 1100px) {
+		.toggelingShow {
+			top: 78% !important;
+		}
+		.message {
+			font-size: 1.5rem;
+			font-weight: bolder;
+		}
+	}
 `;

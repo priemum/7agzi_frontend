@@ -47,7 +47,7 @@ const MyStoreList = ({ language }) => {
 	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
 
 	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(15);
+	const [itemsPerPage, setItemPerPage] = useState(14);
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const { isLoaded, loadError } = useJsApiLoader({

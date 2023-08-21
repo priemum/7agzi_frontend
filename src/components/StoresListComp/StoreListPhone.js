@@ -1,12 +1,43 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-// eslint-disable-next-line
 import FiltersPhone from "./FiltersPhone";
-// import CardsStorePhone from "./CardsStorePhone";
 import NewCardPhone from "./NewCardPhone";
 import AdSense from "../AdSense";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
+
+// Custom Hook for Fade-In effect
+function useFadeInOnScroll() {
+	const ref = useRef(null);
+	const [isVisible, setIsVisible] = useState(false);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setIsVisible(true);
+				} else {
+					setIsVisible(false);
+				}
+			},
+			{
+				threshold: 0.1, // You can adjust this if needed
+			}
+		);
+
+		if (ref.current) {
+			observer.observe(ref.current);
+		}
+
+		return () => {
+			if (ref.current) {
+				observer.unobserve(ref.current);
+			}
+		};
+	}, []);
+
+	return [ref, isVisible];
+}
 
 const StoreListPhone = ({
 	activeStoresOnly,
@@ -14,13 +45,16 @@ const StoreListPhone = ({
 	filtersClicked,
 	setFiltersClicked,
 }) => {
+	const [contentRef, contentVisible] = useFadeInOnScroll();
+
 	return (
 		<StoreListPhoneWrapper>
 			<FiltersPhone
 				filtersClicked={filtersClicked}
 				setFiltersClicked={setFiltersClicked}
 			/>
-			<div className='container mt-2'>
+
+			<ContentContainer ref={contentRef} isVisible={contentVisible}>
 				<div className='row'>
 					{activeStoresOnly &&
 						activeStoresOnly.map((p, i) => {
@@ -38,18 +72,18 @@ const StoreListPhone = ({
 										allServicesCombined={allServicesCombined}
 									/>
 
-									{i === 5 ? (
+									{(i === 5 || i === 10) && (
 										<div
 											onClick={() => {
-												ReactGA.event("Ads_Clicked", {
-													event_category: "Ads_Clicked",
+												ReactGA.event("Ads_Clicked_StoreList", {
+													event_category: "Ads_Clicked_StoreList",
 													event_label: "Ads_Clicked",
-													value: 1, // Optional extra parameters
+													value: 1,
 												});
 
-												ReactPixel.track("Ads_Clicked", {
-													content_name: "Ads_Clicked",
-													content_category: "Ads_Clicked",
+												ReactPixel.track("Ads_Clicked_StoreList", {
+													content_name: "Ads_Clicked_StoreList",
+													content_category: "Ads_Clicked_StoreList",
 													value: "",
 													currency: "",
 												});
@@ -57,17 +91,15 @@ const StoreListPhone = ({
 										>
 											<AdSense adSlot='5842698744' />
 										</div>
-									) : null}
+									)}
 								</div>
 							);
 						})}
 				</div>
-			</div>
+			</ContentContainer>
 		</StoreListPhoneWrapper>
 	);
 };
-
-export default StoreListPhone;
 
 const StoreListPhoneWrapper = styled.div`
 	display: none;
@@ -77,3 +109,14 @@ const StoreListPhoneWrapper = styled.div`
 		display: block;
 	}
 `;
+
+const ContentContainer = styled.div.attrs((props) => ({
+	style: {
+		opacity: props.isVisible ? 1 : 0,
+	},
+}))`
+	transition: opacity 0.5s ease-in-out;
+	margin-top: 1rem; // Representing mt-2 in your code
+`;
+
+export default StoreListPhone;

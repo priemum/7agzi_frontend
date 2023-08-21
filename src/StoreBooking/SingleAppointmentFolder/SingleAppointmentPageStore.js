@@ -78,7 +78,7 @@ const isActive2 = (history, path) => {
 	}
 };
 
-const SingleAppointmentPageStore = (props) => {
+const SingleAppointmentPageStore = ({ props }) => {
 	const [loading, setLoading] = useState(true);
 	const [clickedMenu, setClickedMenu] = useState("Details");
 	const [singleAppointment, setSingleAppointment] = useState({});
