@@ -31,6 +31,7 @@ function useFadeInOnScroll() {
 
 		return () => {
 			if (ref.current) {
+				// eslint-disable-next-line
 				observer.unobserve(ref.current);
 			}
 		};

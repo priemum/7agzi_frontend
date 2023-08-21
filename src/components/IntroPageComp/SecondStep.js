@@ -78,9 +78,6 @@ const SecondStep = ({
 		if (!emailFormat.test(email)) {
 			return toast.info("Email is incorrect, please check");
 		}
-		if (!email) {
-			return toast.info("email is required");
-		}
 
 		if (!password) {
 			return toast.info("password is required");
@@ -347,8 +344,8 @@ const SecondStep = ({
 			{chosenLanguage === "Arabic" ? (
 				<div className='formWrapper mt-4 col-md-10 mx-auto'>
 					<div className='row'>
-						<div className='col-1 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+						<div className='col-1 my-auto ml-3'>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>الاسم</strong>{" "}
 							</label>
@@ -368,8 +365,8 @@ const SecondStep = ({
 					</div>
 
 					<div className='row'>
-						<div className='col-1 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+						<div className='col-1 my-auto ml-3'>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>الهاتف</strong>{" "}
 							</label>
@@ -388,8 +385,8 @@ const SecondStep = ({
 						<span className='required-asterisk'>*</span>
 					</div>
 					<div className='row'>
-						<div className='col-1 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+						<div className='col-1 my-auto ml-3'>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>الإيميل</strong>{" "}
 							</label>
@@ -411,7 +408,7 @@ const SecondStep = ({
 				<div className='formWrapper mt-4 col-md-10 mx-auto'>
 					<div className='row'>
 						<div className='col-2 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>Name</strong>{" "}
 							</label>
@@ -432,7 +429,7 @@ const SecondStep = ({
 
 					<div className='row'>
 						<div className='col-2 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>Phone</strong>{" "}
 							</label>
@@ -452,7 +449,7 @@ const SecondStep = ({
 					</div>
 					<div className='row'>
 						<div className='col-2 my-auto ml-2'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>Email</strong>{" "}
 							</label>
@@ -506,7 +503,7 @@ const SecondStep = ({
 				<div className='formWrapper mt-4 col-md-10 mx-auto'>
 					<div className='row'>
 						<div className='col-3 my-auto'>
-							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
+							<label style={{ fontWeight: "bolder", fontSize: "0.7rem" }}>
 								{" "}
 								<strong>كلمة المرور</strong>{" "}
 							</label>
@@ -548,7 +545,7 @@ const SecondStep = ({
 					</div>
 					<div className='row'>
 						<div className='col-3 my-auto'>
-							<label style={{ fontWeight: "bolder", fontSize: "1rem" }}>
+							<label style={{ fontWeight: "bolder", fontSize: "0.8rem" }}>
 								{" "}
 								<strong>تأكيد</strong>{" "}
 							</label>
