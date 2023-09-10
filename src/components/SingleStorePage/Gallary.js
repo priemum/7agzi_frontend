@@ -8,8 +8,8 @@ const Gallary = ({ filteredResults }) => {
 		<GalleryStyling>
 			<div className='row mt-4 text-center'>
 				{filteredResults &&
-					filteredResults.gallaryPhotos &&
-					filteredResults.gallaryPhotos.map((item, i) => {
+					filteredResults &&
+					filteredResults.map((item, i) => {
 						return (
 							<div key={i} className='col-lg-4 col-md-6 mx-auto my-3'>
 								<img

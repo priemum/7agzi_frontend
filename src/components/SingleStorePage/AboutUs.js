@@ -3,16 +3,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPreviousScheduledHours } from "../../Owners/apiOwner";
-// import ReactGA from "react-ga";
 
 const AboutUs = ({ aboutus, storeProperties }) => {
 	const [previousAddedHours, setPreviousAddedHours] = useState([]);
-	// useEffect(() => {
-	// 	ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENTID);
-	// 	// To Report Page View
-	// 	ReactGA.pageview(window.location.pathname + window.location.search);
-	// 	// eslint-disable-next-line
-	// }, []);
 
 	const PreviousAddedAppointmentHours = () => {
 		getPreviousScheduledHours(storeProperties.belongsTo._id, "token").then(

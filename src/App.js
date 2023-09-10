@@ -101,6 +101,8 @@ import ProfileUpdateBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/Profil
 import IntroPage from "./pages/IntroPage";
 import BusinessPartnersReportsMain from "./TheBoss/BusinessPartnersReports/BusinessPartnersReportsMain";
 import SingleAppointmentMain from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentMain";
+import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
+import CookiePolicy from "./components/Footer/CookiePolicy";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -234,6 +236,8 @@ function App() {
 					/>
 
 					<Route path='/auth/password/reset/:token' exact component={Reset} />
+					<Route path='/privacy-policy' exact component={PrivacyPolicy} />
+					<Route path='/cookie-policy' exact component={CookiePolicy} />
 
 					<Route
 						path='/about'

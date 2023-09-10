@@ -184,6 +184,21 @@ const SalonsData = () => {
 			dataIndex: "storeName",
 			key: "storeName",
 		},
+
+		{
+			title: "Grade",
+			key: "salonGrade",
+			render: (storeOwner) => {
+				return (
+					storeOwner.settings.length > 0 &&
+					storeOwner.settings[storeOwner.settings.length - 1].salonGrade &&
+					storeOwner.settings[
+						storeOwner.settings.length - 1
+					].salonGrade.toUpperCase()
+				);
+			},
+		},
+
 		{
 			title: "Agent Name",
 			key: "agentName",

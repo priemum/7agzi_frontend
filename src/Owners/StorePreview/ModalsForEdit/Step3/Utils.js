@@ -402,7 +402,7 @@ export const FemaleStandardServices = [
 	},
 
 	{
-		serviceName: "Pride Offer",
+		serviceName: "Bride Offer",
 		serviceNameOtherLanguage: "عرض العروسة",
 		customerType: "female",
 		customerTypeOtherLanguage: "أنثى",

@@ -340,6 +340,8 @@ const AddService = ({ language }) => {
 			arabic: " سويت البكينى والاندر ارم ",
 		},
 		{ english: "Makeup services", arabic: "خدمات المكياج" },
+		{ english: "Groom Offer", arabic: "عرض العريس" },
+		{ english: "Bride Offer", arabic: "عرض العروسة" },
 	];
 
 	var customerTypes = [
