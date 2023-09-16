@@ -28,7 +28,7 @@ import SalonPreviewEn from "./MenuImages/SalonPreviewEn.png";
 
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../sidebar_context";
-import { isAuthenticated } from "../../auth";
+import { isAuthenticated, signout } from "../../auth";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -356,6 +356,36 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 						)}
 					</Link>
 				</div>
+				<div
+					className='pt-4 firstGroupItem manualItem'
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
+				>
+					<div style={isActive("ProfileUpdate", fromPage)}>
+						<Link
+							to='#'
+							onClick={() => {
+								signout(() => {
+									if (window.ReactNativeWebView) {
+										window.ReactNativeWebView.postMessage("signedOut");
+									} else {
+										window.location.href = "/home";
+									}
+									localStorage.removeItem("userHistoryPurchases");
+									localStorage.removeItem("order");
+									window.scrollTo({ top: 0, behavior: "smooth" });
+								});
+							}}
+							style={{ color: "#edb9b9" }}
+						>
+							<i
+								className='fas fa-sign-out-alt'
+								style={{ color: "#edb9b9", fontSize: "1.5rem" }}
+							></i>
+							<br />
+							LOGOUT
+						</Link>
+					</div>
+				</div>
 			</div>
 		</OwnerNavmenuWrapper>
 	);
@@ -385,7 +415,7 @@ const OwnerNavmenuWrapper = styled.div`
 	}
 
 	.FourthGroup {
-		padding-top: 90px;
+		padding-top: 50px;
 	}
 
 	.FourthGroupItem > a > img {
@@ -477,7 +507,7 @@ const OwnerNavmenuWrapper = styled.div`
 		}
 
 		.FourthGroup {
-			padding-top: 90px;
+			padding-top: 50px;
 		}
 
 		.FourthGroupItem > a > img {

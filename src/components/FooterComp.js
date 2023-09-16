@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const FooterComp = () => {
 	return (
 		<Wrapper>
-			<div className='mx-auto text-center'>
+			<div className='mx-auto text-center footerComp'>
 				<div className='mb-2'>
 					<span
 						onClick={() =>
