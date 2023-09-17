@@ -324,7 +324,7 @@ const AddService = ({ language }) => {
 		{ english: "Full body waxing", arabic: "للجسم كامل  الشمع" },
 		{ english: "Full hand waxing", arabic: "لليد كاملة  الشمع" },
 		{ english: "Full leg waxing", arabic: "للرجل كاملة  الشمع" },
-		{ english: " Half hand waxing", arabic: " الشمع نصف اليد " },
+		{ english: "Half hand waxing", arabic: " الشمع نصف اليد " },
 		{ english: "Half leg waxing", arabic: " نصف الرجل الشمع" },
 		{
 			english: "Bikini & underarm waxing",
@@ -333,7 +333,7 @@ const AddService = ({ language }) => {
 		{ english: "Full body sweet", arabic: "للجسم كامل  سويت" },
 		{ english: "Full hand sweet ", arabic: "لليد كاملة  سويت " },
 		{ english: "Full leg sweet ", arabic: "للرجل كاملة  سويت " },
-		{ english: " Half hand sweet ", arabic: " سويت نصف اليد " },
+		{ english: "Half hand sweet ", arabic: " سويت نصف اليد " },
 		{ english: "Half leg sweet ", arabic: " نصف الرجل سويت " },
 		{
 			english: "Bikini & underarm sweet ",
