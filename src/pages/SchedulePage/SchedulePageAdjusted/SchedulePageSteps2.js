@@ -581,7 +581,7 @@ const SchedulePageSteps2 = ({ language }) => {
 								paymentStatus: false,
 								status: "Not Paid",
 								minLoyaltyPointsForAward: 0,
-								onlineServicesFees: 0,
+								onlineServicesFees: 5,
 								phone: convertArabicOrNumericToEnglish(customerPhone),
 								scheduleAppointmentPhoto: null,
 								appointmentComment: "",

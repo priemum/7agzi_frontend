@@ -103,6 +103,7 @@ import BusinessPartnersReportsMain from "./TheBoss/BusinessPartnersReports/Busin
 import SingleAppointmentMain from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentMain";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import CookiePolicy from "./components/Footer/CookiePolicy";
+import AppsLandingPage from "./pages/AppsLandingPage";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -291,6 +292,7 @@ function App() {
 							/>
 						)}
 					/>
+					<Route path='/xlookpro-apps' exact component={AppsLandingPage} />
 
 					{/* <Route
 						path='/schedule'
