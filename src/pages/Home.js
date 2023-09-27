@@ -169,7 +169,8 @@ const Home = ({ language, setLanguage }) => {
 							: `booking websites for salons, infinite apps, infinite erp, XLOOK platform, XLOOK, XLookpro, xlookpro.com, barbershops, beauty salons, beauty centers, family services, appointment booking, custom websites, affordable websites, website development, website building`
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/home' />
+
+				<link rel='canonical' href='https://www.xlookpro.com/' />
 				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}
