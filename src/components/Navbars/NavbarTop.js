@@ -368,7 +368,7 @@ const Navbar1 = ({ history }) => {
 										onClick={() => {
 											closeSidebar();
 											signout(() => {
-												history.push("/home");
+												history.push("/");
 												localStorage.removeItem("userHistoryPurchases");
 												localStorage.removeItem("order");
 											});
@@ -406,7 +406,7 @@ const Navbar1 = ({ history }) => {
 			{sideBar()}
 			<div className='logo-type'>
 				<Link
-					to='/home'
+					to='/'
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
 					}}
@@ -602,7 +602,7 @@ const Navbar1 = ({ history }) => {
 								}}
 								onClick={() =>
 									signout(() => {
-										history.push("/home");
+										history.push("/");
 										localStorage.removeItem("userHistoryPurchases");
 										localStorage.removeItem("order");
 										window.scrollTo({ top: 0, behavior: "smooth" });

@@ -192,8 +192,9 @@ function App() {
 						<DarkBackground setClick={setClick} setClickMenu={setClickMenu} />
 					) : null}
 					<>
-						{window.location.pathname.includes("book-appointment-from-store") ||
-						window.location.pathname === "/" ? null : (
+						{window.location.pathname.includes(
+							"book-appointment-from-store"
+						) ? null : (
 							<>
 								<NavbarTop
 									click={click}
@@ -212,13 +213,13 @@ function App() {
 				<ToastContainer />
 				<Switch>
 					<Route
-						path='/home'
+						path='/'
 						exact
 						component={() => (
 							<Home language={language} setLanguage={setLanguage} />
 						)}
 					/>
-					<Route path='/' exact component={() => <IntroPage />} />
+					<Route path='/landing' exact component={() => <IntroPage />} />
 					<Route
 						path='/signin'
 						exact
