@@ -248,6 +248,25 @@ const Navbar1 = ({ history }) => {
 							</React.Fragment>
 						)}
 
+						{isAuthenticated() && isAuthenticated().user.role === 5000 && (
+							<React.Fragment>
+								<li
+									className='nav-item ml-5 mt-3'
+									onClick={() => {
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
+									<Link
+										className='nav-link'
+										to='/ecommerce/admin/dashboard'
+										onClick={closeSidebar}
+									>
+										Ecommerce Admin Dashboard
+									</Link>
+								</li>
+							</React.Fragment>
+						)}
+
 						{isAuthenticated() && isAuthenticated().user.role === 2000 && (
 							<React.Fragment>
 								<li

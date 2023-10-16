@@ -1,58 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+// import AdminNavbar from "../OwnerNavbar/AdminNavbar";
+import OwnerNavmenu from "../NewOwnerNavMenu/OwnerNavmenu";
 import { useCartContext } from "../../sidebar_context";
+import EcomNav from "../../ecommerceModule/EcommerceNavigation/EcomNav";
+import AddCategory from "../../ecommerceModule/Categories/AddCategory";
+import AddSubcategory from "../../ecommerceModule/Subcategory/AddSubcategory";
+import AddProduct from "../../ecommerceModule/ProductManagement/AddingProduct/AddProduct";
+import StoreSettingsView from "../../ecommerceModule/StoreSettings/StoreSettingsView";
+import { isAuthenticated } from "../../auth";
 
-const EcommerceMain = ({ language }) => {
+const EcommerceMain = () => {
+	const [clickedMenu, setClickedMenu] = useState("Categories");
+	const [categoryMenu, setCategoryMenu] = useState("AddCategory");
+	const [SubcategoryMenu, setSubCategoryMenu] = useState("AddSubCategory");
 	const { chosenLanguage } = useCartContext();
+	const { user } = isAuthenticated();
 
-	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
-	const [collapsed, setCollapsed] = useState(false);
+	console.log(clickedMenu, "clickedMenu");
+
+	useEffect(() => {
+		if (window.location.search.includes("categories")) {
+			setClickedMenu("Categories");
+		} else if (window.location.search.includes("subcategory")) {
+			setClickedMenu("Subcategories");
+		} else if (window.location.search.includes("products")) {
+			setClickedMenu("Products");
+		} else if (window.location.search.includes("orders")) {
+			setClickedMenu("Orders");
+		} else if (window.location.search.includes("storesettings")) {
+			setClickedMenu("StoreSettings");
+		} else {
+			setClickedMenu("Categories");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<EcommerceMainWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<div className='grid-container'>
-				<div>
-					<AdminNavbar
-						fromPage='Ecommerce'
-						AdminMenuStatus={AdminMenuStatus}
-						setAdminMenuStatus={setAdminMenuStatus}
-						collapsed={collapsed}
-						setCollapsed={setCollapsed}
-						language={chosenLanguage}
-					/>
+				<div className='menuWrapper'>
+					{user.role === 5000 ? null : (
+						<OwnerNavmenu language={chosenLanguage} fromPage='EcommerceStore' />
+					)}
 				</div>
-				{chosenLanguage === "Arabic" ? (
-					<div className='messageWrapper mx-auto col-md-6 mt-5'>
-						<h2 style={{ fontWeight: "bolder" }}>
-							للأسف، الخطة الحالية التي لديك لا تدعم إضافة متجر إلكتروني إلى
-							نظامك.
-							<br />
-							<br />
-							يمكنك التواصل عبر الواتساب على الرقم +19099914386 وسيقوم أحد
-							ممثلينا بتقديم الاستشارة المناسبة.
-							<br />
-							<br />
-							يُرجى ملاحظة أن إضافة منصة التجارة الإلكترونية إلى الخطة الحالية
-							ستزيد من تكلفتها بمبلغ 25 دولار شهريًا على الأقل.
-						</h2>
-					</div>
-				) : (
-					<div className='messageWrapper mx-auto col-md-6 mt-5'>
-						<h2 style={{ fontWeight: "bolder" }}>
-							Unfortunately, Your current plan doesn't support adding an
-							eCommerce store into your system.
-							<br />
-							<br />
-							You can Whats App +19099914386 and one of our representatives will
-							advise.
-							<br />
-							<br />
-							Please be noted that adding an eCommerce platform to your plan
-							will increase it by at least $25/Mo.
-						</h2>
-					</div>
-				)}
+				<div
+					className='ecommerceStoreWrapper'
+					dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "left" }}
+				>
+					<EcomNav
+						clickedMenu={clickedMenu}
+						setClickedMenu={setClickedMenu}
+						chosenLanguage={chosenLanguage}
+						user={user}
+					/>
+					{clickedMenu === "Categories" ? (
+						<AddCategory
+							chosenLanguage={chosenLanguage}
+							categoryMenu={categoryMenu}
+							setCategoryMenu={setCategoryMenu}
+						/>
+					) : null}
+
+					{clickedMenu === "Subcategories" ? (
+						<AddSubcategory
+							chosenLanguage={chosenLanguage}
+							SubcategoryMenu={SubcategoryMenu}
+							setSubCategoryMenu={setSubCategoryMenu}
+						/>
+					) : null}
+
+					{clickedMenu === "Products" ? (
+						<AddProduct
+							chosenLanguage={chosenLanguage}
+							SubcategoryMenu={SubcategoryMenu}
+							setSubCategoryMenu={setSubCategoryMenu}
+						/>
+					) : null}
+
+					{clickedMenu === "StoreSettings" ? (
+						<StoreSettingsView chosenLanguage={chosenLanguage} />
+					) : null}
+				</div>
 			</div>
 		</EcommerceMainWrapper>
 	);
@@ -62,15 +92,40 @@ export default EcommerceMain;
 
 const EcommerceMainWrapper = styled.div`
 	min-height: 1000px;
+
 	.grid-container {
 		display: grid;
-		grid-template-columns: 16% 84%;
+		grid-template-columns: 5% 95%;
+	}
+
+	.menuWrapper {
+		background-color: black;
+		overflow: auto;
+		min-height: 1000px;
+	}
+
+	.ecommerceStoreWrapper {
+		margin: 50px;
 	}
 
 	@media (max-width: 1200px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: 18% 82%;
+		}
+
+		.menuItems {
+			font-size: 12px !important;
+			margin: auto !important;
+		}
+
 		.messageWrapper {
 			margin-right: 2px !important;
 			margin-left: 5px !important;
+		}
+
+		.ecommerceStoreWrapper {
+			margin: 10px;
 		}
 	}
 `;

@@ -2,14 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa"; // I'm using react-icons for the search icon. You need to install it.
 
-const FirstSection = ({ language, handleInputChange, searchValue }) => {
+const FirstSection = ({
+	language,
+	handleInputChange,
+	searchValue,
+	setChosenSalonType,
+}) => {
 	return (
 		<FirstSectionWrapper>
 			<div>
 				<div className='row firstSection'>
 					<div
 						onClick={() => {
-							window.location.href = `/schedule?barber shop`;
+							setChosenSalonType("barber shop");
+							localStorage.setItem("salonTypeStored", "barber shop");
 						}}
 						className='col-3'
 						style={{
@@ -23,7 +29,8 @@ const FirstSection = ({ language, handleInputChange, searchValue }) => {
 					</div>
 					<div
 						onClick={() => {
-							window.location.href = `/schedule?hair salon`;
+							setChosenSalonType("hair salon");
+							localStorage.setItem("salonTypeStored", "hair salon");
 						}}
 						className='col-3'
 						style={{

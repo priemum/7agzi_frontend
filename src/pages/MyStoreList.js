@@ -13,8 +13,6 @@ import { Link } from "react-router-dom";
 import StoreListPhone from "../components/StoresListComp/StoreListPhone";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import StoreFilter from "../components/StoreFilter";
-import CardForStore from "../components/StoresListComp/CardForStore";
 import SideFilter from "../components/StoresListComp/SideFilter";
 import { useCartContext } from "../sidebar_context";
 
@@ -47,7 +45,7 @@ const MyStoreList = ({ language }) => {
 	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
 
 	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(14);
+	const [itemsPerPage, setItemPerPage] = useState(15);
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const { isLoaded, loadError } = useJsApiLoader({
@@ -56,6 +54,7 @@ const MyStoreList = ({ language }) => {
 	});
 
 	const getLocation = useCallback(() => {
+		const salonTypeStored = localStorage.getItem("salonTypeStored");
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				// lat, long
@@ -64,12 +63,12 @@ const MyStoreList = ({ language }) => {
 				const { latitude: lat, longitude: lon } = position.coords;
 
 				allStoresSorted(
-					lat,
-					lon,
+					lat ? lat : 31.001504971164643,
+					lon ? lon : 30.05182950306324,
 					"egypt",
 					selectedGovernorate,
 					selectedDistrict,
-					selectedSalonType,
+					salonTypeStored ? salonTypeStored : selectedSalonType,
 					selectedService,
 					itemsPerPage,
 					currentPage
@@ -384,45 +383,6 @@ const MyStoreList = ({ language }) => {
 				setSelectedSalonType={setSelectedSalonType}
 			/>
 			<div>
-				<div className='deskTopVersion'>
-					<div className='pt-5'>
-						<StoreFilter
-							availableCountries={availableCountries}
-							availableGovernorates={availableGovernorates}
-							availableDistricts={availableDistricts}
-							selectedCountry={selectedCountry}
-							setSelectedCountry={setSelectedCountry}
-							selectedGovernorate={selectedGovernorate}
-							setSelectedGovernorate={setSelectedGovernorate}
-							selectedDistrict={selectedDistrict}
-							setSelectedDistrict={setSelectedDistrict}
-							allAvailableFilters={allAvailableFilters}
-						/>
-					</div>
-					<div className='continueShoppingEmpty mx-auto my-5'>
-						The Best Barber Shops and Salons in Egypt
-					</div>
-
-					<div className='container'>
-						<div className='row'>
-							{stores &&
-								stores.map((p, i) => {
-									return (
-										<div
-											key={i}
-											className='col-md-4'
-											onClick={() => {
-												localStorage.setItem("chosenStore", JSON.stringify(p));
-												window.scrollTo({ top: 0, behavior: "smooth" });
-											}}
-										>
-											<CardForStore store={p} />
-										</div>
-									);
-								})}
-						</div>
-					</div>
-				</div>
 				<StoreListPhone
 					activeStoresOnly={stores}
 					allServicesCombined={allServicesCombined}
@@ -432,7 +392,7 @@ const MyStoreList = ({ language }) => {
 				/>
 			</div>
 			<div
-				className='mx-auto text-center mt-3 pb-5 pagination'
+				className='mx-auto text-center mt-3 pb-5 pagination container'
 				onClick={() => {
 					window.scrollTo({ top: 10, behavior: "smooth" });
 				}}

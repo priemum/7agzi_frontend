@@ -134,7 +134,7 @@ export default ThirdSection;
 
 const ThirdSectionWrapper = styled.div`
 	.thirdSection {
-		padding: 10px 100px;
+		padding: 10px 150px;
 		background-color: #141414;
 	}
 

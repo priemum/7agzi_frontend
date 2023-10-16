@@ -25,6 +25,8 @@ import GallaryAr from "./MenuImages/GallaryAr.png";
 import GallaryEn from "./MenuImages/GallaryEn.png";
 import SalonPreviewAr from "./MenuImages/SalonPreviewAr.png";
 import SalonPreviewEn from "./MenuImages/SalonPreviewEn.png";
+import eCommerceAr from "./MenuImages/eCommerceAr.png";
+import eCommerceEn from "./MenuImages/eCommerceEn.png";
 
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../sidebar_context";
@@ -223,6 +225,27 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 			</div>
 
 			<div className='SecondGroup pt-5'>
+				<div
+					className='SecondGroupItem'
+					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
+				>
+					<Link to='/store/admin/ecommerce-integration'>
+						{chosenLanguage === "Arabic" ? (
+							<img
+								src={eCommerceAr}
+								alt='Powered By Infinite-Apps'
+								style={isActive("EcommerceStore", fromPage)}
+							/>
+						) : (
+							<img
+								src={eCommerceEn}
+								alt='Powered By Infinite-Apps'
+								style={isActive("EcommerceStore", fromPage)}
+							/>
+						)}
+					</Link>
+				</div>
+
 				<div
 					className='SecondGroupItem'
 					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
@@ -479,6 +502,24 @@ const OwnerNavmenuWrapper = styled.div`
 	.manualItem > div > a {
 		color: white;
 		font-size: 12px;
+	}
+
+	.manualItem2 {
+		color: white;
+		text-align: center;
+		background: "#17a2b8" !important;
+	}
+
+	.manualItem2 > div {
+		text-align: center;
+		margin: auto;
+		background: "#17a2b8" !important;
+	}
+
+	.manualItem2 > div > a {
+		color: white;
+		font-size: 12px;
+		background: "#17a2b8" !important;
 	}
 
 	@media (max-width: 1000px) {

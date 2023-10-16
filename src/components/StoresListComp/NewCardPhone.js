@@ -257,6 +257,7 @@ const CardsStorePhoneWrapper = styled.div.attrs((props) => ({
 		margin: 0px 0px;
 		padding: 5px;
 		border-radius: 4px;
+
 		/* border: 1px solid grey; */
 	}
 
@@ -269,8 +270,8 @@ const CardsStorePhoneWrapper = styled.div.attrs((props) => ({
 		padding: 5px;
 		border-radius: 4px;
 		/* border: 1px solid grey; */
-		min-height: 170px;
-		max-height: 200px;
+		min-height: 220px;
+		max-height: 430px;
 		align-items: center; /* Center items vertically */
 	}
 
@@ -285,8 +286,22 @@ const CardsStorePhoneWrapper = styled.div.attrs((props) => ({
 		justify-self: end;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 1100px) {
 		margin-top: 7px;
 		margin-bottom: 7px;
+
+		.grid {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			gap: 10px;
+			background-color: #222222;
+			margin: 0px 0px;
+			padding: 5px;
+			border-radius: 4px;
+			/* border: 1px solid grey; */
+			min-height: 170px;
+			max-height: 200px;
+			align-items: center; /* Center items vertically */
+		}
 	}
 `;

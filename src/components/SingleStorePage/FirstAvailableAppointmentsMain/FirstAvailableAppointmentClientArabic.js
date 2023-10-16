@@ -247,10 +247,12 @@ const FirstAvailableAppointmentModifiedWrapper = styled.div`
 	text-align: center;
 	margin-left: 100px;
 	margin-right: 100px;
-	background-color: rgba(0, 0, 0, 0.85);
 	padding: 30px;
 	border-radius: 20px 100px;
 	z-index: 1000;
+	background-color: #4e0000;
+	margin-left: 0px;
+	margin-right: 0px;
 
 	.contentWrapper {
 		position: relative;

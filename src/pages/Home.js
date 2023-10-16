@@ -6,8 +6,12 @@ import { Redirect } from "react-router-dom";
 // eslint-disable-next-line
 import { isAuthenticated } from "../auth";
 
-// eslint-disable-next-line
-import { allStoresSorted, allStoresSorted2 } from "../apiCore";
+import {
+	// eslint-disable-next-line
+	allStoresSorted,
+	allStoresSorted2,
+	allStoresSortedGraded,
+} from "../apiCore";
 import { useJsApiLoader } from "@react-google-maps/api";
 import FirstSection from "../components/HomePage/FirstSection";
 import SecondSection from "../components/HomePage/SecondSection";
@@ -28,13 +32,15 @@ import axios from "axios";
 
 const Home = ({ language, setLanguage }) => {
 	const [stores, setStores] = useState([]);
+	const [stores2, setStores2] = useState([]);
 	const [searchValue, setSearchValue] = useState("");
+	const [chosenSalonType, setChosenSalonType] = useState(undefined);
 	const [loading, setLoading] = useState(true);
 	// eslint-disable-next-line
 	const [currentPage, setCurrentPage] = useState(1);
 	const [error, setError] = useState(null);
 	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(12);
+	const [itemsPerPage, setItemPerPage] = useState(25);
 	const { chosenLanguage } = useCartContext();
 
 	const handleInputChange = (event) => {
@@ -47,6 +53,8 @@ const Home = ({ language, setLanguage }) => {
 	});
 	const getLocation = useCallback(() => {
 		setLoading(true);
+		const salonTypeStored = localStorage.getItem("salonTypeStored");
+
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				// lat, long
@@ -55,12 +63,12 @@ const Home = ({ language, setLanguage }) => {
 				const { latitude: lat, longitude: lon } = position.coords;
 
 				allStoresSorted2(
-					lat,
-					lon,
+					lat ? lat : 31.001504971164643,
+					lon ? lon : 30.05182950306324,
 					"egypt",
 					undefined,
 					undefined,
-					undefined,
+					salonTypeStored ? salonTypeStored : chosenSalonType,
 					undefined,
 					itemsPerPage,
 					currentPage
@@ -76,10 +84,33 @@ const Home = ({ language, setLanguage }) => {
 						}
 					})
 					.catch((err) => setError(err));
+
+				allStoresSortedGraded(
+					lat ? lat : 31.001504971164643,
+					lon ? lon : 30.05182950306324,
+					"egypt",
+					undefined,
+					undefined,
+					salonTypeStored ? salonTypeStored : chosenSalonType,
+					undefined,
+					itemsPerPage,
+					currentPage
+				)
+					.then((data) => {
+						if (data.error) {
+							setError(data.error);
+						} else {
+							var uniqueStoresWithLatestDates = data.stores;
+
+							setStores2(uniqueStoresWithLatestDates);
+							setLoading(false);
+						}
+					})
+					.catch((err) => setError(err));
 			},
 			() => setError("Could not get location")
 		);
-	}, [currentPage, itemsPerPage]);
+	}, [currentPage, itemsPerPage, chosenSalonType]);
 
 	useEffect(() => {
 		if (!isLoaded) return;
@@ -176,39 +207,20 @@ const Home = ({ language, setLanguage }) => {
 				)}
 			</Helmet>
 
-			{/* {isAuthenticated() &&
-			isAuthenticated().user &&
-			isAuthenticated().user.role === 2000 ? (
-				<Redirect to='/agent/dashboard' />
-			) : null}
-			{isAuthenticated() &&
-			isAuthenticated().user &&
-			isAuthenticated().user.role === 1000 ? (
-				<Redirect to='/store/admin/dashboard' />
-			) : null}
-
-			{isAuthenticated() &&
-			isAuthenticated().user &&
-			isAuthenticated().user.role === 10000
-				? null
-				: null}
-
-			{!isAuthenticated() && !isAuthenticated().user ? (
-				<Redirect to='/about?ar' />
-			) : null} */}
-
-			<div className=''>
+			<div className='containerWrapper'>
 				{chosenLanguage === "Arabic" ? (
 					<FirstSectionArabic
 						language={chosenLanguage}
 						handleInputChange={handleInputChange}
 						searchValue={searchValue}
+						setChosenSalonType={setChosenSalonType}
 					/>
 				) : (
 					<FirstSection
 						language={chosenLanguage}
 						handleInputChange={handleInputChange}
 						searchValue={searchValue}
+						setChosenSalonType={setChosenSalonType}
 					/>
 				)}
 
@@ -221,7 +233,7 @@ const Home = ({ language, setLanguage }) => {
 				{chosenLanguage === "Arabic" ? (
 					<ThirdSectionArabic
 						language={chosenLanguage}
-						stores={stores}
+						stores={stores2}
 						loading={loading}
 						handleRetryClick={handleRetryClick}
 						loadError={loadError}
@@ -231,7 +243,7 @@ const Home = ({ language, setLanguage }) => {
 				) : (
 					<ThirdSection
 						language={chosenLanguage}
-						stores={stores}
+						stores={stores2}
 						loading={loading}
 						handleRetryClick={handleRetryClick}
 						loadError={loadError}
@@ -293,6 +305,10 @@ const HomeWrapper = styled.div`
 	padding-top: 10px;
 	background-color: black;
 
+	.containerWrapper {
+		margin: auto 200px;
+	}
+
 	.firstSection {
 		margin-top: 10px;
 	}
@@ -302,5 +318,11 @@ const HomeWrapper = styled.div`
 		margin-bottom: 60px;
 		min-height: 150px;
 		border: 1px white solid;
+	}
+
+	@media (max-width: 1100px) {
+		.containerWrapper {
+			margin: auto;
+		}
 	}
 `;

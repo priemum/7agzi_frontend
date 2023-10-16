@@ -83,6 +83,8 @@ const SigninForm = () => {
 				return (window.location.href = "/boss/admin/dashboard");
 			} else if (user && user.role === 2000) {
 				return (window.location.href = "/agent/dashboard");
+			} else if (user && user.role === 5000) {
+				return (window.location.href = "/ecommerce/admin/dashboard");
 			} else {
 				return (window.location.href = "/home");
 			}

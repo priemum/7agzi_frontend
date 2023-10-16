@@ -111,17 +111,17 @@ const ThirdSectionCardWrapper = styled.div`
 
 	.card-body {
 		font-weight: bold;
-		letter-spacing: 2px;
 		padding: 0px !important;
 		width: 100%;
 		margin-left: 7px;
+		min-height: 300px;
 	}
 
 	@media (max-width: 680px) {
 		/* .card {
-			width: 100%;
-			height: 100%;
-		} */
+		width: 100%;
+		height: 100%;
+	} */
 
 		.card {
 			width: 100%;

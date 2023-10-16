@@ -197,6 +197,21 @@ const Navbar = ({ history, language }) => {
 						</li>
 					)}
 
+					{isAuthenticated() && isAuthenticated().user.role === 5000 && (
+						<li className='nav-item ml-4'>
+							<Link
+								className='nav-link'
+								style={isActive2(history, "/ecommerce/admin/dashboard")}
+								to='/ecommerce/admin/dashboard'
+								onClick={() => {
+									window.scrollTo({ top: 0, behavior: "smooth" });
+								}}
+							>
+								Ecommerce Admin Dashboard
+							</Link>
+						</li>
+					)}
+
 					{isAuthenticated() && isAuthenticated().user.role === 2000 && (
 						<li className='nav-item ml-4'>
 							<Link

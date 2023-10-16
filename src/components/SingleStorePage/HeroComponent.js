@@ -170,7 +170,7 @@ const HeroComponentWrapper = styled.div`
 		.requiredComponentBottomLeft {
 			position: absolute; // Position the required component absolutely...
 			bottom: 200px; // ...at the bottom...
-			left: 10px; // ...and to the left of the parent container.
+			left: 400px; // ...and to the left of the parent container.
 		}
 	}
 

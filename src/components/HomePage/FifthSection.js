@@ -50,10 +50,17 @@ const FifthSectionWrapper = styled.div`
 	.fifthSection {
 		margin-top: 30px;
 		min-height: 220px;
-		border: 1px white solid;
+		align-items: center;
+		text-align: center;
 	}
 
 	img {
-		width: 100%;
+		width: 40%;
+	}
+
+	@media (max-width: 1100px) {
+		img {
+			width: 100%;
+		}
 	}
 `;

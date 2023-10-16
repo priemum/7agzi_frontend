@@ -268,6 +268,7 @@ const SingleStorePage = ({ props, language }) => {
 		setChosenCustomerType(event.target.value);
 	};
 
+	// eslint-disable-next-line
 	var screenWidth = typeof window !== "undefined" ? window.innerWidth : null;
 
 	return (
@@ -311,36 +312,6 @@ const SingleStorePage = ({ props, language }) => {
 						fromLocalStore={storeChosen}
 						language={chosenLanguage}
 					/>
-
-					<div className='deskTopContent'>
-						<div>
-							<EmployeesList
-								storeProperties={storeChosen}
-								contact={contact}
-								filteredResults={allEmployees}
-							/>
-						</div>
-
-						<div>
-							<ContactUs contact={contact} />
-						</div>
-
-						<div>
-							<AboutUs aboutus={aboutus} storeProperties={storeChosen} />
-						</div>
-
-						<div>
-							{!loading &&
-							storeChosen &&
-							screenWidth &&
-							screenWidth >= 810 &&
-							storeChosen.addStoreName &&
-							storeChosen.latitude &&
-							storeChosen.longitude ? (
-								<GettingMap storeProperties={storeChosen} loading={loading} />
-							) : null}
-						</div>
-					</div>
 
 					<div className='phoneContent mt-2'>
 						<div
@@ -565,12 +536,33 @@ export default SingleStorePage;
 const SingleStorePageWrapper = styled.div`
 	min-height: 900px;
 	background-color: black;
+	padding-left: 200px;
+	padding-right: 200px;
 
-	.phoneContent {
-		display: none;
+	.navLinks {
+		font-weight: bolder;
+		padding: 5px;
+		border: lightgrey 0.1px solid;
+		text-align: center;
+		border-radius: 2px;
+		cursor: pointer;
 	}
 
-	@media (max-width: 800px) {
+	.firstAvailableApp {
+		border-radius: 25px 110px;
+	}
+
+	.phoneContent {
+		display: block;
+		color: white;
+		padding: 5px;
+		overflow: hidden;
+	}
+
+	@media (max-width: 1100px) {
+		padding-left: 5px;
+		padding-right: 5px;
+
 		.deskTopContent {
 			display: none;
 		}

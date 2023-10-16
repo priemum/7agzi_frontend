@@ -357,6 +357,34 @@ export const allStoresSorted2 = (
 		.catch((err) => console.log(err));
 };
 
+export const allStoresSortedGraded = (
+	lat,
+	lon,
+	country,
+	governorate,
+	district,
+	storeType,
+	service,
+	pagination,
+	page
+) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/store-management-a-b/pagination2/${lat}/${lon}/${country}/${governorate}/${district}/${storeType}/${service}/${pagination}/${page}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const activeStoresCount = (
 	country,
 	governorate,

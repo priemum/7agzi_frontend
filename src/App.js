@@ -26,6 +26,13 @@ import SchedulePageSteps2 from "./pages/SchedulePage/SchedulePageAdjusted/Schedu
 import MyStoreList from "./pages/MyStoreList";
 import Forgot from "./auth/Forgot";
 import Reset from "./auth/Reset";
+import AppsLandingPage from "./pages/AppsLandingPage";
+import SignupFormEcommerce from "./pages/SignupFormEcommerce";
+import IconHaircut from "./pages/IconHaircut";
+import IconBeard from "./pages/IconBeard";
+import IconBundle from "./pages/IconBundle";
+import IconGroom from "./pages/IconGroom";
+import IconSkinCare from "./pages/IconSkinCare";
 
 // eslint-disable-next-line
 import StoresList from "./pages/StoresList";
@@ -103,7 +110,8 @@ import BusinessPartnersReportsMain from "./TheBoss/BusinessPartnersReports/Busin
 import SingleAppointmentMain from "./StoreBooking/SingleAppointmentFolder/SingleAppointmentMain";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import CookiePolicy from "./components/Footer/CookiePolicy";
-import AppsLandingPage from "./pages/AppsLandingPage";
+
+import ShopRoute from "./auth/ShopRoute";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -232,6 +240,12 @@ function App() {
 					/>
 
 					<Route
+						path='/register-your-ecommerce-shop'
+						exact
+						component={() => <SignupFormEcommerce language={language} />}
+					/>
+
+					<Route
 						path='/auth/password/forgot'
 						exact
 						component={() => <Forgot language={language} />}
@@ -305,6 +319,34 @@ function App() {
 						exact
 						component={() => <MyStoreList language={language} />}
 					/>
+					<Route
+						path='/schedule/haircut'
+						exact
+						component={() => <IconHaircut language={language} />}
+					/>
+					<Route
+						path='/schedule/beard-shaving'
+						exact
+						component={() => <IconBeard language={language} />}
+					/>
+
+					<Route
+						path='/schedule/bundle'
+						exact
+						component={() => <IconBundle language={language} />}
+					/>
+
+					<Route
+						path='/schedule/skin-care'
+						exact
+						component={() => <IconSkinCare language={language} />}
+					/>
+
+					<Route
+						path='/schedule/groom'
+						exact
+						component={() => <IconGroom language={language} />}
+					/>
 
 					<Route
 						path='/appointment-successfully-scheduled/YourAppointmentWasSuccesfullyScheduled/:userId'
@@ -328,6 +370,12 @@ function App() {
 						path='/agents-signup-form2'
 						exact
 						component={() => <AgentsSignupForm2 language={language} />}
+					/>
+					{/* Ecommerce Routes */}
+					<ShopRoute
+						path='/ecommerce/admin/dashboard'
+						exact
+						component={() => <EcommerceMain language={language} />}
 					/>
 
 					{/* Owner Routes */}

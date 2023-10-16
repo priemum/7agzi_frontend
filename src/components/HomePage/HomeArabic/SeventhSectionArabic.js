@@ -100,10 +100,10 @@ const SeventhSectionArabic = ({
 export default SeventhSectionArabic;
 
 const ThirdSectionWrapper = styled.div`
-	padding: 30px 0px;
+	padding-bottom: 100px;
 
 	.thirdSection {
-		padding: 10px 100px;
+		padding: 10px 150px;
 		background-color: #141414;
 	}
 
@@ -111,18 +111,12 @@ const ThirdSectionWrapper = styled.div`
 		display: none !important;
 	}
 
-	.topPerf {
+	.quickLinks {
+		text-align: center;
+		margin: 10px 5px;
 		font-weight: bolder;
-		margin-bottom: 5px;
+		text-transform: uppercase;
 		text-decoration: underline;
-	}
-
-	.topRated {
-		text-align: right;
-		font-weight: bolder;
-		margin-bottom: 5px;
-		text-decoration: underline;
-		font-size: 10px;
 	}
 
 	@media (max-width: 1100px) {
@@ -132,6 +126,12 @@ const ThirdSectionWrapper = styled.div`
 
 		.slick-dots {
 			display: none !important;
+		}
+
+		.quickLinks {
+			font-size: 12px;
+			text-align: center;
+			margin-top: 10px;
 		}
 	}
 `;

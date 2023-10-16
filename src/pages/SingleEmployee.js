@@ -113,7 +113,7 @@ const SingleEmployee = (props) => {
 	let history = useHistory();
 	let { employeeId, employeeName } = useParams();
 
-	console.log(Employee, "employee");
+	// console.log(Employee, "employee");
 
 	const handleModal = () => {
 		if (user && token) {
@@ -337,8 +337,7 @@ const SingleEmployee = (props) => {
 
 	const gettingAllContacts = () => {
 		let getChosenStore = JSON.parse(localStorage.getItem("chosenStore"));
-
-		getContacts("Token", getChosenStore.storeId).then((data) => {
+		getContacts("Token", getChosenStore._id).then((data) => {
 			if (data.error) {
 				console.log(data.error);
 			} else {

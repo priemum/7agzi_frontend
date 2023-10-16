@@ -115,6 +115,7 @@ const ThirdSectionCardWrapper = styled.div`
 		padding: 0px !important;
 		width: 100%;
 		margin-left: 7px;
+		min-height: 300px;
 	}
 
 	@media (max-width: 680px) {
