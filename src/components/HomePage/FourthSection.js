@@ -16,7 +16,7 @@ const FourthSection = () => {
 				<span
 					className='offers'
 					onClick={() => {
-						window.location.href = `/schedule?50`;
+						window.location.href = `/schedule/50-EGP-Offer`;
 					}}
 				>
 					50 EGP OFFER...
@@ -57,7 +57,15 @@ const FourthSectionWrapper = styled.div`
 		background-color: #001e1e;
 	}
 
+	.closest:hover {
+		cursor: pointer;
+	}
+
 	.offers {
 		background-color: #270000;
+	}
+
+	.offers:hover {
+		cursor: pointer;
 	}
 `;

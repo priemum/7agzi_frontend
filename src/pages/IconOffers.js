@@ -8,7 +8,7 @@ import {
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
 import { Link } from "react-router-dom";
-import StoreListPhone from "../components/StoresListComp/StoreListPhone";
+import StoreListPhone from "../components/StoreListOffers/StoreListPhone";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import SideFilter from "../components/StoresListComp/SideFilter";
@@ -296,9 +296,9 @@ const IconOffers = () => {
 			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{chosenLanguage === "Arabic" ? (
-					<title dir='rtl'>دور على أقرب مصفف شعر ومركز تجميل ليك</title>
+					<title dir='rtl'>أفضل عروض XLOOK</title>
 				) : (
-					<title>Find Your Closest Stylist And Beauty Center</title>
+					<title>XLOOK Best Offers</title>
 				)}
 				<meta
 					name='description'
@@ -323,7 +323,7 @@ const IconOffers = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule' />
+				<link rel='canonical' href='https://www.xlookpro.com/schedule/offers' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

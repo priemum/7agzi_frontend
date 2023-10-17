@@ -112,6 +112,8 @@ import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import CookiePolicy from "./components/Footer/CookiePolicy";
 
 import ShopRoute from "./auth/ShopRoute";
+import Icon50EGP from "./pages/Icon50EGP";
+import IconOffers from "./pages/IconOffers";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -346,6 +348,18 @@ function App() {
 						path='/schedule/groom'
 						exact
 						component={() => <IconGroom language={language} />}
+					/>
+
+					<Route
+						path='/schedule/50-EGP-Offer'
+						exact
+						component={() => <Icon50EGP language={language} />}
+					/>
+
+					<Route
+						path='/schedule/offers'
+						exact
+						component={() => <IconOffers language={language} />}
 					/>
 
 					<Route

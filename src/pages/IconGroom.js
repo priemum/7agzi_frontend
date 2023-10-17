@@ -327,7 +327,7 @@ const IconGroom = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule' />
+				<link rel='canonical' href='https://www.xlookpro.com/schedule/groom' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

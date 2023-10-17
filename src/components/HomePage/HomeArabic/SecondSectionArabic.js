@@ -46,6 +46,9 @@ const SecondSectionArabic = () => {
 					<img
 						src={OffersImg}
 						alt=' احجز موعدك مع إكسلوك للحصول على أحدث عروضنا الحصرية'
+						onClick={() => {
+							window.location.href = `/schedule/offers`;
+						}}
 					/>
 					<img
 						src={WhatsAppImg}
@@ -91,6 +94,9 @@ const SecondSectionArabic = () => {
 					<img
 						src={OffersImg}
 						alt=' احجز موعدك مع إكسلوك للحصول على أحدث عروضنا الحصرية'
+						onClick={() => {
+							window.location.href = `/schedule/offers`;
+						}}
 					/>
 					<img
 						src={WhatsAppImg}

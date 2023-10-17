@@ -8,13 +8,13 @@ import {
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
 import { Link } from "react-router-dom";
-import StoreListPhone from "../components/StoreListSkinCare/StoreListPhone";
+import StoreListPhone from "../components/StoreList50EGP/StoreListPhone";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import SideFilter from "../components/StoresListComp/SideFilter";
 import { useCartContext } from "../sidebar_context";
 
-const IconSkinCare = () => {
+const Icon50EGP = () => {
 	const { chosenLanguage } = useCartContext();
 
 	// eslint-disable-next-line
@@ -43,7 +43,7 @@ const IconSkinCare = () => {
 	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
 
 	// eslint-disable-next-line
-	const [itemsPerPage, setItemPerPage] = useState(50);
+	const [itemsPerPage, setItemPerPage] = useState(24);
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const { isLoaded, loadError } = useJsApiLoader({
@@ -76,16 +76,11 @@ const IconSkinCare = () => {
 							setError(data.error);
 						} else {
 							var uniqueStoresWithLatestDates = data.stores.filter((store) =>
-								store.services.some((service) =>
-									service.serviceName.toLowerCase().includes("skin")
+								store.services.some(
+									(service) =>
+										Number(service.servicePriceDiscount) <= Number(50)
 								)
 							);
-
-							// console.log(cleanedString, "cleanedString");
-							// console.log(
-							// 	uniqueStoresWithLatestDates,
-							// 	"uniqueStoresWithLatestDates"
-							// );
 
 							if (selectedCountry) {
 								uniqueStoresWithLatestDates =
@@ -300,9 +295,9 @@ const IconSkinCare = () => {
 			<Helmet dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 				<meta charSet='utf-8' />
 				{chosenLanguage === "Arabic" ? (
-					<title dir='rtl'>أفضل عروض العناية بالبشرة للنساء</title>
+					<title dir='rtl'>اكس لوك | عرضنا الخاص 50 جنيه</title>
 				) : (
-					<title>Best Skin Care offers for Women</title>
+					<title>XLOOK | Our Special 50 EGP Offer</title>
 				)}
 				<meta
 					name='description'
@@ -329,7 +324,7 @@ const IconSkinCare = () => {
 
 				<link
 					rel='canonical'
-					href='https://www.xlookpro.com/schedule/skin-care'
+					href='https://www.xlookpro.com/schedule/50-EGP-Offer'
 				/>
 			</Helmet>
 			<SideFilter
@@ -384,7 +379,7 @@ const IconSkinCare = () => {
 	);
 };
 
-export default IconSkinCare;
+export default Icon50EGP;
 
 const MyStoreListWrapper = styled.div`
 	min-height: 1100px;

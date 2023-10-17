@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const FourthSectionArabic = () => {
 	return (
-		<FourthSectionWrapper>
+		<FourthSectionWrapper dir='rtl'>
 			<div className='grid-container'>
 				<span
 					className='closest'
@@ -16,7 +16,7 @@ const FourthSectionArabic = () => {
 				<span
 					className='offers'
 					onClick={() => {
-						window.location.href = `/schedule?50`;
+						window.location.href = `/schedule/50-EGP-Offer`;
 					}}
 				>
 					عرض 50 جنيه ...
@@ -57,7 +57,15 @@ const FourthSectionWrapper = styled.div`
 		background-color: #001e1e;
 	}
 
+	.closest:hover {
+		cursor: pointer;
+	}
+
 	.offers {
 		background-color: #270000;
+	}
+
+	.offers:hover {
+		cursor: pointer;
 	}
 `;

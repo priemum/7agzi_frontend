@@ -330,7 +330,7 @@ const IconBeard = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule' />
+				<link rel='canonical' href='https://www.xlookpro.com/beard-shaving' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

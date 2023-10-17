@@ -327,7 +327,10 @@ const IconHaircut = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule' />
+				<link
+					rel='canonical'
+					href='https://www.xlookpro.com/schedule/haircut'
+				/>
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}
