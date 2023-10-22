@@ -274,7 +274,9 @@ const AddSubcategory = ({
 									key={i}
 									style={{ textTransform: "capitalize" }}
 								>
-									{c.categoryName}
+									{chosenLanguage === "Arabic"
+										? c.categoryName_Arabic
+										: c.categoryName}
 								</option>
 							);
 						})}

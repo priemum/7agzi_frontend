@@ -4,6 +4,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import styled from "styled-components";
+import { useCartContext } from "../../sidebar_context";
 
 const isActive = (history, path) => {
 	if (history.location.pathname === path) {
@@ -32,6 +33,9 @@ const isActive2 = (history, path) => {
 };
 
 const Navbar = ({ history, language }) => {
+	const { chosenLanguage } = useCartContext();
+	console.log(chosenLanguage, "chosenLan");
+
 	return (
 		<Nav
 			className=' navbar  navbar-expand-sm'
@@ -39,7 +43,7 @@ const Navbar = ({ history, language }) => {
 		>
 			<div
 				className='collapse navbar-collapse '
-				dir={language === "Arabic" ? "rtl" : "ltr"}
+				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 			>
 				<ul
 					className='navbar-nav mx-auto navbar-expand '
@@ -54,7 +58,7 @@ const Navbar = ({ history, language }) => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<span
 									style={{
 										fontFamily: "Droid Arabic Kufi",
@@ -64,7 +68,7 @@ const Navbar = ({ history, language }) => {
 									الصفحة الرئيسية
 								</span>
 							) : (
-								"Home"
+								"HOME"
 							)}
 						</Link>
 					</li>
@@ -77,7 +81,7 @@ const Navbar = ({ history, language }) => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<span
 									style={{
 										fontFamily: "Droid Arabic Kufi",
@@ -87,10 +91,24 @@ const Navbar = ({ history, language }) => {
 									احجز
 								</span>
 							) : (
-								"Schedule"
+								"SCHEDULE"
 							)}
 						</Link>
 					</li>
+
+					<li className='nav-item'>
+						<Link
+							className='nav-link'
+							style={isActive(history, "/xlook/shop")}
+							to='/xlook/shop'
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+						>
+							XLOOK SHOP
+						</Link>
+					</li>
+
 					<li className='nav-item'>
 						<Link
 							className='nav-link'
@@ -100,7 +118,7 @@ const Navbar = ({ history, language }) => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<span
 									style={{
 										fontFamily: "Droid Arabic Kufi",
@@ -123,7 +141,7 @@ const Navbar = ({ history, language }) => {
 								window.scrollTo({ top: 0, behavior: "smooth" });
 							}}
 						>
-							{language === "Arabic" ? (
+							{chosenLanguage === "Arabic" ? (
 								<span
 									style={{
 										fontFamily: "Droid Arabic Kufi",

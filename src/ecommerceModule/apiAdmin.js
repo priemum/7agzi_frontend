@@ -61,7 +61,7 @@ export const removeCategory = (categoryId, userId, token) => {
 };
 
 export const getCategories = (token, userId) => {
-	return fetch(`${process.env.REACT_APP_API_URL}/categories/${userId}`, {
+	return fetch(`${process.env.REACT_APP_API_URL}/categories`, {
 		method: "GET",
 		headers: {
 			// content type?

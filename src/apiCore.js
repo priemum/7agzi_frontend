@@ -830,3 +830,174 @@ export const gettingEmployeeFreeSlots = (
 			.catch((err) => console.log(err));
 	}
 };
+
+export const gettingAllProducts = (
+	categories,
+	subcategories,
+	gender,
+	size,
+	pagination,
+	page
+) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/all-products/${categories}/${subcategories}/${gender}/${size}/${pagination}/${page}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const gettingAllCategories = () => {
+	return fetch(`${process.env.REACT_APP_API_URL}/all-categories`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const gettingAllSubcategories = () => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/all-subcategories`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+			.then((response) => {
+				return response.json();
+			})
+			.catch((err) => console.log(err))
+	);
+};
+
+export const gettingAllGenders = () => {
+	return fetch(`${process.env.REACT_APP_API_URL}/all-genders`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const readProduct = (productId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/${productId}`, {
+		method: "GET",
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const commentProduct = (
+	userId,
+	token,
+	productId,
+	comment,
+	commentsPhotos
+) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/post/comment`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId, comment, commentsPhotos }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const uncommentProduct = (userId, token, productId, comment) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/post/uncomment`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId, comment }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const productStar = (productId, star, token, email, userId) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/product/star/${productId}/${userId}`,
+		{
+			method: "PUT",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({ productId, star, email, userId }),
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const like = (userId, token, productId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/post/like`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const unlike = (userId, token, productId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/post/unlike`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

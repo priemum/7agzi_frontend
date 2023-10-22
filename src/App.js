@@ -114,6 +114,8 @@ import CookiePolicy from "./components/Footer/CookiePolicy";
 import ShopRoute from "./auth/ShopRoute";
 import Icon50EGP from "./pages/Icon50EGP";
 import IconOffers from "./pages/IconOffers";
+import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
+import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -368,6 +370,12 @@ function App() {
 						component={SuccessfulSchedule}
 					/>
 
+					<Route
+						path='/xlook/shop'
+						exact
+						component={() => <ShopLandingPage language={language} />}
+					/>
+
 					{/* <Route
 						path='/agents-signup-form'
 						exact
@@ -385,6 +393,13 @@ function App() {
 						exact
 						component={() => <AgentsSignupForm2 language={language} />}
 					/>
+
+					<Route
+						path='/product/:categoryslug/:slug/:productId'
+						exact
+						component={SingleProduct}
+					/>
+
 					{/* Ecommerce Routes */}
 					<ShopRoute
 						path='/ecommerce/admin/dashboard'

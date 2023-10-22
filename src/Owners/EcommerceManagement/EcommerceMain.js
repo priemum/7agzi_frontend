@@ -11,7 +11,7 @@ import StoreSettingsView from "../../ecommerceModule/StoreSettings/StoreSettings
 import { isAuthenticated } from "../../auth";
 
 const EcommerceMain = () => {
-	const [clickedMenu, setClickedMenu] = useState("Categories");
+	const [clickedMenu, setClickedMenu] = useState("StoreSettings");
 	const [categoryMenu, setCategoryMenu] = useState("AddCategory");
 	const [SubcategoryMenu, setSubCategoryMenu] = useState("AddSubCategory");
 	const { chosenLanguage } = useCartContext();
@@ -20,9 +20,7 @@ const EcommerceMain = () => {
 	console.log(clickedMenu, "clickedMenu");
 
 	useEffect(() => {
-		if (window.location.search.includes("categories")) {
-			setClickedMenu("Categories");
-		} else if (window.location.search.includes("subcategory")) {
+		if (window.location.search.includes("subcategory")) {
 			setClickedMenu("Subcategories");
 		} else if (window.location.search.includes("products")) {
 			setClickedMenu("Products");
@@ -31,7 +29,7 @@ const EcommerceMain = () => {
 		} else if (window.location.search.includes("storesettings")) {
 			setClickedMenu("StoreSettings");
 		} else {
-			setClickedMenu("Categories");
+			setClickedMenu("StoreSettings");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

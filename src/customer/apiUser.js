@@ -206,3 +206,35 @@ export const getUserBookings = (phone, userId, token) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const userlikeProduct = (userId, token, productId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/user/like`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const userunlikeProduct = (userId, token, productId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/product/user/unlike`, {
+		method: "PUT",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ userId, productId }),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

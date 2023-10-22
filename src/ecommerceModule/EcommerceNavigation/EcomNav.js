@@ -33,39 +33,25 @@ const EcomNav = ({ clickedMenu, setClickedMenu, chosenLanguage, user }) => {
 	return (
 		<EcomNavWrapper>
 			<div
-				style={isActive(clickedMenu, "StoreSettings")}
-				className='col-md-5 col-8 mx-auto menuItems mb-2'
-				onClick={() => setClickedMenu("StoreSettings")}
-			>
-				<Link
-					style={isActive(clickedMenu, "StoreSettings")}
-					onClick={() => setClickedMenu("StoreSettings")}
-					to={
-						user.role === 5000
-							? "/ecommerce/admin/dashboard?storesettings"
-							: "/store/admin/ecommerce-integration?storesettings"
-					}
-				>
-					<i className='fa-solid fa-list mx-1'></i>
-					{chosenLanguage === "Arabic" ? "إعدادات المتجر" : "Store Settings"}
-				</Link>
-			</div>
-			<div
 				className='row mx-auto'
 				style={{ backgroundColor: "white", padding: "5px" }}
 			>
 				<div
-					style={isActive(clickedMenu, "Categories")}
-					className='col-md-3 col-6 mx-auto menuItems'
-					onClick={() => setClickedMenu("Categories")}
+					style={isActive(clickedMenu, "StoreSettings")}
+					className='col-md-3 col-6 mx-auto menuItems mb-2'
+					onClick={() => setClickedMenu("StoreSettings")}
 				>
 					<Link
-						style={isActive(clickedMenu, "Categories")}
-						onClick={() => setClickedMenu("Categories")}
-						to='#'
+						style={isActive(clickedMenu, "StoreSettings")}
+						onClick={() => setClickedMenu("StoreSettings")}
+						to={
+							user.role === 5000
+								? "/ecommerce/admin/dashboard?storesettings"
+								: "/store/admin/ecommerce-integration?storesettings"
+						}
 					>
 						<i className='fa-solid fa-list mx-1'></i>
-						{chosenLanguage === "Arabic" ? "الفئات" : "Categories"}
+						{chosenLanguage === "Arabic" ? "إعدادات المتجر" : "Store Settings"}
 					</Link>
 				</div>
 				<div

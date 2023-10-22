@@ -92,6 +92,27 @@ const Navbar1 = ({ history }) => {
 								) : null}
 							</Link>
 						</li>
+
+						<li
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+						>
+							<Link
+								to='/xlook/shop'
+								className={
+									chosenLanguage === "Arabic"
+										? " sidebar-linkArabic"
+										: "sidebar-link"
+								}
+								onClick={closeSidebar}
+							>
+								{isSidebarOpen && isSidebarOpen ? (
+									<React.Fragment>XLOOK SHOP</React.Fragment>
+								) : null}
+							</Link>
+						</li>
+
 						<li
 							onClick={() => {
 								window.scrollTo({ top: 0, behavior: "smooth" });

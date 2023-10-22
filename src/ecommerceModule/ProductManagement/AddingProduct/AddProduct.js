@@ -17,6 +17,16 @@ import axios from "axios";
 import { Select } from "antd";
 import UpdateProduct from "../UpdatingProduct/UpdateProduct";
 import StockReport from "./StockReport";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+const toolbarOptions = [
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+	["link", "image", "video"],
+	["clean"],
+];
 
 const { Option } = Select;
 
@@ -147,6 +157,8 @@ const AddProduct = ({ chosenLanguage }) => {
 		});
 	};
 
+	// console.log(values.category, "category");
+
 	// console.log(subsOptions, "------ SubsOptions");
 
 	const gettingAllCategories = () => {
@@ -262,6 +274,27 @@ const AddProduct = ({ chosenLanguage }) => {
 				setLoading(false);
 			});
 	};
+
+	function handlePaste(e) {
+		const clipboardData = e.clipboardData || window.clipboardData;
+		if (clipboardData && clipboardData.getData) {
+			const content = clipboardData.getData("text/html");
+			const div = document.createElement("div");
+			div.innerHTML = content;
+			document.execCommand("insertHTML", false, div.innerHTML);
+			e.preventDefault();
+		}
+	}
+
+	function handleEditorChange(content, delta, source, editor) {
+		const html = editor.getHTML();
+		setValues({ ...values, description1: html });
+	}
+
+	function handleEditorChangeArabic(content, delta, source, editor) {
+		const html = editor.getHTML();
+		setValues({ ...values, description1_Arabic: html });
+	}
 
 	return (
 		<>
@@ -515,6 +548,60 @@ const AddProduct = ({ chosenLanguage }) => {
 									</div>
 								)}
 							</div>
+							{values &&
+								values.category &&
+								values.category === "652f1787830cc33cdc7d4dea" && (
+									<div className='row'>
+										<div className='form-group col-md-5 mx-auto'>
+											<div className='form-group'>
+												<label className='text-muted'>Size</label>
+												<select
+													onChange={(e) =>
+														setValues({ ...values, size: e.target.value })
+													}
+													className='form-control'
+												>
+													<option value=''>Please select a size</option>
+													<option value='small'>SMALL</option>
+													<option value='medium'>MEDIUM</option>
+													<option value='large'>LARGE</option>
+													<option value='xl'>XLARGE</option>
+													<option value='xxl'>XXLARGE</option>
+													<option value='xxxl'>XXXLARGE</option>
+												</select>
+											</div>
+										</div>
+
+										<div className='form-group col-md-5 mx-auto'>
+											<div className='form-group'>
+												<label className='text-muted'>Color</label>
+												<select
+													onChange={(e) =>
+														setValues({ ...values, color: e.target.value })
+													}
+													className='form-control'
+												>
+													<option value=''>Please select a color</option>
+													<option value='black'>Black</option>
+													<option value='red'>Red</option>
+													<option value='green'>Green</option>
+													<option value='blue'>Blue</option>
+													<option value='yellow'>Yellow</option>
+													<option value='purple'>Purple</option>
+													<option value='pink'>Pink</option>
+													<option value='orange'>Orange</option>
+													<option value='gray'>Gray</option>
+													<option value='brown'>Brown</option>
+													<option value='cyan'>Cyan</option>
+													<option value='teal'>Teal</option>
+													<option value='lime'>Lime</option>
+													<option value='navy'>Navy</option>
+													<option value='beige'>Beige</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								)}
 
 							<br />
 							<div className='row'>
@@ -577,29 +664,42 @@ const AddProduct = ({ chosenLanguage }) => {
 								</div>
 							</div>
 
-							<div className='form-group'>
-								<label className=''>
-									Add Description (Required In English)
-								</label>
-								<textarea
-									rows='5'
-									onChange={handleChange("description1")}
-									className='form-control'
-									value={values.description1}
-									placeholder='Required*  write a little bit about the product'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<label className=''>إضافة الوصف (مطلوب)</label>
-								<textarea
-									rows='5'
-									onChange={handleChange("description1_Arabic")}
-									className='form-control'
-									value={values.description1_Arabic}
-									placeholder='مطلوب * اكتب قليلا عن المنتج'
-									required
-								/>
+							<div className='row'>
+								<div className='col-md-6'>
+									<div className='form-group' dir='ltr'>
+										<label className=''>
+											Add Description (Required In English)
+										</label>
+										<>
+											<ReactQuill
+												value={values.description1}
+												onChange={handleEditorChange}
+												modules={{
+													toolbar: { container: toolbarOptions },
+													clipboard: { matchVisual: false },
+												}}
+												onPaste={handlePaste}
+											/>
+										</>
+									</div>
+								</div>
+
+								<div className='col-md-6'>
+									<div className='form-group' dir='ltr'>
+										<label className=''>إضافة الوصف (مطلوب)</label>
+										<>
+											<ReactQuill
+												value={values.description1_Arabic}
+												onChange={handleEditorChangeArabic}
+												modules={{
+													toolbar: { container: toolbarOptions },
+													clipboard: { matchVisual: false },
+												}}
+												onPaste={handlePaste}
+											/>
+										</>
+									</div>
+								</div>
 							</div>
 
 							<hr />

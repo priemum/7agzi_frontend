@@ -16,6 +16,16 @@ import { ToastContainer, toast } from "react-toastify";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { Select } from "antd";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+const toolbarOptions = [
+	[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	["bold", "italic", "underline", "strike", { color: [] }],
+	[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+	["link", "image", "video"],
+	["clean"],
+];
 
 const { Option } = Select;
 
@@ -241,8 +251,26 @@ const UpdateProduct = ({ chosenLanguage }) => {
 			});
 	};
 
-	console.log(values && values.category, "category");
-	console.log(values && values.subcategory, "subcategory");
+	function handlePaste(e) {
+		const clipboardData = e.clipboardData || window.clipboardData;
+		if (clipboardData && clipboardData.getData) {
+			const content = clipboardData.getData("text/html");
+			const div = document.createElement("div");
+			div.innerHTML = content;
+			document.execCommand("insertHTML", false, div.innerHTML);
+			e.preventDefault();
+		}
+	}
+
+	function handleEditorChange(content, delta, source, editor) {
+		const html = editor.getHTML();
+		setValues({ ...values, description1: html });
+	}
+
+	function handleEditorChangeArabic(content, delta, source, editor) {
+		const html = editor.getHTML();
+		setValues({ ...values, description1_Arabic: html });
+	}
 
 	return (
 		<>
@@ -603,29 +631,42 @@ const UpdateProduct = ({ chosenLanguage }) => {
 								)}
 							</div>
 
-							<div className='form-group'>
-								<label className=''>
-									Update Description (Required In English)
-								</label>
-								<textarea
-									rows='5'
-									onChange={handleChange("description1")}
-									className='form-control'
-									value={values.description1}
-									placeholder='Required*  write a little bit about the product in English'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<label className=''>تعديل الوصف (مطلوب)</label>
-								<textarea
-									rows='5'
-									onChange={handleChange("description1_Arabic")}
-									className='form-control'
-									value={values.description1_Arabic}
-									placeholder='مطلوب * اكتب قليلا عن المنتج'
-									required
-								/>
+							<div className='row'>
+								<div className='col-md-6'>
+									<div className='form-group' dir='ltr'>
+										<label className=''>
+											Add Description (Required In English)
+										</label>
+										<>
+											<ReactQuill
+												value={values.description1}
+												onChange={handleEditorChange}
+												modules={{
+													toolbar: { container: toolbarOptions },
+													clipboard: { matchVisual: false },
+												}}
+												onPaste={handlePaste}
+											/>
+										</>
+									</div>
+								</div>
+
+								<div className='col-md-6'>
+									<div className='form-group' dir='ltr'>
+										<label className=''>إضافة الوصف (مطلوب)</label>
+										<>
+											<ReactQuill
+												value={values.description1_Arabic}
+												onChange={handleEditorChangeArabic}
+												modules={{
+													toolbar: { container: toolbarOptions },
+													clipboard: { matchVisual: false },
+												}}
+												onPaste={handlePaste}
+											/>
+										</>
+									</div>
+								</div>
 							</div>
 
 							<hr />
