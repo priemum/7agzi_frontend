@@ -243,22 +243,17 @@ const ShopLandingPage = () => {
 						})}
 				</div>
 			</div>
-
-			<div className='row mt-3 mb-5'>
-				{allProducts &&
-					allProducts.map((product, i) => (
-						<div
-							className='col-lg-4 col-md-6 col-sm-12 mx-auto text-center'
-							key={i}
-						>
+			<div className='container'>
+				<div className='product-grid'>
+					{allProducts &&
+						allProducts.map((product, i) => (
 							<ShopItems
 								product={product}
 								key={i}
 								chosenLanguage={chosenLanguage}
 							/>
-						</div>
-					))}
-				<hr />
+						))}
+				</div>
 			</div>
 		</ShopLandingPageWrapper>
 	);
@@ -269,4 +264,31 @@ export default ShopLandingPage;
 const ShopLandingPageWrapper = styled.div`
 	min-height: 1000px;
 	overflow: hidden;
+
+	.product-grid {
+		display: grid;
+		margin-top: 20px;
+		margin-bottom: 100px;
+		grid-template-columns: repeat(
+			4,
+			1fr
+		); /* 5 items in one row for larger screens */
+		gap: 10px;
+	}
+
+	/* Media query for smaller screens */
+	@media (max-width: 1000px) {
+		.container {
+			padding: 0px !important;
+			margin: 3px !important;
+		}
+		/* Assuming 768px as breakpoint for smaller screens */
+		.product-grid {
+			grid-template-columns: repeat(
+				2,
+				1fr
+			); /* 2 items in one row for smaller screens */
+			gap: 5px;
+		}
+	}
 `;

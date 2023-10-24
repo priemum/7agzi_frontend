@@ -1,65 +1,34 @@
 /** @format */
 import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
-import { useCartContext } from "./cart_context";
+import { useCartContext } from "../../../sidebar_context";
 import { Link } from "react-router-dom";
-import { isAuthenticated, setLocalStorage } from "../../auth/index";
-import {
-	allLoyaltyPointsAndStoreStatus,
-	getShippingOptions,
-} from "../../admin/apiAdmin";
-import { readShippingOption } from "../apiCore";
-import { toast } from "react-toastify";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import Slider from "react-slick";
 import CardForRelatedProducts from "../SingleProduct/CardForRelatedProducts";
+import { useCartContext2 } from "./cart_context";
 
-const Cart = ({ chosenLanguage }) => {
-	const [shippingFee, setShippingFee] = useState("");
-	const [allShippingOptions, setAllShippingOptions] = useState([]);
-	const [chosenShippingOption, setChosenShippingOption] = useState([]);
+const Cart = () => {
+	const { chosenLanguage } = useCartContext();
 	const [relatedProducts, setRelatedProducts] = useState([]);
-	const [
-		alreadySetLoyaltyPointsManagement,
-		setAlreadySetLoyaltyPointsManagement,
-	] = useState([]);
 
 	const {
 		cart,
 		clearCart,
 		removeItem,
 		toggleAmount,
+		// eslint-disable-next-line
 		total_amount,
+		// eslint-disable-next-line
 		addShipmentFee,
+		// eslint-disable-next-line
 		addShipmentDetails,
 		// eslint-disable-next-line
 		shipping_fee,
-	} = useCartContext();
-
-	const gettingAllShippingOptions = () => {
-		getShippingOptions().then((data) => {
-			if (data.error) {
-				console.log("Error from AdminSideBar");
-			} else {
-				setAllShippingOptions(data.filter((i) => i.carrierStatus === true));
-			}
-		});
-	};
-
-	const gettingPreviousLoyaltyPointsManagement = () => {
-		allLoyaltyPointsAndStoreStatus().then((data) => {
-			if (data.error) {
-				console.log(data.error);
-			} else {
-				setAlreadySetLoyaltyPointsManagement(data && data[data.length - 1]);
-			}
-		});
-	};
+	} = useCartContext2();
 
 	useEffect(() => {
-		gettingAllShippingOptions();
-		gettingPreviousLoyaltyPointsManagement();
 		if (
 			cart &&
 			cart[0] &&
@@ -91,7 +60,8 @@ const Cart = ({ chosenLanguage }) => {
 		return (
 			<WrapperCartItem
 				className='row '
-				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+			>
 				<div className='col-md-2 mx-auto text-center my-auto'>
 					<img
 						src={image}
@@ -101,12 +71,14 @@ const Cart = ({ chosenLanguage }) => {
 				</div>
 				<div
 					className='col-md-2 mx-auto text-center my-auto'
-					style={{ fontSize: "0.7rem", fontWeight: "bold" }}>
+					style={{ fontSize: "0.7rem", fontWeight: "bold" }}
+				>
 					{chosenLanguage === "Arabic" ? nameArabic : name}
 				</div>
 				<div
 					className='col-md-2 mx-auto text-center my-auto'
-					style={{ color: "#347acd", fontWeight: "bold" }}>
+					style={{ color: "#347acd", fontWeight: "bold" }}
+				>
 					{price} KD
 				</div>
 				<div className='col-md-2 mx-auto text-center my-auto buttons-up-down'>
@@ -126,7 +98,8 @@ const Cart = ({ chosenLanguage }) => {
 							fontWeight: "bold",
 							letterSpacing: "3px",
 							color: "#8d9124",
-						}}>
+						}}
+					>
 						{price * amount} KD
 					</span>
 				</div>
@@ -140,7 +113,8 @@ const Cart = ({ chosenLanguage }) => {
 							border: "none",
 							fontWeight: "bold",
 						}}
-						onClick={() => removeItem(id)}>
+						onClick={() => removeItem(id)}
+					>
 						<FaTrash />
 					</button>
 				</div>
@@ -153,7 +127,8 @@ const Cart = ({ chosenLanguage }) => {
 			<WrapperCartColumns
 				dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 				className='row mt-3'
-				style={{ fontSize: "1rem", fontWeight: "bold" }}>
+				style={{ fontSize: "1rem", fontWeight: "bold" }}
+			>
 				<div className='col-md-2 mx-auto text-center mt-3'>
 					{chosenLanguage === "Arabic" ? "المنتجات" : "Item"}
 				</div>
@@ -175,61 +150,6 @@ const Cart = ({ chosenLanguage }) => {
 				<hr />
 			</WrapperCartColumns>
 		);
-	};
-
-	const handleChange = (e) => {
-		if (e.target.value === "Please select / Required*") {
-			setChosenShippingOption("");
-			setShippingFee("");
-		} else if (e.target.value === "PickupInStore") {
-			setChosenShippingOption({
-				carrierName: "PickupInStore",
-				carrierName_Arabic: "احصل على المنتج في المتجر",
-				carrierStatus: true,
-				createdAt: new Date().toLocaleString(),
-				estimatedDays: 0,
-				shippingPrice: 0,
-				shippingPrice_Unit: "Kuwaiti Dinar",
-				updatedAt: new Date().toLocaleString(),
-			});
-
-			setShippingFee(0);
-			addShipmentFee(0);
-
-			addShipmentDetails({
-				carrierName: "PickupInStore",
-				carrierName_Arabic: "احصل على المنتج في المتجر",
-				carrierStatus: true,
-				createdAt: new Date().toLocaleString(),
-				estimatedDays: 1,
-				shippingPrice: 0,
-				shippingPrice_Unit: "Kuwaiti Dinar",
-				updatedAt: new Date().toLocaleString(),
-			});
-
-			setLocalStorage("shipping_carrier", {
-				carrierName: "PickupInStore",
-				carrierName_Arabic: "احصل على المنتج في المتجر",
-				carrierStatus: true,
-				createdAt: new Date().toLocaleString(),
-				estimatedDays: 1,
-				shippingPrice: 0,
-				shippingPrice_Unit: "Kuwaiti Dinar",
-				updatedAt: new Date().toLocaleString(),
-			});
-		} else {
-			readShippingOption(e.target.value).then((data) => {
-				if (data.error) {
-					console.log(data.error);
-				} else {
-					setChosenShippingOption(data);
-					setShippingFee(data.shippingPrice);
-					addShipmentFee(data.shippingPrice);
-					addShipmentDetails(data);
-					setLocalStorage("shipping_carrier", data);
-				}
-			});
-		}
 	};
 
 	const settings = {
@@ -263,171 +183,19 @@ const Cart = ({ chosenLanguage }) => {
 		],
 	};
 
-	console.log(chosenShippingOption, "chosenShippingOption");
-
-	const CartTotals = () => {
-		return (
-			<WrapperCartTotals>
-				<div>
-					<div className='form-group'>
-						<label
-							className=''
-							style={{
-								fontSize: "1.2rem",
-								fontWeight: "bolder",
-							}}>
-							{chosenLanguage === "Arabic"
-								? "خيارات الشحن"
-								: "Please Choose A Shipping Option:"}
-						</label>
-						<select
-							onChange={handleChange}
-							className='form-control'
-							style={{ fontSize: "0.80rem" }}>
-							<option>Please select / Required*</option>
-							{allShippingOptions &&
-								allShippingOptions.map((i) => {
-									return (
-										<option value={i._id} key={i._id}>
-											{chosenLanguage === "Arabic"
-												? i.carrierName_Arabic
-												: i.carrierName}
-										</option>
-									);
-								})}
-							{alreadySetLoyaltyPointsManagement &&
-							alreadySetLoyaltyPointsManagement.activatePickupInStore ? (
-								<option value='PickupInStore'>
-									{chosenLanguage === "Arabic"
-										? "احصل على المنتج في المتجر"
-										: "Pick Up In Store"}
-								</option>
-							) : null}
-						</select>
-					</div>
-					<article>
-						<h5>
-							subtotal : <span>{total_amount} KD</span>
-						</h5>
-						<p>
-							shipping fee :{" "}
-							{shippingFee ? <span>{shippingFee} KD</span> : <span>0 KD</span>}
-						</p>
-						<p>
-							Days To Deliver :{" "}
-							{(shippingFee || shippingFee === 0) && chosenShippingOption && (
-								<span>{chosenShippingOption.estimatedDays} Days</span>
-							)}
-						</p>
-						<hr />
-						<h4>
-							order total :
-							{chosenShippingOption && shippingFee ? (
-								<span>{total_amount + shippingFee} KD</span>
-							) : (
-								<span>{total_amount} KD</span>
-							)}
-						</h4>
-					</article>
-					{isAuthenticated() ? (
-						<>
-							{chosenShippingOption && (shippingFee || shippingFee === 0) ? (
-								<Link
-									to={
-										chosenShippingOption.carrierName === "PickupInStore"
-											? "/checkout-store-pickup"
-											: "/checkout"
-									}
-									className='btn mb-5'
-									style={{ backgroundColor: "#004c99", color: "white" }}>
-									proceed to checkout
-								</Link>
-							) : (
-								<Link
-									onClick={() => {
-										if (chosenLanguage === "Arabic") {
-											return toast.error(` يرجى تحديد طريقة الشحن أولاً`);
-										} else {
-											return toast.error(` Please Select A Carrier First`);
-										}
-									}}
-									to='#'
-									className='btn mb-5'
-									style={{ backgroundColor: "#004c99", color: "white" }}>
-									proceed to checkout
-								</Link>
-							)}
-						</>
-					) : (
-						<div className='row'>
-							<Link
-								to='/signin'
-								type='button'
-								style={{ backgroundColor: "#004c99", color: "white" }}
-								className='btn mb-2 col-md-5 mx-auto'>
-								Login
-							</Link>
-							<Link
-								to='/signup'
-								type='button'
-								style={{ backgroundColor: "#004c99", color: "white" }}
-								className='btn mb-2 col-md-5 mx-auto'>
-								Register
-							</Link>
-
-							<>
-								{chosenShippingOption && (shippingFee || shippingFee === 0) ? (
-									<Link
-										// to='/checkout-guest'
-										to={
-											chosenShippingOption.carrierName === "PickupInStore"
-												? "/checkout-store-pickup-guest"
-												: "/checkout-guest"
-										}
-										className='btn mb-5 col-md-10 mx-auto'
-										style={{ backgroundColor: "#004c99", color: "white" }}>
-										Check Out As A Guest
-									</Link>
-								) : (
-									<Link
-										onClick={() => {
-											if (chosenLanguage === "Arabic") {
-												return toast.error(` يرجى تحديد طريقة الشحن أولاً`);
-											} else {
-												return toast.error(` Please Select A Carrier First`);
-											}
-										}}
-										to='#'
-										className='btn mb-5 col-md-10 mx-auto'
-										style={{ backgroundColor: "#004c99", color: "white" }}>
-										Check Out As A Guest
-									</Link>
-								)}
-							</>
-						</div>
-					)}
-				</div>
-			</WrapperCartTotals>
-		);
-	};
-
 	return (
 		<CartV2Styling>
 			<Helmet>
 				<meta charSet='utf-8' />
-				<title>Demo Ecommerce Web App | Developed By Infinite-Apps</title>
+				<title>XLOOK | Cart</title>
 
-				<meta
-					name='description'
-					content='This is a demo website created by Infinite-Apps. This web app is mainly focusing on Ecommerce business/Web Shops and it could be used for Brick and Mortar stores to increase your sales. Infinite Apps can help with your SEO (Search Engine Optimization) so you can market for your business and rank higher with Google. If you are interested, Please contact infinite apps 9099914386 (www.infinite-apps.com)'
-				/>
 				<link
 					rel='stylesheet'
 					href='http://fonts.googleapis.com/earlyaccess/droidarabickufi.css'
 				/>
-				<link rel='canonical' href='http://infinite-apps.com' />
+				<link rel='canonical' href='https://xlookpro.com/cart' />
 			</Helmet>
-			{cart.length === 0 ? (
+			{cart && cart.length === 0 ? (
 				<div
 					className='text-center'
 					style={{
@@ -435,15 +203,17 @@ const Cart = ({ chosenLanguage }) => {
 						fontSize: "2rem",
 						fontWeight: "bold",
 						marginTop: "20px",
-					}}>
+					}}
+				>
 					Your Cart Is Empty
 					<br />
 					<Link
-						to='/our-products'
+						to='/xlook/shop'
 						style={{
 							fontSize: "1.5rem",
 							fontWeight: "bold",
-						}}>
+						}}
+					>
 						Continue Shopping
 					</Link>
 				</div>
@@ -452,221 +222,156 @@ const Cart = ({ chosenLanguage }) => {
 					<div className='fullScreen'>
 						{CartColumns()}
 						<hr />
-						{cart.map((i, k) => {
-							return (
-								<Fragment key={k}>
-									<span>
-										{CartItem(
-											i.id,
-											i.image,
-											i.name,
-											i.price,
-											i.amount,
-											i.nameArabic,
-										)}
-									</span>
-									<hr />
-								</Fragment>
-							);
-						})}
+						{cart &&
+							cart.map((i, k) => {
+								return (
+									<Fragment key={k}>
+										<span>
+											{CartItem(
+												i.id,
+												i.image,
+												i.name,
+												i.price,
+												i.amount,
+												i.nameArabic
+											)}
+										</span>
+										<hr />
+									</Fragment>
+								);
+							})}
 						<div className='link-container'>
-							<Link to='/our-products' className='link-btn btn-primary'>
+							<Link to='/xlook/shop' className='link-btn btn-primary'>
 								continue shopping
 							</Link>
 							<button
 								type='button'
 								className='link-btn clear-btn'
-								onClick={clearCart}>
+								onClick={clearCart}
+							>
 								clear shopping cart
 							</button>
-						</div>
-						<div className='row'>
-							<div className='col-md-3 mt-5'>
-								<span
-									style={{
-										color: "darkRed",
-										fontWeight: "bold",
-										textAlign: "center",
-										marginLeft: "40px",
-										letterSpacing: "4px",
-										textShadow: "3px 3px 6px",
-										fontSize: "1.1rem",
-									}}>
-									Shipping Options
-								</span>
-								<table
-									className='table table-bordered table-md-responsive table-hover table-striped mt-2'
-									style={{ fontSize: "0.75rem" }}>
-									<thead className='thead-light'>
-										<tr>
-											<th scope='col'>Carrier</th>
-											<th scope='col'>Days To Deliver</th>
-											<th scope='col'>Shipping Fee</th>
-										</tr>
-									</thead>
-									<tbody>
-										{allShippingOptions &&
-											allShippingOptions.map((i, e) => {
-												return (
-													<tr key={e}>
-														<td>{i.carrierName}</td>
-														<td>{i.estimatedDays} Days</td>
-														<td>{i.shippingPrice} KD</td>
-													</tr>
-												);
-											})}
-									</tbody>
-								</table>
-							</div>
-							<div className='col-md-9'>{CartTotals()}</div>
 						</div>
 					</div>
 					<div className='cellPhoneLayout mt-5'>
-						{cart.map((i, k) => {
-							const increase = () => {
-								toggleAmount(i.id, "inc");
-							};
-							const decrease = () => {
-								toggleAmount(i.id, "dec");
-							};
-							return (
-								<div key={k} className='mt-2'>
-									<div className='row'>
-										<div className='col-3'>
-											<span>
-												<img
-													src={i.image}
-													alt={i.name}
-													style={{ width: "80px", height: "80px" }}
-												/>
-											</span>
-										</div>
-										<div className='col-9 mx-auto my-auto'>
-											<div
-												style={{
-													fontSize: "12px",
-													fontWeight: "bold",
-													marginLeft: "10px",
-												}}>
-												{chosenLanguage === "Arabic" ? i.nameArabic : i.name}
+						{cart &&
+							cart.map((i, k) => {
+								const increase = () => {
+									toggleAmount(i.id, "inc");
+								};
+								const decrease = () => {
+									toggleAmount(i.id, "dec");
+								};
+								return (
+									<div key={k} className='mt-2'>
+										<div className='row'>
+											<div className='col-3'>
+												<span>
+													<img
+														src={i.image}
+														alt={i.name}
+														style={{ width: "80px", height: "80px" }}
+													/>
+												</span>
 											</div>
-											{chosenLanguage === "Arabic" ? (
-												<span
-													className='buttons-up-down'
-													style={{ color: "#282491", marginTop: "10px" }}>
-													<button
-														type='button'
-														className='amount-btn'
-														onClick={increase}>
-														<FaPlus />
-													</button>
-													<span className='amount'>{i.amount}</span>
+											<div className='col-9 mx-auto my-auto'>
+												<div
+													style={{
+														fontSize: "12px",
+														fontWeight: "bold",
+														marginLeft: "10px",
+													}}
+												>
+													{chosenLanguage === "Arabic" ? i.nameArabic : i.name}
+												</div>
+												{chosenLanguage === "Arabic" ? (
+													<span
+														className='buttons-up-down'
+														style={{ color: "#282491", marginTop: "10px" }}
+													>
+														<button
+															type='button'
+															className='amount-btn'
+															onClick={increase}
+														>
+															<FaPlus />
+														</button>
+														<span className='amount'>{i.amount}</span>
 
-													<button
-														type='button'
-														className='amount-btn'
-														onClick={decrease}>
-														<FaMinus />
-													</button>
-													<span style={{ color: "black" }}>الكمية</span>
-												</span>
-											) : (
-												<span
-													className='buttons-up-down'
-													style={{ color: "#282491", marginTop: "10px" }}>
-													<span style={{ color: "black" }}>Quantity</span>
-													<button
-														type='button'
-														className='amount-btn'
-														onClick={decrease}>
-														<FaMinus />
-													</button>
-													<span className='amount'>{i.amount}</span>
-													<button
-														type='button'
-														className='amount-btn'
-														onClick={increase}>
-														<FaPlus />
-													</button>
-												</span>
-											)}
-											<div
-												style={{
-													fontSize: "0.9rem",
-													fontWeight: "bold",
-													letterSpacing: "3px",
-													color: "#8d9124",
-													marginLeft: "70px",
-													marginTop: "10px",
-												}}>
-												{i.price * i.amount} KD
+														<button
+															type='button'
+															className='amount-btn'
+															onClick={decrease}
+														>
+															<FaMinus />
+														</button>
+														<span style={{ color: "black" }}>الكمية</span>
+													</span>
+												) : (
+													<span
+														className='buttons-up-down'
+														style={{ color: "#282491", marginTop: "10px" }}
+													>
+														<span style={{ color: "black" }}>Quantity</span>
+														<button
+															type='button'
+															className='amount-btn'
+															onClick={decrease}
+														>
+															<FaMinus />
+														</button>
+														<span className='amount'>{i.amount}</span>
+														<button
+															type='button'
+															className='amount-btn'
+															onClick={increase}
+														>
+															<FaPlus />
+														</button>
+													</span>
+												)}
+												<div
+													style={{
+														fontSize: "0.9rem",
+														fontWeight: "bold",
+														letterSpacing: "3px",
+														color: "#8d9124",
+														marginLeft: "70px",
+														marginTop: "10px",
+													}}
+												>
+													{i.price * i.amount} KD
+												</div>
+												<button
+													type='button'
+													style={{
+														marginLeft: "250px",
+														color: "red",
+														border: "none",
+														fontWeight: "bold",
+													}}
+													onClick={() => removeItem(i.id)}
+												>
+													<FaTrash />
+												</button>
 											</div>
-											<button
-												type='button'
-												style={{
-													marginLeft: "250px",
-													color: "red",
-													border: "none",
-													fontWeight: "bold",
-												}}
-												onClick={() => removeItem(i.id)}>
-												<FaTrash />
-											</button>
 										</div>
+
+										<hr />
 									</div>
-
-									<hr />
-								</div>
-							);
-						})}
+								);
+							})}
 						<div className='link-container'>
-							<Link to='/our-products' className='link-btn btn-primary'>
+							<Link to='/xlook/shop' className='link-btn btn-primary'>
 								continue shopping
 							</Link>
 							<button
 								type='button'
 								className='link-btn clear-btn'
-								onClick={clearCart}>
+								onClick={clearCart}
+							>
 								clear shopping cart
 							</button>
-						</div>
-						{CartTotals()}
-						<div className='my-3'>
-							<span
-								style={{
-									color: "darkRed",
-									fontWeight: "bold",
-									textAlign: "center",
-									marginLeft: "40px",
-									letterSpacing: "4px",
-									textShadow: "3px 3px 6px",
-									fontSize: "1.1rem",
-								}}>
-								Shipping Options
-							</span>
-							<table
-								className='table table-bordered table-md-responsive table-hover table-striped mt-2'
-								style={{ fontSize: "0.75rem" }}>
-								<thead className='thead-light'>
-									<tr>
-										<th scope='col'>Carrier</th>
-										<th scope='col'>Days To Deliver</th>
-										<th scope='col'>Shipping Fee</th>
-									</tr>
-								</thead>
-								<tbody>
-									{allShippingOptions &&
-										allShippingOptions.map((i, e) => {
-											return (
-												<tr key={e}>
-													<td>{i.carrierName}</td>
-													<td>{i.estimatedDays} Days</td>
-													<td> {i.shippingPrice} KD</td>
-												</tr>
-											);
-										})}
-								</tbody>
-							</table>
 						</div>
 					</div>
 				</>
@@ -675,10 +380,10 @@ const Cart = ({ chosenLanguage }) => {
 				<ProductWrapperRelated>
 					<React.Fragment>
 						<div className='title mb-2'>
-							<h1 className='title'>Products You May Like!</h1>
+							<h1 className='title'>Products You May Also Like!</h1>
 						</div>
 					</React.Fragment>
-					<div className='container-fluid my-3 ProductSlider'>
+					<div className='container my-3 ProductSlider'>
 						<Slider {...settings} className='mb-5'>
 							{relatedProducts &&
 								relatedProducts.map((product, i) => (
@@ -802,57 +507,26 @@ const WrapperCartItem = styled.div`
 	}
 `;
 
-const WrapperCartTotals = styled.div`
-	text-transform: capitalize;
-	margin-top: 3rem;
-	display: flex;
-	justify-content: center;
-	article {
-		border: 1px solid var(--clr-grey-8);
-		border-radius: var(--radius);
-		padding: 1.5rem 3rem;
-	}
-	h4,
-	h5,
-	p {
-		display: grid;
-		grid-template-columns: 320px 1fr;
-	}
-	p {
-		text-transform: capitalize;
-	}
-	h4 {
-		margin-top: 2rem;
-	}
-	@media (min-width: 776px) {
-		justify-content: flex-end;
-	}
-	@media (max-width: 776px) {
-		h4,
-		h5,
-		p {
-			display: grid;
-			grid-template-columns: 200px 1fr;
-		}
-	}
-
-	.btn {
-		width: 100%;
-		margin-top: 1rem;
-		text-align: center;
-		font-weight: 700;
-	}
-`;
-
 const ProductWrapperRelated = styled.div`
 	margin-top: 50px;
+
+	.product-grid {
+		display: grid;
+		margin-top: 20px;
+		margin-bottom: 100px;
+		grid-template-columns: repeat(
+			4,
+			1fr
+		); /* 5 items in one row for larger screens */
+		gap: 10px;
+	}
 
 	.title {
 		text-align: center;
 		font-size: 2rem;
 		letter-spacing: 7px;
 		font-weight: bold;
-		text-shadow: 3px 3px 10px;
+		text-shadow: 1px 1px 5px;
 	}
 
 	.titleArabic {
@@ -880,6 +554,19 @@ const ProductWrapperRelated = styled.div`
 	@media (max-width: 1200px) {
 		.ProductSlider {
 			padding: 0px 10px 0px 10px;
+		}
+
+		.container {
+			padding: 0px !important;
+			margin: 3px !important;
+		}
+		/* Assuming 768px as breakpoint for smaller screens */
+		.product-grid {
+			grid-template-columns: repeat(
+				2,
+				1fr
+			); /* 2 items in one row for smaller screens */
+			gap: 5px;
 		}
 	}
 `;

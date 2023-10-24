@@ -116,6 +116,8 @@ import Icon50EGP from "./pages/Icon50EGP";
 import IconOffers from "./pages/IconOffers";
 import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
 import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
+import Cart from "./pages/TheShop/checkout/Cart";
+import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -400,6 +402,8 @@ function App() {
 						component={SingleProduct}
 					/>
 
+					<Route path='/cart' exact component={Cart} />
+
 					{/* Ecommerce Routes */}
 					<ShopRoute
 						path='/ecommerce/admin/dashboard'
@@ -673,6 +677,13 @@ function App() {
 						exact
 						component={StoreBillingMain}
 					/>
+
+					<BossRoute
+						path='/boss/admin/xstore'
+						exact
+						component={() => <StoreAccountsMain language={language} />}
+					/>
+
 					{/* End OfPlatform Admin Routes */}
 				</Switch>
 			</React.Fragment>

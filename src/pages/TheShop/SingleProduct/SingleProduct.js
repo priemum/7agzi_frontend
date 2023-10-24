@@ -456,18 +456,21 @@ const SingleProduct = (props) => {
 									dynamicHeight={true}
 									showThumbs={true}
 									thumbWidth={70}
-									// width={"75%"}
+									width={"100%"}
 									autoFocus={true}
+									swipeScrollTolerance={50}
+									swipeable={true}
+									preventMovementUntilSwipeScrollTolerance={true}
 								>
 									{Product.images.map((i) => (
 										<img
 											alt={Product.productName}
 											src={i.url}
 											key={i.public_id}
+											className='image-carousel'
 											style={{
 												borderRadius: "15px",
-												// height: "100%",
-												// objectFit: "cover",
+												width: "50%",
 											}}
 										/>
 									))}
@@ -725,10 +728,10 @@ const SingleProduct = (props) => {
 						<ProductWrapperRelated>
 							<React.Fragment>
 								<div className='title mb-2'>
-									<h1 className='title'>Products You May Like!</h1>
+									<h1 className='title'>Products You May Also Like!</h1>
 								</div>
 							</React.Fragment>
-							<div className='container-fluid my-3 ProductSlider'>
+							<div className='container my-3 ProductSlider'>
 								<Slider {...settings} className='mb-5'>
 									{relatedProducts &&
 										relatedProducts.map((product, i) => (
@@ -758,7 +761,6 @@ const SingleEmp = styled.div`
 	} */
 
 	.carousel-root {
-		border: 1px solid grey;
 		border-radius: 15px;
 		object-fit: cover;
 		/* max-height: 60%; */
@@ -781,6 +783,14 @@ const SingleEmp = styled.div`
 	.buttons:hover {
 		cursor: pointer;
 	}
+
+	@media (max-width: 1000px) {
+		width: 98%;
+
+		.image-carousel {
+			width: 100% !important;
+		}
+	}
 `;
 
 const Like = styled.div`
@@ -796,12 +806,23 @@ const Like = styled.div`
 const ProductWrapperRelated = styled.div`
 	margin-top: 50px;
 
+	.product-grid {
+		display: grid;
+		margin-top: 20px;
+		margin-bottom: 100px;
+		grid-template-columns: repeat(
+			4,
+			1fr
+		); /* 5 items in one row for larger screens */
+		gap: 10px;
+	}
+
 	.title {
 		text-align: center;
 		font-size: 2rem;
 		letter-spacing: 7px;
 		font-weight: bold;
-		text-shadow: 3px 3px 10px;
+		text-shadow: 1px 1px 5px;
 	}
 
 	.titleArabic {
@@ -829,6 +850,19 @@ const ProductWrapperRelated = styled.div`
 	@media (max-width: 1200px) {
 		.ProductSlider {
 			padding: 0px 10px 0px 10px;
+		}
+
+		.container {
+			padding: 0px !important;
+			margin: 3px !important;
+		}
+		/* Assuming 768px as breakpoint for smaller screens */
+		.product-grid {
+			grid-template-columns: repeat(
+				2,
+				1fr
+			); /* 2 items in one row for smaller screens */
+			gap: 5px;
 		}
 	}
 `;

@@ -18,6 +18,7 @@ const StoreSettingsView = () => {
 	const [discountPercentage, setDiscountPercentage] = useState("");
 	// eslint-disable-next-line
 	const [onlineServicesFees, setOnlineServicesFees] = useState(0);
+	const [shippingFees, setShippingFees] = useState(0);
 	// eslint-disable-next-line
 	const [transactionFeePercentage, setTransactionFeePercentage] = useState(0);
 	// eslint-disable-next-line
@@ -85,6 +86,11 @@ const StoreSettingsView = () => {
 	const handleChange12 = (e) => {
 		setError("");
 		setActivatePayOnline(e.target.value);
+	};
+
+	const handleChange13 = (e) => {
+		setError("");
+		setShippingFees(e.target.value);
 	};
 
 	const fileUploadAndResizeLogo = (e) => {
@@ -209,6 +215,7 @@ const StoreSettingsView = () => {
 				setActivatePayOnDelivery(lastAdded.activatePayOnDelivery);
 				setActiveEcomStore(lastAdded.activeEcomStore);
 				setAddStoreName(lastAdded.addStoreName);
+				setShippingFees(lastAdded.shippingFees);
 			}
 		});
 	};
@@ -237,6 +244,7 @@ const StoreSettingsView = () => {
 			activatePayOnDelivery: activatePayOnDelivery,
 			activatePickupInStore: activatePickupInStore,
 			activatePayOnline: activatePayOnline,
+			shippingFees: shippingFees,
 			belongsTo: user._id,
 			activeEcomStore: activeEcomStore,
 		}).then((data) => {
@@ -313,7 +321,7 @@ const StoreSettingsView = () => {
 			</div>
 
 			<div className='row'>
-				<div className='col-md-4 mx-auto'>
+				<div className='col-md-3 mx-auto'>
 					<div className='form-group'>
 						<label className='text-muted'>Brand Name</label>
 						<input
@@ -328,7 +336,20 @@ const StoreSettingsView = () => {
 					</div>
 				</div>
 
-				<div className='col-md-4 mx-auto'>
+				<div className='col-md-3 mx-auto'>
+					<div className='form-group'>
+						<label className='text-muted'>Shipping Fees (In EGP)</label>
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange13}
+							value={shippingFees}
+							placeholder='Shipping Fee'
+						/>
+					</div>
+				</div>
+
+				<div className='col-md-3 mx-auto'>
 					<div className='form-group'>
 						<label className='text-muted'>Loyalty Points To Award</label>
 						<input
@@ -341,7 +362,7 @@ const StoreSettingsView = () => {
 						/>
 					</div>
 				</div>
-				<div className='col-md-4 mx-auto'>
+				<div className='col-md-3 mx-auto'>
 					<div className='form-group'>
 						<label className='text-muted'>
 							Loyalty Points Discount Percentage

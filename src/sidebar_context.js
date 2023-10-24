@@ -11,7 +11,7 @@ import {
 } from "./actions";
 
 const initialState = {
-	isSidebarOpen: false,
+	isSidebarOpen2: false,
 	chosenLanguage: "Arabic",
 	userLocation: {
 		country: "",
@@ -26,10 +26,10 @@ const CartContext = React.createContext();
 export const CartProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const openSidebar = () => {
+	const openSidebar2 = () => {
 		dispatch({ type: SIDEBAR_OPEN });
 	};
-	const closeSidebar = () => {
+	const closeSidebar2 = () => {
 		dispatch({ type: SIDEBAR_CLOSE });
 	};
 
@@ -56,8 +56,8 @@ export const CartProvider = ({ children }) => {
 		<CartContext.Provider
 			value={{
 				...state,
-				openSidebar,
-				closeSidebar,
+				openSidebar2,
+				closeSidebar2,
 				chosenLanguageArabic,
 				chosenLanguageEngish,
 				capturingUserLocation,

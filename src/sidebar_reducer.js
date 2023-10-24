@@ -8,10 +8,10 @@ import {
 
 const cart_reducer = (state, action) => {
 	if (action.type === SIDEBAR_OPEN) {
-		return { ...state, isSidebarOpen: true };
+		return { ...state, isSidebarOpen2: true };
 	}
 	if (action.type === SIDEBAR_CLOSE) {
-		return { ...state, isSidebarOpen: false };
+		return { ...state, isSidebarOpen2: false };
 	}
 
 	if (action.type === IS_ARABIC) {

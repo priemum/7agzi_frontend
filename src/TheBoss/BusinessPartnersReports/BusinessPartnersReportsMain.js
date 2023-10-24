@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { isAuthenticated } from "../../auth";
-import { summaryByGovernorate } from "../apiBoss";
+import { gettingBookingSummary, summaryByGovernorate } from "../apiBoss";
 import { Table } from "antd";
 import { Helmet } from "react-helmet";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
+import CountUp from "react-countup";
 
 const BusinessPartnersReportsMain = () => {
 	const [governorateReport, setGovernorateReport] = useState([]);
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
+	const [getBookingSummary, setGetBookingSummary] = useState("");
 
 	const { user, token } = isAuthenticated();
 
@@ -23,8 +25,19 @@ const BusinessPartnersReportsMain = () => {
 		});
 	};
 
+	const BookingSummary = () => {
+		gettingBookingSummary(token, user._id).then((data) => {
+			if (data && data.error) {
+				console.log(data.error);
+			} else {
+				setGetBookingSummary(data);
+			}
+		});
+	};
+
 	useEffect(() => {
 		gettingSummaryByGovernorate();
+		BookingSummary();
 		// eslint-disable-next-line
 	}, []);
 
@@ -87,6 +100,7 @@ const BusinessPartnersReportsMain = () => {
 		},
 	];
 
+	console.log(getBookingSummary, "booking summary");
 	return (
 		<BusinessPartnersReportsMainWrapper>
 			<Helmet>
@@ -109,7 +123,122 @@ const BusinessPartnersReportsMain = () => {
 					/>
 				</div>
 			</div>
-			<div className='container my-5'>
+			<div className='contentWrapper my-5'>
+				<div className='col-md-6 mx-auto text-center mb-3'>
+					<div className='card' style={{ background: "#f1416c" }}>
+						<div className='card-body'>
+							<h5
+								style={{
+									fontWeight: "bolder",
+									color: "white",
+									fontSize: "2rem",
+								}}
+							>
+								Overall Reservations
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2}
+								delay={1}
+								end={getBookingSummary.OverallBookings}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+				<div className='row'>
+					<div className='col-6 col-md-2 text-center mx-auto my-2'>
+						<div className='card' style={{ background: "#f1416c" }}>
+							<div className='card-body'>
+								<h5
+									style={{
+										fontWeight: "bolder",
+										color: "white",
+										fontSize: "1rem",
+									}}
+								>
+									Today's Reservations
+								</h5>
+								<CountUp
+									style={{ color: "white" }}
+									duration={2}
+									delay={1}
+									end={getBookingSummary.todayBookings}
+									separator=','
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div className='col-6 col-md-2 text-center mx-auto my-2'>
+						<div className='card' style={{ background: "#009ef7" }}>
+							<div className='card-body'>
+								<h5
+									style={{
+										fontWeight: "bolder",
+										color: "white",
+										fontSize: "0.9rem",
+									}}
+								>
+									Yesterday's Reservations
+								</h5>
+								<CountUp
+									style={{ color: "white" }}
+									duration={2}
+									delay={1}
+									end={getBookingSummary.yesterdayBookings}
+									separator=','
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div className='col-6 col-md-2 text-center mx-auto my-2'>
+						<div className='card' style={{ background: "#00f7d5" }}>
+							<div className='card-body'>
+								<h5
+									style={{
+										fontWeight: "bold",
+										color: "white",
+										fontSize: "1rem",
+									}}
+								>
+									Last 7 Days
+								</h5>
+								<CountUp
+									style={{ color: "white" }}
+									duration={2}
+									delay={1}
+									end={getBookingSummary.last7daysBookings}
+									separator=','
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div className='col-6 col-md-2 text-center mx-auto my-2'>
+						<div className='card' style={{ background: "#d500f7" }}>
+							<div className='card-body'>
+								<h5
+									style={{
+										fontWeight: "bolder",
+										color: "white",
+										fontSize: "1rem",
+									}}
+								>
+									Last 30 Days
+								</h5>
+								<CountUp
+									style={{ color: "white" }}
+									duration={2}
+									delay={1}
+									end={getBookingSummary.last30DaysBooking}
+									separator=','
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
 				<Table
 					dataSource={governorateReport}
 					columns={columns}
@@ -124,4 +253,24 @@ export default BusinessPartnersReportsMain;
 
 const BusinessPartnersReportsMainWrapper = styled.div`
 	min-height: 1000px;
+
+	.contentWrapper {
+		padding-right: 20px;
+		padding-left: 17%;
+	}
+
+	.card-body span {
+		font-size: 2rem;
+	}
+
+	.main-header > span {
+		font-size: 2.5rem;
+	}
+
+	@media (max-width: 1000px) {
+		.contentWrapper {
+			padding-right: 10px;
+			padding-left: 4%;
+		}
+	}
 `;

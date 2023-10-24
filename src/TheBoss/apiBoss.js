@@ -377,3 +377,38 @@ export const removeCoupon = (couponId, userId, token) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const gettingBookingSummary = (token, userId) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/booking-summary-boss/${userId}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const gettingAllXStores = (token, userId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/list-of-xstores/${userId}`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

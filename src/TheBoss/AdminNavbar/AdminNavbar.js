@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 import {
 	AreaChartOutlined,
+	BankTwoTone,
 	BarChartOutlined,
 	// eslint-disable-next-line
 	BranchesOutlined,
@@ -86,6 +87,15 @@ const items = [
 	),
 
 	getItem(
+		<Link to='/boss/admin/xstore'> X Store Accounts</Link>,
+		"sub11",
+		<>
+			{" "}
+			<BankTwoTone />
+		</>
+	),
+
+	getItem(
 		<Link to='/boss/admin/store-billing'>Stores Billing</Link>,
 		"sub10",
 		<>
@@ -143,6 +153,8 @@ const AdminNavbar = ({
 						? "sub10"
 						: fromPage === "BusinessReport"
 						? "sub5"
+						: fromPage === "XStores"
+						? "sub11"
 						: "sub1"
 				}
 				defaultOpenKeys={[

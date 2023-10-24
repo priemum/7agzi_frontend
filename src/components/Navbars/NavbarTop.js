@@ -8,23 +8,225 @@ import myLogo from "../../Images/XLookLogo.png";
 import EgyptianFlag from "../../Images/Egypt.png";
 import AmericanFlag from "../../Images/UnitedStates.png";
 import { useCartContext } from "../../sidebar_context";
+import { useCartContext2 } from "../../pages/TheShop/checkout/cart_context";
+import { FaTrash, FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 
 // import logo from "../pagesImgs/Sinai-I-Logo.jpg";
 
 const Navbar1 = ({ history }) => {
 	const {
-		openSidebar,
-		closeSidebar,
-		isSidebarOpen,
+		openSidebar2,
+		closeSidebar2,
+		isSidebarOpen2,
 		chosenLanguageEngish,
 		chosenLanguage,
 		chosenLanguageArabic,
 	} = useCartContext();
 
+	const {
+		cart,
+		total_items,
+		// clearCart,
+		openSidebar,
+		closeSidebar,
+		isSidebarOpen,
+		removeItem,
+		toggleAmount,
+		// total_amount,
+	} = useCartContext2();
+
+	const sideCart = () => {
+		return (
+			<SideWrapperCart
+				show={isSidebarOpen}
+				show2={chosenLanguage === "Arabic"}
+				dir='ltr'
+			>
+				{cart && cart.length > 0 ? (
+					<>
+						<div
+							onClick={closeSidebar}
+							className='float-right mr-3'
+							style={{ fontSize: "20px", color: "darkRed", cursor: "pointer" }}
+						>
+							<FaTimes />
+						</div>
+						<div className='cellPhoneLayout mt-5'>
+							{cart.map((i, k) => {
+								const increase = () => {
+									toggleAmount(i.id, "inc");
+								};
+								const decrease = () => {
+									toggleAmount(i.id, "dec");
+								};
+								return (
+									<div key={k} className='mt-2'>
+										<div className='row mx-auto'>
+											<div className='col-3'>
+												<span>
+													<img
+														src={i.image}
+														alt={i.name}
+														style={{
+															width: "80px",
+															height: "100px",
+															objectFit: "cover",
+														}}
+													/>
+												</span>
+											</div>
+											<div className='col-9 mx-auto my-auto'>
+												<div
+													style={{
+														fontSize: "12px",
+														fontWeight: "bold",
+														marginLeft: "10px",
+														textTransform: "capitalize",
+													}}
+												>
+													{chosenLanguage === "Arabic" ? i.nameArabic : i.name}{" "}
+												</div>
+												<span
+													className='buttons-up-down'
+													style={{ color: "#282491", marginTop: "10px" }}
+												>
+													<span style={{ color: "black" }}>Quantity:</span>{" "}
+													<button
+														type='button'
+														className='amount-btn'
+														onClick={decrease}
+														style={{
+															border: "lightgrey solid 1px",
+															backgroundColor: "white",
+															color: "darkgrey",
+															padding: "19px 13px",
+														}}
+													>
+														<FaMinus />
+													</button>
+													<span
+														className='amount my-auto mx-auto'
+														style={{
+															border: "lightgrey solid 1px",
+															backgroundColor: "white",
+															color: "black",
+															padding: "9px 14px 11px 14px",
+														}}
+													>
+														{i.amount}
+													</span>
+													<button
+														type='button'
+														className='amount-btn'
+														onClick={increase}
+														style={{
+															border: "lightgrey solid 1px",
+															backgroundColor: "white",
+															color: "darkgrey",
+															padding: "19px 13px",
+														}}
+													>
+														<FaPlus />
+													</button>
+												</span>
+												<div
+													style={{
+														fontSize: "0.9rem",
+														fontWeight: "bold",
+														letterSpacing: "3px",
+														color: "#8d9124",
+														marginLeft: "70px",
+														marginTop: "10px",
+													}}
+												>
+													{i.price * i.amount} EGP
+												</div>
+												<button
+													className='trashIcon'
+													type='button'
+													style={{
+														marginLeft: "250px",
+														color: "red",
+														border: "none",
+														fontWeight: "bold",
+													}}
+													onClick={() => removeItem(i.id)}
+												>
+													<FaTrash />
+												</button>
+											</div>
+										</div>
+
+										<hr />
+									</div>
+								);
+							})}
+							<div className='link-container' onClick={closeSidebar}>
+								<Link
+									to='/xlook/shop'
+									className='link-btn btn-primary'
+									onClick={() =>
+										window.scrollTo({ top: 0, behavior: "smooth" })
+									}
+								>
+									continue shopping
+								</Link>
+								<Link
+									to='/cart'
+									className='link-btn btn-primary'
+									onClick={() =>
+										window.scrollTo({ top: 0, behavior: "smooth" })
+									}
+								>
+									Check Out
+								</Link>
+							</div>
+						</div>
+					</>
+				) : (
+					<>
+						<div
+							onClick={closeSidebar}
+							className='float-right mr-3'
+							style={{ fontSize: "20px", color: "darkRed", cursor: "pointer" }}
+						>
+							<FaTimes />
+						</div>
+						<div
+							style={{
+								fontWeight: "bold",
+								textAlign: "center",
+								marginTop: "50px",
+							}}
+						>
+							<h5 style={{ fontWeight: "bold" }}>
+								No Products Currently In The Cart...
+							</h5>
+							<div
+								className='link-container mx-auto text-center mx-3'
+								onClick={closeSidebar}
+							>
+								<Link
+									to='/xlook/shop'
+									className='link-btn btn-primary mx-3'
+									onClick={() =>
+										window.scrollTo({ top: 0, behavior: "smooth" })
+									}
+								>
+									continue shopping
+								</Link>
+							</div>
+						</div>
+					</>
+				)}
+			</SideWrapperCart>
+		);
+	};
+
 	const sideBar = () => {
 		return (
 			<React.Fragment>
-				<SideWrapper show={isSidebarOpen} show2={chosenLanguage === "Arabic"}>
+				<SideWrapper show={isSidebarOpen2} show2={chosenLanguage === "Arabic"}>
 					<ul className=''>
 						<li
 							className='mt-3'
@@ -40,9 +242,9 @@ const Navbar1 = ({ history }) => {
 										? "sidebar-linkArabic"
 										: "sidebar-link"
 								}
-								onClick={closeSidebar}
+								onClick={closeSidebar2}
 							>
-								{isSidebarOpen && isSidebarOpen ? (
+								{isSidebarOpen2 && isSidebarOpen2 ? (
 									<React.Fragment>
 										{chosenLanguage === "Arabic" ? (
 											<span
@@ -72,9 +274,9 @@ const Navbar1 = ({ history }) => {
 										? " sidebar-linkArabic"
 										: "sidebar-link"
 								}
-								onClick={closeSidebar}
+								onClick={closeSidebar2}
 							>
-								{isSidebarOpen && isSidebarOpen ? (
+								{isSidebarOpen2 && isSidebarOpen2 ? (
 									<React.Fragment>
 										{chosenLanguage === "Arabic" ? (
 											<span
@@ -105,9 +307,9 @@ const Navbar1 = ({ history }) => {
 										? " sidebar-linkArabic"
 										: "sidebar-link"
 								}
-								onClick={closeSidebar}
+								onClick={closeSidebar2}
 							>
-								{isSidebarOpen && isSidebarOpen ? (
+								{isSidebarOpen2 && isSidebarOpen2 ? (
 									<React.Fragment>XLOOK SHOP</React.Fragment>
 								) : null}
 							</Link>
@@ -125,9 +327,9 @@ const Navbar1 = ({ history }) => {
 										? "sidebar-linkArabic"
 										: "sidebar-link"
 								}
-								onClick={closeSidebar}
+								onClick={closeSidebar2}
 							>
-								{isSidebarOpen && isSidebarOpen ? (
+								{isSidebarOpen2 && isSidebarOpen2 ? (
 									<React.Fragment>
 										{chosenLanguage === "Arabic" ? (
 											<span
@@ -157,9 +359,9 @@ const Navbar1 = ({ history }) => {
 										? "sidebar-linkArabic"
 										: "sidebar-link"
 								}
-								onClick={closeSidebar}
+								onClick={closeSidebar2}
 							>
-								{isSidebarOpen && isSidebarOpen ? (
+								{isSidebarOpen2 && isSidebarOpen2 ? (
 									<React.Fragment>
 										{chosenLanguage === "Arabic" ? (
 											<span
@@ -188,7 +390,7 @@ const Navbar1 = ({ history }) => {
 								<Link
 									className='nav-link '
 									to='/dashboard'
-									onClick={closeSidebar}
+									onClick={closeSidebar2}
 								>
 									My Account/Dashboard
 								</Link>
@@ -206,7 +408,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link '
 										to='/store/book-appointment-from-store'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										Your Salon Account
 									</Link>
@@ -242,7 +444,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link'
 										to='/book-appointment-from-store'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										Store Scheduler
 									</Link>
@@ -261,7 +463,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link'
 										to='/boss/admin/dashboard'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										XLOOK ADMIN
 									</Link>
@@ -280,7 +482,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link'
 										to='/ecommerce/admin/dashboard'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										Ecommerce Admin Dashboard
 									</Link>
@@ -299,7 +501,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link'
 										to='/agent/dashboard'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										XLOOK <strong>Account Manager</strong>
 									</Link>
@@ -318,7 +520,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link'
 										to='/stylist/dashboard'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										Stylist Dashboard
 									</Link>
@@ -337,7 +539,7 @@ const Navbar1 = ({ history }) => {
 									<Link
 										className='nav-link '
 										to='/signin'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										Login
 									</Link>
@@ -353,7 +555,7 @@ const Navbar1 = ({ history }) => {
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
 										to='/about'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										{chosenLanguage === "Arabic" ? (
 											<span style={{ fontSize: "1.2rem" }}>كن شريكنا</span>
@@ -373,7 +575,7 @@ const Navbar1 = ({ history }) => {
 										className='nav-link'
 										style={{ color: "#b2d3f4" }}
 										to='/agent-guide?ar'
-										onClick={closeSidebar}
+										onClick={closeSidebar2}
 									>
 										{chosenLanguage === "Arabic" ? (
 											<span style={{ fontSize: "1.2rem" }}>
@@ -406,7 +608,7 @@ const Navbar1 = ({ history }) => {
 											fontStyle: "italic",
 										}}
 										onClick={() => {
-											closeSidebar();
+											closeSidebar2();
 											signout(() => {
 												history.push("/");
 												localStorage.removeItem("userHistoryPurchases");
@@ -430,17 +632,17 @@ const Navbar1 = ({ history }) => {
 			className=' navbar  navbar-expand-sm nav-center py-1'
 			style={{ backgroundColor: "#363636" }}
 		>
-			{isSidebarOpen ? (
+			{isSidebarOpen2 ? (
 				<i
 					className='far fa-window-close nav-icon faaa-bars'
-					onClick={closeSidebar}
-					style={{ color: "white", marginLeft: "10px" }}
+					onClick={closeSidebar2}
+					style={{ color: "white", marginLeft: "5px", marginRight: "5px" }}
 				></i>
 			) : (
 				<i
 					className='fa fa-bars nav-icon faaa-bars'
-					onClick={openSidebar}
-					style={{ color: "white", marginLeft: "10px" }}
+					onClick={openSidebar2}
+					style={{ color: "white", marginLeft: "5px", marginRight: "5px" }}
 				></i>
 			)}
 			{sideBar()}
@@ -458,30 +660,7 @@ const Navbar1 = ({ history }) => {
 					</div> */}
 				</Link>
 			</div>
-			<span
-				className='languageFlagsPhone'
-				style={{ padding: "0px", marginLeft: "" }}
-			>
-				{chosenLanguage === "English" ? (
-					<span className='' onClick={chosenLanguageArabic}>
-						{" "}
-						<img
-							className='flags'
-							src={EgyptianFlag}
-							style={{ marginRight: "5px" }}
-							alt='Arabic'
-						/>
-					</span>
-				) : (
-					<span
-						className=' '
-						style={{ color: "white" }}
-						onClick={chosenLanguageEngish}
-					>
-						<img className='flags' src={AmericanFlag} alt='English' />{" "}
-					</span>
-				)}
-			</span>
+
 			<div className='collapse navbar-collapse menu'>
 				<ul className='navbar-nav actual-list'>
 					{isAuthenticated() && isAuthenticated().user.role === 0 && (
@@ -683,6 +862,48 @@ const Navbar1 = ({ history }) => {
 					</li>
 				</ul>
 			</div>
+
+			<div className='nav-cart mx-1 faaa-bars'>
+				{/* <FaCartPlus className="nav-icon" onClick={handleCart} /> */}
+
+				<div style={{ cursor: "pointer" }}>
+					<span
+						className='languageFlagsPhone'
+						style={{ padding: "0px", marginLeft: "" }}
+					>
+						{chosenLanguage === "English" ? (
+							<span className='' onClick={chosenLanguageArabic}>
+								{" "}
+								<img
+									className='flags'
+									src={EgyptianFlag}
+									style={{ marginRight: "5px" }}
+									alt='Arabic'
+								/>
+							</span>
+						) : (
+							<span
+								className=' '
+								style={{ color: "white" }}
+								onClick={chosenLanguageEngish}
+							>
+								<img className='flags' src={AmericanFlag} alt='English' />{" "}
+							</span>
+						)}
+					</span>
+					<sup onClick={isSidebarOpen ? closeSidebar : openSidebar}>
+						<small className='cart-badge'>{total_items}</small>
+					</sup>
+					<i
+						onClick={isSidebarOpen ? closeSidebar : openSidebar}
+						className='fa fa-cart-plus faaa-bars'
+						style={{ color: "white" }}
+						aria-hidden='true'
+					></i>
+				</div>
+
+				{sideCart()}
+			</div>
 		</Nav>
 	);
 };
@@ -712,6 +933,12 @@ const Nav = styled.nav`
 
 	.languageList:hover {
 		cursor: pointer;
+	}
+
+	.cart-badge {
+		color: white;
+		margin: 2px;
+		font-size: 14px;
 	}
 
 	@media (max-width: 680px) {
@@ -803,7 +1030,7 @@ const SideWrapper = styled.nav`
 	position: fixed;
 	top: 66px;
 	left: 0;
-	width: 60%;
+	width: 70%;
 	height: 100%;
 	/* background: var(--mainGrey); */
 	z-index: 300;
@@ -814,7 +1041,7 @@ const SideWrapper = styled.nav`
 	background-color: black;
 	transform: ${(props) =>
 		props.show && props.show2
-			? "translateX(68%)"
+			? "translateX(45%)"
 			: props.show && !props.show2
 			? "translateX(0)"
 			: "translateX(220%)"};
@@ -859,5 +1086,97 @@ const SideWrapper = styled.nav`
 	}
 	@media (min-width: 680px) {
 		display: none;
+	}
+`;
+
+const SideWrapperCart = styled.nav`
+	overflow-y: auto;
+	position: fixed;
+	top: 70px;
+	right: 0;
+	width: 80%;
+	height: 100%;
+	background: var(--mainGrey);
+	z-index: 100;
+	border-left: 3px solid var(--darkGrey);
+	transition: 0.5s;
+	transform: ${(props) =>
+		props.show && props.show2
+			? "translateX(-26%)"
+			: props.show && !props.show2
+			? "translateX(0)"
+			: "translateX(-230%)"};
+	/*transform: translateX(-100%);*/ /**this will hide the side bar */
+	ul {
+		list-style-type: none;
+		padding: 0 !important;
+	}
+	.sidebar-link {
+		display: block;
+		font-size: 1rem;
+		text-transform: capitalize;
+		color: var(--mainBlack);
+		padding: 1.1rem 1.1rem;
+		background: transparent;
+		transition: var(--mainTransition);
+	}
+	.sidebar-link:hover {
+		background: #727272;
+		color: var(--mainWhite);
+		/* padding: 1rem 2rem 1rem 2rem; */
+		text-decoration: none;
+	}
+
+	.link-container {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 1.5rem;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	.link-btn {
+		background: transparent;
+		border-color: transparent;
+		text-transform: capitalize;
+		padding: 0.25rem 0.5rem;
+		background: var(--clr-primary-5);
+		color: var(--clr-white);
+		border-radius: var(--radius);
+		letter-spacing: var(--spacing);
+		font-weight: 400;
+		cursor: pointer;
+	}
+
+	.cellPhoneLayout {
+		display: block;
+		.buttons-up-down {
+			margin-left: 30px;
+			display: grid;
+			font-size: 12px;
+			width: 100px;
+			font-weight: bold;
+			justify-items: center;
+			grid-template-columns: repeat(4, 1fr);
+			align-items: center;
+			h2 {
+				margin-bottom: 0;
+			}
+			button {
+				background: transparent;
+				border-color: transparent;
+				cursor: pointer;
+				padding: 1rem 0;
+				width: 2rem;
+				height: 1rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+	@media (max-width: 1000px) {
+		.trashIcon {
+			margin-left: 180px !important;
+		}
 	}
 `;

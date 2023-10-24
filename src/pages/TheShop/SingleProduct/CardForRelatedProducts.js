@@ -1,32 +1,26 @@
 /** @format */
 
-import React, { useState, Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { addItem, updateItem, removeItem } from "../checkout/cartHelpers";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import { showAverageRating2 } from "./Rating";
+// import { showAverageRating2 } from "./Rating";
 import { useCartContext2 } from "../checkout/cart_context";
 
 const CardForRelatedProducts = ({
 	product,
-	chosenLanguage,
-	// eslint-disable-next-line
 	showViewProductButton = true,
 	showAddToCartButton = true,
 	cartUpdate = false,
 	showRemoveProductButton = false,
 	setRun = (f) => f,
 	run = undefined,
+	chosenLanguage,
 	// changeCartSize
 }) => {
-	const [redirect, setRedirect] = useState(false);
-	const [count, setCount] = useState(product.count);
-
 	const { addToCart, openSidebar } = useCartContext2();
 
-	// eslint-disable-next-line
 	const showViewButton = (showViewProductButton) => {
 		return (
 			showViewProductButton && (
@@ -34,146 +28,91 @@ const CardForRelatedProducts = ({
 					to={`/product/${
 						product && product.category && product.category.categorySlug
 					}/${product.slug}/${product._id}`}
-					className='mr-2'
 					onClick={() => {
 						window.scrollTo(0, 0);
 					}}
 				>
-					<button className='btn btn-outline-primary mt-2 mb-2 card-btn-1 viewproduct'>
-						View Product
-					</button>
+					<span className='btn btn-outline-primary mt-2 mb-2 card-btn-1'>
+						{chosenLanguage === "Arabic" ? (
+							<span className='arabicFonts'>عرض المنتج</span>
+						) : (
+							"View Product"
+						)}
+					</span>
 				</Link>
 			)
 		);
 	};
-	// eslint-disable-next-line
-	const addToCarts = () => {
-		// console.log('added');
-		addItem(product, setRedirect(true));
 
-		// window.scrollTo(0, 0);
-	};
-
-	const shouldRedirect = (redirect) => {
-		if (redirect) {
-			return <Redirect to='/cart' />;
-		}
-	};
+	console.log(product, "product");
 
 	const showAddToCartBtn = (showAddToCartButton) => {
 		return (
-			<Fragment>
+			<>
 				<Fragment>
 					{chosenLanguage === "Arabic" ? (
 						<Fragment>
 							{product.quantity > 0 ? (
-								<Fragment>
+								<>
 									{showAddToCartButton && (
 										<span onClick={openSidebar}>
 											<span
 												onClick={() => addToCart(product._id, null, 1, product)}
-												className='btn btn-warning mt-2 mb-2 card-btn-1  cartoptions2'
+												className='btn btn-warning mt-2 mb-2 card-btn-1  arabicFonts'
 											>
 												أضف إلى السلة
 											</span>
 										</span>
 									)}
-								</Fragment>
+								</>
 							) : (
-								<Fragment>
+								<>
 									<button
-										className='btn btn-warning mt-2 mb-2 card-btn-1 cartoptions2'
+										className='btn btn-warning mt-2 mb-2 card-btn-1 arabicFonts'
 										disabled
 									>
 										أضف إلى السلة
 									</button>
-								</Fragment>
+								</>
 							)}
 						</Fragment>
 					) : (
 						<Fragment>
 							{product.quantity > 0 ? (
-								<Fragment>
+								<>
 									{showAddToCartButton && (
 										<span onClick={openSidebar}>
 											<span
 												onClick={() => addToCart(product._id, null, 1, product)}
-												className='btn btn-warning mt-2 mb-2 card-btn-1  cartoptions'
+												className='btn btn-warning mt-2 mb-2 card-btn-1  '
 											>
 												Add to cart
 											</span>
 										</span>
 									)}
-								</Fragment>
+								</>
 							) : (
-								<Fragment>
+								<>
 									<button
-										className='btn btn-warning mt-2 mb-2 card-btn-1 cartoptions'
+										className='btn btn-warning mt-2 mb-2 card-btn-1 '
 										disabled
 									>
 										Add to cart
 									</button>
-								</Fragment>
+								</>
 							)}
 						</Fragment>
 					)}
 				</Fragment>
-			</Fragment>
+			</>
 		);
 	};
 
 	const showStock = (quantity) => {
 		return quantity > 0 ? (
-			<span className='badge badge-primary badge-pill stockStatus'>
-				In Stock{" "}
-			</span>
+			<span className='badge badge-primary badge-pill'>In Stock </span>
 		) : (
-			<span className='badge badge-danger badge-pill stockStatus'>
-				Sold Out{" "}
-			</span>
-		);
-	};
-
-	const handleChange = (productId) => (event) => {
-		setRun(!run); // run useEffect in parent Cart
-		setCount(event.target.value < 1 ? "" : event.target.value);
-		if (event.target.value >= 1) {
-			updateItem(productId, event.target.value);
-		}
-	};
-
-	const showCartUpdateOptions = (cartUpdate) => {
-		return (
-			cartUpdate && (
-				<div>
-					<div className='input-group mb-3 '>
-						<div className='input-group-prepend'>
-							<span className='input-group-text'>Adjust Quantity</span>
-						</div>
-						<input
-							type='number'
-							className='form-control'
-							value={count}
-							onChange={handleChange(product._id)}
-						/>
-					</div>
-				</div>
-			)
-		);
-	};
-	const showRemoveButton = (showRemoveProductButton) => {
-		return (
-			showRemoveProductButton && (
-				<button
-					onClick={() => {
-						removeItem(product._id);
-						setRun(!run); // run useEffect in parent Cart
-					}}
-					className='btn btn-outline-danger mt-2 mb-2'
-				>
-					Remove Product
-				</button>
-			)
+			<span className='badge badge-danger badge-pill'>Sold Out</span>
 		);
 	};
 
@@ -192,18 +131,16 @@ const CardForRelatedProducts = ({
 				>
 					{item.images.map((i) => (
 						<img
-							className=' rounded mx-auto d-block product-imgs'
 							alt={item.productName}
 							src={i.url}
 							key={i.public_id}
-							style={{ height: "300px", width: "300px", objectFit: "cover" }}
+							style={{ height: "100%", width: "100%", objectFit: "cover" }}
 						/>
 					))}
 				</Carousel>
 			)}
 		</div>
 	);
-
 	// eslint-disable-next-line
 	const productNameModified =
 		product && product.productName && product.productName.split(" ").join("-");
@@ -213,91 +150,73 @@ const CardForRelatedProducts = ({
 			<Fragment>
 				<div
 					className='card '
-					style={{ borderRadius: "5%", backgroundColor: "white" }}
+					style={{ borderRadius: "5px", backgroundColor: "#fafafa" }}
 				>
+					<div className='card-img-top center img'>
+						<Link
+							to={`/product/${
+								product && product.category && product.category.categorySlug
+							}/${product.slug}/${product._id}`}
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+						>
+							<ShowImage item={product} />
+						</Link>
+					</div>
 					<div className='card-body  '>
-						{shouldRedirect(redirect)}
-						<div className='card-img-top center img'>
-							{product && product.ratings && product.ratings.length > 0 ? (
-								<div className='mb-3'>{showAverageRating2(product)}</div>
-							) : (
-								<div
-									className='mb-2'
-									style={{
-										fontSize: "0.75rem",
-										fontStyle: "italic",
-										fontWeight: "bold",
-										color: "black",
-									}}
-								>
-									{chosenLanguage === "Arabic" ? "لا يوجد تقييم" : "No Ratings"}
-								</div>
-							)}
-							<ImageFeat>
-								<Link
-									to={`/product/${
-										product && product.category && product.category.categorySlug
-									}/${product.slug}/${product._id}`}
-									onClick={() => {
-										window.scrollTo({ top: 0, behavior: "smooth" });
-									}}
-								>
-									<ShowImage item={product} />
-								</Link>
-							</ImageFeat>
-						</div>
 						<div
-							className='mt-2 mb-3 productname'
+							className='mt-2 mb-3'
 							style={{
 								fontSize: "15px",
 								fontWeight: "bold",
 								textAlign: "center",
-								textTransform: "capitalize",
 							}}
 						>
-							{chosenLanguage === "Arabic"
-								? product.productName_Arabic
-								: product.productName}
-						</div>
-
-						<div className='row my-2'>
-							{product.price > product.priceAfterDiscount ? (
-								<div
-									className='productprice col-md-5 mx-auto'
-									style={{
-										fontSize: "15px",
-										fontWeight: "bold",
-										textAlign: "center",
-									}}
-								>
-									<span className='productprice'>
-										Price: <s style={{ color: "red" }}>{product.price} KD</s>{" "}
-										{product.priceAfterDiscount} KD
-									</span>
-								</div>
+							{chosenLanguage === "Arabic" ? (
+								<span className='arabicFonts'>
+									{product.productName_Arabic}
+								</span>
 							) : (
-								<div
-									className='productprice col-md-5 mx-auto'
-									style={{
-										fontSize: "15px",
-										fontWeight: "bold",
-										textAlign: "center",
-									}}
-								>
-									Price: {product.price} KD
-								</div>
+								product.productName
 							)}
-							<div className='col-md-3 mx-auto'>
-								{showStock(product.quantity)}
+						</div>
+						{product.price > product.priceAfterDiscount ? (
+							<div
+								className='mt-2 mb-3'
+								style={{
+									fontSize: "12px",
+									fontWeight: "bold",
+									textAlign: "center",
+								}}
+							>
+								<span className='productprice'>
+									Price: <s style={{ color: "red" }}>{product.price} EGP</s>{" "}
+									{product.priceAfterDiscount} EGP
+								</span>
+							</div>
+						) : (
+							<div
+								className='mt-2 mb-3'
+								style={{
+									fontSize: "12px",
+									fontWeight: "bold",
+									textAlign: "center",
+								}}
+							>
+								Price: {product.price} EGP
+							</div>
+						)}
+
+						{showStock(product.quantity)}
+						<div>
+							<div className='button-grid mx-auto text-center'>
+								<div className='showButton'>
+									{showViewButton(showViewProductButton)}
+								</div>
+								<div className=''>{showAddToCartBtn(showAddToCartButton)}</div>
 							</div>
 						</div>
-
-						<div>
-							{/* {showViewButton(showViewProductButton)} */}
-							{showAddToCartBtn(showAddToCartButton)}
-						</div>
-						{showRemoveButton(showRemoveProductButton)}
-						{showCartUpdateOptions(cartUpdate)}
 					</div>
 				</div>
 			</Fragment>
@@ -308,85 +227,63 @@ const CardForRelatedProducts = ({
 export default CardForRelatedProducts;
 
 const ProductWrapper = styled.div`
-	.cards {
-		text-align: center;
-		box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.3);
-		transition: var(--mainTransition);
-		height: 100%;
-		width: 90%;
-		-webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
-		-moz-animation: fadein 3s; /* Firefox < 16 */
-		-ms-animation: fadein 3s; /* Internet Explorer */
-		-o-animation: fadein 3s; /* Opera < 12.1 */
-		animation: fadein 3s;
-		@keyframes fadein {
-			from {
-				opacity: 0;
-			}
-			to {
-				opacity: 1;
-			}
-		}
-	}
 	.card {
-		text-align: center;
-		box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.3);
+		box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.1);
 		transition: var(--mainTransition);
 		height: 100%;
-		width: 90%;
+		width: 100%;
 	}
+
 	.card:hover {
-		box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.5);
+		box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.3);
 		cursor: pointer;
 	}
 	.card-img-top {
-		transition: var(--mainTransition);
+		transition: all 0.3s ease-in-out;
+	}
+	.center {
+		text-align: center;
 	}
 
 	/*To zoom in into the picture when hovering */
 	.card:hover .card-img-top {
-		transform: scale(1.1);
+		transform: scale(1.01);
 		opacity: 0.7;
 	}
 
-	.card-body {
-		font-weight: bold;
-		letter-spacing: 2px;
+	.button-grid {
+		display: grid;
+		grid-template-columns: repeat(
+			2,
+			1fr
+		); /* 5 items in one row for larger screens */
+		gap: 10px;
 	}
 
-	.productname {
-		font-size: 14px;
+	.arabicFonts {
+		font-size: 12px !important;
 	}
 
-	@media (max-width: 680px) {
-		/* .card {
-			width: 100%;
-			height: 100%;
-		} */
-		.productname {
+	@media (max-width: 1000px) {
+		.showButton {
+			display: none;
+		}
+
+		.arabicFonts {
 			font-size: 12px !important;
 		}
 
-		.productprice {
-			font-size: 11px !important;
+		img {
+			height: 100% !important;
+			width: 100% !important;
 		}
-		.stockStatus {
-			font-size: 10px;
-		}
-		.cartoptions {
-			font-size: 12px;
-		}
-		.viewproduct {
-			font-size: 12px;
-		}
-	}
-`;
 
-const ImageFeat = styled.div`
-	@media (max-width: 680px) {
-		.product-imgs {
-			width: 130px !important;
-			height: 130px !important;
+		.button-grid {
+			grid-template-columns: repeat(
+				1,
+				1fr
+			); /* 5 items in one row for larger screens */
+			gap: 0px;
 		}
 	}
 `;
