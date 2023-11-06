@@ -80,7 +80,7 @@ const AppsLandingPage = () => {
 	};
 
 	return (
-		<AppsLandingPageWrapper dir='rtl'>
+		<AppsLandingPageWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<title>XLOOK | Our Play Store And App Store Applications</title>
@@ -111,17 +111,35 @@ const AppsLandingPage = () => {
 			</div>
 
 			<div className='contentWrapper'>
-				<div className='textData'>
-					<h1>إكس لوك</h1>
-					<p>
-						أول منصة تضم جميع مراكز التجميل وصالونات الحلاقة في مصر
-						<br />
-						<br />
-						فبمجرد تنزيل التطبيق، ستتمكن من استكشاف جميع صالونات التجميل
-					</p>
-				</div>
+				{chosenLanguage === "Arabic" ? (
+					<div className='textData' style={{ textAlign: "right" }}>
+						<h1>إكس لوك</h1>
+						<p>
+							أول منصة تضم جميع مراكز التجميل وصالونات الحلاقة في مصر
+							<br />
+							<br />
+							فبمجرد تنزيل التطبيق، ستتمكن من استكشاف جميع صالونات التجميل
+						</p>
+					</div>
+				) : (
+					<div className='textData' style={{ textAlign: "left" }}>
+						<h1>X Look</h1>
+						<p>
+							The first platform that includes all beauty centers and barber
+							shops in Egypt
+							<br />
+							<br />
+							Once you download the app, you will be able to explore all the
+							beauty salons
+						</p>
+					</div>
+				)}
 
-				<h2>متوفر في جميع منصات التحميل</h2>
+				{chosenLanguage === "Arabic" ? (
+					<h2>متوفر في جميع منصات التحميل</h2>
+				) : (
+					<h2>Available on all download platforms</h2>
+				)}
 
 				<div className='row'>
 					<div
@@ -169,8 +187,8 @@ const AppsLandingPageWrapper = styled.div`
 	h1 {
 		font-weight: bolder;
 		color: white;
-		text-align: right;
-		margin-right: 20px;
+		margin-right: 10px;
+		margin-left: 10px;
 		margin-top: 20px;
 		font-size: 3rem;
 	}
@@ -187,8 +205,8 @@ const AppsLandingPageWrapper = styled.div`
 	p {
 		font-weight: bolder;
 		color: white;
-		text-align: right;
-		margin-right: 20px;
+		margin-right: 10px;
+		margin-left: 10px;
 		font-size: 1.75rem;
 	}
 
@@ -216,8 +234,8 @@ const AppsLandingPageWrapper = styled.div`
 		h1 {
 			font-weight: bolder;
 			color: white;
-			text-align: right;
-			margin-right: 20px;
+			margin-right: 10px;
+			margin-left: 10px;
 			margin-top: 20px;
 			font-size: 2rem;
 		}
@@ -234,8 +252,8 @@ const AppsLandingPageWrapper = styled.div`
 		p {
 			font-weight: bolder;
 			color: white;
-			text-align: right;
-			margin-right: 20px;
+			margin-right: 10px;
+			margin-left: 10px;
 			font-size: 0.7rem;
 		}
 

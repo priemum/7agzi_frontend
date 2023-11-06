@@ -25,6 +25,7 @@ import SixthSectionArabic from "../components/HomePage/HomeArabic/SixthSectionAr
 import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSectionArabic";
 import { useCartContext } from "../sidebar_context";
 import axios from "axios";
+import AppsLandingPage from "./AppsLandingPage";
 
 const Home = ({ language, setLanguage }) => {
 	const [stores, setStores] = useState([]);
@@ -350,6 +351,7 @@ const Home = ({ language, setLanguage }) => {
 					/>
 				)}
 			</div>
+			<AppsLandingPage />
 		</HomeWrapper>
 	);
 };
