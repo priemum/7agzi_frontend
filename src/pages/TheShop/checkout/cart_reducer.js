@@ -56,6 +56,7 @@ const cart_reducer = (state, action) => {
 				categoryName: product.category.categoryName,
 				categoryNameArabic: product.category.categoryName_Arabic,
 				relatedProducts: product.relatedProducts,
+				belongsTo: product.belongsTo,
 			};
 			return { ...state, cart: [...state.cart, newItem] };
 		}

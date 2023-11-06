@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Spin } from "antd";
-import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
 import AdSense from "../AdSense";
@@ -45,21 +44,21 @@ const SeventhSection = ({
 		],
 	};
 
-	if (loadError || error) {
-		return (
-			<div className='spinner-container'>
-				<Spin size='large' tip='Loading...' />
-				<div>
-					This app requires access to your location. Please enable it in your
-					browser settings, or{" "}
-					<Link href='#' onClick={handleRetryClick}>
-						click here
-					</Link>{" "}
-					to retry.
-				</div>
-			</div>
-		);
-	}
+	// if (loadError || error) {
+	// 	return (
+	// 		<div className='spinner-container'>
+	// 			<Spin size='large' tip='Loading...' />
+	// 			<div>
+	// 				This app requires access to your location. Please enable it in your
+	// 				browser settings, or{" "}
+	// 				<Link href='#' onClick={handleRetryClick}>
+	// 					click here
+	// 				</Link>{" "}
+	// 				to retry.
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<ThirdSectionWrapper>

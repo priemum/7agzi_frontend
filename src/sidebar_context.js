@@ -10,9 +10,18 @@ import {
 	USER_LOCATION,
 } from "./actions";
 
+const getLanguageLocalStorage = () => {
+	let language = localStorage.getItem("lang");
+	if (language) {
+		return JSON.parse(localStorage.getItem("lang"));
+	} else {
+		return "English";
+	}
+};
+
 const initialState = {
 	isSidebarOpen2: false,
-	chosenLanguage: "Arabic",
+	chosenLanguage: getLanguageLocalStorage(),
 	userLocation: {
 		country: "",
 		state: "",

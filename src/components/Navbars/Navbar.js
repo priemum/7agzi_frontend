@@ -674,7 +674,7 @@ const SideWrapper = styled.nav`
 		border-color: transparent;
 		text-transform: capitalize;
 		padding: 0.25rem 0.5rem;
-		background: var(--clr-primary-5);
+		background: black;
 		color: var(--clr-white);
 		border-radius: var(--radius);
 		letter-spacing: var(--spacing);

@@ -96,7 +96,7 @@ const Checkout = ({ chosenLanguage }) => {
 			allCoupons.map((items) => items.name.toLowerCase().replace(/\s/g, ""));
 		let match =
 			allCouponsnames.indexOf(
-				appliedCoupon.toLowerCase().replace(/\s/g, ""),
+				appliedCoupon.toLowerCase().replace(/\s/g, "")
 			) !== -1;
 		setAppliedCouponAvailable(match);
 		if (match) {
@@ -104,9 +104,9 @@ const Checkout = ({ chosenLanguage }) => {
 				allCoupons &&
 					allCoupons[
 						allCouponsnames.indexOf(
-							appliedCoupon.toLowerCase().replace(/\s/g, ""),
+							appliedCoupon.toLowerCase().replace(/\s/g, "")
 						)
-					],
+					]
 			);
 		} else {
 			setAppliedCouponData({});
@@ -136,7 +136,8 @@ const Checkout = ({ chosenLanguage }) => {
 							style={{
 								fontWeight: "bold",
 								fontStyle: "italic",
-							}}>
+							}}
+						>
 							{/* <div
 						className='mt-2 mb-1'
 						style={{
@@ -162,7 +163,8 @@ const Checkout = ({ chosenLanguage }) => {
 									fontStyle: "italic",
 									fontWeight: "bold",
 									color: "green",
-								}}>
+								}}
+							>
 								Thank you for applying the coupon. You have received %
 								{appliedCouponData.discount} discount.
 							</div>
@@ -184,7 +186,8 @@ const Checkout = ({ chosenLanguage }) => {
 											fontStyle: "italic",
 											fontWeight: "bold",
 											color: "red",
-										}}>
+										}}
+									>
 										This coupon is expired or unavailable, Please try another
 										one.
 									</div>
@@ -196,7 +199,8 @@ const Checkout = ({ chosenLanguage }) => {
 											fontStyle: "italic",
 											fontWeight: "bold",
 											color: "grey",
-										}}>
+										}}
+									>
 										Please add a coupon...
 									</div>
 								)}
@@ -205,7 +209,8 @@ const Checkout = ({ chosenLanguage }) => {
 						<div className='col-md-6 mt-2 mx-auto'>
 							<button
 								className='btn btn-outline-info btn-block  '
-								onClick={checkAppliedCoupon}>
+								onClick={checkAppliedCoupon}
+							>
 								Apply Coupon
 							</button>
 						</div>
@@ -362,7 +367,7 @@ const Checkout = ({ chosenLanguage }) => {
 			Number(getTaxes()) +
 				Number(getTotalAmount()) +
 				Number(getShippingFee()) +
-				Number(getTransactionFee()),
+				Number(getTransactionFee())
 		).toFixed(2);
 	};
 
@@ -371,7 +376,7 @@ const Checkout = ({ chosenLanguage }) => {
 			Number(getActualTaxes()) +
 				Number(total_amount) +
 				Number(carrierDataFromStorage && carrierDataFromStorage.shippingPrice) +
-				Number(getActualTransactionFee()),
+				Number(getActualTransactionFee())
 		).toFixed(2);
 	};
 
@@ -616,7 +621,8 @@ const Checkout = ({ chosenLanguage }) => {
 							marginLeft: "10px",
 							color: "red",
 							fontWeight: "bold",
-						}}>
+						}}
+					>
 						(مطلوب)
 					</span>
 				) : (
@@ -626,7 +632,8 @@ const Checkout = ({ chosenLanguage }) => {
 							marginLeft: "10px",
 							color: "red",
 							fontWeight: "bold",
-						}}>
+						}}
+					>
 						Required*
 					</span>
 				)}
@@ -646,7 +653,8 @@ const Checkout = ({ chosenLanguage }) => {
 								fontWeight: "bold",
 								letterSpacing: chosenLanguage === "Arabic" ? "0px" : "4px",
 								textShadow: "3px 3px 6px",
-							}}>
+							}}
+						>
 							{chosenLanguage === "Arabic"
 								? "معلومات شحنة العميل"
 								: "Deliver to info:"}
@@ -668,7 +676,8 @@ const Checkout = ({ chosenLanguage }) => {
 											{!applyPoints && (
 												<button
 													onClick={() => setApplyPoints(true)}
-													className='btn btn-success  m-3 card-btn-1 mx-auto'>
+													className='btn btn-success  m-3 card-btn-1 mx-auto'
+												>
 													Apply{" "}
 													{alreadySetLoyaltyPointsManagement &&
 														alreadySetLoyaltyPointsManagement.discountPercentage}
@@ -683,7 +692,8 @@ const Checkout = ({ chosenLanguage }) => {
 														fontStyle: "italic",
 														fontWeight: "bold",
 														color: "green",
-													}}>
+													}}
+												>
 													Thank you for applying your loyalty points, you got{" "}
 													{alreadySetLoyaltyPointsManagement &&
 														alreadySetLoyaltyPointsManagement.discountPercentage}
@@ -699,7 +709,8 @@ const Checkout = ({ chosenLanguage }) => {
 												fontStyle: "italic",
 												fontWeight: "bold",
 												color: "#7b7b7b",
-											}}>
+											}}
+										>
 											Note: Your current Active Points are{" "}
 											{updatedUser.activePoints} points, You need{" "}
 											{updatedUser &&
@@ -872,7 +883,8 @@ const Checkout = ({ chosenLanguage }) => {
 		return (
 			<div
 				onBlur={() => setData({ ...data, error: "" })}
-				style={{ marginBottom: "100px !important" }}>
+				style={{ marginBottom: "100px !important" }}
+			>
 				{data.clientToken !== null && cart.length > 0 ? (
 					<>
 						<DropIn
@@ -909,7 +921,8 @@ const Checkout = ({ chosenLanguage }) => {
 	const showError = (error) => (
 		<div
 			className='alert alert-danger'
-			style={{ display: error ? "" : "none" }}>
+			style={{ display: error ? "" : "none" }}
+		>
 			{error}
 		</div>
 	);
@@ -917,7 +930,8 @@ const Checkout = ({ chosenLanguage }) => {
 	const showSuccess = (success) => (
 		<div
 			className='alert alert-info'
-			style={{ display: success ? "" : "none" }}>
+			style={{ display: success ? "" : "none" }}
+		>
 			{chosenLanguage === "Arabic"
 				? "شكرا! دفعت بنجاح"
 				: "Thanks! Your payment was successful!"}
@@ -950,7 +964,8 @@ const Checkout = ({ chosenLanguage }) => {
 						fontSize: "2rem",
 						fontWeight: "bold",
 						marginTop: "20px",
-					}}>
+					}}
+				>
 					Your Cart Is Empty
 					<br />
 					<Link
@@ -958,7 +973,8 @@ const Checkout = ({ chosenLanguage }) => {
 						style={{
 							fontSize: "1.5rem",
 							fontWeight: "bold",
-						}}>
+						}}
+					>
 						Continue Shopping
 					</Link>
 				</div>
@@ -978,7 +994,8 @@ const Checkout = ({ chosenLanguage }) => {
 											letterSpacing:
 												chosenLanguage === "Arabic" ? "0px" : "4px",
 											textShadow: "3px 3px 6px",
-										}}>
+										}}
+									>
 										{chosenLanguage === "Arabic"
 											? "ملخص سلة التسوق الخاصة بك"
 											: "Your Cart Summary"}
@@ -1002,7 +1019,8 @@ const Checkout = ({ chosenLanguage }) => {
 												cursor: "pointer",
 												marginLeft: "20px",
 												letterSpacing: "2px",
-											}}>
+											}}
+										>
 											(Update Your Cart)
 										</span>
 									</h4>
@@ -1028,20 +1046,21 @@ const Checkout = ({ chosenLanguage }) => {
 															color: "red",
 															marginRight: "10px",
 															fontSize: "0.9rem",
-														}}>
+														}}
+													>
 														{carrierDataFromStorage &&
 															carrierDataFromStorage.shippingPrice.toFixed(
-																2,
+																2
 															)}{" "}
-														KD
+														EGP
 													</s>{" "}
-													{getShippingFee().toFixed(2)} KD
+													{getShippingFee().toFixed(2)} EGP
 												</span>
 											) : (
 												<span>
 													{carrierDataFromStorage &&
 														carrierDataFromStorage.shippingPrice}{" "}
-													KD
+													EGP
 												</span>
 											)}
 										</span>
@@ -1058,13 +1077,14 @@ const Checkout = ({ chosenLanguage }) => {
 															color: "red",
 															marginRight: "10px",
 															fontSize: "0.9rem",
-														}}>
-														{total_amount.toFixed(2)} KD
+														}}
+													>
+														{total_amount.toFixed(2)} EGP
 													</s>{" "}
-													{getTotalAmount().toFixed(2)} KD
+													{getTotalAmount().toFixed(2)} EGP
 												</span>
 											) : (
-												<span>{getTotalAmount().toFixed(2)} KD</span>
+												<span>{getTotalAmount().toFixed(2)} EGP</span>
 											)}
 										</span>
 									</h4>
@@ -1080,13 +1100,14 @@ const Checkout = ({ chosenLanguage }) => {
 															color: "red",
 															marginRight: "10px",
 															fontSize: "0.9rem",
-														}}>
-														{getActualTransactionFee()} KD
+														}}
+													>
+														{getActualTransactionFee()} EGP
 													</s>{" "}
-													{getTransactionFee()} KD
+													{getTransactionFee()} EGP
 												</span>
 											) : (
-												<span>{getTransactionFee()} KD</span>
+												<span>{getTransactionFee()} EGP</span>
 											)}
 										</span>
 										<br />
@@ -1096,7 +1117,7 @@ const Checkout = ({ chosenLanguage }) => {
 												alreadySetLoyaltyPointsManagement.transactionFeePercentage
 											}
 											% of Subtotal +{"   "}
-											{alreadySetLoyaltyPointsManagement.onlineServicesFees} KD
+											{alreadySetLoyaltyPointsManagement.onlineServicesFees} EGP
 										</span>
 									</h4>
 									<h4
@@ -1104,7 +1125,8 @@ const Checkout = ({ chosenLanguage }) => {
 											fontWeight: "bold",
 											fontSize: "1rem",
 											marginTop: "10px",
-										}}>
+										}}
+									>
 										Taxes:{" "}
 										<span style={{ color: "#3498ff" }}>
 											{getTaxes() !== getActualTaxes() ? (
@@ -1114,17 +1136,18 @@ const Checkout = ({ chosenLanguage }) => {
 															color: "red",
 															marginRight: "10px",
 															fontSize: "0.9rem",
-														}}>
-														{getActualTaxes()} KD
+														}}
+													>
+														{getActualTaxes()} EGP
 													</s>{" "}
-													{getTaxes()} KD (
+													{getTaxes()} EGP (
 													{alreadySetLoyaltyPointsManagement &&
 														alreadySetLoyaltyPointsManagement.purchaseTaxes}
 													% )
 												</span>
 											) : (
 												<span>
-													{getTaxes()} KD (
+													{getTaxes()} EGP (
 													{alreadySetLoyaltyPointsManagement &&
 														alreadySetLoyaltyPointsManagement.purchaseTaxes}
 													% )
@@ -1136,11 +1159,13 @@ const Checkout = ({ chosenLanguage }) => {
 										style={{
 											borderBottom: "solid 2px #ffcece",
 											marginTop: "20px",
-										}}></div>
+										}}
+									></div>
 
 									<h3
 										className='mt-3'
-										style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+										style={{ fontWeight: "bold", fontSize: "1.5rem" }}
+									>
 										Total Amount:{" "}
 										<span style={{ color: "#3498ff" }}>
 											{getActualTotal() !== getTotal() ? (
@@ -1150,13 +1175,14 @@ const Checkout = ({ chosenLanguage }) => {
 															color: "red",
 															marginRight: "10px",
 															fontSize: "1.2rem",
-														}}>
-														{getActualTotal()} KD
+														}}
+													>
+														{getActualTotal()} EGP
 													</s>{" "}
-													{getTotal()} KD
+													{getTotal()} EGP
 												</span>
 											) : (
-												<span>{getTotal()} KD</span>
+												<span>{getTotal()} EGP</span>
 											)}
 										</span>
 									</h3>
@@ -1169,7 +1195,8 @@ const Checkout = ({ chosenLanguage }) => {
 								<div className='col-md-3 mx-auto my-2'>
 									<button
 										onClick={buyNoPayment}
-										className='btn btn-success btn-block'>
+										className='btn btn-success btn-block'
+									>
 										Place an Order. (Pay On Delivery)
 									</button>
 								</div>
@@ -1183,7 +1210,8 @@ const Checkout = ({ chosenLanguage }) => {
 										style={{
 											borderTop: "solid 5px #0074e8",
 											marginTop: "10px",
-										}}></div>
+										}}
+									></div>
 
 									<div className='my-5 col-md-5 mx-auto'>{showDropIn()}</div>
 									<br />

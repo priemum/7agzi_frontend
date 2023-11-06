@@ -301,6 +301,25 @@ export const allLoyaltyPointsAndStoreStatus = (token) => {
 		.catch((err) => console.log(err));
 };
 
+export const StoresBelongsTo = (ids) => {
+	// Convert array of IDs to a comma-separated string
+	const idsString = ids.join(",");
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/store-belongs-to/${idsString}`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const allStoresSorted = (
 	lat,
 	lon,

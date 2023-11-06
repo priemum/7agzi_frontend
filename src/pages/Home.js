@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-// eslint-disable-next-line
-import { Redirect } from "react-router-dom";
-// eslint-disable-next-line
-import { isAuthenticated } from "../auth";
 
 import {
 	// eslint-disable-next-line
@@ -51,20 +47,69 @@ const Home = ({ language, setLanguage }) => {
 		id: "google-map-script",
 		googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
 	});
+
 	const getLocation = useCallback(() => {
 		setLoading(true);
 		const salonTypeStored = localStorage.getItem("salonTypeStored");
 
+		allStoresSorted2(
+			31.001504971164643,
+			30.05182950306324,
+			"egypt",
+			undefined,
+			undefined,
+			salonTypeStored ? salonTypeStored : chosenSalonType,
+			undefined,
+			itemsPerPage,
+			currentPage
+		)
+			.then((data) => {
+				if (data.error) {
+					setLoading(false);
+					setError(data.error);
+				} else {
+					var uniqueStoresWithLatestDates = data.stores;
+
+					setStores(uniqueStoresWithLatestDates);
+					setLoading(false);
+				}
+			})
+			.catch((err) => setError(err));
+
+		allStoresSortedGraded(
+			31.001504971164643,
+			30.05182950306324,
+			"egypt",
+			undefined,
+			undefined,
+			salonTypeStored ? salonTypeStored : chosenSalonType,
+			undefined,
+			itemsPerPage,
+			currentPage
+		)
+			.then((data) => {
+				if (data.error) {
+					setError(data.error);
+					setLoading(false);
+				} else {
+					var uniqueStoresWithLatestDates = data.stores;
+
+					setStores2(uniqueStoresWithLatestDates);
+					setLoading(false);
+				}
+			})
+			.catch((err) => setError(err));
+
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
+				console.log("Ahowan Gowa");
 				// lat, long
 				// 31.123883, 29.775421 examples
 				// eslint-disable-next-line
 				const { latitude: lat, longitude: lon } = position.coords;
-
 				allStoresSorted2(
-					lat ? lat : 31.001504971164643,
-					lon ? lon : 30.05182950306324,
+					lat,
+					lon,
 					"egypt",
 					undefined,
 					undefined,
@@ -86,8 +131,8 @@ const Home = ({ language, setLanguage }) => {
 					.catch((err) => setError(err));
 
 				allStoresSortedGraded(
-					lat ? lat : 31.001504971164643,
-					lon ? lon : 30.05182950306324,
+					lat,
+					lon,
 					"egypt",
 					undefined,
 					undefined,
@@ -108,7 +153,9 @@ const Home = ({ language, setLanguage }) => {
 					})
 					.catch((err) => setError(err));
 			},
-			() => setError("Could not get location")
+			() => {
+				setError("Could not get location");
+			}
 		);
 	}, [currentPage, itemsPerPage, chosenSalonType]);
 
@@ -136,11 +183,10 @@ const Home = ({ language, setLanguage }) => {
 		// eslint-disable-next-line
 	}, []);
 
-	// console.log(stores, "stores");
-
 	useEffect(() => {
 		if (!navigator.geolocation) {
 			console.log("Geolocation is not supported by your browser");
+			setDefaultLocation();
 		} else {
 			navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
 		}
@@ -167,11 +213,23 @@ const Home = ({ language, setLanguage }) => {
 				})
 				.catch((error) => {
 					console.log(error);
+					setDefaultLocation();
 				});
 		}
 
 		function errorFunction(error) {
-			console.log(error);
+			console.error("Error while fetching geolocation:", error);
+			setDefaultLocation();
+		}
+
+		function setDefaultLocation() {
+			const defaultLocation = {
+				country: "Egypt",
+				state: "Default State",
+				city: "Default City",
+			};
+
+			localStorage.setItem("userLocation", JSON.stringify(defaultLocation));
 		}
 	}, []);
 

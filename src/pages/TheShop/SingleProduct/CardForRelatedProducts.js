@@ -44,8 +44,6 @@ const CardForRelatedProducts = ({
 		);
 	};
 
-	console.log(product, "product");
-
 	const showAddToCartBtn = (showAddToCartButton) => {
 		return (
 			<>

@@ -118,13 +118,14 @@ import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
 import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
 import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
+import { useCartContext } from "./sidebar_context";
 
 function App() {
 	const [click, setClick] = useState(false);
 	const [clickMenu, setClickMenu] = useState(false);
 	const [language, setLanguage] = useState("English");
 
-	// const { chosenLanguage } = useCartContext();
+	const { chosenLanguage } = useCartContext();
 	// eslint-disable-next-line
 	const { user } = isAuthenticated();
 
@@ -195,6 +196,12 @@ function App() {
 
 		// eslint-disable-next-line
 	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("lang", JSON.stringify(chosenLanguage));
+
+		// eslint-disable-next-line
+	}, [chosenLanguage]);
 
 	return (
 		<BrowserRouter>

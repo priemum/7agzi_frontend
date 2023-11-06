@@ -8,27 +8,45 @@ import { Helmet } from "react-helmet";
 import Slider from "react-slick";
 import CardForRelatedProducts from "../SingleProduct/CardForRelatedProducts";
 import { useCartContext2 } from "./cart_context";
+import { StoresBelongsTo } from "../../../apiCore";
 
 const Cart = () => {
 	const { chosenLanguage } = useCartContext();
 	const [relatedProducts, setRelatedProducts] = useState([]);
+	// eslint-disable-next-line
+	const [storeSettings, setStoreSettings] = useState([]);
 
 	const {
 		cart,
 		clearCart,
 		removeItem,
 		toggleAmount,
-		// eslint-disable-next-line
 		total_amount,
-		// eslint-disable-next-line
 		addShipmentFee,
-		// eslint-disable-next-line
-		addShipmentDetails,
 		// eslint-disable-next-line
 		shipping_fee,
 	} = useCartContext2();
 
+	const gettingStoresSettings = () => {
+		var allIds = cart && cart.map((i) => i.belongsTo);
+		StoresBelongsTo(allIds).then((data) => {
+			if (data && data.error) {
+				console.log(data.error);
+			} else {
+				setStoreSettings(data);
+
+				// Calculate the sum of shippingFees
+				const sumOfShippingFees = data.reduce(
+					(total, storeSetting) => total + (storeSetting.shippingFees || 0),
+					0
+				);
+				addShipmentFee(sumOfShippingFees);
+			}
+		});
+	};
+
 	useEffect(() => {
+		gettingStoresSettings();
 		if (
 			cart &&
 			cart[0] &&
@@ -79,7 +97,7 @@ const Cart = () => {
 					className='col-md-2 mx-auto text-center my-auto'
 					style={{ color: "#347acd", fontWeight: "bold" }}
 				>
-					{price} KD
+					{price} EGP
 				</div>
 				<div className='col-md-2 mx-auto text-center my-auto buttons-up-down'>
 					{" "}
@@ -100,7 +118,7 @@ const Cart = () => {
 							color: "#8d9124",
 						}}
 					>
-						{price * amount} KD
+						{price * amount} EGP
 					</span>
 				</div>
 				<div className='col-md-2 mx-auto text-center my-auto'>
@@ -212,6 +230,7 @@ const Cart = () => {
 						style={{
 							fontSize: "1.5rem",
 							fontWeight: "bold",
+							background: "#0b275b",
 						}}
 					>
 						Continue Shopping
@@ -231,7 +250,7 @@ const Cart = () => {
 												i.id,
 												i.image,
 												i.name,
-												i.price,
+												i.priceAfterDiscount,
 												i.amount,
 												i.nameArabic
 											)}
@@ -241,7 +260,18 @@ const Cart = () => {
 								);
 							})}
 						<div className='link-container'>
-							<Link to='/xlook/shop' className='link-btn btn-primary'>
+							<Link
+								to='/xlook/checkout'
+								className='link-btn btn-primary'
+								style={{ background: "#094932" }}
+							>
+								Check Out
+							</Link>
+							<Link
+								to='/xlook/shop'
+								className='link-btn btn-primary'
+								style={{ background: "#0b275b" }}
+							>
 								continue shopping
 							</Link>
 							<button
@@ -340,7 +370,7 @@ const Cart = () => {
 														marginTop: "10px",
 													}}
 												>
-													{i.price * i.amount} KD
+													{i.priceAfterDiscount * i.amount} EGP
 												</div>
 												<button
 													type='button'
@@ -361,8 +391,54 @@ const Cart = () => {
 									</div>
 								);
 							})}
+						<div className='container'>
+							<div
+								style={{
+									fontWeight: "bold",
+									fontSize: "1rem",
+									color: "#676767",
+								}}
+							>
+								Subtotal: {Number(total_amount).toFixed(2)} EGP
+							</div>
+
+							<div
+								style={{
+									fontWeight: "bold",
+									fontSize: "1rem",
+									color: "#676767",
+								}}
+							>
+								Shipping Fees: {Number(shipping_fee).toFixed(2)} EGP
+							</div>
+							<div
+								className='my-3'
+								style={{
+									fontWeight: "bold",
+									fontSize: "1.2rem",
+									color: "black",
+									textAlign: "center",
+								}}
+							>
+								Total: {Number(total_amount + shipping_fee).toFixed(2)} EGP
+							</div>
+						</div>
+
+						<div>
+							<Link
+								to='/xlook/checkout'
+								className='link-btn btn-primary btn-block text-center'
+								style={{ background: "#094932" }}
+							>
+								Check Out
+							</Link>
+						</div>
 						<div className='link-container'>
-							<Link to='/xlook/shop' className='link-btn btn-primary'>
+							<Link
+								to='/xlook/shop'
+								className='link-btn btn-primary'
+								style={{ background: "#0b275b" }}
+							>
 								continue shopping
 							</Link>
 							<button
@@ -379,8 +455,8 @@ const Cart = () => {
 			{relatedProducts && relatedProducts.length > 0 ? (
 				<ProductWrapperRelated>
 					<React.Fragment>
-						<div className='title mb-2'>
-							<h1 className='title'>Products You May Also Like!</h1>
+						<div className='title mb-2 text-center'>
+							<h1 className='title text-center'>Products You May Also Like!</h1>
 						</div>
 					</React.Fragment>
 					<div className='container my-3 ProductSlider'>
@@ -405,14 +481,14 @@ const CartV2Styling = styled.div`
 	.link-container {
 		display: flex;
 		justify-content: space-between;
-		margin-top: 3rem;
+		margin-top: 1rem;
 	}
 	.link-btn {
 		background: transparent;
 		border-color: transparent;
 		text-transform: capitalize;
 		padding: 0.25rem 0.5rem;
-		background: var(--clr-primary-5);
+		background: black;
 		color: var(--clr-white);
 		border-radius: var(--radius);
 		letter-spacing: var(--spacing);
@@ -429,14 +505,14 @@ const CartV2Styling = styled.div`
 		.link-container {
 			display: flex;
 			justify-content: space-between;
-			margin-top: 3rem;
+			margin-top: 1rem;
 		}
 		.link-btn {
 			background: transparent;
 			border-color: transparent;
 			text-transform: capitalize;
 			padding: 0.25rem 0.5rem;
-			background: var(--clr-primary-5);
+			background: black;
 			color: var(--clr-white);
 			border-radius: var(--radius);
 			letter-spacing: var(--spacing);
@@ -524,7 +600,7 @@ const ProductWrapperRelated = styled.div`
 	.title {
 		text-align: center;
 		font-size: 2rem;
-		letter-spacing: 7px;
+		letter-spacing: 3px;
 		font-weight: bold;
 		text-shadow: 1px 1px 5px;
 	}

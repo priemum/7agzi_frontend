@@ -38,6 +38,7 @@ const StoreAccountsMain = () => {
 
 	useEffect(() => {
 		getAllXStoreAccounts();
+		// eslint-disable-next-line
 	}, []);
 
 	console.log(xStoreAccounts, "xstoreAccounts");

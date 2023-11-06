@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Spin } from "antd";
-import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import ThirdSectionCard from "./ThirdSectionCard";
 
@@ -44,21 +43,21 @@ const ThirdSectionArabic = ({
 		],
 	};
 
-	if (loadError || error) {
-		return (
-			<div className='spinner-container'>
-				<Spin size='large' tip='جار التحميل...' />
-				<div>
-					تحتاج هذه التطبيق إلى الوصول إلى موقعك. من فضلك قم بتفعيله في إعدادات
-					المتصفح الخاص بك، أو{" "}
-					<Link href='#' onClick={handleRetryClick}>
-						انقر هنا
-					</Link>{" "}
-					لإعادة المحاولة.
-				</div>
-			</div>
-		);
-	}
+	// if (loadError || error) {
+	// 	return (
+	// 		<div className='spinner-container'>
+	// 			<Spin size='large' tip='جار التحميل...' />
+	// 			<div>
+	// 				تحتاج هذه التطبيق إلى الوصول إلى موقعك. من فضلك قم بتفعيله في إعدادات
+	// 				المتصفح الخاص بك، أو{" "}
+	// 				<Link href='#' onClick={handleRetryClick}>
+	// 					انقر هنا
+	// 				</Link>{" "}
+	// 				لإعادة المحاولة.
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<ThirdSectionWrapper dir='ltr'>
