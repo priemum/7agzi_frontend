@@ -9,6 +9,7 @@ import {
 	allStoresSorted2,
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import StoreListPhone from "../components/StoresListComp/StoreListPhone";
 import { Helmet } from "react-helmet";
@@ -24,6 +25,7 @@ const MyStoreList = ({ language }) => {
 
 	const [stores, setStores] = useState([]);
 	const [loading, setLoading] = useState(true);
+	// eslint-disable-next-line
 	const [error, setError] = useState(null);
 	const [totalItems, setTotalItems] = useState(0);
 	const [filtersClicked, setFiltersClicked] = useState(false);
@@ -48,6 +50,7 @@ const MyStoreList = ({ language }) => {
 	const [itemsPerPage, setItemPerPage] = useState(20);
 	const [currentPage, setCurrentPage] = useState(1);
 
+	// eslint-disable-next-line
 	const { isLoaded, loadError } = useJsApiLoader({
 		id: "google-map-script",
 		googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -449,6 +452,7 @@ const MyStoreList = ({ language }) => {
 		// eslint-disable-next-line
 	}, []);
 
+	// eslint-disable-next-line
 	const handleRetryClick = () => {
 		window.location.reload();
 	};
@@ -457,22 +461,6 @@ const MyStoreList = ({ language }) => {
 		return (
 			<div className='spinner-container'>
 				<Spin size='large' tip='Loading...' />
-			</div>
-		);
-	}
-
-	if (loadError || error) {
-		return (
-			<div className='spinner-container'>
-				<Spin size='large' tip='Loading...' />
-				<div>
-					This app requires access to your location. Please enable it in your
-					browser settings, or{" "}
-					<Link href='#' onClick={handleRetryClick}>
-						click here
-					</Link>{" "}
-					to retry.
-				</div>
 			</div>
 		);
 	}
