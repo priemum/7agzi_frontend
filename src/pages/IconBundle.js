@@ -7,7 +7,6 @@ import {
 	getCountriesDistrictsGov,
 } from "../apiCore";
 import { Pagination, Spin } from "antd";
-import { Link } from "react-router-dom";
 import StoreListPhone from "../components/StoreListBundle/StoreListPhone";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
@@ -22,6 +21,8 @@ const IconBundle = () => {
 
 	const [stores, setStores] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	// eslint-disable-next-line
 	const [error, setError] = useState(null);
 	const [totalItems, setTotalItems] = useState(0);
 	const [filtersClicked, setFiltersClicked] = useState(false);
@@ -46,6 +47,7 @@ const IconBundle = () => {
 	const [itemsPerPage, setItemPerPage] = useState(21);
 	const [currentPage, setCurrentPage] = useState(1);
 
+	// eslint-disable-next-line
 	const { isLoaded, loadError } = useJsApiLoader({
 		id: "google-map-script",
 		googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -380,6 +382,7 @@ const IconBundle = () => {
 		// eslint-disable-next-line
 	}, []);
 
+	// eslint-disable-next-line
 	const handleRetryClick = () => {
 		window.location.reload();
 	};
@@ -392,21 +395,21 @@ const IconBundle = () => {
 		);
 	}
 
-	if (loadError || error) {
-		return (
-			<div className='spinner-container'>
-				<Spin size='large' tip='Loading...' />
-				<div>
-					This app requires access to your location. Please enable it in your
-					browser settings, or{" "}
-					<Link href='#' onClick={handleRetryClick}>
-						click here
-					</Link>{" "}
-					to retry.
-				</div>
-			</div>
-		);
-	}
+	// if (loadError || error) {
+	// 	return (
+	// 		<div className='spinner-container'>
+	// 			<Spin size='large' tip='Loading...' />
+	// 			<div>
+	// 				This app requires access to your location. Please enable it in your
+	// 				browser settings, or{" "}
+	// 				<Link href='#' onClick={handleRetryClick}>
+	// 					click here
+	// 				</Link>{" "}
+	// 				to retry.
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<MyStoreListWrapper showPagination={selectedGovernorate}>
