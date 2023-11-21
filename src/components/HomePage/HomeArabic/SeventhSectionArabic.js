@@ -71,23 +71,27 @@ const SeventhSectionArabic = ({
 						<div className='topPerf'>أفضل المؤدين:</div>
 						<div className='topRated'>الأعلى تقييمًا:</div>
 						<Slider {...settings}>
-							{stores.map((salon, i) => (
-								<div
-									className='img-fluid images'
-									key={i}
-									onClick={() => {
-										localStorage.setItem("chosenStore", JSON.stringify(salon));
-										window.scrollTo({ top: 0, behavior: "smooth" });
-									}}
-								>
-									<ThirdSectionCard
-										i={i}
-										salon={salon}
+							{stores &&
+								stores.map((salon, i) => (
+									<div
+										className='img-fluid images'
 										key={i}
-										language={language}
-									/>
-								</div>
-							))}
+										onClick={() => {
+											localStorage.setItem(
+												"chosenStore",
+												JSON.stringify(salon)
+											);
+											window.scrollTo({ top: 0, behavior: "smooth" });
+										}}
+									>
+										<ThirdSectionCard
+											i={i}
+											salon={salon}
+											key={i}
+											language={language}
+										/>
+									</div>
+								))}
 						</Slider>
 					</div>
 				</div>
