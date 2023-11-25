@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Chart from "react-apexcharts";
 
-const Section2 = ({sortedArray}) => {
+const Section2 = ({ sortedArray, user }) => {
 	var chartDataTotalAmount = {
 		options: {
 			chart: {
@@ -47,7 +47,9 @@ const Section2 = ({sortedArray}) => {
 			},
 
 			title: {
-				text: "Day Over Day Not Cancelled Reservations (EGP)",
+				text: `Day Over Day Not Cancelled Reservations (${
+					user.storeCountry === "Egypt" ? "EGP" : "$"
+				})`,
 				align: "left",
 				margin: 10,
 				offsetX: 0,

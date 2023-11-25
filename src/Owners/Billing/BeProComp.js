@@ -120,7 +120,12 @@ const BeProComp = ({
 							<div className=' col-md-12'>
 								<h3>
 									Our PRO PLAN costs{" "}
-									<strong style={{ color: "black" }}>EGP 500/ Month</strong>{" "}
+									<strong style={{ color: "black" }}>
+										{" "}
+										{user.storeCountry === "egypt"
+											? "EGP 500/ Month"
+											: "$15/Mo"}{" "}
+									</strong>{" "}
 								</h3>
 								<ul
 									className='mx-auto col-md-8'

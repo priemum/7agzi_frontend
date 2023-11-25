@@ -7,6 +7,7 @@ import AgentChoiceModal from "./AgentChoiceModal";
 import ReactGA from "react-ga4";
 import { ShipToData } from "../../Utils";
 import ReactPixel from "react-facebook-pixel";
+import { UnitedStatesData } from "../../Utils2";
 
 const { Option } = Select;
 
@@ -30,11 +31,13 @@ const SignupFormComp = ({
 	setAllAgents,
 	allDistricts,
 	setAllDistricts,
+	states,
 }) => {
 	// eslint-disable-next-line
 	const [animationDirection, setAnimationDirection] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 
+	// eslint-disable-next-line
 	const handleModalOpen = () => {
 		setModalVisible(true);
 	};
@@ -73,8 +76,7 @@ const SignupFormComp = ({
 								</h1>
 							) : (
 								<h1 className='mb-3' style={{ fontWeight: "bolder" }}>
-									Business Partners{" "}
-									<span className='text-primary'>Registration</span>
+									Salon <span className='text-primary'>Registration</span>
 								</h1>
 							)}
 
@@ -98,7 +100,7 @@ const SignupFormComp = ({
 											value={name}
 											onChange={handleChange("name")}
 											required
-											placeholder='e.g. Muhammed Hussein'
+											placeholder='e.g. Dwight Doe'
 										/>
 									</div>
 								</div>
@@ -127,7 +129,7 @@ const SignupFormComp = ({
 												value={email}
 												onChange={handleChange("email")}
 												required
-												placeholder='e.g. MuhammedHussein@gmail.com'
+												placeholder='e.g. dwightdoe@gmail.com'
 											/>
 										</div>
 									</div>
@@ -179,7 +181,7 @@ const SignupFormComp = ({
 												{language === "Arabic" ? "نوع المتجر" : "Store Type"}
 											</label>
 											<select
-												className='form-control'
+												className='form-control p-1'
 												onChange={(e) => {
 													setValues({ ...values, storeType: e.target.value });
 													ReactGA.event("Account_Chose_Store_Type", {
@@ -198,14 +200,10 @@ const SignupFormComp = ({
 											>
 												<option value='Please Select'>Please Select</option>
 												<option value='Hair Salon'>
-													Beauty Salon/ Coiffure <strong> (WOMEN)</strong>
+													Beauty Salon/ Coiffure
 												</option>
-												<option value='Barber Shop'>
-													Barber Shop <strong> (MEN)</strong>{" "}
-												</option>
-												<option value='Massage Salon'>
-													Massage Salon <strong>(BOTH)</strong>{" "}
-												</option>
+												<option value='Barber Shop'>Barber Shop</option>
+												<option value='Massage Salon'>Massage Salon</option>
 											</select>
 										</div>
 									</div>
@@ -258,7 +256,7 @@ const SignupFormComp = ({
 												{language === "Arabic" ? "بلد المتجر" : "Store Country"}
 											</label>
 											<select
-												className='form-control'
+												className='form-control p-1'
 												onChange={(e) => {
 													setValues({
 														...values,
@@ -295,7 +293,8 @@ const SignupFormComp = ({
 											>
 												{values &&
 												values.storeCountry &&
-												values.storeCountry !== "Egypt" ? (
+												values.storeCountry !== "Egypt" &&
+												values.storeCountry !== "United States" ? (
 													<span>
 														{/* {values.storeCountry} is not where you are, please
 														select the correct country, Thank you! */}
@@ -313,7 +312,8 @@ const SignupFormComp = ({
 								values.storeType &&
 								values.storeName &&
 								values.storeCountry &&
-								values.storeCountry === "Egypt" ? (
+								(values.storeCountry === "Egypt" ||
+									values.storeCountry === "United States") ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -326,12 +326,10 @@ const SignupFormComp = ({
 											style={{ marginTop: "25px" }}
 										>
 											<label style={{ fontWeight: "bold" }}>
-												{language === "Arabic"
-													? "المحافظة"
-													: "Store Governorate"}
+												{language === "Arabic" ? "المحافظة" : "State"}
 											</label>
 											<select
-												className='form-control'
+												className='form-control p-1'
 												onChange={(e) => {
 													const selectedGovernorate = e.target.value;
 													setValues({
@@ -339,11 +337,25 @@ const SignupFormComp = ({
 														storeGovernorate: selectedGovernorate,
 													});
 
-													const governorateCities = ShipToData.filter(
-														(item) => item.GovernorateEn === selectedGovernorate
-													).map((item) => item.City.AreaEn);
+													if (values.storeCountry === "United States") {
+														// Get counties for the selected state in the United States
+														const stateCounties =
+															UnitedStatesData &&
+															UnitedStatesData.filter(
+																(item) => item.state === selectedGovernorate
+															).map((item) => item.county);
 
-													setAllDistricts([...new Set(governorateCities)]);
+														setAllDistricts([...new Set(stateCounties)]);
+													}
+
+													if (values.storeCountry === "Egypt") {
+														const governorateCities = ShipToData.filter(
+															(item) =>
+																item.GovernorateEn === selectedGovernorate
+														).map((item) => item.City.AreaEn);
+
+														setAllDistricts([...new Set(governorateCities)]);
+													}
 
 													ReactGA.event("Account_Chose_Governorate", {
 														event_category: "Account_Chose_Governorate",
@@ -360,14 +372,28 @@ const SignupFormComp = ({
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
-
-												{EgyptGovernorate.map((g, i) => {
-													return (
-														<option key={i} value={g}>
-															{g}
-														</option>
-													);
-												})}
+												{values.storeCountry === "Egypt" ? (
+													<>
+														{EgyptGovernorate.map((g, i) => {
+															return (
+																<option key={i} value={g}>
+																	{g}
+																</option>
+															);
+														})}
+													</>
+												) : (
+													<>
+														{states &&
+															states.map((g, i) => {
+																return (
+																	<option key={i} value={g.name}>
+																		{g.name}
+																	</option>
+																);
+															})}
+													</>
+												)}
 											</select>
 
 											<div
@@ -397,10 +423,10 @@ const SignupFormComp = ({
 											style={{ marginTop: "25px" }}
 										>
 											<label style={{ fontWeight: "bold" }}>
-												{language === "Arabic" ? "منطقة" : "Store District"}
+												{language === "Arabic" ? "منطقة" : "County"}
 											</label>
 											<select
-												className='form-control'
+												className='form-control p-1'
 												onChange={(e) => {
 													setValues({
 														...values,
@@ -492,7 +518,7 @@ const SignupFormComp = ({
 											className='form-group col-md-8 mx-auto'
 											style={{ marginTop: "25px" }}
 										>
-											{language === "Arabic" ? (
+											{/* {language === "Arabic" ? (
 												<div
 													dir='rtl'
 													className='my-2'
@@ -515,7 +541,7 @@ const SignupFormComp = ({
 													60-day free trial instead of the standard 30 days. If
 													you have an agent, please add their information below.
 												</div>
-											)}
+											)} */}
 
 											<label style={{ fontWeight: "bold" }}>
 												{language === "Arabic" ? "وكيلك" : "Your Agent"}
@@ -572,7 +598,7 @@ const SignupFormComp = ({
 												className='mt-3'
 												style={{ fontWeight: "bolder", fontSize: "1rem" }}
 											>
-												{language === "Arabic" ? (
+												{/* {language === "Arabic" ? (
 													<>
 														إذا كنت لا تملك وكيلاً،{" "}
 														<strong
@@ -602,7 +628,7 @@ const SignupFormComp = ({
 														</strong>{" "}
 														and get the closest agent in your area
 													</>
-												)}
+												)} */}
 											</div>
 										</div>
 									</div>

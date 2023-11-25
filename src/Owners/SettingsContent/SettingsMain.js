@@ -416,6 +416,7 @@ const SettingsMain = ({ language }) => {
 							activeWhatsAppNotification={activeWhatsAppNotification}
 							setActiveWhatsAppNotification={setActiveWhatsAppNotification}
 							language={chosenLanguage}
+							user={user}
 						/>
 					) : null}
 

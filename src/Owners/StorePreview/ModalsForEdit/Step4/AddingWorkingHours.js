@@ -113,7 +113,7 @@ const AddingWorkingHours = ({
 					<select
 						value={startTime}
 						onChange={(e) => setStartTime(e.target.value)}
-						className='form-control'
+						className='form-control p-1 my-1'
 					>
 						<label>Shift Starting Time:</label>
 						<br />
@@ -127,10 +127,10 @@ const AddingWorkingHours = ({
 							</option>
 						))}
 					</select>
-					<label>Shift Ending Time:</label>
+					<label className='mt-3'>Shift Ending Time:</label>
 					<br />
 					<select
-						className='form-control'
+						className='form-control p-1'
 						value={endTime}
 						onChange={(e) => setEndTime(e.target.value)}
 						disabled={!startTime}

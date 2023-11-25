@@ -338,7 +338,10 @@ const StoreSettingsView = () => {
 
 				<div className='col-md-3 mx-auto'>
 					<div className='form-group'>
-						<label className='text-muted'>Shipping Fees (In EGP)</label>
+						<label className='text-muted'>
+							Shipping Fees (In{" "}
+							{user && user.storyCountry === "egypt" ? "EGP" : "USD"})
+						</label>
 						<input
 							type='number'
 							className='form-control'
@@ -380,14 +383,19 @@ const StoreSettingsView = () => {
 				<div className='col-md-5 mx-auto'>
 					<div className='form-group'>
 						<label className='text-muted'>
-							Total EGP Value Limit To get Free Shipping
+							Total {user && user.storyCountry === "egypt" ? "EGP" : "USD"}{" "}
+							Value Limit To get Free Shipping
 						</label>
 						<input
 							type='number'
 							className='form-control'
 							onChange={handleChange6}
 							value={freeShippingLimit}
-							placeholder='Min EGP value purchase to get free shipping (e.g. 100 EGP will be added as 100)'
+							placeholder={`Min ${
+								user && user.storyCountry === "egypt" ? "EGP" : "USD"
+							} value purchase to get free shipping (e.g. 100 ${
+								user && user.storyCountry === "egypt" ? "EGP" : "USD"
+							} will be added as 100)`}
 						/>
 					</div>
 				</div>
@@ -627,7 +635,7 @@ const StoreSettingsView = () => {
 									Online Services Fee:
 									{alreadySetLoyaltyPointsManagement &&
 										alreadySetLoyaltyPointsManagement.onlineServicesFees}{" "}
-									EGP
+									{user && user.storyCountry === "egypt" ? "EGP" : "USD"}
 								</div>
 								<div className='mx-auto col-md-5 mt-3'>
 									Transaction Fee:
@@ -642,10 +650,12 @@ const StoreSettingsView = () => {
 									%
 								</div>
 								<div className='mx-auto col-md-5 mt-3'>
-									Minimum EGP to get free Shipping:
+									Minimum{" "}
+									{user && user.storyCountry === "egypt" ? "EGP" : "USD"} to get
+									free Shipping:
 									{alreadySetLoyaltyPointsManagement &&
 										alreadySetLoyaltyPointsManagement.freeShippingLimit}{" "}
-									EGP
+									{user && user.storyCountry === "egypt" ? "EGP" : "USD"}
 								</div>
 								<div className='mx-auto col-md-5 mt-3'>
 									First Purchase Percentage Discount:{" "}

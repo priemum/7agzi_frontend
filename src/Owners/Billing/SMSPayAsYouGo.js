@@ -129,13 +129,13 @@ const SMSPayAsYouGo = ({
 								<h5>
 									Initial Payment Will be{" "}
 									<strong style={{ color: "black", fontSize: "1.3rem" }}>
-										$2
+										$5
 									</strong>{" "}
 									and then you will be re-charged every week based on how many
 									messages were sent to your client
 									<br />
 									<strong style={{ color: "black", fontSize: "1.3rem" }}>
-										$0.03 per message
+										5 cents per message
 									</strong>
 								</h5>
 								<DropIn

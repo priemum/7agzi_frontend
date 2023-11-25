@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { DatePicker } from "antd";
 
-const TableViewStore = ({ orders, selectedDate }) => {
+const TableViewStore = ({ orders, setSelectedDate, selectedDate }) => {
 	const [q, setQ] = useState("");
 
 	function search(orders) {
@@ -45,15 +46,119 @@ const TableViewStore = ({ orders, selectedDate }) => {
 			)
 		);
 
+	const date = moment(selectedDate, "MM/DD/YYYY");
+
+	const handleChangeDate = (date) => {
+		if (date) {
+			const formattedDate = moment(date).format("MM/DD/YYYY");
+			setSelectedDate(formattedDate);
+		} else {
+			setSelectedDate(null);
+		}
+	};
+
 	return (
 		<TableViewStoreWrapper>
+			<div className='row mx-1'>
+				<div className='col-3'></div>
+				<div className='col-6 text-center mx-auto'>
+					<div className='mt-2'>
+						<span
+							onClick={() =>
+								setSelectedDate(
+									moment(selectedDate, "MM/DD/YYYY")
+										.subtract(1, "days")
+										.format("MM/DD/YYYY")
+								)
+							}
+							style={{
+								fontSize: "12px",
+								marginRight: "3px",
+								fontWeight: "bolder",
+								background: "#214221",
+								color: "white",
+								padding: "1px 15px",
+								cursor: "pointer",
+							}}
+						>
+							Previous
+						</span>
+						<span
+							onClick={() =>
+								setSelectedDate(
+									moment(selectedDate, "MM/DD/YYYY")
+										.add(1, "days")
+										.format("MM/DD/YYYY")
+								)
+							}
+							style={{
+								fontSize: "12px",
+								marginRight: "5px",
+								fontWeight: "bolder",
+								background: "#214221",
+								color: "white",
+								padding: "1px 15px",
+								cursor: "pointer",
+							}}
+						>
+							Next
+						</span>
+					</div>
+					<div className='my-4'>
+						<label
+							className='ml-3'
+							style={{
+								fontSize: "14px",
+							}}
+						>
+							<strong>Choose Date</strong>
+						</label>
+						<DatePicker
+							onChange={handleChangeDate}
+							size='small'
+							defaultValue={moment(selectedDate, "MM/DD/YYYY")}
+							style={{ width: "95%" }}
+							max
+							showToday={true}
+							// defaultValue={chosenDate || moment()}
+							placeholder='Please Select A Date'
+						/>
+					</div>
+				</div>
+				<div className='col-3 text-center'>
+					<div
+						className='english'
+						style={{ textAlign: "center", fontWeight: "bolder" }}
+					>
+						<div
+							style={{
+								fontSize: "2rem",
+								textAlign: "center",
+								fontWeight: "bolder",
+							}}
+						>
+							<strong>
+								{date.locale("en").format("D")} {/* Day */}
+							</strong>
+							<div
+								style={{ fontSize: "15px", textAlign: "center", margin: "0px" }}
+							>
+								<strong>
+									{date.locale("en").format("MMMM, YYYY")}{" "}
+									{/* Month Name, Year */}
+								</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div className=' mb-3 form-group mx-3 text-center'>
 				<label
-					className='mt-3 mx-3'
+					className='mt-0 mx-1'
 					style={{
 						fontWeight: "bold",
 						fontSize: "1.05rem",
-						color: "black",
+						color: "white",
 						borderRadius: "20px",
 					}}
 				>
@@ -64,8 +169,8 @@ const TableViewStore = ({ orders, selectedDate }) => {
 					type='text'
 					value={q}
 					onChange={(e) => setQ(e.target.value.toLowerCase())}
-					placeholder='Search By Client Phone, Client Name, Stylist Name or Client Schedule Date'
-					style={{ borderRadius: "20px", width: "95%" }}
+					placeholder='Seach by client phone, client name, stylist name'
+					style={{ borderRadius: "20px", width: "100%" }}
 				/>
 			</div>
 			{/* <div className='my-3'>{DownloadExcel()}</div> */}
@@ -77,162 +182,129 @@ const TableViewStore = ({ orders, selectedDate }) => {
 				}}
 			>
 				<table
-					className='table table-bordered table-md-responsive table-hover table-striped'
+					className='table table-md-responsive table-hover my-auto'
 					style={{ fontSize: "0.75rem" }}
 				>
-					<thead
-					// className='thead-light'
-					// style={{border: "2px black solid"}}
-					>
+					<thead>
 						<tr>
-							<th scope='col'>#</th>
-							<th scope='col'>Booking Loc.</th>
-							<th scope='col'>Stylist Name</th>
-							<th scope='col'>Customer Name</th>
-							<th scope='col'>Customer Phone</th>
-							<th scope='col'>Schedule DateTime</th>
-							<th scope='col'>Booked On</th>
-							<th scope='col'>Status</th>
-							{/* <th scope='col'>Receipt #</th> */}
-							<th scope='col'>Service</th>
-							<th scope='col'>Paid Tip</th>
-							<th scope='col'>Service Price</th>
-							<th scope='col'>Online Fee</th>
-							<th scope='col'>Amount</th>
-							<th scope='col'>Loyalty Points</th>
+							<th>#</th>
+							<th>Date</th>
+							<th>Client Name</th>
+							<th>Client Phone</th>
+							<th>Stylist</th>
+							<th>Amount</th>
+							<th>Booking Source </th>
+							<th>Details</th>
 						</tr>
 					</thead>
 
-					<tbody>
-						{search(orders).map((s, i) => (
+					<tbody className='my-auto'>
+						{search(q ? orders : ordersFiltered).map((s, i) => (
 							<tr
 								key={i}
-								style={{
-									background:
-										s.status === "Cancelled"
-											? "darkred"
-											: s.status.includes("Not Paid")
-											? ""
-											: s.status.includes("Paid")
-											? "lightgreen"
-											: "",
-									color:
-										s.status === "Cancelled"
-											? "white"
-											: s.status.includes("Not Paid")
-											? ""
-											: s.status.includes("Paid")
-											? "black"
-											: "",
-								}}
+								className={
+									s.status === "Paid"
+										? "green-back"
+										: s.status === "Cancelled"
+										? "red-back"
+										: i % 2 === 0
+										? "white-row"
+										: "grey-row"
+								}
 							>
 								<td>{i + 1}</td>
-								<td>{s.BookedFrom}</td>
-								<td
-									onClick={() => {
-										window.scrollTo({ top: 0, behavior: "smooth" });
-									}}
-								>
-									<Link
-										to={`/store/single-appointment-details-store/${s._id}/${
-											s && s.employees && s.employees[0] && s.employees[0]._id
-										}`}
-									>
-										{s.employees.map((e, ii) => (
-											<div
-												key={ii}
-												// className='text-center'
-												style={{
-													color:
-														s.status === "Cancelled"
-															? "white"
-															: s.status.includes("Not Paid")
-															? ""
-															: s.status.includes("Paid")
-															? "black"
-															: "",
-													textDecoration: "underline",
-												}}
-											>
-												{e.employeeName}
-											</div>
-										))}
-									</Link>
-								</td>
-
-								<td>{s.scheduledByUserName}</td>
-								<td>{s.phone}</td>
 								<td>
 									{new Date(s.scheduledDate).toLocaleDateString()}{" "}
 									{s.scheduledTime}
 								</td>
-								<td>{new Date(s.createdAt).toLocaleString()}</td>
-								<td>{s.status}</td>
-								{/* <td>
-									{s.transaction_id === null ||
-									s.transaction_id === undefined ||
-									s.transaction_id === ""
-										? s._id.substring(0, 10)
-										: s.transaction_id}
-								</td> */}
-								<td>{s.service}</td>
-								<td>{s.paidTip.toFixed(2)}</td>
-								<td>{s.servicePrice}</td>
-								<td>{s.onlineServicesFees}</td>
-								<td style={{ fontWeight: "bolder", fontSize: "13px" }}>
-									{s.amount.toFixed(2)}
+								<td>{s.scheduledByUserName}</td>
+								<td>{s.phone}</td>
+								<td>
+									{s.employees.map((e, ii) => (
+										<div
+											key={ii}
+											// className='text-center'
+											style={{
+												color:
+													s.status === "Cancelled"
+														? "white"
+														: s.status.includes("Not Paid")
+														? ""
+														: s.status.includes("Paid")
+														? "white"
+														: "",
+											}}
+										>
+											{e.employeeName}
+										</div>
+									))}
 								</td>
-								<td>{s.applyPoints.toString()}</td>
+								<td style={{ fontWeight: "bolder", fontSize: "10px" }}>
+									${s.amount.toFixed(2)}
+								</td>
+								<td>{s.BookedFrom === "Store" ? "From Store" : "Online"}</td>
+								<td>
+									<Link
+										onClick={() => {
+											window.scrollTo({ top: 0, behavior: "smooth" });
+										}}
+										to={`/store/single-appointment-details-store/${s._id}/${
+											s && s.employees && s.employees[0] && s.employees[0]._id
+										}`}
+									>
+										{" "}
+										<strong>Details...</strong>
+									</Link>
+								</td>
 							</tr>
 						))}
-
 						<tr className='grey-row'>
-							<td className='text-end'>
+							<td>
 								{!q && ordersFiltered && ordersFiltered.length === 0 ? "1" : ""}
 							</td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr className='white-row'>
-							<td className='text-end'>
+							<td>
 								{!q && ordersFiltered && ordersFiltered.length === 0 ? "2" : ""}
 							</td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr className='grey-row'>
-							<td className='text-end'>
+							<td>
 								{!q && ordersFiltered && ordersFiltered.length === 0 ? "3" : ""}
 							</td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr className='white-row'>
-							<td className='text-end'>
+							<td>
 								{!q && ordersFiltered && ordersFiltered.length === 0 ? "4" : ""}
 							</td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
-							<td className='text-end'></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
@@ -245,7 +317,7 @@ const TableViewStore = ({ orders, selectedDate }) => {
 					}}
 				>
 					{!q && ordersFiltered && ordersFiltered.length === 0
-						? "No Reservations"
+						? "No Available Appointment For The Selected Date"
 						: ""}
 				</div>
 			</div>
@@ -259,6 +331,31 @@ const TableViewStoreWrapper = styled.div`
 	margin-right: 20px;
 	margin-left: 20px;
 	overflow-x: auto;
+	background-color: grey;
+
+	.white-row {
+		background-color: #ececec;
+		color: black;
+	}
+
+	.grey-row {
+		background-color: white;
+		color: black;
+	}
+
+	.green-back {
+		background-color: green;
+		color: white;
+	}
+
+	.red-back {
+		background-color: red;
+		color: white;
+	}
+
+	table {
+		background-color: lightgrey;
+	}
 
 	@media (max-width: 1100px) {
 		font-size: 0.5rem;

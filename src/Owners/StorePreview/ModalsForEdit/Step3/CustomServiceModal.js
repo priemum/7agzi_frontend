@@ -138,8 +138,9 @@ const CustomServiceModal = ({
 						<div>
 							<div>VERY IMPORTANT</div>
 							<div>
-								Service Price: should be digits only so don't add EGP or
-								anything, just digits please
+								Service Price: should be digits only so don't add{" "}
+								{user.storeCountry === "egypt" ? "EGP" : "USD"} or anything,
+								just digits please
 							</div>
 							<div>
 								Service Estimated Time: should be digits only

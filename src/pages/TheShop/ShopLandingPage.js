@@ -66,6 +66,8 @@ const ShopLandingPage = () => {
 	const [distinctCategories, setDistinctCategories] = useState([]);
 	const [distinctGenders, setDistinctGenders] = useState([]);
 
+	const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+
 	const [filterCategories, setFilterCategories] = useState(undefined);
 	const [filterGender, setFilterGender] = useState(undefined);
 	const [filterSize, setFilterSize] = useState(undefined);
@@ -78,7 +80,9 @@ const ShopLandingPage = () => {
 			undefined,
 			filterGender,
 			filterSize,
-			undefined,
+			!userLocation.country
+				? "United States"
+				: userLocation.country && userLocation.country.toLowerCase(),
 			30,
 			1
 		).then((data) => {
@@ -113,8 +117,6 @@ const ShopLandingPage = () => {
 		gettingDistinctGenders();
 		// eslint-disable-next-line
 	}, [filterGender, filterCategories, filterSize]);
-
-	console.log(allProducts, "allProducts");
 
 	return (
 		<ShopLandingPageWrapper>

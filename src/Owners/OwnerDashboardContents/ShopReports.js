@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {listScheduledOrders2} from "../apiOwner";
-import {isAuthenticated} from "../../auth";
-import {Spin} from "antd";
+import { listScheduledOrders2 } from "../apiOwner";
+import { isAuthenticated } from "../../auth";
+import { Spin } from "antd";
 import Section1 from "./ShopReportsContent/Section1";
 import Section2 from "./ShopReportsContent/Section2";
 import Section3 from "./ShopReportsContent/Section3";
@@ -15,7 +15,7 @@ const ShopReports = () => {
 	const [loading, setLoading] = useState(true);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [filteredStylistName, setFilteredStylistName] = useState("");
-	const {user, token} = isAuthenticated();
+	const { user, token } = isAuthenticated();
 
 	const loadOrders = () => {
 		function compareTotalAppointments(a, b) {
@@ -157,7 +157,7 @@ const ShopReports = () => {
 			return dateB - dateA; // Sort in descending order
 		});
 
-	const {minDate, maxDate} =
+	const { minDate, maxDate } =
 		orders &&
 		orders.reduce(
 			(result, current) => {
@@ -170,14 +170,14 @@ const ShopReports = () => {
 				}
 				return result;
 			},
-			{minDate: null, maxDate: null}
+			{ minDate: null, maxDate: null }
 		);
 
 	return (
 		<ShopReportsWrapper>
 			{loading ? (
-				<div style={{textAlign: "center", marginTop: "20px"}}>
-					<Spin size='large' style={{fontSize: "48px"}} />
+				<div style={{ textAlign: "center", marginTop: "20px" }}>
+					<Spin size='large' style={{ fontSize: "48px" }} />
 				</div>
 			) : (
 				<div className='container-fluid col-lg-11 mx-auto'>
@@ -208,14 +208,19 @@ const ShopReports = () => {
 						</h4>
 					</div>
 
-					<Section1 orders={orders} />
-					<Section2 sortedArray={sortedArray} />
+					<Section1 orders={orders} user={user} />
+					<Section2 sortedArray={sortedArray} user={user} />
 					<Section3
 						sortedArray={sortedArray}
 						sortedArrayCancelled={sortedArrayCancelled}
+						user={user}
 					/>
 
-					<Section4 orders={orders} NotCancelledOrders={NotCancelledOrders} />
+					<Section4
+						orders={orders}
+						NotCancelledOrders={NotCancelledOrders}
+						user={user}
+					/>
 				</div>
 			)}
 		</ShopReportsWrapper>

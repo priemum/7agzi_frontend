@@ -301,12 +301,16 @@ const UpdateService = ({ language }) => {
 		{ english: "Male", arabic: "ذكر" },
 		{ english: "Female", arabic: "أنثى" },
 		{
-			english: "Boys (Client 12 Years Old or Younger)",
+			english: "Boys",
 			arabic: "الأولاد (العميل الذي تقل أعمارهم عن 12 سنة)",
 		},
 		{
-			english: "Girls (Client 12 Years Old or Younger)",
+			english: "Girls",
 			arabic: "البنات (العميل الذي تقل أعمارهم عن 12 سنة)",
+		},
+		{
+			english: "Others",
+			arabic: "",
 		},
 	];
 
@@ -428,7 +432,12 @@ const UpdateService = ({ language }) => {
 					>
 						{customerTypes.map((type, index) => (
 							<option key={index} value={JSON.stringify(type)}>
-								{type.english} {index === 0 ? null : " | " + type.arabic}
+								{type.english}{" "}
+								{index === 0
+									? null
+									: user && user.storeCountry === "egypt"
+									? " | " + type.arabic
+									: null}
 							</option>
 						))}
 					</select>
@@ -461,7 +470,10 @@ const UpdateService = ({ language }) => {
 						)}
 						{possibleServices.map((service, index) => (
 							<option key={index} value={JSON.stringify(service)}>
-								{service.english} / {service.arabic}
+								{service.english}{" "}
+								{user && user.storeCountry === "egypt"
+									? "/ " + service.arabic
+									: null}
 							</option>
 						))}
 					</select>
@@ -490,28 +502,60 @@ const UpdateService = ({ language }) => {
 								className='form-control'
 								onChange={(e) => setServiceName(e.target.value)}
 								value={serviceName}
-								placeholder='Add Custom Service'
+								placeholder={
+									language === "Arabic"
+										? "إضافة خدمة مخصصة"
+										: "Add Custom Service"
+								}
 								required
 							/>
 						</div>
 
-						<div className='form-group col-md-6 mx-auto'>
-							<label className='text-muted'>
-								{" "}
-								{bundleService ? "Bundle" : "Custom"} Service Name (Arabic)
-							</label>
-							<input
-								type='text'
-								className='form-control'
-								onChange={(e) => setServiceNameOtherLanguage(e.target.value)}
-								value={serviceNameOtherLanguage}
-								placeholder='Add Custom Service Name In Arabic'
-								required
-							/>
-						</div>
-
+						{user &&
+						user.storeCountry &&
+						user.storeCountry.toLowerCase() === "egypt" ? (
+							<div
+								className='form-group col-md-6 mx-auto'
+								style={{
+									textAlign: language === "Arabic" ? "right" : "",
+									fontWeight: language === "Arabic" ? "bolder" : "",
+								}}
+							>
+								<>
+									<label className='text-muted'>
+										{bundleService
+											? language === "Arabic"
+												? "اسم الحزمة (بالعربية)"
+												: "Bundle Service Name (Arabic)"
+											: language === "Arabic"
+											? "اسم الخدمة المخصصة (بالعربية)"
+											: "Custom Service Name (Arabic)"}
+									</label>
+									<input
+										type='text'
+										className='form-control'
+										onChange={(e) =>
+											setServiceNameOtherLanguage(e.target.value)
+										}
+										value={serviceNameOtherLanguage}
+										placeholder={
+											language === "Arabic"
+												? "إضافة اسم خدمة مخصصة باللغة العربية"
+												: "Add Custom Service Name In Arabic"
+										}
+										required
+									/>
+								</>
+							</div>
+						) : null}
 						{bundleService ? (
-							<div className='form-group mx-auto col-md-12 w-100 py-2'>
+							<div
+								className='form-group mx-auto col-md-12 w-100 py-2'
+								style={{
+									textAlign: language === "Arabic" ? "right" : "",
+									fontWeight: language === "Arabic" ? "bolder" : "",
+								}}
+							>
 								<label className='text-muted'>
 									{language === "Arabic"
 										? "Add Set Of Services"
@@ -537,58 +581,6 @@ const UpdateService = ({ language }) => {
 						) : null}
 					</>
 				) : null}
-
-				<div className='row'>
-					<div
-						className='form-group col-md-6 mx-auto col-4'
-						style={{
-							textAlign: language === "Arabic" ? "right" : "",
-							fontWeight: language === "Arabic" ? "bolder" : "",
-						}}
-					>
-						<label className='text-muted'>
-							{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
-						</label>
-						<input
-							type='number'
-							className='form-control'
-							onChange={handleChange2}
-							value={servicePrice}
-							placeholder={
-								language === "Arabic"
-									? "يجب أن تكون أرقام فقط"
-									: "Should be digits only"
-							}
-							required
-						/>
-					</div>
-
-					<div
-						className='form-group col-md-6 mx-auto col-7'
-						style={{
-							textAlign: language === "Arabic" ? "right" : "",
-							fontWeight: language === "Arabic" ? "bolder" : "",
-						}}
-					>
-						<label className='text-muted'>
-							{language === "Arabic"
-								? "سعر الخدمة بعد الخصم"
-								: "Service Price After Discount"}
-						</label>
-						<input
-							type='number'
-							className='form-control'
-							onChange={handleChange9}
-							value={servicePriceDiscount}
-							placeholder={
-								language === "Arabic"
-									? "يجب أن تكون أرقام فقط"
-									: "Should be digits only"
-							}
-							required
-						/>
-					</div>
-				</div>
 
 				{/* <div className='form-group col-md-8 mx-auto'>
 					<label className='text-muted'>
@@ -618,7 +610,62 @@ const UpdateService = ({ language }) => {
 					/>
 				</div> */}
 			</div>
+
 			<div className='row'>
+				<div
+					className='form-group col-md-6 mx-auto col-4'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{language === "Arabic" ? "سعر الخدمة" : "Service Price"}
+					</label>
+					<input
+						type='number'
+						className='form-control'
+						onChange={handleChange2}
+						value={servicePrice}
+						placeholder={
+							language === "Arabic"
+								? "يجب أن تكون أرقام فقط"
+								: "Should be digits only"
+						}
+						required
+					/>
+				</div>
+
+				<div
+					className='form-group col-md-6 mx-auto col-7'
+					style={{
+						textAlign: language === "Arabic" ? "right" : "",
+						fontWeight: language === "Arabic" ? "bolder" : "",
+					}}
+				>
+					<label className='text-muted'>
+						{language === "Arabic"
+							? "سعر الخدمة بعد الخصم"
+							: "Service Price After Discount"}
+					</label>
+					<input
+						type='number'
+						className='form-control'
+						onChange={handleChange9}
+						value={servicePriceDiscount}
+						placeholder={
+							language === "Arabic"
+								? "يجب أن تكون أرقام فقط"
+								: "Should be digits only"
+						}
+						required
+					/>
+				</div>
+			</div>
+			<div
+				className='row'
+				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+			>
 				<div className='col-md-6 mx-auto'>
 					<div>
 						{serviceDescriptionCombined &&
@@ -667,17 +714,20 @@ const UpdateService = ({ language }) => {
 							)}
 					</div>
 					<label className='text-muted'>
-						Add set of services connected to{" "}
-						<span style={{ color: "blue", fontWeight: "bold" }}>
-							"{serviceName}"
-						</span>
+						{language === "Arabic"
+							? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceName}" باللغة الإنجليزية`
+							: `Add set of services connected to "${serviceName}"`}
 					</label>
 					<input
 						type='text'
 						className='form-control'
 						onChange={handleChange8}
 						value={serviceDescription}
-						placeholder='Describtion of the service'
+						placeholder={
+							language === "Arabic"
+								? "وصف الخدمة"
+								: "Description of the service"
+						}
 					/>
 					<div className='row'>
 						<button
@@ -685,7 +735,9 @@ const UpdateService = ({ language }) => {
 							onClick={pushToServiceDescription}
 							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
 						>
-							Add Service Description.
+							{language === "Arabic"
+								? "إضافة وصف الخدمة."
+								: "Add Service Description."}
 						</button>
 						<button
 							style={{ fontSize: "12px" }}
@@ -695,94 +747,117 @@ const UpdateService = ({ language }) => {
 							}}
 							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
 						>
-							Clear Set Of Descriptions
+							{language === "Arabic"
+								? "مسح مجموعة الأوصاف"
+								: "Clear Set Of Descriptions"}
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<div className='row'>
+			<div
+				className='row'
+				style={{ textAlign: language === "Arabic" ? "right" : "" }}
+			>
 				<div className='col-md-6 mx-auto'>
-					<div>
-						{serviceDescriptionCombinedOtherLanguage &&
-							serviceDescriptionCombinedOtherLanguage.length > 0 && (
-								<React.Fragment>
-									{language === "Arabic"
-										? "الوصف المضاف باللغة العربية:"
-										: "Added Descriptions Arabic:"}
-									<ul>
-										{serviceDescriptionCombinedOtherLanguage &&
-											serviceDescriptionCombinedOtherLanguage.map((i, e) => (
-												<li
-													style={{
-														listStyle: "none",
-														marginLeft: "20px",
-														fontSize: "12px",
-													}}
-													key={e}
-												>
-													<button
-														type='button'
-														onClick={() => {
-															var array =
-																serviceDescriptionCombinedOtherLanguage &&
-																serviceDescriptionCombinedOtherLanguage.filter(
-																	function (s) {
-																		return s !== i;
-																	}
-																);
-															setServiceDescriptionCombinedOtherLanguage(array);
-														}}
+					{user && user.storeCountry === "egypt" ? (
+						<div>
+							{serviceDescriptionCombinedOtherLanguage &&
+								serviceDescriptionCombinedOtherLanguage.length > 0 && (
+									<React.Fragment>
+										{language === "Arabic"
+											? "الوصف المضاف باللغة العربية:"
+											: "Added Descriptions Arabic:"}
+										<ul>
+											{serviceDescriptionCombinedOtherLanguage &&
+												serviceDescriptionCombinedOtherLanguage.map((i, e) => (
+													<li
 														style={{
-															color: "white",
-															background: "black",
-															fontSize: "15px",
-															borderRadius: "15px",
-															marginRight: "10px",
+															listStyle: "none",
+															marginLeft: "20px",
+															fontSize: "12px",
 														}}
-														aria-label='Close'
+														key={e}
 													>
-														<span aria-hidden='true'>&times;</span>
-													</button>
-													{i}
-												</li>
-											))}
-									</ul>
-								</React.Fragment>
-							)}
-					</div>
-					<label className='text-muted'>
-						Add set of services connected to{" "}
-						<span style={{ color: "blue", fontWeight: "bold" }}>
-							"{serviceNameOtherLanguage}" In Arabic
-						</span>
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						onChange={handleChange13}
-						value={serviceDescriptionOtherLanguage}
-						placeholder='Describtion of the service'
-					/>
-					<div className='row'>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={pushToServiceDescriptionOtherLanguage}
-							className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
-						>
-							Add Service Description.
-						</button>
-						<button
-							style={{ fontSize: "12px" }}
-							onClick={() => {
-								setServiceDescriptionCombinedOtherLanguage([]);
-								setServiceType("Please select / Required*");
-							}}
-							className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
-						>
-							Clear Set Of Descriptions
-						</button>
-					</div>
+														<button
+															type='button'
+															onClick={() => {
+																var array =
+																	serviceDescriptionCombinedOtherLanguage &&
+																	serviceDescriptionCombinedOtherLanguage.filter(
+																		function (s) {
+																			return s !== i;
+																		}
+																	);
+																setServiceDescriptionCombinedOtherLanguage(
+																	array
+																);
+															}}
+															style={{
+																color: "white",
+																background: "black",
+																fontSize: "15px",
+																borderRadius: "15px",
+																marginRight: "10px",
+															}}
+															aria-label='Close'
+														>
+															<span aria-hidden='true'>&times;</span>
+														</button>
+														{i}
+													</li>
+												))}
+										</ul>
+									</React.Fragment>
+								)}
+						</div>
+					) : null}
+
+					{user &&
+					user.storeCountry &&
+					user.storeCountry.toLowerCase() === "egypt" ? (
+						<>
+							<label className='text-muted'>
+								{language === "Arabic"
+									? `إضافة مجموعة من الخدمات المرتبطة بـ "${serviceNameOtherLanguage}" باللغة العربية`
+									: `Add set of services connected to "${serviceNameOtherLanguage}" In Arabic`}
+							</label>
+							<input
+								type='text'
+								className='form-control'
+								onChange={handleChange13}
+								value={serviceDescriptionOtherLanguage}
+								placeholder={
+									language === "Arabic"
+										? "وصف الخدمة"
+										: "Description of the service"
+								}
+							/>
+							<div className='row'>
+								<button
+									style={{ fontSize: "12px" }}
+									onClick={pushToServiceDescriptionOtherLanguage}
+									className='btn btn-outline-info col-md-5  text-center mx-auto my-2'
+								>
+									{language === "Arabic"
+										? "إضافة وصف الخدمة."
+										: "Add Service Description."}
+								</button>
+								<button
+									style={{ fontSize: "12px" }}
+									onClick={() => {
+										setServiceDescriptionCombinedOtherLanguage([]);
+										setServiceType("Please select / Required*");
+									}}
+									className='btn btn-outline-danger col-md-5  text-center mx-auto my-2'
+								>
+									{language === "Arabic"
+										? "مسح مجموعة الأوصاف"
+										: "Clear Set Of Descriptions"}
+								</button>
+							</div>
+						</>
+					) : null}
 				</div>
 			</div>
 
@@ -946,10 +1021,15 @@ const UpdateService = ({ language }) => {
 									</strong>
 								</div>
 								<div className='col-6 mx-auto'>
-									<strong>{s.servicePrice} EGP</strong>,
+									<strong>
+										{user && user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+										{s.servicePrice}
+									</strong>
+									,
 									<strong style={{ color: "green" }}>
 										{" "}
-										{s.servicePriceDiscount} EGP
+										{user && user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+										{s.servicePriceDiscount}
 									</strong>
 								</div>
 								<div className='col-6'>
@@ -1001,7 +1081,7 @@ const UpdateService = ({ language }) => {
 						)}
 					</h3>
 					<div
-						className='col-md-8 col-sm-6  mt-5 p-3'
+						className='col-md-10 col-sm-6  mt-5 p-3'
 						style={{
 							border: "2px #0f377e solid",
 							borderRadius: "20px",
@@ -1021,6 +1101,7 @@ export default UpdateService;
 
 const UpdateServiceWrapper = styled.div`
 	margin-left: 200px;
+	margin-bottom: 100px;
 
 	h3 {
 		margin-left: 150px;

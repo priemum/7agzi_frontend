@@ -514,11 +514,13 @@ function App() {
 						exact
 						component={StylistSingleSchedulePage}
 					/>
+
 					<EmployeeRoute
 						path='/update-profile/:userId'
 						exact
 						component={UpdateProfile}
 					/>
+
 					<EmployeeRoute
 						path='/general-stats/:userId'
 						exact

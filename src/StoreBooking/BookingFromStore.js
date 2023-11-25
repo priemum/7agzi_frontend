@@ -245,7 +245,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 				allPickedServices.join(","),
 				chosenCustomerType,
 				formattedDate,
-				"Egypt",
+				user.storeCountry === "united states" ? "United States" : "Egypt",
 				userBelongsToModified
 			).then((data) => {
 				if (data.error) {
@@ -378,12 +378,12 @@ const BookingFromStore = ({ language, setLanguage }) => {
 							{chosenLanguage === "Arabic" ? (
 								<div className='row mx-auto text-center mb-4 mt-2'>
 									<div
-										className='col-md-10 col-10 mx-auto menuItems mt-2'
+										className='col-md-10 col-10 mx-auto menuItems mt-2 '
 										style={isActive(clickedMenu, "POSAccount")}
 										onClick={() => setClickedMenu("POSAccount")}
 									>
 										<Link
-											className='mb-2'
+											className='mb-2 p-0'
 											style={isActive(clickedMenu, "POSAccount")}
 											to='/store/book-appointment-from-store?pos-account'
 										>
@@ -397,6 +397,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										onClick={() => setClickedMenu("NewAppointment")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "NewAppointment")}
 											to='/store/book-appointment-from-store?new-appointments'
 										>
@@ -410,6 +411,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										onClick={() => setClickedMenu("TableView")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "TableView")}
 											to='/store/book-appointment-from-store?table-view'
 										>
@@ -424,6 +426,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 										onClick={() => setClickedMenu("OverAllCalendar")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "OverAllCalendar")}
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
@@ -435,50 +438,55 @@ const BookingFromStore = ({ language, setLanguage }) => {
 							) : (
 								<div className='row mx-auto text-center mb-4 mt-2'>
 									<div
-										className='col-md-9 col-9 mx-auto menuItems mb-1'
+										className='col-md-10 col-10 mx-auto menuItems mt-2 '
 										style={isActive(clickedMenu, "POSAccount")}
 										onClick={() => setClickedMenu("POSAccount")}
 									>
 										<Link
+											className='mb-2 p-0'
 											style={isActive(clickedMenu, "POSAccount")}
 											to='/store/book-appointment-from-store?pos-account'
 										>
-											<i className='fa-brands fa-servicestack mr-1'></i> Create
-											a POS Account
+											<i className='fa-brands fa-servicestack mr-1'></i>
+											Create POS Account For Your Salon
 										</Link>
 									</div>
-
 									<div
-										className='col-md-3 col-4 mx-auto menuItems'
+										className='col-md-3 col-4 mx-auto menuItems mt-2'
 										style={isActive(clickedMenu, "NewAppointment")}
 										onClick={() => setClickedMenu("NewAppointment")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "NewAppointment")}
 											to='/store/book-appointment-from-store?new-appointments'
 										>
 											<i className='fa-brands fa-servicestack mr-1'></i>
-											New Appoint.
+											New Appointment
 										</Link>
 									</div>
 									<div
-										className='col-md-3 col-4 mx-auto menuItems'
+										className='col-md-3 col-4 mx-auto menuItems mt-2'
 										style={isActive(clickedMenu, "TableView")}
 										onClick={() => setClickedMenu("TableView")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "TableView")}
 											to='/store/book-appointment-from-store?table-view'
 										>
-											<i className='fa-brands fa-servicestack mr-1'></i> Cashier
+											<i className='fa-brands fa-servicestack mr-1'></i>
+											Overall Appointments
 										</Link>
 									</div>
+
 									<div
-										className='col-md-3 col-4 mx-auto menuItems'
+										className='col-md-3 col-4 mx-auto menuItems mt-2'
 										style={isActive(clickedMenu, "OverAllCalendar")}
 										onClick={() => setClickedMenu("OverAllCalendar")}
 									>
 										<Link
+											className='p-0'
 											style={isActive(clickedMenu, "OverAllCalendar")}
 											to='/store/book-appointment-from-store?overall-calendar'
 										>
@@ -589,14 +597,18 @@ const BookingFromStore = ({ language, setLanguage }) => {
 									style={isActive2(clickedMenu2, "FirstAppointment")}
 									onClick={() => setClickedMenu2("FirstAppointment")}
 								>
-									أول حجز متاح
+									{chosenLanguage === "Arabic"
+										? "أول حجز متاح"
+										: "First Available Appointment"}
 								</div>
 								<div
 									className='col-6 mx-auto text-center'
 									style={isActive2(clickedMenu2, "SpecificEmp")}
 									onClick={() => setClickedMenu2("SpecificEmp")}
 								>
-									احجز مع موظف معين
+									{chosenLanguage === "Arabic"
+										? "احجز مع موظف معين"
+										: "Book With A Stylist"}
 								</div>
 							</div>
 							{clickedMenu2 === "FirstAppointment" ? (
@@ -822,6 +834,7 @@ const BookingFromStore = ({ language, setLanguage }) => {
 								<TableViewStore
 									orders={orders}
 									setSelectedDate={setSelectedDate}
+									selectedDate={selectedDate}
 								/>
 							)}
 						</>

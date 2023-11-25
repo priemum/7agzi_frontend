@@ -53,7 +53,7 @@ const BillingMain = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
 
 	const [collapseMenu, setCollapseMenu] = useState(false);
-	const [clickedMenu, setClickedMenu] = useState("PlatformShare");
+	const [clickedMenu, setClickedMenu] = useState("BePro");
 	const [updateCardClicked, setUpdateCardClicked] = useState(false);
 
 	const [data, setData] = useState({
@@ -179,10 +179,11 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 500,
+					amount: user.storeCountry === "egypt" ? 500 : 15,
 					email: user.email,
 					customerId: user._id,
-					planId: "monthly_plan_egy",
+					planId:
+						user.storeCountry === "egypt" ? "monthly_plan_egy" : "monthly_plan",
 				};
 
 				processPayment_Subscription(user._id, token, paymentData)
@@ -262,7 +263,7 @@ const BillingMain = ({ language }) => {
 
 				const paymentData = {
 					paymentMethodNonce: nonce,
-					amount: 2,
+					amount: 5,
 					email: user.email,
 					customerId: user._id,
 					planId: "One Time Payment",
@@ -339,7 +340,7 @@ const BillingMain = ({ language }) => {
 		} else if (window.location.search.includes("sms-pay")) {
 			setClickedMenu("SMS => PAY AS YOU GO");
 		} else {
-			setClickedMenu("PlatformShare");
+			setClickedMenu("BePro");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -379,27 +380,34 @@ const BillingMain = ({ language }) => {
 				<div>
 					<div className='container'>
 						<div className='row mx-auto'>
-							<div
-								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
-								style={isActive(clickedMenu, "PlatformShare")}
-								className='col-md-3 menuItems'
-								onClick={() => setClickedMenu("PlatformShare")}
-							>
-								<Link
+							{user && user.storeCountry === "egypt" ? (
+								<div
+									dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 									style={isActive(clickedMenu, "PlatformShare")}
-									to='/store/admin/billing-account?platform-share'
+									className='col-md-3 menuItems'
+									onClick={() => setClickedMenu("PlatformShare")}
 								>
-									<i className='fa-sharp fa-solid fa-house'></i>{" "}
-									{chosenLanguage === "Arabic" ? "مشاركة XLOOK" : "XLOOK Share"}
-								</Link>
-							</div>
+									<Link
+										className='p-0'
+										style={isActive(clickedMenu, "PlatformShare")}
+										to='/store/admin/billing-account?platform-share'
+									>
+										<i className='fa-sharp fa-solid fa-house'></i>{" "}
+										{chosenLanguage === "Arabic"
+											? "مشاركة XLOOK"
+											: "XLOOK Share"}
+									</Link>
+								</div>
+							) : null}
+
 							<div
 								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "BePro")}
-								className='col-md-3 menuItems'
+								className='col-md-4 menuItems'
 								onClick={() => setClickedMenu("BePro")}
 							>
 								<Link
+									className='p-0'
 									style={isActive(clickedMenu, "BePro")}
 									to='/store/admin/billing-account?be-pro'
 								>
@@ -410,10 +418,11 @@ const BillingMain = ({ language }) => {
 							<div
 								dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 								style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
-								className='col-md-3 menuItems'
+								className='col-md-4 menuItems'
 								onClick={() => setClickedMenu("SMS => PAY AS YOU GO")}
 							>
 								<Link
+									className='p-0'
 									style={isActive(clickedMenu, "SMS => PAY AS YOU GO")}
 									to='/store/admin/billing-account?sms-pay'
 								>

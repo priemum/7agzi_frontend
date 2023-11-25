@@ -108,6 +108,7 @@ const EmployeeMain = ({ language }) => {
 								onClick={() => setClickedMenu("AddEmployee")}
 							>
 								<Link
+									className='p-0'
 									style={isActive(clickedMenu, "AddEmployee")}
 									onClick={() => setClickedMenu("AddEmployee")}
 									to='/store/admin/employees'
@@ -124,6 +125,7 @@ const EmployeeMain = ({ language }) => {
 								onClick={() => setClickedMenu("UpdateEmployee")}
 							>
 								<Link
+									className='p-0'
 									style={isActive(clickedMenu, "UpdateEmployee")}
 									onClick={() => setClickedMenu("UpdateEmployee")}
 									to='/store/admin/employees?update-employee'

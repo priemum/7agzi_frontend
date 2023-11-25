@@ -411,6 +411,7 @@ const AddEmployee = ({ language }) => {
 							values={values}
 							setValues={setValues}
 							language={language}
+							user={user}
 						/>
 					</div>
 				) : null}

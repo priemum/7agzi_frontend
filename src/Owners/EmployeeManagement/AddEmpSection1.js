@@ -10,6 +10,7 @@ const AddEmpSection1 = ({
 	values,
 	setValues,
 	language,
+	user,
 }) => {
 	return (
 		<AddEmpSection1Wrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
@@ -41,37 +42,15 @@ const AddEmpSection1 = ({
 							}
 							value={values.employeeName}
 							onChange={(e) => {
-								setValues({ ...values, employeeName: e.target.value });
-							}}
-						/>
-					</div>
-					<div
-						className='mt-3'
-						dir={language === "Arabic" ? "rtl" : "ltr"}
-						style={{ textAlign: language === "Arabic" ? "right" : "" }}
-					>
-						<label>
-							{language === "Arabic"
-								? "اسم الموظف بالعربية"
-								: "Employee Name (Arabic)"}
-						</label>
-						<input
-							className='form-control'
-							type='text'
-							placeholder={
-								language === "Arabic"
-									? "أدخل اسم الموظف بالكامل بالعربية"
-									: "Fill In Stylist Full Name In Arabic"
-							}
-							value={values.employeeNameOtherLanguage}
-							onChange={(e) => {
 								setValues({
 									...values,
+									employeeName: e.target.value,
 									employeeNameOtherLanguage: e.target.value,
 								});
 							}}
 						/>
 					</div>
+
 					<div className='mt-4'>
 						<label>
 							{language === "Arabic" ? "رقم هاتف الموظف" : "Employee Phone #"}
@@ -103,6 +82,7 @@ const AddEmpSection1 = ({
 							<option value=''>Select Gender</option>
 							<option value='Male'>Male</option>
 							<option value='Female'>Female</option>
+							<option value='Other'>Others</option>
 						</select>
 					</div>
 				</div>

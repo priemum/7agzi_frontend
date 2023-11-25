@@ -39,7 +39,7 @@ const ImageCard = ({
 									addThumbnail.map((image, i) => {
 										return (
 											<div className='col-5  mb-3' key={i}>
-												<div className=' col-11 '>
+												<div className=' col-9 '>
 													<button
 														type='button'
 														className='close'
@@ -74,11 +74,11 @@ const ImageCard = ({
 														<span aria-hidden='true'>&times;</span>
 													</button>
 													<img
-														className='mx-2'
+														className='mx-2 imagePlace'
 														src={image.url}
 														alt='Img Not Found'
 														style={{
-															width: "200%",
+															width: "80%",
 															boxShadow: "1px 1px 1px 1px rgba(0,0,0,0.2)",
 														}}
 														key={image.public_id}
@@ -171,5 +171,11 @@ const ImageCardWrapper = styled.div`
 		border: 1px #f6f6f6 solid !important;
 		margin: auto;
 		text-align: center;
+	}
+
+	@media (max-width: 1000px) {
+		.imagePlace {
+			width: 250% !important;
+		}
 	}
 `;

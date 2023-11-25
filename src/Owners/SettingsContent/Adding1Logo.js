@@ -289,57 +289,87 @@ const Adding1Logo = ({
 						/>
 					)}
 				</div>
-				<div className='col-md-5 pt-5 mx-auto'>
-					<label>
-						{language === "Arabic"
-							? "اسم المتجر بالإنجليزية"
-							: "Store Name In English"}{" "}
-						<span style={{ color: "red", fontWeight: "bold" }}>
-							{" "}
-							<strong>*</strong>{" "}
-						</span>{" "}
-					</label>
-					<input
-						className='form-control'
-						type='text'
-						placeholder={
-							language === "Arabic"
-								? "ادخل اسم متجرك"
-								: "Fill In Your Store Name In English"
-						}
-						value={addStoreName}
-						onChange={(e) => {
-							setAddStoreName(e.target.value);
-						}}
-					/>
-				</div>
+				{user.storeCountry === "Egypt" ? (
+					<div className='col-md-5 pt-5 mx-auto'>
+						<label>
+							{language === "Arabic"
+								? "اسم المتجر بالإنجليزية"
+								: "Store Name In English"}{" "}
+							<span style={{ color: "red", fontWeight: "bold" }}>
+								{" "}
+								<strong>*</strong>{" "}
+							</span>{" "}
+						</label>
+						<input
+							className='form-control'
+							type='text'
+							placeholder={
+								language === "Arabic"
+									? "ادخل اسم متجرك"
+									: "Fill In Your Store Name In English"
+							}
+							value={addStoreName}
+							onChange={(e) => {
+								setAddStoreName(e.target.value);
+							}}
+						/>
+					</div>
+				) : (
+					<div className='col-md-7 pt-5 mx-auto'>
+						<label>
+							{language === "Arabic" ? "اسم المتجر بالإنجليزية" : "Store Name"}{" "}
+							<span style={{ color: "red", fontWeight: "bold" }}>
+								{" "}
+								<strong>*</strong>{" "}
+							</span>{" "}
+						</label>
+						<input
+							className='form-control'
+							type='text'
+							placeholder={
+								language === "Arabic"
+									? "ادخل اسم متجرك"
+									: "Fill In Your Store Name"
+							}
+							value={addStoreName}
+							onChange={(e) => {
+								setAddStoreName(e.target.value);
+								setAddStoreNameArabic(e.target.value);
+							}}
+						/>
+					</div>
+				)}
 
-				<div className='col-md-5 pt-5 mx-auto'>
-					<label>
-						{language === "Arabic"
-							? "اسم المتجر (بالعربية)"
-							: "Store Name (Arabic)"}{" "}
-						<span style={{ color: "red", fontWeight: "bold" }}>
-							{" "}
-							<strong>*</strong>{" "}
-						</span>{" "}
-					</label>
-					<input
-						className='form-control'
-						type='text'
-						placeholder={
-							language === "Arabic"
-								? "ادخل اسم متجرك بالعربية"
-								: "Fill In Your Store Name In Arabic"
-						}
-						value={addStoreNameArabic}
-						onChange={(e) => {
-							setAddStoreNameArabic(e.target.value);
-						}}
-					/>
-				</div>
+				{user &&
+				user.storeCountry &&
+				user.storeCountry.toLowerCase() === "egypt" ? (
+					<div className='col-md-5 pt-5 mx-auto'>
+						<label>
+							{language === "Arabic"
+								? "اسم المتجر (بالعربية)"
+								: "Store Name (Arabic)"}{" "}
+							<span style={{ color: "red", fontWeight: "bold" }}>
+								{" "}
+								<strong>*</strong>{" "}
+							</span>{" "}
+						</label>
+						<input
+							className='form-control'
+							type='text'
+							placeholder={
+								language === "Arabic"
+									? "ادخل اسم متجرك بالعربية"
+									: "Fill In Your Store Name In Arabic"
+							}
+							value={addStoreNameArabic}
+							onChange={(e) => {
+								setAddStoreNameArabic(e.target.value);
+							}}
+						/>
+					</div>
+				) : null}
 
-				<div className='col-md-5 py-5 mx-auto'>
+				<div className='col-md-6 py-5 mx-auto'>
 					<label>
 						{language === "Arabic" ? "خط العرض" : "Latitude"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>
@@ -361,7 +391,7 @@ const Adding1Logo = ({
 						}}
 					/>
 				</div>
-				<div className='col-md-5 py-5 mx-auto'>
+				<div className='col-md-6 py-5 mx-auto'>
 					<label>
 						{language === "Arabic" ? "خط الطول" : "Longitude"}{" "}
 						<span style={{ color: "red", fontWeight: "bold" }}>

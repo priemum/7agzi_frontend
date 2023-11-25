@@ -136,18 +136,17 @@ const EditServiceModal = ({
 						</div>
 					) : (
 						<div>
-							<div>
-								Service:
-								<br />
-								{pickedService.serviceNameOtherLanguage}
+							<div style={{ textTransform: "capitalize" }}>
+								Service: <strong>{pickedService.serviceName}</strong>
 							</div>
 
-							<div>
+							<div className='mt-3'>
 								<label>Service Price</label>
 								<input
 									type='number'
 									className='form-control'
 									placeholder='Service price'
+									value={pickedService.servicePrice}
 									onChange={(e) => {
 										setPickedService({
 											...pickedService,
@@ -157,12 +156,13 @@ const EditServiceModal = ({
 									}}
 								/>
 							</div>
-							<div>
+							<div className='mt-3'>
 								<label>Service Esitmated Time</label>
 								<input
 									type='number'
 									className='form-control'
 									placeholder='Estimated Time'
+									value={pickedService.serviceTime}
 									onChange={(e) => {
 										setPickedService({
 											...pickedService,
@@ -172,7 +172,7 @@ const EditServiceModal = ({
 								/>
 							</div>
 
-							<div>
+							<div className='mt-3'>
 								<label>Deativate Service</label>
 								<select
 									className='form-control'

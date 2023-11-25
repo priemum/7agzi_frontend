@@ -42,6 +42,7 @@ const EcomNav = ({ clickedMenu, setClickedMenu, chosenLanguage, user }) => {
 					onClick={() => setClickedMenu("StoreSettings")}
 				>
 					<Link
+						className='p-0'
 						style={isActive(clickedMenu, "StoreSettings")}
 						onClick={() => setClickedMenu("StoreSettings")}
 						to={
@@ -60,6 +61,7 @@ const EcomNav = ({ clickedMenu, setClickedMenu, chosenLanguage, user }) => {
 					onClick={() => setClickedMenu("Subcategories")}
 				>
 					<Link
+						className='p-0'
 						style={isActive(clickedMenu, "Subcategories")}
 						onClick={() => setClickedMenu("Subcategories")}
 						to={
@@ -78,6 +80,7 @@ const EcomNav = ({ clickedMenu, setClickedMenu, chosenLanguage, user }) => {
 					onClick={() => setClickedMenu("Products")}
 				>
 					<Link
+						className='p-0'
 						style={isActive(clickedMenu, "Products")}
 						onClick={() => setClickedMenu("Products")}
 						to={
@@ -96,6 +99,7 @@ const EcomNav = ({ clickedMenu, setClickedMenu, chosenLanguage, user }) => {
 					onClick={() => setClickedMenu("Orders")}
 				>
 					<Link
+						className='p-0'
 						style={isActive(clickedMenu, "Orders")}
 						onClick={() => setClickedMenu("Orders")}
 						to={

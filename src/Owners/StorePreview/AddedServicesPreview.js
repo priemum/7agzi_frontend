@@ -250,19 +250,7 @@ const AddedServicesPreview = ({
 							overallAddedSettings.length >= 2 &&
 							AllServices &&
 							AllServices.length === 0 ? (
-								<div
-									style={{
-										position: "absolute",
-										top: "-50px",
-										left: "30%",
-										animation: "moveArrow 1s infinite",
-										fontWeight: "bolder",
-										fontSize: "2.5rem",
-										color: "#ff7676",
-									}}
-								>
-									#3 →
-								</div>
+								<div className='arrow3'>#3 →</div>
 							) : null}
 						</div>
 
@@ -357,10 +345,30 @@ const AddedServicesStyling = styled.div`
 		animation: ${drawCircle} 10s forwards; /* 2s is the duration, change as needed */
 	}
 
+	.arrow3 {
+		position: absolute;
+		top: -150px;
+		left: 73%;
+		animation: moveArrow 1s infinite;
+		font-weight: bolder;
+		font-size: 2.5rem;
+		color: #ff7676;
+	}
+
 	@media (max-width: 1000px) {
 		width: 100%;
 		.ant-collapse-header {
 			font-size: 12px;
+		}
+
+		.arrow3 {
+			position: absolute;
+			top: -50px;
+			left: 25%;
+			animation: moveArrow 1s infinite;
+			font-weight: bolder;
+			font-size: 2.5rem;
+			color: #ff7676;
 		}
 	}
 `;

@@ -412,9 +412,9 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			return toast.error("Please Fill in Your User Name...");
 		}
 
-		if (customerPhone.length !== 11) {
+		if (customerPhone.length < 10) {
 			return toast.error(
-				"Please make sure the phone number is only 11 digits & In English"
+				"Please make sure the phone number is at least 10 digits & In English"
 			);
 		}
 
@@ -500,6 +500,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 			amount: Number(totalServicePriceDiscount) - Number(discountCash),
 			paidTip: 0,
 			tipPercentage: 0,
+			country: user.storeCountry,
 			servicePrice: totalServicePrice,
 			service: serviceDetailsArray.map((i) => i.serviceName).join(","),
 			serviceDetails: employeeAvailability,
@@ -599,6 +600,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 							clickSubmitSchedule_NoPayment={clickSubmitSchedule_NoPayment}
 							setModalVisible={setModalVisible}
 							discountCash={discountCash}
+							user={user}
 						/>
 					) : (
 						<ScheduleFormHelper
@@ -624,6 +626,7 @@ const ScheduleFormFinal = ({ language, setLanguage }) => {
 							clickSubmitSchedule_NoPayment={clickSubmitSchedule_NoPayment}
 							setModalVisible={setModalVisible}
 							discountCash={discountCash}
+							user={user}
 						/>
 					)}
 

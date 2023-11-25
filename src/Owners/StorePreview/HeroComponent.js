@@ -149,23 +149,7 @@ const HeroComponent = ({
 					}}
 				>
 					{overallAddedSettings && overallAddedSettings.length === 0 ? (
-						<div
-							style={{
-								position: "absolute",
-								top: "2px", // adjust this to fit your needs
-								right: "160%", // adjust this to center the arrow above the button
-								animation: "moveArrow1 1s infinite",
-								transform: "translateX(50%)",
-								width: "80%",
-								background: "rgba(0, 0, 0, 0.5)",
-								textAlign: "right",
-								fontWeight: "bolder",
-								fontSize: "1.8rem",
-								color: "#ff7676",
-							}}
-						>
-							#1 →
-						</div>
+						<div className='arrow1'>#1 →</div>
 					) : null}
 
 					<button
@@ -174,7 +158,7 @@ const HeroComponent = ({
 							borderRadius: "10px",
 						}}
 						type='button'
-						className='btn btn-info p-1'
+						className='btn btn-info p-1 banner-button'
 						onClick={() => {
 							setModalVisible(true);
 							ReactGA.event("Account_Clicked_To_Edit_ThumbnailPhotos", {
@@ -344,6 +328,24 @@ export default HeroComponent;
 const HeroComponentWrapper = styled.div`
 	overflow: hidden;
 
+	.arrow1 {
+		position: absolute;
+		top: 2px; // adjust this to fit your needs
+		right: 120%; // adjust this to center the arrow above the button
+		animation: moveArrow1 1s infinite;
+		transform: translateX(50%);
+		width: 25%;
+		background: rgba(0, 0, 0, 0.5);
+		text-align: right;
+		font-weight: bolder;
+		font-size: 1.8rem;
+		color: #ff7676;
+	}
+
+	.banner-button {
+		margin-right: 500px;
+	}
+
 	.firstAppointWrapper {
 		position: relative; // Relative positioning is necessary for absolute child positioning
 
@@ -413,6 +415,24 @@ const HeroComponentWrapper = styled.div`
 
 		.firstAppointWrapperSub {
 			display: none;
+		}
+
+		.arrow1 {
+			position: absolute;
+			top: 2px; // adjust this to fit your needs
+			right: 160%; // adjust this to center the arrow above the button
+			animation: moveArrow1 1s infinite;
+			transform: translateX(50%);
+			width: 80%;
+			background: rgba(0, 0, 0, 0.5);
+			text-align: right;
+			font-weight: bolder;
+			font-size: 1.8rem;
+			color: #ff7676;
+		}
+
+		.banner-button {
+			margin-right: 10px;
 		}
 	}
 `;

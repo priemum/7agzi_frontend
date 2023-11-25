@@ -187,11 +187,21 @@ const ServicesModal = ({ modalVisible, setModalVisible, language }) => {
 							</div>
 						</div>
 					) : (
-						<div>
-							<div>VERY IMPORTANT</div>
+						<div
+							className='mb-3'
+							style={{
+								textAlign: "left",
+								fontSize: "1rem",
+								fontWeight: "bolder",
+							}}
+						>
+							<div style={{ fontSize: "1.2rem", color: "darkred" }}>
+								VERY IMPORTANT!
+							</div>
 							<div>
-								Service Price: should be digits only so don't add EGP or
-								anything, just digits please
+								Service Price: should be digits only so don't add{" "}
+								{user.storeCountry === "egypt" ? "EGP" : "USD"} or anything,
+								just digits please
 							</div>
 							<div>
 								Service Estimated Time: should be digits only
@@ -223,7 +233,12 @@ const ServicesModal = ({ modalVisible, setModalVisible, language }) => {
 									chosenSetServicesBarbers.map((s, i) => {
 										return (
 											<tr className='align-middle' key={i}>
-												<td style={{ fontWeight: "bolder" }}>
+												<td
+													style={{
+														fontWeight: "bolder",
+														textTransform: "capitalize",
+													}}
+												>
 													{s.serviceNameOtherLanguage}
 												</td>
 												<td className='price-col'>
@@ -323,7 +338,9 @@ const ServicesModal = ({ modalVisible, setModalVisible, language }) => {
 									chosenSetServicesBarbers.map((s, i) => {
 										return (
 											<tr className='' key={i}>
-												<td>{s.serviceName}</td>
+												<td style={{ textTransform: "capitalize" }}>
+													{s.serviceName}
+												</td>
 												<td className='price-col'>
 													<input
 														type='number'

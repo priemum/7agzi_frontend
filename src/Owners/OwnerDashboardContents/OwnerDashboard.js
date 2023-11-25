@@ -58,7 +58,7 @@ const OwnerDashboard = ({ language }) => {
 	const [collapseMenu, setCollapseMenu] = useState(false);
 
 	//Helper Variables
-	const [clickedMenu, setClickedMenu] = useState("ShopReports");
+	const [clickedMenu, setClickedMenu] = useState("Calendar");
 	const [storeProperties, setStoreProperties] = useState("");
 	const [allEmployees, setAllEmployees] = useState([]);
 
@@ -109,7 +109,7 @@ const OwnerDashboard = ({ language }) => {
 		} else if (window.location.search.includes("customer-reports")) {
 			setClickedMenu("CustomerReports");
 		} else {
-			setClickedMenu("ShopReports");
+			setClickedMenu("Calendar");
 		}
 		getOnlineStoreName();
 		gettingCurrentUser();
@@ -286,7 +286,7 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("Calendar")}
 							>
 								<Link
-									className='dashboardLinks'
+									className='dashboardLinks p-0'
 									style={isActive(clickedMenu, "Calendar")}
 									to='/store/admin/dashboard?calendar'
 								>
@@ -300,7 +300,7 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("BarberAppointment")}
 							>
 								<Link
-									className='dashboardLinks'
+									className='dashboardLinks p-0'
 									style={isActive(clickedMenu, "BarberAppointment")}
 									to='/store/admin/dashboard?barber-appointments'
 								>
@@ -316,7 +316,7 @@ const OwnerDashboard = ({ language }) => {
 								onClick={() => setClickedMenu("TableView")}
 							>
 								<Link
-									className='dashboardLinks'
+									className='dashboardLinks p-0'
 									style={isActive(clickedMenu, "TableView")}
 									to='/store/admin/dashboard?table-view'
 								>
@@ -334,7 +334,7 @@ const OwnerDashboard = ({ language }) => {
 								}}
 							>
 								<Link
-									className='dashboardLinks'
+									className='dashboardLinks p-0'
 									style={isActive(clickedMenu, "ShopReports")}
 									to='/store/admin/dashboard?shop-reports'
 								>
@@ -352,7 +352,7 @@ const OwnerDashboard = ({ language }) => {
 								}}
 							>
 								<Link
-									className='dashboardLinks'
+									className='dashboardLinks p-0'
 									style={isActive(clickedMenu, "CustomerReports")}
 									to='/store/admin/dashboard?customer-reports'
 								>

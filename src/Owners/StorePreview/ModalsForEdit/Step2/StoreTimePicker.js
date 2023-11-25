@@ -85,83 +85,104 @@ const StoreTimePicker = ({
 		return { display, value: time };
 	});
 
-	console.log(allHours, "allHours");
-	console.log(openTime, "openTime");
-	console.log(closeTime, "closeTime");
+	const displayTimesEnglish = possibleTimes.map((time) => {
+		const [hour] = time.split(":");
+		if (time === "11:45") return { display: "11:45 PM", value: time };
+		const display =
+			hour < 12 ? `${hour} AM` : hour === 12 ? `12 PM` : `${hour - 12} PM`;
+		return { display, value: time };
+	});
+
+	// console.log(allHours, "allHours");
+	// console.log(openTime, "openTime");
+	// console.log(closeTime, "closeTime");
 
 	return (
 		<StoreTimePickerWrapper dir={language === "Arabic" ? "rtl" : "ltr"}>
 			{language === "Arabic" ? (
 				<div style={{ textAlign: "right" }}>
 					<div>
-						ساعات الصالون من <strong>"{allHours && allHours[0]}"</strong> إلى{" "}
+						ساعات شحن التجارة الإلكترونية من{" "}
+						<strong>"{allHours && allHours[0]}"</strong> إلى{" "}
 						<strong>
 							"{allHours && allHours[0] && allHours[allHours.length - 1]}"
 						</strong>
 					</div>
-					<select
-						value={openTime}
-						onChange={onOpenTimeChange}
-						className='w-75 text-center'
-					>
-						{displayTimes.map(({ display, value }, index) => (
-							<option key={index} value={value}>
-								{display}
-							</option>
-						))}
-					</select>
-					<select
-						value={closeTime}
-						onChange={onCloseTimeChange}
-						disabled={!openTime}
-						className='mobile-scrollable-dropdown w-75 text-center my-2'
-					>
-						{displayTimes
-							.filter(({ value }) => value >= openTime)
-							.map(({ display, value }, index) => (
-								<option key={index} value={value}>
-									{display}
-								</option>
-							))}
-					</select>
+					<div className='row'>
+						<div className='col-md-5'>
+							<select
+								value={openTime}
+								onChange={onOpenTimeChange}
+								className='mobile-scrollable-dropdown w-75 text-center my-2 form-control'
+							>
+								{displayTimes.map(({ display, value }, index) => (
+									<option key={index} value={value}>
+										{display}
+									</option>
+								))}
+							</select>
+						</div>
+
+						<div className='col-md-5'>
+							<select
+								value={closeTime}
+								onChange={onCloseTimeChange}
+								disabled={!openTime}
+								className='mobile-scrollable-dropdown w-75 text-center my-2 form-control'
+							>
+								{displayTimes
+									.filter(({ value }) => value >= openTime)
+									.map(({ display, value }, index) => (
+										<option key={index} value={value}>
+											{display}
+										</option>
+									))}
+							</select>
+						</div>
+					</div>
 				</div>
 			) : (
 				<>
 					<div>
-						Salon Hours From <strong>"{allHours && allHours[0]}"</strong> to{" "}
+						Salon Working Hours From{" "}
+						<strong>"{allHours && allHours[0]}"</strong> to{" "}
 						<strong>
 							"{allHours && allHours[0] && allHours[allHours.length - 1]}"
 						</strong>
 					</div>
-					<select
-						value={openTime}
-						onChange={onOpenTimeChange}
-						className='w-75 text-center'
-					>
-						{possibleTimes.map((time, index) => (
-							<option key={index} value={time.value}>
-								{time.label}
-							</option>
-						))}
-					</select>
-					<select
-						value={closeTime}
-						onChange={onCloseTimeChange}
-						disabled={!openTime}
-						className='mobile-scrollable-dropdown w-75 text-center my-2'
-					>
-						{possibleTimes
-							.slice(
-								possibleTimes.indexOf(
-									possibleTimes.find((t) => t.value === openTime)
-								) + 1
-							)
-							.map((time, index) => (
-								<option key={index} value={time.value}>
-									{time.label}
-								</option>
-							))}
-					</select>
+
+					<div className='row'>
+						<div className='col-md-5 '>
+							<select
+								value={openTime}
+								onChange={onOpenTimeChange}
+								className='w-75 text-center form-control'
+							>
+								{displayTimesEnglish.map(({ display, value }, index) => (
+									<option key={index} value={value}>
+										{display}
+									</option>
+								))}
+							</select>
+						</div>
+
+						<div className='col-md-5'>
+							<select
+								value={closeTime}
+								onChange={onCloseTimeChange}
+								disabled={!openTime}
+								className='mobile-scrollable-dropdown w-75 text-center my-2 form-control'
+							>
+								{displayTimesEnglish
+									.filter(({ value }) => value >= openTime)
+									.map(({ display, value }, index) => (
+										<option key={index} value={value}>
+											{display}
+										</option>
+									))}
+							</select>
+						</div>
+					</div>
 				</>
 			)}
 		</StoreTimePickerWrapper>

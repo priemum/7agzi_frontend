@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Chart from "react-apexcharts";
 
-const Section4 = ({orders, NotCancelledOrders}) => {
+const Section4 = ({ orders, NotCancelledOrders, user }) => {
 	const aggregatedArrayStatus =
 		orders &&
 		orders.reduce((result, current) => {
@@ -45,7 +45,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		tooltip: {
 			enabled: true,
 			y: {
-				formatter: function (val, {seriesIndex}) {
+				formatter: function (val, { seriesIndex }) {
 					let percentage =
 						(
 							(val / aggregatedArrayStatus.reduce((a, b) => a + b.amount, 0)) *
@@ -59,7 +59,9 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		dataLabels: {
 			enabled: true,
 			formatter: function (val, opts) {
-				return `EGP ${aggregatedArrayStatus[opts.seriesIndex].amount} `;
+				return `${user.storeCountry === "Egypt" ? "EGP" : "$"} ${
+					aggregatedArrayStatus[opts.seriesIndex].amount
+				} `;
 			},
 		},
 
@@ -162,7 +164,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		},
 
 		colors: [
-			function ({value, seriesIndex, dataPointIndex, w}) {
+			function ({ value, seriesIndex, dataPointIndex, w }) {
 				if (dataPointIndex === 0) {
 					return "#00b3b3";
 				} else if (dataPointIndex === 1) {
@@ -198,14 +200,14 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 						.map((i) => Number(i.amount).toFixed(2))
 						.indexOf(Number(value).toFixed(2));
 
-				return (
-					"EGP " +
-					Number(value).toLocaleString() +
-					` (${
-						aggregatedArrayEmployees &&
-						aggregatedArrayEmployees[index].reservationsCount
-					} Appointments)`
-				);
+				return user.storeCountry === "Egypt"
+					? "EGP"
+					: "$" +
+							Number(value).toLocaleString() +
+							` (${
+								aggregatedArrayEmployees &&
+								aggregatedArrayEmployees[index].reservationsCount
+							} Appointments)`;
 			},
 		},
 
@@ -279,7 +281,7 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		tooltip: {
 			enabled: true,
 			y: {
-				formatter: function (val, {seriesIndex}) {
+				formatter: function (val, { seriesIndex }) {
 					let percentage =
 						(
 							(val /
@@ -289,7 +291,11 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 								)) *
 							100
 						).toFixed(2) + "%";
-					return `EGP ${val} (${percentage}) (${aggregatedArrayBookingSource[seriesIndex].reservationsCount} Appointments)`;
+					return `${
+						user.storeCountry === "Egypt" ? "EGP" : "$"
+					} ${val} (${percentage}) (${
+						aggregatedArrayBookingSource[seriesIndex].reservationsCount
+					} Appointments)`;
 				},
 			},
 		},
@@ -297,7 +303,9 @@ const Section4 = ({orders, NotCancelledOrders}) => {
 		dataLabels: {
 			enabled: true,
 			formatter: function (val, opts) {
-				return `EGP ${aggregatedArrayBookingSource[opts.seriesIndex].amount} `;
+				return `${user.storeCountry === "Egypt" ? "EGP" : "$"} ${
+					aggregatedArrayBookingSource[opts.seriesIndex].amount
+				} `;
 			},
 		},
 

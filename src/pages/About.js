@@ -411,28 +411,55 @@ const About = ({ language, setLanguage }) => {
 			</div>
 
 			<div>
-				<p style={{ textAlign: "right", marginRight: "10px" }}>
-					اخيرا اصبح لصالونك موقع خاص إحتراف متخصص لعرض امكانياتك و خدماتك على
-					منصة مصممة لمراكز التجميل و صالونات الحلاقة مما سيتيح لك عرض جميع
-					خدماتك و فريق العمل لديك بشكل احترافى متخصص
-				</p>
+				{chosenLanguage === "Arabic" ? (
+					<p style={{ textAlign: "right", marginRight: "10px" }}>
+						اخيرا اصبح لصالونك موقع خاص إحتراف متخصص لعرض امكانياتك و خدماتك على
+						منصة مصممة لمراكز التجميل و صالونات الحلاقة مما سيتيح لك عرض جميع
+						خدماتك و فريق العمل لديك بشكل احترافى متخصص
+					</p>
+				) : (
+					<p style={{ textAlign: "left", marginLeft: "10px" }}>
+						Finally, your salon has its own professional and specialized website
+						to showcase your capabilities and services on a platform designed
+						for beauty centers and barber shops, which will allow you to
+						professionally and expertly display all your services and your team.
+					</p>
+				)}
 			</div>
 
-			<div className='redSquare'>
-				<div>خطوات التسجيل</div>
-				<div>للمزيد عن خطوات التسجيل</div>
-				<div>
-					<Link
-						onClick={() => {
-							window.scrollTo({ top: 0, behavior: "smooth" });
-						}}
-						className='btn btn-primary btnArabic'
-						to='/steps?ar'
-					>
-						دليل التسجيل من هنا
-					</Link>
+			{chosenLanguage === "Arabic" ? (
+				<div className='redSquare'>
+					<div>خطوات التسجيل</div>
+					<div>للمزيد عن خطوات التسجيل</div>
+					<div>
+						<Link
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+							className='btn btn-primary btnArabic'
+							to='/steps?ar'
+						>
+							دليل التسجيل من هنا
+						</Link>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className='redSquare'>
+					<div>Registration Steps</div>
+					<div>For more about the registration steps</div>
+					<div>
+						<Link
+							onClick={() => {
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
+							className='btn btn-primary btnArabic'
+							to='/steps?ar'
+						>
+							Registration guide from here
+						</Link>
+					</div>
+				</div>
+			)}
 		</AboutPageWrapper>
 	);
 };

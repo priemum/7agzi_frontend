@@ -84,7 +84,7 @@ const ServicesMain = ({ language }) => {
 					/>
 				</div>
 				<div>
-					<div className='container'>
+					<div className='container mx-auto'>
 						<div className='row mx-auto'>
 							<div
 								style={isActive(clickedMenu, "AddService")}
@@ -109,10 +109,10 @@ const ServicesMain = ({ language }) => {
 						</div>
 					</div>
 					{clickedMenu === "AddService" ? (
-						<AddService language={chosenLanguage} />
+						<AddService language={chosenLanguage} user={user} />
 					) : null}
 					{clickedMenu === "UpdateServices" ? (
-						<UpdateService language={chosenLanguage} />
+						<UpdateService language={chosenLanguage} user={user} />
 					) : null}
 				</div>
 			</div>
@@ -132,12 +132,11 @@ const ServicesMainWrapper = styled.div`
 	.container {
 		margin-top: 50px;
 		margin-bottom: 20px;
-		margin-left: 350px;
+		margin-left: 450px;
 	}
 
 	.menuWrapper {
 		background-color: ${(props) => (props.show ? "white" : "black")};
-		min-height: 1200px;
 		overflow: auto;
 	}
 	.iconMenu {

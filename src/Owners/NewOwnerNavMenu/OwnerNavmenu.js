@@ -31,12 +31,14 @@ import eCommerceEn from "./MenuImages/eCommerceEn.png";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../sidebar_context";
 import { isAuthenticated, signout } from "../../auth";
+import { TeamOutlined } from "@ant-design/icons";
 
 const isActive = (history, path) => {
 	if (history === path) {
 		return {
 			background: "#744f0f",
 			transition: "var(--mainTransition)",
+			border: "1px solid white",
 
 			// textDecoration: "underline",
 		};
@@ -159,15 +161,31 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 								style={isActive("Employees", fromPage)}
 							/>
 						) : (
-							<img
-								src={EmployeeAr}
-								alt='Powered By Infinite-Apps'
-								style={isActive("Employees", fromPage)}
-							/>
+							<div
+								style={{
+									...isActive("Employees", fromPage),
+									width: "85%",
+								}}
+							>
+								<div
+									style={{
+										fontSize: "2.5rem",
+										color: "white",
+										paddingLeft: "15px",
+										border: "1px solid white",
+									}} // Adjust marginRight as needed
+								>
+									<TeamOutlined />
+								</div>
+							</div>
+							// <img
+							// 	src={EmployeeAr}
+							// 	alt='Powered By Infinite-Apps'
+							// 	style={isActive("Employees", fromPage)}
+							// />
 						)}
 					</Link>
 				</div>
-
 				<div
 					className='pt-1 firstGroupItem'
 					style={{ textAlign: chosenLanguage === "Arabic" ? "right" : "" }}
@@ -218,7 +236,9 @@ const OwnerNavmenu = ({ language, fromPage, collapseMenu }) => {
 						<Link to={`/profile-update-owner/${user._id}`}>
 							<i className='fa-solid fa-pen-nib'></i>
 							<br />
-							تعديل كلمة المرور
+							{chosenLanguage === "Arabic"
+								? "تعديل كلمة المرور"
+								: "Edit Password"}
 						</Link>
 					</div>
 				</div>

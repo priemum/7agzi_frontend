@@ -139,7 +139,7 @@ const Navbar1 = ({ history }) => {
 														marginTop: "10px",
 													}}
 												>
-													{i.price * i.amount} EGP
+													EGP {i.priceAfterDiscount * i.amount}
 												</div>
 												<button
 													className='trashIcon'
@@ -846,7 +846,7 @@ const Navbar1 = ({ history }) => {
 								<span className='' onClick={chosenLanguageArabic}>
 									{" "}
 									<img className='flags' src={EgyptianFlag} alt='Arabic' />
-									<span style={{ color: "white" }}>Arabic</span>
+									{/* <span style={{ color: "white" }}>Arabic</span> */}
 								</span>
 							) : (
 								<span

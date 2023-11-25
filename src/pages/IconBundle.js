@@ -53,13 +53,15 @@ const IconBundle = () => {
 		googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
 	});
 
+	const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+
 	const getLocation = useCallback(() => {
 		const salonTypeStored = localStorage.getItem("salonTypeStored");
 
 		allStoresSorted(
-			31.001504971164643,
-			30.05182950306324,
-			"egypt",
+			34.052235,
+			-118.243683,
+			"united states",
 			selectedGovernorate,
 			selectedDistrict,
 			salonTypeStored ? salonTypeStored : selectedSalonType,
@@ -184,7 +186,7 @@ const IconBundle = () => {
 				allStoresSorted(
 					lat,
 					lon,
-					"egypt",
+					userLocation.country.toLowerCase(),
 					selectedGovernorate,
 					selectedDistrict,
 					salonTypeStored ? salonTypeStored : selectedSalonType,
@@ -323,6 +325,7 @@ const IconBundle = () => {
 		selectedGovernorate,
 		itemsPerPage,
 		allAvailableFilters,
+		userLocation,
 	]);
 
 	const gettingFilteringCriteria = () => {

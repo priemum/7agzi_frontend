@@ -13,6 +13,7 @@ const Adding3Awards = ({
 	activeWhatsAppNotification,
 	setActiveWhatsAppNotification,
 	language,
+	user,
 }) => {
 	const handleChange1 = (e) => {
 		setLoyaltyPointsAward(e.target.value);
@@ -103,25 +104,29 @@ const Adding3Awards = ({
 					fontWeight: language === "Arabic" ? "bolder" : "",
 				}}
 			>
-				<div className='form-group'>
-					<label className='text-muted'>
-						{language === "Arabic"
-							? "رسوم الخدمات الإلكترونية (رسوم ثابتة)"
-							: "Online Services Fees (Flat Fee)"}
-					</label>
-					إ
-					<input
-						type='number'
-						className='form-control'
-						onChange={handleChange3}
-						value={onlineServicesFees}
-						placeholder={
-							language === "Arabic"
+				{user &&
+				user.storeCountry &&
+				user.storeCountry.toLowerCase() === "egypt" ? (
+					<div className='form-group'>
+						<label className='text-muted'>
+							{language === "Arabic"
 								? "رسوم الخدمات الإلكترونية (رسوم ثابتة)"
-								: "Online Services Fees (Flat Fee)"
-						}
-					/>
-				</div>
+								: "Online Services Fees (Flat Fee)"}
+						</label>
+						إ
+						<input
+							type='number'
+							className='form-control'
+							onChange={handleChange3}
+							value={onlineServicesFees}
+							placeholder={
+								language === "Arabic"
+									? "رسوم الخدمات الإلكترونية (رسوم ثابتة)"
+									: "Online Services Fees (Flat Fee)"
+							}
+						/>
+					</div>
+				) : null}
 			</div>
 			{/* <div className='ml-2 mb-3 col-md-8 mx-auto'>
 			<button

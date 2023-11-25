@@ -187,9 +187,14 @@ const FirstAvailableAppointmentModified = ({
 											return (
 												<tr key={i}>
 													<td>{i + 1}</td>
-													<td>{d.serviceName}</td>
+													<td style={{ textTransform: "capitalize" }}>
+														{d.serviceName}
+													</td>
 													<td>{d.serviceTime} Minutes</td>
-													<td>{d.servicePriceDiscount} EGP</td>
+													<td>
+														{user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+														{d.servicePriceDiscount}
+													</td>
 												</tr>
 											);
 										})}
@@ -198,11 +203,11 @@ const FirstAvailableAppointmentModified = ({
 										<td></td>
 										<td></td>
 										<td>
+											{user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
 											{serviceDetailsArray &&
 												serviceDetailsArray.reduce((total, serviceDetail) => {
 													return total + serviceDetail.servicePriceDiscount;
 												}, 0)}{" "}
-											EGP
 										</td>
 									</tr>
 								</tbody>

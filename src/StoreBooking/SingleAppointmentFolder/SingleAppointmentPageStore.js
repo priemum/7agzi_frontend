@@ -293,8 +293,14 @@ const SingleAppointmentPageStore = ({ props }) => {
 										</td>
 										<td>{s.service}</td>
 										<td>{s.commentsByStylist}</td>
-										<td>{s.serviceDetails.servicePriceDiscount} EGP</td>
-										<td>{s.amount.toFixed(2)} EGP</td>
+										<td>
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+											{s.serviceDetails.servicePriceDiscount}
+										</td>
+										<td>
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+											{s.amount.toFixed(2)}
+										</td>
 										<td>{s.applyPoints.toString()}</td>
 									</tr>
 								))}
@@ -358,7 +364,8 @@ const SingleAppointmentPageStore = ({ props }) => {
 								style={isActive2(clickedMenu, "NewAppointment")}
 								to='/store/book-appointment-from-store?new-appointments'
 							>
-								<i className='fa-brands fa-servicestack mr-1'></i> حجز جديد
+								<i className='fa-brands fa-servicestack mr-1'></i> New
+								Appointment
 							</Link>
 						</div>
 
@@ -372,7 +379,7 @@ const SingleAppointmentPageStore = ({ props }) => {
 								to='/store/book-appointment-from-store?overall-calendar'
 							>
 								<i className='fa-brands fa-servicestack mr-1'></i>
-								قائمة الحجز
+								Calendar
 							</Link>
 						</div>
 						<div
@@ -385,7 +392,7 @@ const SingleAppointmentPageStore = ({ props }) => {
 								to='/store/book-appointment-from-store?table-view'
 							>
 								<i className='fa-brands fa-servicestack mr-1'></i>
-								الكاشير
+								Overall Appointments
 							</Link>
 						</div>
 					</div>
@@ -560,7 +567,8 @@ const SingleAppointmentPageStore = ({ props }) => {
 												<li className='list-group-item'>
 													Service Price:
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.servicePrice} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+														{singleAppointment.servicePrice}
 													</span>
 												</li>
 											</div>
@@ -568,7 +576,8 @@ const SingleAppointmentPageStore = ({ props }) => {
 												<li className='list-group-item'>
 													Paid Tip: {"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.paidTip.toFixed(2)} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+														{singleAppointment.paidTip.toFixed(2)}
 													</span>
 												</li>
 											</div>
@@ -576,7 +585,8 @@ const SingleAppointmentPageStore = ({ props }) => {
 												<li className='list-group-item'>
 													Online Service Fee:{"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.onlineServicesFees} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+														{singleAppointment.onlineServicesFees}
 													</span>
 												</li>
 											</div>
@@ -590,7 +600,10 @@ const SingleAppointmentPageStore = ({ props }) => {
 														className='detailsAboutAppointment'
 														style={{ fontSize: "1.4rem" }}
 													>
-														<strong>{singleAppointment.amount} EGP</strong>
+														<strong>
+															{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
+															{singleAppointment.amount}
+														</strong>
 													</span>
 												</li>
 											</div>
@@ -598,13 +611,13 @@ const SingleAppointmentPageStore = ({ props }) => {
 												<li className='list-group-item'>
 													Discounted Amount:{"  "}
 													<span className='detailsAboutAppointment'>
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}{" "}
 														{singleAppointment.discountedAmount &&
 														singleAppointment.discountedAmount !== 0
 															? singleAppointment.discountedAmount.toFixed(2) +
 															  "    " +
 															  `(${singleAppointment.discountedPercentage}%)`
 															: 0}{" "}
-														{""} EGP
 													</span>
 												</li>
 											</div>

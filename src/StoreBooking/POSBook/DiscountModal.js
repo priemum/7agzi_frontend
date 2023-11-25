@@ -20,20 +20,20 @@ const DiscountModal = ({
 	return (
 		<div dir='rtl'>
 			<Modal
-				title='إضافة خصم نقدي (جنيه مصري)'
+				title='Discount'
 				open={modalVisible}
 				onOk={handleOk}
 				onCancel={handleCancel}
 			>
 				<div>
-					<label>إضافة خصم نقدي (جنيه مصري)</label>
+					<label>Discount Addition (1 means $1 to be deducted)</label>
 					<div>
 						<input
 							type='number'
 							className='form-control '
 							value={discountCash}
 							onChange={(e) => setDiscountCash(e.target.value)}
-							placeholder='إضافة خصم نقدي (جنيه مصري)'
+							placeholder='Add a discount'
 						/>
 					</div>
 				</div>

@@ -328,55 +328,80 @@ const SalonNameAndGeneral = ({
 			>
 				<>
 					<div>
-						<div className='col-md-5 pt-3 mx-auto'>
-							<label>
-								{language === "Arabic"
-									? "اسم المتجر بالإنجليزية"
-									: "Store Name In English"}{" "}
-								<span style={{ color: "red", fontWeight: "bold" }}>
-									{" "}
-									<strong>*</strong>{" "}
-								</span>{" "}
-							</label>
-							<input
-								className='form-control'
-								type='text'
-								placeholder={
-									language === "Arabic"
-										? "ادخل اسم متجرك"
-										: "Fill In Your Store Name In English"
-								}
-								value={addStoreName}
-								onChange={(e) => {
-									setAddStoreName(e.target.value);
-								}}
-							/>
-						</div>
+						{user && user.storeCountry === "Egypt" ? (
+							<>
+								<div className='col-md-5 pt-3 mx-auto'>
+									<label>
+										{language === "Arabic"
+											? "اسم المتجر بالإنجليزية"
+											: "Store Name In English"}{" "}
+										<span style={{ color: "red", fontWeight: "bold" }}>
+											{" "}
+											<strong>*</strong>{" "}
+										</span>{" "}
+									</label>
+									<input
+										className='form-control'
+										type='text'
+										placeholder={
+											language === "Arabic"
+												? "ادخل اسم متجرك"
+												: "Fill In Your Store Name In English"
+										}
+										value={addStoreName}
+										onChange={(e) => {
+											setAddStoreName(e.target.value);
+										}}
+									/>
+									<label>
+										{language === "Arabic"
+											? "اسم المتجر (بالعربية)"
+											: "Store Name (Arabic)"}{" "}
+										<span style={{ color: "red", fontWeight: "bold" }}>
+											{" "}
+											<strong>*</strong>{" "}
+										</span>{" "}
+									</label>
+									<input
+										className='form-control'
+										type='text'
+										placeholder={
+											language === "Arabic"
+												? "ادخل اسم متجرك بالعربية"
+												: "Fill In Your Store Name In Arabic"
+										}
+										value={addStoreNameArabic}
+										onChange={(e) => {
+											setAddStoreNameArabic(e.target.value);
+										}}
+									/>
+								</div>
+							</>
+						) : (
+							<>
+								<div className='col-md-5 pt-3 mx-auto'>
+									<label>
+										Store Name
+										<span style={{ color: "red", fontWeight: "bold" }}>
+											{" "}
+											<strong>*</strong>{" "}
+										</span>{" "}
+									</label>
+									<input
+										className='form-control'
+										type='text'
+										placeholder={"Fill In Your Store Name In English"}
+										value={addStoreName}
+										onChange={(e) => {
+											setAddStoreName(e.target.value);
+											setAddStoreNameArabic(e.target.value);
+										}}
+									/>
+								</div>
+							</>
+						)}
 
 						<div className='col-md-5 pt-3 mx-auto'>
-							<label>
-								{language === "Arabic"
-									? "اسم المتجر (بالعربية)"
-									: "Store Name (Arabic)"}{" "}
-								<span style={{ color: "red", fontWeight: "bold" }}>
-									{" "}
-									<strong>*</strong>{" "}
-								</span>{" "}
-							</label>
-							<input
-								className='form-control'
-								type='text'
-								placeholder={
-									language === "Arabic"
-										? "ادخل اسم متجرك بالعربية"
-										: "Fill In Your Store Name In Arabic"
-								}
-								value={addStoreNameArabic}
-								onChange={(e) => {
-									setAddStoreNameArabic(e.target.value);
-								}}
-							/>
-
 							<div className='w-100 mb-3 mt-3'>
 								<label>
 									{language === "Arabic"
@@ -385,7 +410,7 @@ const SalonNameAndGeneral = ({
 								</label>
 								<div className='checkboxes border-gray-200 border border-solid'>
 									<div className='row'>
-										<div className='col-md-1 col-6'>
+										<div className='col-md-1 col-6 mx-auto'>
 											<label htmlFor='one' className='block '>
 												<input
 													type='checkbox'
@@ -403,7 +428,7 @@ const SalonNameAndGeneral = ({
 											</label>
 										</div>
 
-										<div className='col-md-1 col-6'>
+										<div className='col-md-1 col-6 mx-auto'>
 											<label htmlFor='two' className='block'>
 												<input
 													type='checkbox'
@@ -511,7 +536,7 @@ const SalonNameAndGeneral = ({
 								<label className='text-muted'>
 									{language === "Arabic"
 										? "أضف التواريخ التي تكون فيها المتجر مغلقًا (مثل العطلات، عيد العمال ، وما إلى ذلك)؟"
-										: "Add dates your store is closed (e.g. Holidays, labor day, etc...)"}
+										: "Add dates your salon is closed (e.g. Holidays, labor day, etc...)"}
 								</label>
 								<br />
 								<DatePicker

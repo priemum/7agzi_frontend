@@ -29,6 +29,7 @@ const ScheduleFormHelper = ({
 	clickSubmitSchedule_NoPayment,
 	setModalVisible,
 	discountCash,
+	user,
 }) => {
 	const handleChangeDate = (date) => {
 		const formatEnglishDate = (date) => {
@@ -404,7 +405,7 @@ const ScheduleFormHelper = ({
 						customerPhone.length > 9 &&
 						chosenDate &&
 						chosenTime ? (
-							<div className='mt-3 messageFromTo2'>
+							<div className='mt-5 messageFromTo2 container mx-auto'>
 								<div>
 									<strong style={{ color: "#e2c4c4", fontSize: "1.1rem" }}>
 										REVIEW:
@@ -439,7 +440,10 @@ const ScheduleFormHelper = ({
 													<div className='row'>
 														<div className='col-5'>{s.serviceName}:</div>
 														<div className='col-5'>
-															EGP {s.servicePriceDiscount}
+															{user && user.storeCountry === "egypt"
+																? "EGP"
+																: "$"}{" "}
+															{s.servicePriceDiscount}
 														</div>
 													</div>
 												</div>
@@ -452,16 +456,23 @@ const ScheduleFormHelper = ({
 									{totalServicePrice === totalServicePriceDiscount ? (
 										<span>
 											{" "}
-											<strong>EGP {totalServicePriceDiscount}</strong>{" "}
+											<strong>
+												{user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+												{totalServicePriceDiscount}
+											</strong>{" "}
 										</span>
 									) : (
 										<>
 											<br />
 											<s style={{ color: "#e2c4c4" }} className='mr-2'>
-												EGP {totalServicePrice}
+												{user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+												{totalServicePrice}
 											</s>
 											<span style={{ color: "#b9edb9" }}>
-												<strong>EGP {totalServicePriceDiscount}</strong>
+												<strong>
+													{user.storeCountry === "egypt" ? "EGP" : "USD"}{" "}
+													{totalServicePriceDiscount}
+												</strong>
 											</span>
 										</>
 									)}

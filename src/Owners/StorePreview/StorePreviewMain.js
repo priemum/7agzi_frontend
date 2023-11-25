@@ -519,19 +519,7 @@ const StorePreviewMain = ({ language }) => {
 						AllServices.length > 0 &&
 						allEmployees &&
 						allEmployees.length <= 1 ? (
-							<div
-								style={{
-									position: "absolute",
-									right: "190px",
-									top: "-150px",
-									animation: "moveArrow 1s infinite",
-									fontWeight: "bolder",
-									fontSize: "3rem",
-									color: "#ff7676",
-								}}
-							>
-								#4 →
-							</div>
+							<div className='arrow4'>#4 →</div>
 						) : null}
 					</div>
 					<AddedServicesPreview
@@ -590,15 +578,21 @@ const StorePreviewMain = ({ language }) => {
 		</StorePreviewMainWrapper>
 	);
 };
-
+// {belongsTo:ObjectId('655eeb6054e2a7ac2c8fd3c8')}
 export default StorePreviewMain;
 
 const StorePreviewMainWrapper = styled.div`
-	min-height: 1000px;
+	min-height: 1200px;
 	background-color: black;
+	padding-left: 200px;
+	padding-right: 200px;
+	padding-bottom: 100px;
 
 	.phoneContent {
-		display: none;
+		display: block;
+		color: white;
+		padding: 5px;
+		overflow: hidden;
 	}
 
 	@keyframes moveArrow {
@@ -613,7 +607,20 @@ const StorePreviewMainWrapper = styled.div`
 		}
 	}
 
+	.arrow4 {
+		position: absolute;
+		right: 980px;
+		top: -300px;
+		animation: moveArrow 1s infinite;
+		font-weight: bolder;
+		font-size: 3rem;
+		color: #ff7676;
+	}
+
 	@media (max-width: 800px) {
+		padding-left: 5px;
+		padding-right: 5px;
+
 		.deskTopContent {
 			display: none;
 		}
@@ -635,6 +642,16 @@ const StorePreviewMainWrapper = styled.div`
 
 		.firstAvailableApp {
 			border-radius: 25px 110px;
+		}
+
+		.arrow4 {
+			position: absolute;
+			right: 190px;
+			top: -150px;
+			animation: moveArrow 1s infinite;
+			font-weight: bolder;
+			font-size: 3rem;
+			color: #ff7676;
 		}
 	}
 `;

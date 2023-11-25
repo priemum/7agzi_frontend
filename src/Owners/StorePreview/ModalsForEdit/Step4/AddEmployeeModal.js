@@ -217,7 +217,10 @@ const AddEmployeeModal = ({
 			>
 				<div
 					dir={language === "Arabic" ? "rtl" : "ltr"}
-					style={{ textAlign: language === "Arabic" ? "right" : "" }}
+					style={{
+						textAlign: language === "Arabic" ? "right" : "center",
+						margin: "auto",
+					}}
 				>
 					{language === "Arabic" ? (
 						<div>
@@ -262,7 +265,7 @@ const AddEmployeeModal = ({
 						</div>
 					)}
 
-					<div className='col-md-6'>
+					<div className='col-md-6 text-center mx-auto'>
 						<ImageCard
 							addThumbnail={values.workPhotos}
 							handleImageRemove={handleImageRemove}
@@ -272,7 +275,7 @@ const AddEmployeeModal = ({
 							loading={loading}
 						/>
 					</div>
-					<div className='my-3'>
+					<div className='my-3 container'>
 						<label style={{ fontSize: "1rem" }}>
 							{language === "Arabic" ? "اسم الموظف" : "Employee Name"}
 						</label>
@@ -301,15 +304,15 @@ const AddEmployeeModal = ({
 						/>
 					</div>
 					<div
-						className='w-100 my-3'
+						className='w-100 my-3 container'
 						dir={language === "Arabic" ? "rtl" : "ltr"}
 					>
 						<label style={{ fontSize: "1rem" }}>
 							{language === "Arabic"
 								? "يرجى تحديد أيام العمل للموظف"
-								: "Please Select Working Days"}
+								: "Please Select Employee Working Days"}
 						</label>
-						<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center'>
+						<div className='checkboxes border-gray-200 border border-solid  mx-auto text-center container'>
 							<label htmlFor='one' className='block '>
 								<input
 									type='checkbox'
@@ -330,7 +333,7 @@ const AddEmployeeModal = ({
 										});
 									}}
 									value='Saturday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Saturday") !== -1}
 								/>
 								{language === "Arabic" ? "السبت" : "Saturday"}
@@ -355,7 +358,7 @@ const AddEmployeeModal = ({
 										});
 									}}
 									value='Sunday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Sunday") !== -1}
 								/>
 								{language === "Arabic" ? "الأحد" : "Sunday"}
@@ -380,7 +383,7 @@ const AddEmployeeModal = ({
 										});
 									}}
 									value='Monday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Monday") !== -1}
 								/>
 								{language === "Arabic" ? "الاثنين" : "Monday"}
@@ -391,7 +394,7 @@ const AddEmployeeModal = ({
 									id='four'
 									onChange={handleQueryChange}
 									value='Tuesday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Tuesday") !== -1}
 								/>
 								{language === "Arabic" ? "الثلاثاء" : "Tuesday"}
@@ -402,7 +405,7 @@ const AddEmployeeModal = ({
 									id='five'
 									onChange={handleQueryChange}
 									value='Wednesday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Wednesday") !== -1}
 								/>
 								{language === "Arabic" ? "الأربعاء" : "Wednesday"}
@@ -413,7 +416,7 @@ const AddEmployeeModal = ({
 									id='six'
 									onChange={handleQueryChange}
 									value='Thursday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Thursday") !== -1}
 								/>
 								{language === "Arabic" ? "الخميس" : "Thursday"}
@@ -424,14 +427,14 @@ const AddEmployeeModal = ({
 									id='seven'
 									onChange={handleQueryChange}
 									value='Friday'
-									className='mr-3 ml-1 my-2'
+									className='mr-1 ml-3 my-2'
 									checked={query && query.indexOf("Friday") !== -1}
 								/>
 								{language === "Arabic" ? "الجمعة" : "Friday"}
 							</label>
 						</div>
 					</div>
-					<div>
+					<div className='container mt-4'>
 						<AddingWorkingHours
 							allWorkingHours={allWorkingHours}
 							values={values}

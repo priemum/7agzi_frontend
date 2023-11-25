@@ -52,11 +52,12 @@ const Home = ({ language, setLanguage }) => {
 	const getLocation = useCallback(() => {
 		setLoading(true);
 		const salonTypeStored = localStorage.getItem("salonTypeStored");
+		const userLocation = JSON.parse(localStorage.getItem("userLocation"));
 
 		allStoresSorted2(
-			31.001504971164643,
-			30.05182950306324,
-			"egypt",
+			34.052235,
+			-118.243683,
+			undefined, //storeCountry
 			undefined,
 			undefined,
 			salonTypeStored ? salonTypeStored : chosenSalonType,
@@ -78,9 +79,9 @@ const Home = ({ language, setLanguage }) => {
 			.catch((err) => setError(err));
 
 		allStoresSortedGraded(
-			31.001504971164643,
-			30.05182950306324,
-			"egypt",
+			34.052235,
+			-118.243683,
+			undefined, //storeCountry
 			undefined,
 			undefined,
 			salonTypeStored ? salonTypeStored : chosenSalonType,
@@ -103,7 +104,6 @@ const Home = ({ language, setLanguage }) => {
 
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				console.log("Ahowan Gowa");
 				// lat, long
 				// 31.123883, 29.775421 examples
 				// eslint-disable-next-line
@@ -111,7 +111,7 @@ const Home = ({ language, setLanguage }) => {
 				allStoresSorted2(
 					lat,
 					lon,
-					"egypt",
+					userLocation.country.toLowerCase(),
 					undefined,
 					undefined,
 					salonTypeStored ? salonTypeStored : chosenSalonType,
@@ -134,7 +134,7 @@ const Home = ({ language, setLanguage }) => {
 				allStoresSortedGraded(
 					lat,
 					lon,
-					"egypt",
+					userLocation.country.toLowerCase(),
 					undefined,
 					undefined,
 					salonTypeStored ? salonTypeStored : chosenSalonType,
@@ -225,7 +225,7 @@ const Home = ({ language, setLanguage }) => {
 
 		function setDefaultLocation() {
 			const defaultLocation = {
-				country: "Egypt",
+				country: "United States",
 				state: "Default State",
 				city: "Default City",
 			};
@@ -234,6 +234,7 @@ const Home = ({ language, setLanguage }) => {
 		}
 	}, []);
 
+	// console.log(stores, "salons");
 	return (
 		<HomeWrapper dir='ltr'>
 			<Helmet>
@@ -288,28 +289,31 @@ const Home = ({ language, setLanguage }) => {
 				) : (
 					<SecondSection language={chosenLanguage} />
 				)}
-
-				{chosenLanguage === "Arabic" ? (
-					<ThirdSectionArabic
-						language={chosenLanguage}
-						stores={stores2}
-						loading={loading}
-						handleRetryClick={handleRetryClick}
-						loadError={loadError}
-						searchValue={searchValue}
-						error={error}
-					/>
-				) : (
-					<ThirdSection
-						language={chosenLanguage}
-						stores={stores2}
-						loading={loading}
-						handleRetryClick={handleRetryClick}
-						loadError={loadError}
-						searchValue={searchValue}
-						error={error}
-					/>
-				)}
+				{stores && stores.length > 0 && stores2 && stores2.length > 0 ? (
+					<>
+						{chosenLanguage === "Arabic" ? (
+							<ThirdSectionArabic
+								language={chosenLanguage}
+								stores={stores2}
+								loading={loading}
+								handleRetryClick={handleRetryClick}
+								loadError={loadError}
+								searchValue={searchValue}
+								error={error}
+							/>
+						) : (
+							<ThirdSection
+								language={chosenLanguage}
+								stores={stores2}
+								loading={loading}
+								handleRetryClick={handleRetryClick}
+								loadError={loadError}
+								searchValue={searchValue}
+								error={error}
+							/>
+						)}
+					</>
+				) : null}
 
 				{chosenLanguage === "Arabic" ? (
 					<FourthSectionArabic language={chosenLanguage} />
@@ -329,27 +333,31 @@ const Home = ({ language, setLanguage }) => {
 					<SixthSection language={chosenLanguage} />
 				)}
 
-				{chosenLanguage === "Arabic" ? (
-					<SeventhSectionArabic
-						language={chosenLanguage}
-						stores={stores}
-						loading={loading}
-						handleRetryClick={handleRetryClick}
-						loadError={loadError}
-						searchValue={searchValue}
-						error={error}
-					/>
-				) : (
-					<SeventhSection
-						language={chosenLanguage}
-						stores={stores}
-						loading={loading}
-						handleRetryClick={handleRetryClick}
-						loadError={loadError}
-						searchValue={searchValue}
-						error={error}
-					/>
-				)}
+				{stores && stores.length > 0 && stores2 && stores2.length > 0 ? (
+					<>
+						{chosenLanguage === "Arabic" ? (
+							<SeventhSectionArabic
+								language={chosenLanguage}
+								stores={stores}
+								loading={loading}
+								handleRetryClick={handleRetryClick}
+								loadError={loadError}
+								searchValue={searchValue}
+								error={error}
+							/>
+						) : (
+							<SeventhSection
+								language={chosenLanguage}
+								stores={stores}
+								loading={loading}
+								handleRetryClick={handleRetryClick}
+								loadError={loadError}
+								searchValue={searchValue}
+								error={error}
+							/>
+						)}
+					</>
+				) : null}
 			</div>
 			<AppsLandingPage />
 		</HomeWrapper>

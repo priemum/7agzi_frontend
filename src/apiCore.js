@@ -855,11 +855,12 @@ export const gettingAllProducts = (
 	subcategories,
 	gender,
 	size,
+	storeCountry,
 	pagination,
 	page
 ) => {
 	return fetch(
-		`${process.env.REACT_APP_API_URL}/all-products/${categories}/${subcategories}/${gender}/${size}/${pagination}/${page}`,
+		`${process.env.REACT_APP_API_URL}/all-products/${categories}/${subcategories}/${gender}/${size}/${storeCountry}/${pagination}/${page}`,
 		{
 			method: "GET",
 			headers: {

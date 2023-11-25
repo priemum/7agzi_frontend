@@ -208,7 +208,7 @@ const Navbar = ({ history, language }) => {
 														marginTop: "10px",
 													}}
 												>
-													{i.priceAfterDiscount * i.amount} EGP
+													EGP {i.priceAfterDiscount * i.amount}
 												</div>
 												<button
 													type='button'

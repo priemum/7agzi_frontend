@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import SignupFormComp from "../components/SignupComp/SignupFormComp";
 import { getAllAgents } from "../apiCore";
 import { Helmet } from "react-helmet";
-import { ShipToData } from "../Utils";
+import { ShipToData, states } from "../Utils";
 import { useCartContext } from "../sidebar_context";
 
 const SignupForm = ({ language }) => {
@@ -283,6 +283,7 @@ const SignupForm = ({ language }) => {
 			allDistricts={allDistricts}
 			setAllDistricts={setAllDistricts}
 			EgyptGovernorate={distinctGovernorates}
+			states={states}
 		/>
 	);
 

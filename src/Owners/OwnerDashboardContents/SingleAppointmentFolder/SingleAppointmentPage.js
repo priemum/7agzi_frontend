@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
-import moment from "moment";
 import styled from "styled-components";
 
 import { Collapse } from "antd";
@@ -268,8 +267,14 @@ const SingleAppointmentPage = (props) => {
 										</td>
 										<td>{s.service}</td>
 										<td>{s.commentsByStylist}</td>
-										<td>{s.serviceDetails.servicePriceDiscount} EGP</td>
-										<td>{s.amount.toFixed(2)} EGP</td>
+										<td>
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{s.serviceDetails.servicePriceDiscount}
+										</td>
+										<td>
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{s.amount.toFixed(2)}
+										</td>
 										<td>{s.applyPoints.toString()}</td>
 									</tr>
 								))}
@@ -410,7 +415,7 @@ const SingleAppointmentPage = (props) => {
 										</li>
 
 										<div className='row mx-2' style={{ textAlign: "center" }}>
-											<div className='col-md-4 col-6'>
+											<div className='col-md-4 col-6 mt-3'>
 												<li className='list-group-item'>
 													Chosen Date:{" "}
 													<span className='detailsAboutAppointment'>
@@ -420,7 +425,7 @@ const SingleAppointmentPage = (props) => {
 													</span>
 												</li>
 											</div>
-											<div className='col-md-4 col-6'>
+											<div className='col-md-4 col-6 mt-3'>
 												<li className='list-group-item'>
 													Appointment starts at:{" "}
 													<span className='detailsAboutAppointment'>
@@ -459,7 +464,7 @@ const SingleAppointmentPage = (props) => {
 																		key={i}
 																		className='detailsAboutAppointment mr-3'
 																	>
-																		/ {s.serviceNameOtherLanguage}
+																		/ {s.serviceName}
 																	</span>
 																);
 															}
@@ -496,7 +501,6 @@ const SingleAppointmentPage = (props) => {
 														{new Date(
 															singleAppointment.createdAt
 														).toLocaleDateString()}{" "}
-														({moment(singleAppointment.createdAt).fromNow()})
 													</span>
 												</li>
 											</div>
@@ -504,7 +508,8 @@ const SingleAppointmentPage = (props) => {
 												<li className='list-group-item'>
 													Service Price:
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.servicePrice} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}
+														{singleAppointment.servicePrice}
 													</span>
 												</li>
 											</div>
@@ -512,7 +517,8 @@ const SingleAppointmentPage = (props) => {
 												<li className='list-group-item'>
 													Paid Tip: {"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.paidTip.toFixed(2)} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}
+														{singleAppointment.paidTip.toFixed(2)}
 													</span>
 												</li>
 											</div>
@@ -520,7 +526,8 @@ const SingleAppointmentPage = (props) => {
 												<li className='list-group-item'>
 													Online Service Fee:{"  "}
 													<span className='detailsAboutAppointment'>
-														{singleAppointment.onlineServicesFees} EGP
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}
+														{singleAppointment.onlineServicesFees}
 													</span>
 												</li>
 											</div>
@@ -529,12 +536,15 @@ const SingleAppointmentPage = (props) => {
 													className='list-group-item'
 													style={{ fontSize: "1.4rem", fontWeight: "bolder" }}
 												>
-													Paid Amount:{"  "}
+													Amount:{"  "}
 													<span
 														className='detailsAboutAppointment'
 														style={{ fontSize: "1.4rem" }}
 													>
-														<strong>{singleAppointment.amount} EGP</strong>
+														<strong>
+															{user.storeCountry === "Egypt" ? "EGP" : "$"}
+															{singleAppointment.amount}
+														</strong>
 													</span>
 												</li>
 											</div>
@@ -542,13 +552,14 @@ const SingleAppointmentPage = (props) => {
 												<li className='list-group-item'>
 													Discounted Amount:{"  "}
 													<span className='detailsAboutAppointment'>
+														{user.storeCountry === "Egypt" ? "EGP" : "$"}
 														{singleAppointment.discountedAmount &&
 														singleAppointment.discountedAmount !== 0
 															? singleAppointment.discountedAmount.toFixed(2) +
 															  "    " +
 															  `(${singleAppointment.discountedPercentage}%)`
 															: 0}{" "}
-														{""} EGP
+														{""}
 													</span>
 												</li>
 											</div>

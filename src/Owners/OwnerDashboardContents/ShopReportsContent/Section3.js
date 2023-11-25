@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Section3 = ({sortedArrayCancelled, sortedArray}) => {
+const Section3 = ({ sortedArrayCancelled, sortedArray, user }) => {
 	const DataDisplayDayOverDayNonCancelled = (data) => {
 		return (
 			<div className='container mt-4'>
-				<h4 style={{fontWeight: "bold"}}>
-					<strong style={{color: "darkgoldenrod"}}>Non Cancelled</strong>{" "}
+				<h4 style={{ fontWeight: "bold" }}>
+					<strong style={{ color: "darkgoldenrod" }}>Non Cancelled</strong>{" "}
 					Reservations Overview By Date
 				</h4>
 				<div
@@ -31,11 +31,27 @@ const Section3 = ({sortedArrayCancelled, sortedArray}) => {
 								data.map((item, index) => (
 									<tr key={index}>
 										<td>{item.scheduleStartsAtModified}</td>
-										<td> {item.amount} EGP</td>
-										<td> {item.onlineServicesFees} EGP</td>
-										<td> {item.paidTip} EGP</td>
+										<td>
+											{" "}
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{item.amount}
+										</td>
+										<td>
+											{" "}
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{item.onlineServicesFees}
+										</td>
+										<td>
+											{" "}
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{item.paidTip}
+										</td>
 										<td>{item.reservationsCount}</td>
-										<td> {item.servicePrice} EGP</td>
+										<td>
+											{" "}
+											{user.storeCountry === "Egypt" ? "EGP" : "$"}
+											{item.servicePrice}
+										</td>
 									</tr>
 								))}
 						</tbody>
@@ -48,8 +64,8 @@ const Section3 = ({sortedArrayCancelled, sortedArray}) => {
 	const DataDisplayDayOverDayCancelled = (data) => {
 		return (
 			<div className='container mt-5'>
-				<h4 style={{fontWeight: "bold"}}>
-					<strong style={{color: "red"}}>Cancelled</strong> Reservations
+				<h4 style={{ fontWeight: "bold" }}>
+					<strong style={{ color: "red" }}>Cancelled</strong> Reservations
 					Overview By Date
 				</h4>
 				<div
