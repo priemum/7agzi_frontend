@@ -412,3 +412,22 @@ export const gettingAllXStores = (token, userId) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const getAllUsers = (token, userId) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/boss/get-all-users/${userId}`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

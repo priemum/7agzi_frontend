@@ -119,6 +119,7 @@ import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
 import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
 import { useCartContext } from "./sidebar_context";
+import UsersReportsMain from "./TheBoss/UsersReports/UsersReportsMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -691,6 +692,12 @@ function App() {
 						path='/boss/admin/xstore'
 						exact
 						component={() => <StoreAccountsMain language={language} />}
+					/>
+
+					<BossRoute
+						path='/boss/admin/xlook-user'
+						exact
+						component={() => <UsersReportsMain language={language} />}
 					/>
 
 					{/* End OfPlatform Admin Routes */}

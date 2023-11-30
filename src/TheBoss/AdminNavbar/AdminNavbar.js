@@ -81,7 +81,7 @@ const items = [
 	),
 
 	getItem(
-		<Link to='/boss/admin/users-reports'>Users Reports</Link>,
+		<Link to='/boss/admin/xlook-user'>Users Reports</Link>,
 		"sub6",
 		<BarChartOutlined />
 	),
@@ -155,6 +155,8 @@ const AdminNavbar = ({
 						? "sub5"
 						: fromPage === "XStores"
 						? "sub11"
+						: fromPage === "Users"
+						? "sub6"
 						: "sub1"
 				}
 				defaultOpenKeys={[

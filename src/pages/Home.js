@@ -171,6 +171,8 @@ const Home = ({ language, setLanguage }) => {
 		window.location.reload();
 	};
 
+	console.log(stores, "stores");
+
 	useEffect(() => {
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("pickedPetSizeFirstAvailable");
@@ -225,7 +227,7 @@ const Home = ({ language, setLanguage }) => {
 
 		function setDefaultLocation() {
 			const defaultLocation = {
-				country: "United States",
+				country: "egypt",
 				state: "Default State",
 				city: "Default City",
 			};
