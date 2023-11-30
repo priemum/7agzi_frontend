@@ -94,6 +94,8 @@ import StoreBillingMain from "./TheBoss/StoreBilling/StoreBillingMain";
 import UpdateBusinessAgent from "./TheBoss/AddedStores/SingleStoreAdminPage/OwnerDashboardContents/UpdateBusinessAgent";
 import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryAddition/GallaryMainBoss";
 import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
+import UsersReportsMain from "./TheBoss/UsersReports/UsersReportsMain";
+import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
 
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
@@ -117,9 +119,7 @@ import IconOffers from "./pages/IconOffers";
 import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
 import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
-import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
 import { useCartContext } from "./sidebar_context";
-import UsersReportsMain from "./TheBoss/UsersReports/UsersReportsMain";
 
 function App() {
 	const [click, setClick] = useState(false);

@@ -431,3 +431,23 @@ export const getAllUsers = (token, userId) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const getAllUsersBookings = (token, userId, pagination, page) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/boss/get-all-users-bookings/${userId}/${pagination}/${page}
+		`,
+		{
+			method: "GET",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

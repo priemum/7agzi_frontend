@@ -2,10 +2,35 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import { Helmet } from "react-helmet";
-import { Spin } from "antd";
-import { getAllUsers } from "../apiBoss";
+import { Spin, Table, Pagination } from "antd";
+import { getAllUsers, getAllUsersBookings } from "../apiBoss";
 import { isAuthenticated } from "../../auth";
 import CountUp from "react-countup";
+
+const isActive = (history, path) => {
+	if (history === path) {
+		return {
+			background: "#0f377e",
+			fontWeight: "bold",
+			borderRadius: "5px",
+			fontSize: "0.75rem",
+			padding: "10px",
+			color: "white",
+			transition: "var(--mainTransition)",
+		};
+	} else {
+		return {
+			backgroundColor: "lightgrey",
+			padding: "10px",
+			borderRadius: "5px",
+			fontSize: "0.85rem",
+			fontWeight: "bold",
+			cursor: "pointer",
+			transition: "var(--mainTransition)",
+			color: "black",
+		};
+	}
+};
 
 const UsersReportsMain = () => {
 	const [AdminMenuStatus, setAdminMenuStatus] = useState(false);
@@ -13,6 +38,11 @@ const UsersReportsMain = () => {
 	const [storeUsers, setStoreUsers] = useState("");
 	const [sortedUserData, setSortedUserData] = useState([]);
 	const [totalUsersCount, setTotalUsersCount] = useState(0);
+	const [usersReportData, setUsersReportData] = useState("");
+	const [menuClicked, setMenuClicked] = useState("UserCount");
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalRecords, setTotalRecords] = useState(0);
+	const pageSize = 100; // Number of records per page
 
 	// eslint-disable-next-line
 	const [loading, setLoading] = useState(true);
@@ -27,14 +57,32 @@ const UsersReportsMain = () => {
 		}
 	}, []);
 
-	const gettingAllStoreUsers = () => {
+	const gettingAllStoreUsers = (page = 1) => {
 		setLoading(true);
 		getAllUsers(token, user._id).then((data) => {
 			if (data && data.error) {
 				console.log(data.error);
 			} else {
 				setStoreUsers(data);
-				setLoading(false);
+
+				getAllUsersBookings(token, user._id, pageSize, page).then((data2) => {
+					if (data2 && data2.error) {
+						console.log(data2.error);
+					} else {
+						// Sort bookings so that entries with non-blank storeName come first
+						data2.sort((a, b) => {
+							if (a.storeName && b.storeName) return 0; // Both have storeName
+							if (a.storeName) return -1; // Only a has storeName
+							return 1; // Only b has storeName or both don't have
+						});
+
+						const totalCount = data.reduce((sum, user) => sum + user.count, 0);
+
+						setUsersReportData(data2);
+						setTotalRecords(totalCount);
+						setLoading(false);
+					}
+				});
 			}
 		});
 	};
@@ -60,6 +108,72 @@ const UsersReportsMain = () => {
 			setTotalUsersCount(totalCount);
 		}
 	}, [storeUsers]);
+
+	const columns = [
+		{
+			title: "#",
+			key: "index",
+			render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+		},
+		{
+			title: "Name",
+			dataIndex: "name",
+			key: "name",
+		},
+		{
+			title: "Phone",
+			dataIndex: "phone",
+			key: "phone",
+		},
+		{
+			title: "Email",
+			dataIndex: "email",
+			key: "email",
+		},
+		{
+			title: "Created At",
+			dataIndex: "createdAt",
+			key: "createdAt",
+			render: (text) => new Date(text).toDateString(),
+		},
+		{
+			title: "Salon Name",
+			dataIndex: "storeName",
+			key: "storeName",
+		},
+		{
+			title: "Salon Country",
+			dataIndex: "storeCountry",
+			key: "storeCountry",
+		},
+		{
+			title: "Salon Governorate",
+			dataIndex: "storeGovernorate",
+			key: "storeGovernorate",
+		},
+		{
+			title: "Booking Date",
+			dataIndex: "scheduledDate",
+			key: "scheduledDate",
+		},
+		{
+			title: "Booking Time",
+			dataIndex: "scheduledTime",
+			key: "scheduledTime",
+		},
+		{
+			title: "Status",
+			dataIndex: "status",
+			key: "status",
+		},
+	];
+
+	// Handle page change
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+		gettingAllStoreUsers(page);
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
 
 	return (
 		<UsersReportsMainWrapper show={collapsed}>
@@ -94,45 +208,96 @@ const UsersReportsMain = () => {
 						<Spin size='large' tip='Loading...' />
 					</div>
 				) : (
-					<div className='mt-3 container mx-auto'>
-						<div className='mx-auto text-center mb-5'>
-							<div className='card' style={{ background: "#f1416c" }}>
-								<div className='card-body'>
-									<h5
-										style={{
-											fontWeight: "bolder",
-											color: "white",
-											fontSize: "2rem",
-										}}
+					<div className='mt-3  mx-auto col-md-11 mx-auto'>
+						<div className='row mb-5 col-md-10 mx-auto text-center'>
+							<div
+								className='col-md-6 text-center mx-auto'
+								style={isActive(menuClicked, "UserCount")}
+								onClick={() => setMenuClicked("UserCount")}
+							>
+								User Count Report
+							</div>
+							<div
+								className='col-md-6 text-center mx-auto'
+								style={isActive(menuClicked, "UserDetails")}
+								onClick={() => setMenuClicked("UserDetails")}
+							>
+								User Details Report
+							</div>
+						</div>
+						{menuClicked === "UserCount" ? (
+							<div className='container'>
+								<div className='mx-auto text-center mb-5'>
+									<div
+										className='card col-md-6 mx-auto'
+										style={{ background: "#f1416c" }}
 									>
-										Overall Registered Users
-									</h5>
-									<CountUp
-										style={{ color: "white" }}
-										duration={2}
-										delay={1}
-										end={totalUsersCount}
-										separator=','
+										<div className='card-body'>
+											<h5
+												style={{
+													fontWeight: "bolder",
+													color: "white",
+													fontSize: "2rem",
+												}}
+											>
+												Overall Registered Users
+											</h5>
+											<CountUp
+												style={{ color: "white" }}
+												duration={2}
+												delay={1}
+												end={totalUsersCount}
+												separator=','
+											/>
+										</div>
+									</div>
+								</div>
+								<h3 className='mb-4'>Users Count By Date Report:</h3>
+
+								<div style={{ maxHeight: "800px", overflow: "auto" }}>
+									<table className='table'>
+										<thead>
+											<tr>
+												<th>User Registered On Date</th>
+												<th>User Count</th>
+											</tr>
+										</thead>
+										<tbody>
+											{sortedUserData.map((data, index) => (
+												<tr key={index}>
+													<td>{data.date.toDateString()}</td>
+													<td>{data.count}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						) : null}
+
+						{menuClicked === "UserDetails" ? (
+							<div className='px-5 ml-3'>
+								<h3 className='mt-5'>Users Detailed Data:</h3>
+
+								<div style={{ maxHeight: "1000px", overflow: "auto" }}>
+									<Table
+										columns={columns}
+										dataSource={usersReportData}
+										pagination={false} // Disable built-in pagination
+										rowKey={(record) => record._id} // Use unique key from record
+										className='custom-table-header'
+									/>
+								</div>
+								<div className='m-5'>
+									<Pagination
+										current={currentPage}
+										pageSize={pageSize}
+										total={totalRecords}
+										onChange={handlePageChange}
 									/>
 								</div>
 							</div>
-						</div>
-						<table className='table'>
-							<thead>
-								<tr>
-									<th>User Registered On Date</th>
-									<th>User Count</th>
-								</tr>
-							</thead>
-							<tbody>
-								{sortedUserData.map((data, index) => (
-									<tr key={index}>
-										<td>{data.date.toDateString()}</td>
-										<td>{data.count}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						) : null}
 					</div>
 				)}
 			</div>
@@ -169,6 +334,11 @@ const UsersReportsMainWrapper = styled.div`
 
 	.card-body span {
 		font-size: 2rem;
+	}
+
+	.custom-table-header .ant-table-thead > tr > th,
+	.custom-table-header .ant-table-tbody > tr > td {
+		font-size: 12px !important; /* Set your desired font size */
 	}
 
 	@media (max-width: 1200px) {
