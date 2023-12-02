@@ -87,6 +87,12 @@ const items = [
 	),
 
 	getItem(
+		<Link to='/boss/admin/xlook-coupons'>Coupon Management</Link>,
+		"sub7",
+		<PieChartOutlined />
+	),
+
+	getItem(
 		<Link to='/boss/admin/xstore'> X Store Accounts</Link>,
 		"sub11",
 		<>
@@ -157,6 +163,8 @@ const AdminNavbar = ({
 						? "sub11"
 						: fromPage === "Users"
 						? "sub6"
+						: fromPage === "CouponManagement"
+						? "sub7"
 						: "sub1"
 				}
 				defaultOpenKeys={[

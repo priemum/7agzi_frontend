@@ -1021,3 +1021,13 @@ export const unlike = (userId, token, productId) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const readSingleCoupon = (coupon) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/coupon/byname/${coupon}`, {
+		method: "GET",
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};

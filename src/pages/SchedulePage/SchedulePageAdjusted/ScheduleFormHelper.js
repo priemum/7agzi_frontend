@@ -34,6 +34,8 @@ const ScheduleFormHelper = ({
 	password2,
 	setPassword2,
 	user,
+	couponApplied,
+	appliedCoupon,
 }) => {
 	// eslint-disable-next-line
 	const [animationDirection, setAnimationDirection] = useState("");
@@ -95,6 +97,14 @@ const ScheduleFormHelper = ({
 				0
 			)
 		) - Number(discountCash);
+
+	const totalServicePriceFinal = couponApplied
+		? Number(
+				totalServicePriceDiscount -
+					totalServicePriceDiscount * (appliedCoupon.discount / 100)
+		  ).toFixed(2)
+		: totalServicePriceDiscount;
+
 	const totalServicePrice =
 		servicesPicked &&
 		servicesPicked.reduce((sum, service) => sum + service.servicePrice, 0);
@@ -102,7 +112,7 @@ const ScheduleFormHelper = ({
 	return (
 		<ScheduleFormHelperWrapper dir='ltr'>
 			<>
-				<div className='pt-5'>
+				<div className='pt-2'>
 					<h3
 						style={{
 							fontSize: "1.5rem",
@@ -553,10 +563,10 @@ const ScheduleFormHelper = ({
 
 								<div className='mt-4' style={{ fontSize: "1.5rem" }}>
 									Total Amount:{" "}
-									{totalServicePrice === totalServicePriceDiscount ? (
+									{totalServicePrice === totalServicePriceFinal ? (
 										<span>
 											{" "}
-											<strong>EGP {totalServicePriceDiscount}</strong>{" "}
+											<strong>EGP {totalServicePriceFinal}</strong>{" "}
 										</span>
 									) : (
 										<>
@@ -565,7 +575,7 @@ const ScheduleFormHelper = ({
 												EGP {totalServicePrice}
 											</s>
 											<span style={{ color: "#b9edb9" }}>
-												<strong>EGP {totalServicePriceDiscount}</strong>
+												<strong>EGP {totalServicePriceFinal}</strong>
 											</span>
 										</>
 									)}

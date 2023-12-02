@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 import { allLoyaltyPointsAndStoreStatus } from "../../../apiCore";
 import ScheduleFormHelperArabic from "./ScheduleFormHelperArabic";
 import { useCartContext } from "../../../sidebar_context";
+import CouponComp from "./CouponComp";
+import { Helmet } from "react-helmet";
 
 const SchedulePageSteps2 = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
@@ -43,6 +45,9 @@ const SchedulePageSteps2 = ({ language }) => {
 	// const [fullName, setFullName] = useState("");
 	// const [chosenTime, setChosenTime] = useState("");
 	const [chosenDate, setChosenDate] = useState(moment().format("MM/DD/YYYY"));
+	const [appliedCoupon, setAppliedCoupon] = useState("");
+	const [appliedCouponName, setAppliedCouponName] = useState("");
+	const [couponApplied, setCouponApplied] = useState(false);
 
 	const { user, token } = isAuthenticated();
 
@@ -80,8 +85,6 @@ const SchedulePageSteps2 = ({ language }) => {
 		}
 		// eslint-disable-next-line
 	}, []);
-
-	console.log(chosenDate, "chosenDateAgain");
 
 	const loadPickedEmployee = (
 		employeeId,
@@ -509,6 +512,13 @@ const SchedulePageSteps2 = ({ language }) => {
 			0
 		);
 
+		const totalServicePriceFinal = couponApplied
+			? Number(
+					totalServicePriceDiscount -
+						totalServicePriceDiscount * (appliedCoupon.discount / 100)
+			  ).toFixed(2)
+			: totalServicePriceDiscount;
+
 		const gettingBelongsTo =
 			chosenStoreLocalStorage &&
 			chosenStoreLocalStorage.belongsTo &&
@@ -548,7 +558,7 @@ const SchedulePageSteps2 = ({ language }) => {
 							console.log(data, "Error Login");
 						} else {
 							authenticate(data, () => {
-								console.log(data, "data");
+								// console.log(data, "data");
 							});
 
 							//User Signed In Then Create The order
@@ -557,8 +567,7 @@ const SchedulePageSteps2 = ({ language }) => {
 								scheduledByUserName: scheduledByUserName,
 								scheduledByUserEmail:
 									convertArabicOrNumericToEnglish(customerPhone),
-								amount:
-									Number(totalServicePriceDiscount) - Number(discountCash),
+								amount: Number(totalServicePriceFinal) - Number(discountCash),
 								paidTip: 0,
 								tipPercentage: 0,
 								servicePrice: totalServicePrice,
@@ -591,9 +600,9 @@ const SchedulePageSteps2 = ({ language }) => {
 								transaction_id: "",
 								card_data: "",
 								applyPoints: false,
-								appliedCoupon: "Functionality Not added",
+								appliedCoupon: appliedCouponName,
 								// totalwithNoDiscounts: actualPaymentByUser,
-								appliedCouponData: "Not added",
+								appliedCouponData: appliedCoupon,
 								firstPurchase: "Not added yet",
 								belongsTo: gettingBelongsTo,
 								sharePaid: false,
@@ -629,7 +638,7 @@ const SchedulePageSteps2 = ({ language }) => {
 				employees: [pickedEmployee],
 				scheduledByUserName: scheduledByUserName,
 				scheduledByUserEmail: convertArabicOrNumericToEnglish(customerPhone),
-				amount: Number(totalServicePriceDiscount) - Number(discountCash),
+				amount: Number(totalServicePriceFinal) - Number(discountCash),
 				paidTip: 0,
 				tipPercentage: 0,
 				servicePrice: totalServicePrice,
@@ -660,9 +669,9 @@ const SchedulePageSteps2 = ({ language }) => {
 				transaction_id: "",
 				card_data: "",
 				applyPoints: false,
-				appliedCoupon: "Functionality Not added",
+				appliedCoupon: appliedCouponName,
 				// totalwithNoDiscounts: actualPaymentByUser,
-				appliedCouponData: "Not added",
+				appliedCouponData: appliedCoupon,
 				firstPurchase: "Not added yet",
 				belongsTo: gettingBelongsTo,
 				sharePaid: false,
@@ -690,15 +699,39 @@ const SchedulePageSteps2 = ({ language }) => {
 		}
 	};
 
+	const handleAppliedCoupon = (event) => {
+		setAppliedCouponName(event.target.value);
+	};
+
 	// console.log(chosenDate, "chosenDate");
 	return (
 		<ScheduleFormFinalWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+			<Helmet>
+				<meta charSet='utf-8' />
+
+				<title>XLOOK | Appointment Checkout</title>
+
+				<link
+					rel='canonical'
+					href='https://www.xlookpro.com/schedule-an-appointment'
+				/>
+			</Helmet>
 			{loading ? (
 				<div className='text-center mx-auto mt-5'>
 					<Spin size='large' tip='LOADING...' />
 				</div>
 			) : (
 				<>
+					<div className='pt-5 px-5'>
+						<CouponComp
+							appliedCoupon={appliedCoupon}
+							setAppliedCoupon={setAppliedCoupon}
+							handleAppliedCoupon={handleAppliedCoupon}
+							appliedCouponName={appliedCouponName}
+							couponApplied={couponApplied}
+							setCouponApplied={setCouponApplied}
+						/>
+					</div>
 					{chosenLanguage === "Arabic" ? (
 						<ScheduleFormHelperArabic
 							pickedEmployee={pickedEmployee}
@@ -727,6 +760,8 @@ const SchedulePageSteps2 = ({ language }) => {
 							password2={password2}
 							setPassword2={setPassword2}
 							user={user}
+							appliedCoupon={appliedCoupon}
+							couponApplied={couponApplied}
 						/>
 					) : (
 						<ScheduleFormHelper
@@ -756,6 +791,8 @@ const SchedulePageSteps2 = ({ language }) => {
 							password2={password2}
 							setPassword2={setPassword2}
 							user={user}
+							appliedCoupon={appliedCoupon}
+							couponApplied={couponApplied}
 						/>
 					)}
 

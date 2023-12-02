@@ -171,7 +171,7 @@ const Home = ({ language, setLanguage }) => {
 		window.location.reload();
 	};
 
-	console.log(stores, "stores");
+	// console.log(stores, "stores");
 
 	useEffect(() => {
 		localStorage.removeItem("pickedServiceFirstAvailable");

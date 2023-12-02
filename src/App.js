@@ -120,6 +120,7 @@ import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
 import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
 import { useCartContext } from "./sidebar_context";
+import CouponMain from "./TheBoss/CouponManagement/CouponMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -698,6 +699,12 @@ function App() {
 						path='/boss/admin/xlook-user'
 						exact
 						component={() => <UsersReportsMain language={language} />}
+					/>
+
+					<BossRoute
+						path='/boss/admin/xlook-coupons'
+						exact
+						component={CouponMain}
 					/>
 
 					{/* End OfPlatform Admin Routes */}

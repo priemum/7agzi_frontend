@@ -81,30 +81,32 @@ const AppsLandingPage = () => {
 
 	return (
 		<AppsLandingPageWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
-			<Helmet>
-				<meta charSet='utf-8' />
-				<title>XLOOK | Our Play Store And App Store Applications</title>
-				<meta
-					name='description'
-					content={
-						chosenLanguage === "Arabic"
-							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
-							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
-					}
-				/>
-				<meta
-					name='keywords'
-					content={
-						chosenLanguage === "Arabic"
-							? `حجز مواقع الويب لصالونات التجميل، تطبيقات لا نهائية، برامج لا نهاية، منصة XLOOK، XLOOK، XLookpro، xlookpro.com، محلات الحلاقة، صالونات التجميل، مراكز التجميل، خدمات العائلة، حجز المواعيد، مواقع ويب مخصصة، مواقع ويب بأسعار معقولة، تطوير المواقع الإلكترونية، بناء المواقع الإلكترونية`
-							: `booking websites for salons, infinite apps, infinite erp, XLOOK platform, XLOOK, XLookpro, xlookpro.com, barbershops, beauty salons, beauty centers, family services, appointment booking, custom websites, affordable websites, website development, website building, Apple Store application, Play Store Application`
-					}
-				/>
-				<link rel='canonical' href='https://www.xlookpro.com/xlookpro-apps' />
-				{chosenLanguage === "Arabic" && (
-					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
-				)}
-			</Helmet>
+			{window.location.pathname === "/" ? null : (
+				<Helmet>
+					<meta charSet='utf-8' />
+					<title>XLOOK | Our Play Store And App Store Applications</title>
+					<meta
+						name='description'
+						content={
+							chosenLanguage === "Arabic"
+								? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
+								: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
+						}
+					/>
+					<meta
+						name='keywords'
+						content={
+							chosenLanguage === "Arabic"
+								? `حجز مواقع الويب لصالونات التجميل، تطبيقات لا نهائية، برامج لا نهاية، منصة XLOOK، XLOOK، XLookpro، xlookpro.com، محلات الحلاقة، صالونات التجميل، مراكز التجميل، خدمات العائلة، حجز المواعيد، مواقع ويب مخصصة، مواقع ويب بأسعار معقولة، تطوير المواقع الإلكترونية، بناء المواقع الإلكترونية`
+								: `booking websites for salons, infinite apps, infinite erp, XLOOK platform, XLOOK, XLookpro, xlookpro.com, barbershops, beauty salons, beauty centers, family services, appointment booking, custom websites, affordable websites, website development, website building, Apple Store application, Play Store Application`
+						}
+					/>
+					<link rel='canonical' href='https://www.xlookpro.com/xlookpro-apps' />
+					{chosenLanguage === "Arabic" && (
+						<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
+					)}
+				</Helmet>
+			)}
 
 			<div className='bannerImage'>
 				<img src={LandingPageImage} alt='powered by infinite-apps.com' />
