@@ -80,7 +80,7 @@ const ShopLandingPage = () => {
 			undefined,
 			filterGender,
 			filterSize,
-			!userLocation.country
+			!userLocation
 				? "United States"
 				: userLocation.country && userLocation.country.toLowerCase(),
 			30,

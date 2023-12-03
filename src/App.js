@@ -12,6 +12,7 @@ import ReactPixel from "react-facebook-pixel";
 // eslint-disable-next-line
 import axios from "axios";
 import { isAuthenticated } from "./auth";
+import { Redirect } from "react-router-dom";
 
 //Regular Routes
 import NavbarTop from "./components/Navbars/NavbarTop";
@@ -96,6 +97,7 @@ import GallaryMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/GallaryA
 import StorePreviewMainBoss from "./TheBoss/AddedStores/SingleStoreAdminPage/StorePreview/StorePreviewMainBoss";
 import UsersReportsMain from "./TheBoss/UsersReports/UsersReportsMain";
 import StoreAccountsMain from "./TheBoss/XStoreAccounts/StoreAccountsMain";
+import CouponMain from "./TheBoss/CouponManagement/CouponMain";
 
 //Platform Agents routes
 import AgentsRoute from "./auth/AgentsRoute";
@@ -120,7 +122,7 @@ import ShopLandingPage from "./pages/TheShop/ShopLandingPage";
 import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
 import { useCartContext } from "./sidebar_context";
-import CouponMain from "./TheBoss/CouponManagement/CouponMain";
+import SearchKeyword from "./pages/SearchKeyword";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -207,7 +209,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			{}
+			{window.location.pathname === "/home" ? <Redirect to='/' /> : null}
 			<React.Fragment>
 				<React.Fragment>
 					{/* {allAdsCombined && allAdsCombined.show_ad ? <NavbarAds /> : null} */}
@@ -269,6 +271,11 @@ function App() {
 					<Route path='/auth/password/reset/:token' exact component={Reset} />
 					<Route path='/privacy-policy' exact component={PrivacyPolicy} />
 					<Route path='/cookie-policy' exact component={CookiePolicy} />
+					<Route
+						path='/search-by-keyword/:keyword'
+						exact
+						component={SearchKeyword}
+					/>
 
 					<Route
 						path='/about'

@@ -327,6 +327,7 @@ const IconHaircut = () => {
 			},
 			() => setError("Could not get location")
 		);
+		// eslint-disable-next-line
 	}, [
 		currentPage,
 		selectedSalonType,
@@ -336,7 +337,6 @@ const IconHaircut = () => {
 		selectedGovernorate,
 		itemsPerPage,
 		allAvailableFilters,
-		userLocation,
 	]);
 
 	const gettingFilteringCriteria = () => {
@@ -369,7 +369,7 @@ const IconHaircut = () => {
 
 	useEffect(() => {
 		activeStoresCount(
-			"egypt",
+			userLocation && userLocation.country.toLowerCase(),
 			selectedGovernorate,
 			selectedDistrict,
 			selectedSalonType,

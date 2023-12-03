@@ -318,6 +318,7 @@ const Icon50EGP = () => {
 			},
 			() => setError("Could not get location")
 		);
+		// eslint-disable-next-line
 	}, [
 		currentPage,
 		selectedSalonType,
@@ -327,7 +328,6 @@ const Icon50EGP = () => {
 		selectedGovernorate,
 		itemsPerPage,
 		allAvailableFilters,
-		userLocation,
 	]);
 
 	const gettingFilteringCriteria = () => {
@@ -360,7 +360,7 @@ const Icon50EGP = () => {
 
 	useEffect(() => {
 		activeStoresCount(
-			userLocation.country.toLowerCase(),
+			userLocation && userLocation.country.toLowerCase(),
 			selectedGovernorate,
 			selectedDistrict,
 			selectedSalonType,

@@ -386,6 +386,7 @@ const MyStoreList = ({ language }) => {
 			},
 			() => setError("Could not get location")
 		);
+		// eslint-disable-next-line
 	}, [
 		currentPage,
 		selectedSalonType,
@@ -395,7 +396,6 @@ const MyStoreList = ({ language }) => {
 		selectedGovernorate,
 		itemsPerPage,
 		allAvailableFilters,
-		userLocation,
 	]);
 
 	const gettingFilteringCriteria = () => {
@@ -428,7 +428,7 @@ const MyStoreList = ({ language }) => {
 
 	useEffect(() => {
 		activeStoresCount(
-			"united states",
+			userLocation && userLocation.country.toLowerCase(),
 			selectedGovernorate,
 			selectedDistrict,
 			selectedSalonType,

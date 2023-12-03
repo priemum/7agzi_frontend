@@ -20,9 +20,9 @@ const FifthSectionArabic = () => {
 			<div className='bannerAd fifthSection'>
 				<img
 					src='https://res.cloudinary.com/infiniteapps/image/upload/v1689014644/GQ_B2B/1689014644113.jpg'
-					alt='Nextdayegy.com campaign offer'
+					alt='infinite-apps. The right choice to develop you application'
 					onClick={() => {
-						window.open("https://nextdayegy.com", "_blank");
+						window.open("https://infinite-apps.com", "_blank");
 
 						ReactGA.event("Campaign_Nextdayegy.com_clicked", {
 							event_category: "Campaign_Nextdayegy.com_clicked",

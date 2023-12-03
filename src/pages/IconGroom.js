@@ -329,6 +329,7 @@ const IconGroom = () => {
 			},
 			() => setError("Could not get location")
 		);
+		// eslint-disable-next-line
 	}, [
 		currentPage,
 		selectedSalonType,
@@ -338,7 +339,6 @@ const IconGroom = () => {
 		selectedGovernorate,
 		itemsPerPage,
 		allAvailableFilters,
-		userLocation,
 	]);
 
 	const gettingFilteringCriteria = () => {
@@ -371,7 +371,7 @@ const IconGroom = () => {
 
 	useEffect(() => {
 		activeStoresCount(
-			"egypt",
+			userLocation && userLocation.country.toLowerCase(),
 			selectedGovernorate,
 			selectedDistrict,
 			selectedSalonType,

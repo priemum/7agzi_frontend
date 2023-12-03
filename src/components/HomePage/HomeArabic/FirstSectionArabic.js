@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa"; // I'm using react-icons for the search icon. You need to install it.
+import { useHistory } from "react-router-dom";
 
 const FirstSectionArabic = ({
 	language,
@@ -8,6 +9,15 @@ const FirstSectionArabic = ({
 	searchValue,
 	setChosenSalonType,
 }) => {
+	const history = useHistory();
+
+	const handleSearchSubmit = (event) => {
+		event.preventDefault(); // Prevent default form submission behavior
+		if (searchValue.trim()) {
+			history.push(`/search-by-keyword/${searchValue.trim()}`);
+		}
+	};
+
 	return (
 		<FirstSectionWrapper>
 			<div>
@@ -43,13 +53,18 @@ const FirstSectionArabic = ({
 						سيدات
 					</div>
 					<div className='col-6 col-md-4 mx-auto search-col my-auto'>
-						<input
-							type='text'
-							value={searchValue}
-							onChange={handleInputChange}
-							placeholder='بحث'
-						/>
-						<FaSearch className='search-icon' />
+						<form onSubmit={handleSearchSubmit}>
+							<input
+								type='text'
+								value={searchValue}
+								onChange={handleInputChange}
+								placeholder='Search'
+							/>
+							<button type='submit' style={{ display: "none" }}>
+								Search
+							</button>
+							<FaSearch className='search-icon' />
+						</form>
 					</div>
 				</div>
 			</div>

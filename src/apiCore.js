@@ -1031,3 +1031,18 @@ export const readSingleCoupon = (coupon) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const storeSearch = (keyword) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/store-search/${keyword}`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
