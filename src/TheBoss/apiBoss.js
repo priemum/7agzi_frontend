@@ -104,6 +104,23 @@ export const listScheduledOrdersForTheBoss = (userId, token) => {
 		.catch((err) => console.log(err));
 };
 
+export const listAppointmentsByBoss = (userId, token, days) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/boss-appointments/${userId}/${days}`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
 export const updateUserByBoss = (userId, token, user) => {
 	console.log(user, "userfrom api boss");
 	return fetch(

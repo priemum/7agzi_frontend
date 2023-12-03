@@ -3,9 +3,14 @@ import styled from "styled-components";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import { Helmet } from "react-helmet";
 import { Spin, Table, Pagination } from "antd";
-import { getAllUsers, getAllUsersBookings } from "../apiBoss";
+import {
+	getAllUsers,
+	getAllUsersBookings,
+	listAppointmentsByBoss,
+} from "../apiBoss";
 import { isAuthenticated } from "../../auth";
 import CountUp from "react-countup";
+import AppointmentsTable from "./AppointmentsTable";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -37,6 +42,7 @@ const UsersReportsMain = () => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [storeUsers, setStoreUsers] = useState("");
 	const [sortedUserData, setSortedUserData] = useState([]);
+	const [appointmentsHistory, setAppointmentsHistory] = useState([]);
 	const [totalUsersCount, setTotalUsersCount] = useState(0);
 	const [usersReportData, setUsersReportData] = useState("");
 	const [menuClicked, setMenuClicked] = useState("UserCount");
@@ -80,6 +86,16 @@ const UsersReportsMain = () => {
 
 						setUsersReportData(data2);
 						setTotalRecords(totalCount);
+
+						listAppointmentsByBoss(user._id, token, 60).then((data3) => {
+							if (data3 && data3.error) {
+								console.log(data3.error);
+							} else {
+								setAppointmentsHistory(data3);
+								setLoading(false);
+							}
+						});
+
 						setLoading(false);
 					}
 				});
@@ -211,18 +227,26 @@ const UsersReportsMain = () => {
 					<div className='mt-3  mx-auto col-md-11 mx-auto'>
 						<div className='row mb-5 col-md-10 mx-auto text-center'>
 							<div
-								className='col-md-6 text-center mx-auto'
+								className='col-md-4 text-center mx-auto'
 								style={isActive(menuClicked, "UserCount")}
 								onClick={() => setMenuClicked("UserCount")}
 							>
 								User Count Report
 							</div>
 							<div
-								className='col-md-6 text-center mx-auto'
+								className='col-md-4 text-center mx-auto'
 								style={isActive(menuClicked, "UserDetails")}
 								onClick={() => setMenuClicked("UserDetails")}
 							>
 								User Details Report
+							</div>
+
+							<div
+								className='col-md-4 text-center mx-auto'
+								style={isActive(menuClicked, "BookingHistory")}
+								onClick={() => setMenuClicked("BookingHistory")}
+							>
+								Booking History
 							</div>
 						</div>
 						{menuClicked === "UserCount" ? (
@@ -297,6 +321,12 @@ const UsersReportsMain = () => {
 									/>
 								</div>
 							</div>
+						) : null}
+
+						{menuClicked === "BookingHistory" ? (
+							<>
+								<AppointmentsTable appointmentsHistory={appointmentsHistory} />
+							</>
 						) : null}
 					</div>
 				)}
