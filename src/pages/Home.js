@@ -26,6 +26,7 @@ import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSecti
 import { useCartContext } from "../sidebar_context";
 import axios from "axios";
 import AppsLandingPage from "./AppsLandingPage";
+import AdSense from "../components/AdSense";
 
 const Home = ({ language, setLanguage }) => {
 	const [stores, setStores] = useState([]);
@@ -323,6 +324,8 @@ const Home = ({ language, setLanguage }) => {
 					<FourthSection language={chosenLanguage} />
 				)}
 
+				<AdSense slot='5842698744' />
+
 				{chosenLanguage === "Arabic" ? (
 					<FifthSectionArabic language={chosenLanguage} />
 				) : (
@@ -361,7 +364,10 @@ const Home = ({ language, setLanguage }) => {
 					</>
 				) : null}
 			</div>
+			<AdSense slot='5842698744' />
+			<AdSense slot='5842698744' />
 			<AppsLandingPage />
+			<AdSense slot='5842698744' />
 		</HomeWrapper>
 	);
 };
