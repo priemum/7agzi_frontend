@@ -46,34 +46,73 @@ const ScheduleFormHelper = ({
 	};
 
 	const hoursModifiedFunction = () => {
-		// Assuming you have 'chosenDate' available in this scope.
-		let now = moment.tz("Africa/Cairo").locale("en"); // Current date & time in the Egyptian time zone, set to English locale
-		let chosenDateHelper = moment.tz(chosenDate, "Africa/Cairo").locale("en"); // Make sure this is in the correct date format. If it is a string, you might need to parse it first.
+		if (
+			user &&
+			user.storeCountry &&
+			user.storeCountry.toLowerCase() === "united states"
+		) {
+			// Use local timezone for users in the United States
 
-		// Check if chosenDate is today.
-		if (now.isSame(chosenDateHelper, "day")) {
-			// Current hour in HH:mm format in the Egyptian time zone
-			let currentHour = moment.tz("Africa/Cairo").locale("en").format("HH:mm");
-			// Check that employeeAvailability is not null or undefined before accessing hoursAvailable
-			if (employeeAvailability && employeeAvailability.hoursAvailable) {
-				// Filter hoursAvailable to only include times that are later than the current time
-				return employeeAvailability.hoursAvailable.length > 0
-					? employeeAvailability.hoursAvailable.filter(
-							(time) => time >= currentHour
-					  )
-					: employeeAvailability.hoursAvailable;
+			let now = moment().locale("en"); // Current date & time in the local timezone, set to English locale
+			let chosenDateHelper = moment(chosenDate).locale("en"); // Make sure this is in the correct date format. If it is a string, you might need to parse it first.
+
+			// Check if chosenDate is today.
+			if (now.isSame(chosenDateHelper, "day")) {
+				// Current hour in HH:mm format in the local timezone
+				let currentHour = moment().locale("en").format("HH:mm");
+				// Check that employeeAvailability is not null or undefined before accessing hoursAvailable
+				if (employeeAvailability && employeeAvailability.hoursAvailable) {
+					// Filter hoursAvailable to only include times that are later than the current time
+					return employeeAvailability.hoursAvailable.length > 0
+						? employeeAvailability.hoursAvailable.filter(
+								(time) => time >= currentHour
+						  )
+						: employeeAvailability.hoursAvailable;
+				}
+			} else {
+				// If chosenDateHelper is not today, leave hoursAvailable as is
+				if (employeeAvailability && employeeAvailability.hoursAvailable) {
+					return employeeAvailability.hoursAvailable.length > 0
+						? employeeAvailability.hoursAvailable
+						: [];
+				}
 			}
+
+			// Return empty array if employeeAvailability or hoursAvailable is undefined or null
+			return [];
 		} else {
-			// If chosenDateHelper is not today, leave hoursAvailable as is
-			if (employeeAvailability && employeeAvailability.hoursAvailable) {
-				return employeeAvailability.hoursAvailable.length > 0
-					? employeeAvailability.hoursAvailable
-					: [];
-			}
-		}
+			// Assuming you have 'chosenDate' available in this scope.
+			let now = moment.tz("Africa/Cairo").locale("en"); // Current date & time in the Egyptian time zone, set to English locale
+			let chosenDateHelper = moment.tz(chosenDate, "Africa/Cairo").locale("en"); // Make sure this is in the correct date format. If it is a string, you might need to parse it first.
 
-		// Return empty array if employeeAvailability or hoursAvailable is undefined or null
-		return [];
+			// Check if chosenDate is today.
+			if (now.isSame(chosenDateHelper, "day")) {
+				// Current hour in HH:mm format in the Egyptian time zone
+				let currentHour = moment
+					.tz("Africa/Cairo")
+					.locale("en")
+					.format("HH:mm");
+				// Check that employeeAvailability is not null or undefined before accessing hoursAvailable
+				if (employeeAvailability && employeeAvailability.hoursAvailable) {
+					// Filter hoursAvailable to only include times that are later than the current time
+					return employeeAvailability.hoursAvailable.length > 0
+						? employeeAvailability.hoursAvailable.filter(
+								(time) => time >= currentHour
+						  )
+						: employeeAvailability.hoursAvailable;
+				}
+			} else {
+				// If chosenDateHelper is not today, leave hoursAvailable as is
+				if (employeeAvailability && employeeAvailability.hoursAvailable) {
+					return employeeAvailability.hoursAvailable.length > 0
+						? employeeAvailability.hoursAvailable
+						: [];
+				}
+			}
+
+			// Return empty array if employeeAvailability or hoursAvailable is undefined or null
+			return [];
+		}
 	};
 
 	const servicesPicked =
