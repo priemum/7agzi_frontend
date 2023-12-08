@@ -19,6 +19,7 @@ const CardEmployeePhone = ({
 	setModalVisible,
 	setEmployeeServices,
 }) => {
+	// eslint-disable-next-line
 	const scheduleAppointmentbtn = () => {
 		// console.log(employee, "employee");
 		return (
@@ -154,7 +155,7 @@ const CardEmployeePhone = ({
 				</div>
 
 				<div className='col-6 mt-3'>
-					{scheduleAppointmentbtn()}
+					{/* {scheduleAppointmentbtn()} */}
 
 					<div className='mr-3'>
 						{/* {showViewButton()} */}

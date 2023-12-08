@@ -57,6 +57,7 @@ const AddedServicesPreview = ({
 	setModalVisible,
 	setModalVisible2,
 	modalVisible2,
+	user,
 }) => {
 	const [AllServices, setAllServices] = useState([]);
 	const [clickedMenu, setClickedMenu] = useState("STANDARD");
@@ -148,7 +149,11 @@ const AddedServicesPreview = ({
 													className=''
 													style={{ color: "white", fontSize: "11px" }}
 												>
-													{s.servicePriceDiscount} EGP
+													{s.servicePriceDiscount}{" "}
+													{user &&
+													user.storeCountry.toLowerCase() === "united states"
+														? "USD"
+														: "EGP"}
 												</span>
 											</div>
 											<div className='col-3'>
@@ -156,7 +161,7 @@ const AddedServicesPreview = ({
 													className=''
 													style={{ color: "white", fontSize: "11px" }}
 												>
-													{s.serviceTime} دقيقة
+													{s.serviceTime} mins
 												</span>
 											</div>
 											<div

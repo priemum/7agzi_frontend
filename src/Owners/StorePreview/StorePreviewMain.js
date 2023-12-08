@@ -530,6 +530,7 @@ const StorePreviewMain = ({ language }) => {
 						setModalVisible={setModalVisible3}
 						setModalVisible2={setModalVisible4}
 						modalVisible2={modalVisible4}
+						user={user}
 					/>
 				</div>
 			) : null}

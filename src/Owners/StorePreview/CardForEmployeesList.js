@@ -65,6 +65,7 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 		}
 	};
 
+	// eslint-disable-next-line
 	const scheduleAppointmentbtn = () => {
 		return (
 			<button
@@ -130,10 +131,7 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 						{employee && employee.ratings && employee.ratings.length > 0 ? (
 							<div className='mb-3'>{showAverageRating2(employee)}</div>
 						) : null}
-						<Link
-							to={`/employee/${employeeNameModified}/${employee._id}${employee._id}${employee._id}`}
-							onClick={SettingViews}
-						>
+						<Link to={`#`} onClick={SettingViews}>
 							<ShowImage item={employee} />
 						</Link>
 					</div>
@@ -171,7 +169,7 @@ const CardForEmployeesList = ({ employee, storeProperties, contact }) => {
 					{storeProperties && storeProperties.activeOnlineBooking ? (
 						<div onClick={SettingViews}>
 							{/* {showViewButton()} */}
-							{scheduleAppointmentbtn()}
+							{/* {scheduleAppointmentbtn()} */}
 						</div>
 					) : (
 						<div>
