@@ -23,13 +23,16 @@ import { getAffiliates } from "../TheBoss/apiBoss";
 const About = ({ language, setLanguage }) => {
 	const { chosenLanguage } = useCartContext();
 	const [affiliateProducts, setAffiliateProducts] = useState(null);
+	const [loading2, setLoading2] = useState(true);
 
 	const gettingAllAffiliates = () => {
+		setLoading2(true);
 		getAffiliates().then((data) => {
 			if (data && data.error) {
 				console.log("Affiliate Products Error");
 			} else {
 				setAffiliateProducts(data);
+				setLoading2(false);
 			}
 		});
 	};
@@ -110,14 +113,19 @@ const About = ({ language, setLanguage }) => {
 					>
 						{chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل.`
-							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book services offered by the platform through a special application designed for user registration and booking beauty services.`}
+							: `XLOOK is a platform for barbershops, ladies' beauty salons, and beauty centers. The platform gives users the opportunity to find a variety of services for all family members, including women, girls, men, and children. By using XLOOK, users can choose and book a an appointment with a barbershop or beauty center based on their current location. Users can book services through this special application designed for user registration and booking beauty or barber services.`}
 					</p>
 				</div>
 				<div className='col-md-5 mx-auto mt-5 mb-3'>
 					<div className='horizLine'></div>
 				</div>
 				<div>
-					<AffiliateLinks affiliateProducts={affiliateProducts} />
+					{loading2 ? null : (
+						<AffiliateLinks
+							affiliateProducts={affiliateProducts}
+							loading={loading2}
+						/>
+					)}
 					{/* <AdSense adSlot='5842698744' /> */}
 				</div>
 				<div
@@ -154,7 +162,7 @@ const About = ({ language, setLanguage }) => {
 					<p>
 						{chosenLanguage === "Arabic"
 							? "لدينا آلاف العملاء في منطقتك ينتظرون لحجز موعد في صالونك أو مركز التجميل الخاص بك، فهو مناسب جدًا لهم. لا تتردد في الانضمام الآن."
-							: "We have thousands of customers in your area waiting to make a reservation, and your salon or beauty center suitable for them. Do not hesitate to join now."}
+							: "We currently have thousands of potential customers in your area actively searching for the unique and specialized services that your salon provides. By joining now, you'll tap into this extensive customer base eager to experience what your salon has to offer. This is not just an opportunity to expand your clientele but also to showcase your exceptional services to a broader audience. Sieze this chance to ensure your salon's growth and success in catering to the needs of these potential customers."}
 					</p>
 				</div>
 
@@ -176,13 +184,13 @@ const About = ({ language, setLanguage }) => {
 							<strong>
 								{chosenLanguage === "Arabic"
 									? "زيادة مصادر الدخل."
-									: "Increase sources of income"}
+									: "Increase income"}
 							</strong>{" "}
 						</h2>
 						<p>
 							{chosenLanguage === "Arabic"
 								? "سيكون الفرق واضحًا جدًا عند مقارنة دخلك قبل الانضمام إلينا كشريك وبعد الانضمام. ستترك التسويق لنا وتقلل من النفقات على الإعلانات، وستحصل على المزيد من الحجوزات. هنا، ستكون التوفيرات من كلا الجانبين."
-								: "The difference will be very clear when comparing your income before joining us as a partner and after joining. You will leave the marketing to us and reduce expenses on advertisements, and you will receive more bookings. Here, the savings will be from both sides."}
+								: "After partnering with XLOOK, you'll see a noticeable difference in your sales. By entrusting your marketing to us, you'll cut down on advertising costs. This reduction in expenses, coupled with a boost in customer traffic, will lead to an increase in your revenue."}
 						</p>
 					</div>
 
@@ -210,7 +218,7 @@ const About = ({ language, setLanguage }) => {
 						<p>
 							{chosenLanguage === "Arabic"
 								? "أخيرًا، صالونك لديه موقع ويب احترافي ومتخصص خاص به لعرض قدراتك وخدماتك على منصة مصممة لمراكز وصالونات التجميل. ستتيح لك هذه الخاصية تقديم جميع خدماتك وفريقك المتخصص والمحترف."
-								: "Your salon has its own professional and specialized website to showcase your capabilities and services on a platform designed for beauty centers and salons. This will allow you to present all your services and your professional and specialized team."}
+								: "Your distinct salon boasts a dedicated, professional website, tailored specifically to highlight the creative talents of your team. This platform is expertly designed for beauty centers and salons, showcasing your unique capabilities."}
 						</p>
 					</div>
 
@@ -248,13 +256,13 @@ const About = ({ language, setLanguage }) => {
 							<strong>
 								{chosenLanguage === "Arabic"
 									? "معنا ستزداد توسعاتك وفروعك."
-									: "With us, your expansions and branches will increase"}
+									: "Focus on expanding your business"}
 							</strong>{" "}
 						</h2>
 						<p>
 							{chosenLanguage === "Arabic"
 								? "نحرص دائمًا على تأمين حجوزات لك، وذلك سيزيد من حجوزاتك وعدد عملائك من خلال التركيز على تطوير الخدمة المستمر. ونتيجة لذلك، ستزداد قدراتك وفرص توسعك."
-								: "We ensure that you have increased bookings, which will increase your customers by focusing on continuous service development. As a result, your capabilities and opportunities for expansion will increase."}
+								: "We will focus on continuously developing your salon's services, ensuring an increase in bookings.  This will lead to a growth in your customer base, enhancing your capabilities and opening up more opportunities for expansion."}
 						</p>
 					</div>
 
@@ -411,7 +419,12 @@ const About = ({ language, setLanguage }) => {
 				) : (
 					<div className='mt-5 text-center'>
 						<div>
-							<AffiliateLinks affiliateProducts={affiliateProducts} />
+							{loading2 ? null : (
+								<AffiliateLinks
+									affiliateProducts={affiliateProducts}
+									loading={loading2}
+								/>
+							)}
 							{/* <AdSense adSlot='5842698744' /> */}
 						</div>
 						<strong

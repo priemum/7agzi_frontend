@@ -5,7 +5,7 @@ import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
 import Slider from "react-slick";
 
-const AffiliateLinks = ({ affiliateProducts }) => {
+const AffiliateLinks = ({ affiliateProducts, loading = false }) => {
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -39,52 +39,54 @@ const AffiliateLinks = ({ affiliateProducts }) => {
 
 	return (
 		<AffiliateLinksWrapper>
-			<div className='carousel thirdSection'>
-				<div className='container-fluid'>
-					<Slider {...settings}>
-						{affiliateProducts &&
-							affiliateProducts.map((product, i) => (
-								<div
-									className='img-fluid images'
-									key={i}
-									onClick={() => {
-										// Open new tab and navigate to product.affiliateLink
-										window.open(product.affiliateLink, "_blank");
+			{!loading ? (
+				<div className='carousel thirdSection'>
+					<div className='container-fluid'>
+						<Slider {...settings}>
+							{affiliateProducts &&
+								affiliateProducts.map((product, i) => (
+									<div
+										className='img-fluid images'
+										key={i}
+										onClick={() => {
+											// Open new tab and navigate to product.affiliateLink
+											window.open(product.affiliateLink, "_blank");
 
-										// Track the event with Google Analytics
-										ReactGA.event("Affiliate Link Clicked", {
-											event_category: product.productName
-												.split(" ")
-												.slice(0, 7)
-												.join(" "),
-											event_label: product.productName
-												.split(" ")
-												.slice(0, 7)
-												.join(" "),
-											value: 1, // Optional extra parameters
-										});
+											// Track the event with Google Analytics
+											ReactGA.event("Affiliate Link Clicked", {
+												event_category: product.productName
+													.split(" ")
+													.slice(0, 7)
+													.join(" "),
+												event_label: product.productName
+													.split(" ")
+													.slice(0, 7)
+													.join(" "),
+												value: 1, // Optional extra parameters
+											});
 
-										// Track the event with Facebook Pixel
-										ReactPixel.track("Affiliate Link Clicked", {
-											content_name: product.productName
-												.split(" ")
-												.slice(0, 7)
-												.join(" "),
-											content_category: product.productName
-												.split(" ")
-												.slice(0, 7)
-												.join(" "),
-											value: "",
-											currency: "",
-										});
-									}}
-								>
-									<AffiliateLinksCard i={i} product={product} key={i} />
-								</div>
-							))}
-					</Slider>
+											// Track the event with Facebook Pixel
+											ReactPixel.track("Affiliate Link Clicked", {
+												content_name: product.productName
+													.split(" ")
+													.slice(0, 7)
+													.join(" "),
+												content_category: product.productName
+													.split(" ")
+													.slice(0, 7)
+													.join(" "),
+												value: "",
+												currency: "",
+											});
+										}}
+									>
+										<AffiliateLinksCard i={i} product={product} key={i} />
+									</div>
+								))}
+						</Slider>
+					</div>
 				</div>
-			</div>
+			) : null}
 		</AffiliateLinksWrapper>
 	);
 };

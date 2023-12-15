@@ -35,6 +35,7 @@ const Home = ({ language, setLanguage }) => {
 	const [searchValue, setSearchValue] = useState("");
 	const [chosenSalonType, setChosenSalonType] = useState(undefined);
 	const [loading, setLoading] = useState(true);
+	const [loading2, setLoading2] = useState(true);
 	// eslint-disable-next-line
 	const [currentPage, setCurrentPage] = useState(1);
 	const [error, setError] = useState(null);
@@ -177,11 +178,13 @@ const Home = ({ language, setLanguage }) => {
 	// console.log(stores, "stores");
 
 	const gettingAllAffiliates = () => {
+		setLoading2(true);
 		getAffiliates().then((data) => {
 			if (data && data.error) {
 				console.log("Affiliate Products Error");
 			} else {
 				setAffiliateProducts(data);
+				setLoading2(false);
 			}
 		});
 	};
@@ -333,7 +336,12 @@ const Home = ({ language, setLanguage }) => {
 					</>
 				) : null}
 
-				<AffiliateLinks affiliateProducts={affiliateProducts} />
+				{loading2 ? null : (
+					<AffiliateLinks
+						affiliateProducts={affiliateProducts}
+						loading={loading2}
+					/>
+				)}
 
 				{chosenLanguage === "Arabic" ? (
 					<FourthSectionArabic language={chosenLanguage} />
@@ -381,7 +389,12 @@ const Home = ({ language, setLanguage }) => {
 			</div>
 			<AppsLandingPage />
 			<div className='my-4'>
-				<AffiliateLinks affiliateProducts={affiliateProducts} />
+				{loading2 ? null : (
+					<AffiliateLinks
+						affiliateProducts={affiliateProducts}
+						loading={loading2}
+					/>
+				)}
 			</div>
 		</HomeWrapper>
 	);

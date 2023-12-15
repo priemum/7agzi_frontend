@@ -89,11 +89,11 @@ const AboutHeroComp = ({ language }) => {
 							<div className='line1'>For Salon Owners & Beauty Centers</div>
 							<div className='line2'>
 								{" "}
-								Create an online beauty center in less than a minute
+								Create an online presence in less than a minute
 							</div>
 							<div className='line3'>
 								Register now and don't miss the opportunity to appear in front
-								of hundreds of thousands of people around your beauty center.
+								of thousands of people around your business.
 							</div>
 
 							<div className='thebtnEnglish'>
