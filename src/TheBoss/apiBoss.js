@@ -468,3 +468,79 @@ export const getAllUsersBookings = (token, userId, pagination, page) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+/**Start Affiliate */
+
+export const createAffiliate = (userId, token, affiliate) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/affiliate/create/${userId}`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(affiliate),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const updateAffiliate = (affiliateId, userId, token, affiliate) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/affiliate/${affiliateId}/${userId}`,
+		{
+			method: "PUT",
+			headers: {
+				// content type?
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(affiliate),
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const removeAffiliate = (affiliateId, userId, token) => {
+	return fetch(
+		`${process.env.REACT_APP_API_URL}/affiliate/${affiliateId}/${userId}`,
+		{
+			method: "DELETE",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	)
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const getAffiliates = (token, userId) => {
+	return fetch(`${process.env.REACT_APP_API_URL}/affiliates`, {
+		method: "GET",
+		headers: {
+			// content type?
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+/**End Affiliate */

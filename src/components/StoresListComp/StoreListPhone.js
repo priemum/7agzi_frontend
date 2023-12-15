@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
 import NewCardPhone from "./NewCardPhone";
-import AdSense from "../AdSense";
-import ReactGA from "react-ga4";
-import ReactPixel from "react-facebook-pixel";
+import AffiliateLinks from "../HomePage/AffiliateLinks";
 
 // Custom Hook for Fade-In effect
 function useFadeInOnScroll() {
@@ -45,6 +43,7 @@ const StoreListPhone = ({
 	allServicesCombined,
 	filtersClicked,
 	setFiltersClicked,
+	affiliateProducts,
 }) => {
 	const [contentRef, contentVisible] = useFadeInOnScroll();
 
@@ -56,48 +55,38 @@ const StoreListPhone = ({
 			/>
 
 			<ContentContainer ref={contentRef} isVisible={contentVisible}>
+				<div>
+					<AffiliateLinks affiliateProducts={affiliateProducts} />
+					{/* <AdSense adSlot='5842698744' /> */}
+				</div>
 				<div className='row'>
 					{activeStoresOnly &&
 						activeStoresOnly.map((p, i) => {
 							return (
-								<div
-									key={i}
-									className='col-md-4'
-									onClick={() => {
-										localStorage.setItem("chosenStore", JSON.stringify(p));
-										window.scrollTo({ top: 0, behavior: "smooth" });
-									}}
-								>
-									<NewCardPhone
-										store={p}
-										allServicesCombined={allServicesCombined}
-									/>
-
-									{(i === 5 || i === 10) && (
-										<div
-											onClick={() => {
-												ReactGA.event("Ads_Clicked_StoreList", {
-													event_category: "Ads_Clicked_StoreList",
-													event_label: "Ads_Clicked",
-													value: 1,
-												});
-
-												ReactPixel.track("Ads_Clicked_StoreList", {
-													content_name: "Ads_Clicked_StoreList",
-													content_category: "Ads_Clicked_StoreList",
-													value: "",
-													currency: "",
-												});
-											}}
-										>
-											<AdSense adSlot='5842698744' />
-										</div>
-									)}
-								</div>
+								<>
+									{" "}
+									<div
+										key={i}
+										className='col-md-4'
+										onClick={() => {
+											localStorage.setItem("chosenStore", JSON.stringify(p));
+											window.scrollTo({ top: 0, behavior: "smooth" });
+										}}
+									>
+										<NewCardPhone
+											store={p}
+											allServicesCombined={allServicesCombined}
+										/>
+									</div>
+								</>
 							);
 						})}
 				</div>
 			</ContentContainer>
+			<div>
+				<AffiliateLinks affiliateProducts={affiliateProducts} />
+				{/* <AdSense adSlot='5842698744' /> */}
+			</div>
 		</StoreListPhoneWrapper>
 	);
 };

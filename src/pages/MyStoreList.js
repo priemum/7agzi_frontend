@@ -16,6 +16,7 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import SideFilter from "../components/StoresListComp/SideFilter";
 import { useCartContext } from "../sidebar_context";
+import { getAffiliates } from "../TheBoss/apiBoss";
 
 const MyStoreList = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
@@ -35,6 +36,7 @@ const MyStoreList = ({ language }) => {
 	const [availableCountries, setAvailableCountries] = useState([]);
 	const [availableGovernorates, setAvailableGovernorates] = useState([]);
 	const [availableDistricts, setAvailableDistricts] = useState([]);
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
 	const [selectedCountry, setSelectedCountry] = useState(undefined);
 	const [selectedGovernorate, setSelectedGovernorate] = useState(undefined);
 	const [selectedDistrict, setSelectedDistrict] = useState(undefined);
@@ -426,7 +428,18 @@ const MyStoreList = ({ language }) => {
 		});
 	};
 
+	const gettingAllAffiliates = () => {
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+			}
+		});
+	};
+
 	useEffect(() => {
+		gettingAllAffiliates();
 		activeStoresCount(
 			userLocation && userLocation.country.toLowerCase(),
 			selectedGovernorate,
@@ -532,6 +545,7 @@ const MyStoreList = ({ language }) => {
 					filtersClicked={filtersClicked}
 					setFiltersClicked={setFiltersClicked}
 					language={chosenLanguage}
+					affiliateProducts={affiliateProducts}
 				/>
 			</div>
 			<div

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import NewCardPhone from "./NewCardPhone";
-import AdSense from "../AdSense";
+// import AdSense from "../AdSense";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
 
@@ -76,7 +76,7 @@ const StoreListPhone = ({ activeStoresOnly }) => {
 												});
 											}}
 										>
-											<AdSense adSlot='5842698744' />
+											{/* <AdSense adSlot='5842698744' /> */}
 										</div>
 									)}
 								</div>

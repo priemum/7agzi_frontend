@@ -91,6 +91,11 @@ const items = [
 		"sub7",
 		<PieChartOutlined />
 	),
+	getItem(
+		<Link to='/boss/admin/affiliate-links'>Affiliate Program</Link>,
+		"sub8",
+		<PieChartOutlined />
+	),
 
 	getItem(
 		<Link to='/boss/admin/xstore'> X Store Accounts</Link>,
@@ -165,6 +170,8 @@ const AdminNavbar = ({
 						? "sub6"
 						: fromPage === "CouponManagement"
 						? "sub7"
+						: fromPage === "Affiliate"
+						? "sub8"
 						: "sub1"
 				}
 				defaultOpenKeys={[

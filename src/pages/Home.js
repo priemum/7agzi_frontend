@@ -26,7 +26,8 @@ import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSecti
 import { useCartContext } from "../sidebar_context";
 import axios from "axios";
 import AppsLandingPage from "./AppsLandingPage";
-import AdSense from "../components/AdSense";
+import { getAffiliates } from "../TheBoss/apiBoss";
+import AffiliateLinks from "../components/HomePage/AffiliateLinks";
 
 const Home = ({ language, setLanguage }) => {
 	const [stores, setStores] = useState([]);
@@ -37,6 +38,7 @@ const Home = ({ language, setLanguage }) => {
 	// eslint-disable-next-line
 	const [currentPage, setCurrentPage] = useState(1);
 	const [error, setError] = useState(null);
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
 	// eslint-disable-next-line
 	const [itemsPerPage, setItemPerPage] = useState(25);
 	const { chosenLanguage } = useCartContext();
@@ -174,7 +176,18 @@ const Home = ({ language, setLanguage }) => {
 
 	// console.log(stores, "stores");
 
+	const gettingAllAffiliates = () => {
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+			}
+		});
+	};
+
 	useEffect(() => {
+		gettingAllAffiliates();
 		localStorage.removeItem("pickedServiceFirstAvailable");
 		localStorage.removeItem("pickedPetSizeFirstAvailable");
 		localStorage.removeItem("pickedPetTypeFirstAvailable");
@@ -245,14 +258,16 @@ const Home = ({ language, setLanguage }) => {
 				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | برنامج الحجز الرسمي</title>
 				) : (
-					<title>XLOOK | Official Booking Software</title>
+					<title>
+						XLOOK | Official Free Booking App For Barbershops and Salons
+					</title>
 				)}
 				<meta
 					name='description'
 					content={
 						chosenLanguage === "Arabic"
 							? `إكس لوك هي منصة تضم جميع صالونات الحلاقة ومراكز الجمال والتجميل الموجودة في مصر. المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة. منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك. الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
-							: `XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
+							: `Free Barbershops & hair salons booking systems. XLOOK is a platform that includes all barbershops, ladies' beauty salons, and beauty centers. The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided. The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location. Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
 					}
 				/>
 				<meta
@@ -318,13 +333,13 @@ const Home = ({ language, setLanguage }) => {
 					</>
 				) : null}
 
+				<AffiliateLinks affiliateProducts={affiliateProducts} />
+
 				{chosenLanguage === "Arabic" ? (
 					<FourthSectionArabic language={chosenLanguage} />
 				) : (
 					<FourthSection language={chosenLanguage} />
 				)}
-
-				<AdSense slot='5842698744' />
 
 				{chosenLanguage === "Arabic" ? (
 					<FifthSectionArabic language={chosenLanguage} />
@@ -364,10 +379,10 @@ const Home = ({ language, setLanguage }) => {
 					</>
 				) : null}
 			</div>
-			<AdSense slot='5842698744' />
-			<AdSense slot='5842698744' />
 			<AppsLandingPage />
-			<AdSense slot='5842698744' />
+			<div className='my-4'>
+				<AffiliateLinks affiliateProducts={affiliateProducts} />
+			</div>
 		</HomeWrapper>
 	);
 };

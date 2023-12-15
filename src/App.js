@@ -123,6 +123,7 @@ import SingleProduct from "./pages/TheShop/SingleProduct/SingleProduct";
 import Cart from "./pages/TheShop/checkout/Cart";
 import { useCartContext } from "./sidebar_context";
 import SearchKeyword from "./pages/SearchKeyword";
+import AffiliateMain from "./TheBoss/Affiliate/AffiliateMain";
 
 function App() {
 	const [click, setClick] = useState(false);
@@ -680,16 +681,19 @@ function App() {
 						exact
 						component={StorePreviewPage}
 					/>
+
 					<BossRoute
 						path='/boss/admin/agent-management'
 						exact
 						component={AgentsManagementMain}
 					/>
+
 					<BossRoute
 						path='/boss/store/admin/add-gallary/:ownerId'
 						exact
 						component={GallaryMainBoss}
 					/>
+
 					<BossRoute
 						path='/boss/admin/store-billing'
 						exact
@@ -700,6 +704,12 @@ function App() {
 						path='/boss/admin/xstore'
 						exact
 						component={() => <StoreAccountsMain language={language} />}
+					/>
+
+					<BossRoute
+						path='/boss/admin/affiliate-links'
+						exact
+						component={() => <AffiliateMain language={language} />}
 					/>
 
 					<BossRoute

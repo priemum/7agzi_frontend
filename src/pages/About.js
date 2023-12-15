@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // import AboutPhoto from "../imgs/traffic-3098747_1920.jpg";
 // import AboutPhoto from "../Navbar/RCHDIGIMP_Logo.jpg";
@@ -15,12 +15,28 @@ import Icon5 from "../Images/Icon5.png";
 import AboutHeroFooter from "../components/OtherHeroComp/AboutHeroFooter";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../sidebar_context";
-import AdSense from "../components/AdSense";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel";
+import AffiliateLinks from "../components/HomePage/AffiliateLinks";
+import { getAffiliates } from "../TheBoss/apiBoss";
 
 const About = ({ language, setLanguage }) => {
 	const { chosenLanguage } = useCartContext();
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
+
+	const gettingAllAffiliates = () => {
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+			}
+		});
+	};
+
+	useEffect(() => {
+		gettingAllAffiliates();
+	}, []);
 
 	return (
 		<AboutPageWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
@@ -39,7 +55,7 @@ const About = ({ language, setLanguage }) => {
 				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
 				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
 				الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
-							: `XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
+							: `Free Barbershops & hair salons booking systems. XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
 				The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided.
 				The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location.
 				Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
@@ -100,11 +116,18 @@ const About = ({ language, setLanguage }) => {
 				<div className='col-md-5 mx-auto mt-5 mb-3'>
 					<div className='horizLine'></div>
 				</div>
+				<div>
+					<AffiliateLinks affiliateProducts={affiliateProducts} />
+					{/* <AdSense adSlot='5842698744' /> */}
+				</div>
 				<div
 					className='col-md-10 mx-auto'
 					dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
 				>
-					<h1 dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
+					<h1
+						className='mt-3'
+						dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}
+					>
 						{" "}
 						<strong>
 							{chosenLanguage === "Arabic" ? "لماذا إكس لوك؟" : "Why XLOOK?"}
@@ -206,9 +229,7 @@ const About = ({ language, setLanguage }) => {
 								currency: "",
 							});
 						}}
-					>
-						<AdSense adSlot='5842698744' />
-					</div>
+					></div>
 
 					<div className='col-md-4 mx-auto mt-5 mb-3'>
 						<div className='mb-2 imageWrapper'>
@@ -389,6 +410,10 @@ const About = ({ language, setLanguage }) => {
 					</div>
 				) : (
 					<div className='mt-5 text-center'>
+						<div>
+							<AffiliateLinks affiliateProducts={affiliateProducts} />
+							{/* <AdSense adSlot='5842698744' /> */}
+						</div>
 						<strong
 							style={{
 								fontWeight: "bolder",
