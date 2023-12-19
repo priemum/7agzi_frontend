@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNavbar from "../Owners/OwnerNavbar/AdminNavbar";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const isActive = (history, path) => {
 	if (history === path) {
@@ -119,7 +119,7 @@ const OwnersDashboard = () => {
 							className='col-md-2 menuItems '
 							onClick={() => {
 								setClickedMenu("ShopReports");
-								window.scrollTo({top: 100, behavior: "smooth"});
+								window.scrollTo({ top: 100, behavior: "smooth" });
 							}}
 						>
 							<Link
@@ -134,7 +134,7 @@ const OwnersDashboard = () => {
 							className='col-md-2 menuItems '
 							onClick={() => {
 								setClickedMenu("CustomerReports");
-								window.scrollTo({top: 100, behavior: "smooth"});
+								window.scrollTo({ top: 100, behavior: "smooth" });
 							}}
 						>
 							<Link

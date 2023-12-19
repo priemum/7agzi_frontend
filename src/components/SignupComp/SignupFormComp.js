@@ -196,6 +196,15 @@ const SignupFormComp = ({
 														value: "",
 														currency: "",
 													});
+
+													if (window.ttq) {
+														window.ttq.track("Account_Chose_Store_Type", {
+															content_name: "Account_Chose_Store_Type",
+															content_category: "Account_Chose_Store_Type",
+															value: 1,
+															currency: "USD", // Change the currency if needed
+														});
+													}
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -275,6 +284,18 @@ const SignupFormComp = ({
 														value: "",
 														currency: "",
 													});
+
+													if (window.ttq) {
+														window.ttq.track(
+															"Account_Chose_Country " + values.storeCountry,
+															{
+																content_name: "Account_Chose_Store_Type",
+																content_category: "Account_Chose_Store_Type",
+																value: 1,
+																currency: "USD", // Change the currency if needed
+															}
+														);
+													}
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -369,6 +390,15 @@ const SignupFormComp = ({
 														value: "",
 														currency: "",
 													});
+
+													if (window.ttq) {
+														window.ttq.track("Account_Chose_Governorate", {
+															content_name: "Account_Chose_Governorate",
+															content_category: "Account_Chose_Governorate",
+															value: 1,
+															currency: "USD", // Change the currency if needed
+														});
+													}
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -445,6 +475,15 @@ const SignupFormComp = ({
 														value: "",
 														currency: "",
 													});
+
+													if (window.ttq) {
+														window.ttq.track("Account_Chose_District", {
+															content_name: "Account_Chose_District",
+															content_category: "Account_Chose_District",
+															value: 1,
+															currency: "USD", // Change the currency if needed
+														});
+													}
 												}}
 											>
 												<option value='Please Select'>Please Select</option>
@@ -575,6 +614,15 @@ const SignupFormComp = ({
 														value: "",
 														currency: "",
 													});
+
+													if (window.ttq) {
+														window.ttq.track("Account_Chose_Agent", {
+															content_name: "Account_Chose_Agent",
+															content_category: "Account_Chose_Agent",
+															value: 1,
+															currency: "USD", // Change the currency if needed
+														});
+													}
 												}}
 												showSearch
 												optionFilterProp='children'
@@ -719,6 +767,15 @@ const SignupFormComp = ({
 												value: "",
 												currency: "",
 											});
+
+											if (window.ttq) {
+												window.ttq.track("SalonSuccessfulRegistration", {
+													content_name: "SalonSuccessfulRegistration",
+													content_category: "SalonSuccessfulRegistration",
+													value: 1,
+													currency: "USD", // Change the currency if needed
+												});
+											}
 										}}
 										disabled={
 											!password || password.length <= 5 || !/\d/.test(password)

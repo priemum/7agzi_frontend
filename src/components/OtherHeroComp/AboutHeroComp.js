@@ -113,6 +113,15 @@ const AboutHeroComp = ({ language }) => {
 											value: "",
 											currency: "",
 										});
+
+										if (window.ttq) {
+											window.ttq.track("Account_Clicked_Register_Now", {
+												content_name: "Account_Clicked_Register_Now",
+												content_category: "Account_Clicked_Register_Now",
+												value: 1,
+												currency: "USD", // Change the currency if needed
+											});
+										}
 									}}
 								>
 									<strong>REGISTER NOW!</strong>

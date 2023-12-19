@@ -199,6 +199,11 @@ function App() {
 
 		ReactPixel.pageView();
 
+		// TikTok Pixel Page View
+		if (window.ttq) {
+			window.ttq.page();
+		}
+
 		// eslint-disable-next-line
 	}, []);
 
