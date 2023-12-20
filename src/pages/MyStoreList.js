@@ -37,6 +37,7 @@ const MyStoreList = ({ language }) => {
 	const [availableGovernorates, setAvailableGovernorates] = useState([]);
 	const [availableDistricts, setAvailableDistricts] = useState([]);
 	const [affiliateProducts, setAffiliateProducts] = useState(null);
+	const [randomNumberArray, setRandomNumberArray] = useState([0]);
 	const [selectedCountry, setSelectedCountry] = useState(undefined);
 	const [selectedGovernorate, setSelectedGovernorate] = useState(undefined);
 	const [selectedDistrict, setSelectedDistrict] = useState(undefined);
@@ -434,6 +435,16 @@ const MyStoreList = ({ language }) => {
 				console.log("Affiliate Products Error");
 			} else {
 				setAffiliateProducts(data);
+
+				// Create an array from 0 to data.length - 1
+				const numberArray = Array.from({ length: data.length }, (_, i) => i);
+				// Shuffle the array
+				for (let i = numberArray.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[numberArray[i], numberArray[j]] = [numberArray[j], numberArray[i]];
+				}
+				// Set the randomized array
+				setRandomNumberArray(numberArray);
 			}
 		});
 	};
@@ -546,6 +557,7 @@ const MyStoreList = ({ language }) => {
 					setFiltersClicked={setFiltersClicked}
 					language={chosenLanguage}
 					affiliateProducts={affiliateProducts}
+					randomNumberArray={randomNumberArray}
 				/>
 			</div>
 			<div

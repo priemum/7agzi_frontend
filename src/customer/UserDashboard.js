@@ -16,6 +16,8 @@ import ProfileUpdate from "./ProfileUpdate";
 import PointsAndPayments from "./PointsAndPayments";
 import PreviousStoreList from "./PreviousStoreList";
 import Slider from "react-slick";
+import { getAffiliates } from "../TheBoss/apiBoss";
+import AffiliateLinks from "../components/HomePage/AffiliateLinks";
 
 const { Panel } = Collapse;
 
@@ -68,6 +70,8 @@ const UserDashboard = () => {
 	const [allSuccessfulBookings, setAllSuccessfulBookings] = useState([]);
 	const [allCancelledBookings, setAllCancelledBookings] = useState([]);
 	const [totalPointsAndPayments, setTotalPointsAndPayments] = useState([]);
+	const [loading2, setLoading2] = useState(true);
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
 	const { chosenLanguage } = useCartContext();
 
 	const { user, token } = isAuthenticated();
@@ -158,8 +162,22 @@ const UserDashboard = () => {
 		});
 	};
 
+	const gettingAllAffiliates = () => {
+		setLoading2(true);
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+				setLoading2(false);
+			}
+		});
+	};
+
 	useEffect(() => {
 		allUsersBooking();
+		gettingAllAffiliates();
+
 		// eslint-disable-next-line
 	}, []);
 
@@ -508,6 +526,14 @@ const UserDashboard = () => {
 							</Panel>
 						</Collapse>
 					</div>
+				)}
+			</div>
+			<div className='my-4'>
+				{loading2 ? null : (
+					<AffiliateLinks
+						affiliateProducts={affiliateProducts}
+						loading={loading2}
+					/>
 				)}
 			</div>
 		</UserDashboardOverall>

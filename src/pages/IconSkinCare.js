@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import SideFilter from "../components/StoresListComp/SideFilter";
 import { useCartContext } from "../sidebar_context";
+import { getAffiliates } from "../TheBoss/apiBoss";
 
 const IconSkinCare = () => {
 	const { chosenLanguage } = useCartContext();
@@ -41,6 +42,11 @@ const IconSkinCare = () => {
 	const [selectedSalonType, setSelectedSalonType] = useState(undefined);
 	const [priceRange, setPriceRange] = useState([]);
 	const [servicesInPriceRange, setServicesInPriceRange] = useState([]);
+
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
+	// eslint-disable-next-line
+	const [loading2, setLoading2] = useState(true);
+	const [randomNumberArray, setRandomNumberArray] = useState([0]);
 
 	// eslint-disable-next-line
 	const [itemsPerPage, setItemPerPage] = useState(50);
@@ -392,9 +398,29 @@ const IconSkinCare = () => {
 		// eslint-disable-next-line
 	}, [isLoaded, currentPage, , getLocation]);
 
+	const gettingAllAffiliates = () => {
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+
+				// Create an array from 0 to data.length - 1
+				const numberArray = Array.from({ length: data.length }, (_, i) => i);
+				// Shuffle the array
+				for (let i = numberArray.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[numberArray[i], numberArray[j]] = [numberArray[j], numberArray[i]];
+				}
+				// Set the randomized array
+				setRandomNumberArray(numberArray);
+			}
+		});
+	};
+
 	useEffect(() => {
 		gettingFilteringCriteria();
-
+		gettingAllAffiliates();
 		// eslint-disable-next-line
 	}, []);
 
@@ -494,6 +520,9 @@ const IconSkinCare = () => {
 					filtersClicked={filtersClicked}
 					setFiltersClicked={setFiltersClicked}
 					language={chosenLanguage}
+					loading={loading2}
+					affiliateProducts={affiliateProducts}
+					randomNumberArray={randomNumberArray}
 				/>
 			</div>
 			<div

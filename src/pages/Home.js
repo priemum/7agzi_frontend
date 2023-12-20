@@ -13,14 +13,14 @@ import FirstSection from "../components/HomePage/FirstSection";
 import SecondSection from "../components/HomePage/SecondSection";
 import ThirdSection from "../components/HomePage/ThirdSection";
 import FourthSection from "../components/HomePage/FourthSection";
-import FifthSection from "../components/HomePage/FifthSection";
+// import FifthSection from "../components/HomePage/FifthSection";
 import SixthSection from "../components/HomePage/SixthSection";
 import SeventhSection from "../components/HomePage/SeventhSection";
 import FirstSectionArabic from "../components/HomePage/HomeArabic/FirstSectionArabic";
 import SecondSectionArabic from "../components/HomePage/HomeArabic/SecondSectionArabic";
 import ThirdSectionArabic from "../components/HomePage/HomeArabic/ThirdSectionArabic";
 import FourthSectionArabic from "../components/HomePage/HomeArabic/FourthSectionArabic";
-import FifthSectionArabic from "../components/HomePage/HomeArabic/FifthSectionArabic";
+// import FifthSectionArabic from "../components/HomePage/HomeArabic/FifthSectionArabic";
 import SixthSectionArabic from "../components/HomePage/HomeArabic/SixthSectionArabic";
 import SeventhSectionArabic from "../components/HomePage/HomeArabic/SeventhSectionArabic";
 import { useCartContext } from "../sidebar_context";
@@ -349,11 +349,11 @@ const Home = ({ language, setLanguage }) => {
 					<FourthSection language={chosenLanguage} />
 				)}
 
-				{chosenLanguage === "Arabic" ? (
+				{/* {chosenLanguage === "Arabic" ? (
 					<FifthSectionArabic language={chosenLanguage} />
 				) : (
 					<FifthSection language={chosenLanguage} />
-				)}
+				)} */}
 
 				{chosenLanguage === "Arabic" ? (
 					<SixthSectionArabic language={chosenLanguage} />

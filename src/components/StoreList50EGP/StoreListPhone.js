@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
 import NewCardPhone from "./NewCardPhone";
-// import AdSense from "../AdSense";
-import ReactGA from "react-ga4";
-import ReactPixel from "react-facebook-pixel";
+import AffiliateLinks from "../HomePage/AffiliateLinks";
+import SingleAffiliateProduct from "../StoresListComp/SingleAffiliateProduct";
 
 // Custom Hook for Fade-In effect
 function useFadeInOnScroll() {
@@ -45,7 +44,10 @@ const StoreListPhone = ({
 	allServicesCombined,
 	filtersClicked,
 	setFiltersClicked,
+	affiliateProducts,
+	randomNumberArray,
 }) => {
+	// eslint-disable-next-line
 	const [contentRef, contentVisible] = useFadeInOnScroll();
 
 	return (
@@ -55,11 +57,17 @@ const StoreListPhone = ({
 				setFiltersClicked={setFiltersClicked}
 			/>
 
-			<ContentContainer ref={contentRef} isVisible={contentVisible}>
-				<div className='row'>
-					{activeStoresOnly &&
-						activeStoresOnly.map((p, i) => {
-							return (
+			{/* <ContentContainer ref={contentRef} isVisible={contentVisible}> */}
+			{/* <div>
+					<AffiliateLinks affiliateProducts={affiliateProducts} />
+				</div> */}
+			{/* <AdSense adSlot='5842698744' /> */}
+
+			<div className='row'>
+				{activeStoresOnly &&
+					activeStoresOnly.map((p, i) => {
+						return (
+							<>
 								<div
 									key={i}
 									className='col-md-4'
@@ -73,31 +81,24 @@ const StoreListPhone = ({
 										allServicesCombined={allServicesCombined}
 									/>
 
-									{(i === 5 || i === 10) && (
-										<div
-											onClick={() => {
-												ReactGA.event("Ads_Clicked_StoreList", {
-													event_category: "Ads_Clicked_StoreList",
-													event_label: "Ads_Clicked",
-													value: 1,
-												});
-
-												ReactPixel.track("Ads_Clicked_StoreList", {
-													content_name: "Ads_Clicked_StoreList",
-													content_category: "Ads_Clicked_StoreList",
-													value: "",
-													currency: "",
-												});
-											}}
-										>
-											{/* <AdSense adSlot='5842698744' /> */}
-										</div>
+									{i % 3 === 0 && i !== 0 && (
+										<SingleAffiliateProduct
+											affiliateProducts={affiliateProducts}
+											randomNumberArray={randomNumberArray}
+											chosenIndex={randomNumberArray[Math.floor(i / 3) - 1]}
+										/>
 									)}
 								</div>
-							);
-						})}
-				</div>
-			</ContentContainer>
+								{/* Conditionally render SingleAffiliateProduct */}
+							</>
+						);
+					})}
+			</div>
+			{/* </ContentContainer> */}
+			<div>
+				<AffiliateLinks affiliateProducts={affiliateProducts} />
+				{/* <AdSense adSlot='5842698744' /> */}
+			</div>
 		</StoreListPhoneWrapper>
 	);
 };
@@ -116,6 +117,7 @@ const StoreListPhoneWrapper = styled.div`
 	}
 `;
 
+// eslint-disable-next-line
 const ContentContainer = styled.div.attrs((props) => ({
 	style: {
 		opacity: props.isVisible ? 1 : 0,

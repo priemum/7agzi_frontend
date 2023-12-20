@@ -17,6 +17,8 @@ import ScheduleFormHelperArabic from "./ScheduleFormHelperArabic";
 import { useCartContext } from "../../../sidebar_context";
 import CouponComp from "./CouponComp";
 import { Helmet } from "react-helmet";
+import { getAffiliates } from "../../../TheBoss/apiBoss";
+import AffiliateLinks from "../../../components/HomePage/AffiliateLinks";
 
 const SchedulePageSteps2 = ({ language }) => {
 	const { chosenLanguage } = useCartContext();
@@ -48,6 +50,8 @@ const SchedulePageSteps2 = ({ language }) => {
 	const [appliedCoupon, setAppliedCoupon] = useState("");
 	const [appliedCouponName, setAppliedCouponName] = useState("");
 	const [couponApplied, setCouponApplied] = useState(false);
+	const [loading2, setLoading2] = useState(true);
+	const [affiliateProducts, setAffiliateProducts] = useState(null);
 
 	const { user, token } = isAuthenticated();
 
@@ -703,6 +707,24 @@ const SchedulePageSteps2 = ({ language }) => {
 		setAppliedCouponName(event.target.value);
 	};
 
+	const gettingAllAffiliates = () => {
+		setLoading2(true);
+		getAffiliates().then((data) => {
+			if (data && data.error) {
+				console.log("Affiliate Products Error");
+			} else {
+				setAffiliateProducts(data);
+				setLoading2(false);
+			}
+		});
+	};
+
+	useEffect(() => {
+		gettingAllAffiliates();
+
+		// eslint-disable-next-line
+	}, []);
+
 	// console.log(chosenDate, "chosenDate");
 	return (
 		<ScheduleFormFinalWrapper dir={chosenLanguage === "Arabic" ? "rtl" : "ltr"}>
@@ -810,6 +832,15 @@ const SchedulePageSteps2 = ({ language }) => {
 					</Link>
 				</>
 			)}
+
+			<div className='my-4'>
+				{loading2 ? null : (
+					<AffiliateLinks
+						affiliateProducts={affiliateProducts}
+						loading={loading2}
+					/>
+				)}
+			</div>
 		</ScheduleFormFinalWrapper>
 	);
 };

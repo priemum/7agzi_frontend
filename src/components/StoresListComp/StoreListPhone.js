@@ -3,6 +3,7 @@ import styled from "styled-components";
 import FiltersPhone from "./FiltersPhone";
 import NewCardPhone from "./NewCardPhone";
 import AffiliateLinks from "../HomePage/AffiliateLinks";
+import SingleAffiliateProduct from "./SingleAffiliateProduct";
 
 // Custom Hook for Fade-In effect
 function useFadeInOnScroll() {
@@ -44,7 +45,9 @@ const StoreListPhone = ({
 	filtersClicked,
 	setFiltersClicked,
 	affiliateProducts,
+	randomNumberArray,
 }) => {
+	// eslint-disable-next-line
 	const [contentRef, contentVisible] = useFadeInOnScroll();
 
 	return (
@@ -54,35 +57,44 @@ const StoreListPhone = ({
 				setFiltersClicked={setFiltersClicked}
 			/>
 
-			<ContentContainer ref={contentRef} isVisible={contentVisible}>
-				<div>
+			{/* <ContentContainer ref={contentRef} isVisible={contentVisible}> */}
+			{/* <div>
 					<AffiliateLinks affiliateProducts={affiliateProducts} />
-					{/* <AdSense adSlot='5842698744' /> */}
-				</div>
-				<div className='row'>
-					{activeStoresOnly &&
-						activeStoresOnly.map((p, i) => {
-							return (
-								<>
-									{" "}
-									<div
-										key={i}
-										className='col-md-4'
-										onClick={() => {
-											localStorage.setItem("chosenStore", JSON.stringify(p));
-											window.scrollTo({ top: 0, behavior: "smooth" });
-										}}
-									>
-										<NewCardPhone
-											store={p}
-											allServicesCombined={allServicesCombined}
+				</div> */}
+			{/* <AdSense adSlot='5842698744' /> */}
+
+			<div className='row'>
+				{activeStoresOnly &&
+					activeStoresOnly.map((p, i) => {
+						return (
+							<>
+								<div
+									key={i}
+									className='col-md-4'
+									onClick={() => {
+										localStorage.setItem("chosenStore", JSON.stringify(p));
+										window.scrollTo({ top: 0, behavior: "smooth" });
+									}}
+								>
+									<NewCardPhone
+										store={p}
+										allServicesCombined={allServicesCombined}
+									/>
+
+									{i % 3 === 0 && i !== 0 && (
+										<SingleAffiliateProduct
+											affiliateProducts={affiliateProducts}
+											randomNumberArray={randomNumberArray}
+											chosenIndex={randomNumberArray[Math.floor(i / 3) - 1]}
 										/>
-									</div>
-								</>
-							);
-						})}
-				</div>
-			</ContentContainer>
+									)}
+								</div>
+								{/* Conditionally render SingleAffiliateProduct */}
+							</>
+						);
+					})}
+			</div>
+			{/* </ContentContainer> */}
 			<div>
 				<AffiliateLinks affiliateProducts={affiliateProducts} />
 				{/* <AdSense adSlot='5842698744' /> */}
@@ -105,6 +117,7 @@ const StoreListPhoneWrapper = styled.div`
 	}
 `;
 
+// eslint-disable-next-line
 const ContentContainer = styled.div.attrs((props) => ({
 	style: {
 		opacity: props.isVisible ? 1 : 0,

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import ReactGA from "react-ga4";
+import ReactPixel from "react-facebook-pixel";
 import "moment-timezone";
 import { DatePicker } from "antd";
 import { Select } from "antd";
@@ -598,6 +600,28 @@ const ScheduleFormHelperArabic = ({
 								className='my-5 text-center'
 								onClick={() => {
 									clickSubmitSchedule_NoPayment();
+
+									ReactGA.event("Client_Successfully_Reserved", {
+										event_category: "Client_Successfully_Reserved",
+										event_label: "Client_Successfully_Reserved",
+										value: 1, // Optional extra parameters
+									});
+
+									ReactPixel.track("Client_Successfully_Reserved", {
+										content_name: "Client_Successfully_Reserved",
+										content_category: "Client_Successfully_Reserved",
+										value: "",
+										currency: "",
+									});
+
+									if (window.ttq) {
+										window.ttq.track("Client_Successfully_Reserved", {
+											content_name: "Client_Successfully_Reserved",
+											content_category: "Client_Successfully_Reserved",
+											value: 1,
+											currency: "USD", // Change the currency if needed
+										});
+									}
 								}}
 							>
 								<button className='btn btn-success w-50'>احجز الآن</button>
