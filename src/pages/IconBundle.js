@@ -472,7 +472,7 @@ const IconBundle = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule/bundle' />
+				<link rel='canonical' href='https://xlookpro.com/schedule/bundle' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

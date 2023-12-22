@@ -282,7 +282,7 @@ const Home = ({ language, setLanguage }) => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/' />
+				<link rel='canonical' href='https://xlookpro.com/' />
 				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}

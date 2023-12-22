@@ -485,10 +485,7 @@ const IconSkinCare = () => {
 					}
 				/>
 
-				<link
-					rel='canonical'
-					href='https://www.xlookpro.com/schedule/skin-care'
-				/>
+				<link rel='canonical' href='https://xlookpro.com/schedule/skin-care' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

@@ -477,7 +477,7 @@ const IconOffers = () => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule/offers' />
+				<link rel='canonical' href='https://xlookpro.com/schedule/offers' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

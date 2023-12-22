@@ -32,7 +32,7 @@ const AgentGuide = ({ language, setLanguage }) => {
 							: "XLOOK, AGENTS, ACCOUNT MANAGERS, barbershops, women's beauty salons, beauty centers, beauty services"
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/agent-guide' />
+				<link rel='canonical' href='https://xlookpro.com/agent-guide' />
 			</Helmet>
 
 			<div className='mb-5'>

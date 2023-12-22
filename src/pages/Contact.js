@@ -100,7 +100,7 @@ const Contact = ({ language }) => {
 					beauty services. Powered By https://infinite-apps.com`
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/about' />
+				<link rel='canonical' href='https://xlookpro.com/contact' />
 			</Helmet>
 			{/* <div className='ad-class my-3 text-center mx-auto'> */}
 			{/* add your slot id  */}

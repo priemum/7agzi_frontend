@@ -101,7 +101,7 @@ const AppsLandingPage = () => {
 								: `booking websites for salons, infinite apps, infinite erp, XLOOK platform, XLOOK, XLookpro, xlookpro.com, barbershops, beauty salons, beauty centers, family services, appointment booking, custom websites, affordable websites, website development, website building, Apple Store application, Play Store Application`
 						}
 					/>
-					<link rel='canonical' href='https://www.xlookpro.com/xlookpro-apps' />
+					<link rel='canonical' href='https://xlookpro.com/xlookpro-apps' />
 					{chosenLanguage === "Arabic" && (
 						<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 					)}

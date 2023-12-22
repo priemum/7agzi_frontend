@@ -39,7 +39,7 @@ const RegisterSteps = ({ language, setLanguage }) => {
 							: `XLOOK, Registration Steps, Appointment Booking, Beauty Services, Register on XLOOK Website`
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/steps' />
+				<link rel='canonical' href='https://xlookpro.com/steps' />
 				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}

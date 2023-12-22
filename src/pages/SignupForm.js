@@ -294,7 +294,7 @@ const SignupForm = ({ language }) => {
 				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | كن شريكنا | سجل صالونك</title>
 				) : (
-					<title>XLOOK | Be Our Business Partner</title>
+					<title>XLOOK | REGISTER YOUR SALON FOR FREE BOOKING APP</title>
 				)}
 				<meta
 					name='description'
@@ -312,7 +312,7 @@ const SignupForm = ({ language }) => {
 							: `XLOOK, Registration, Be Our Partner, Appointment Booking, Beauty Services, Register on XLOOK Website`
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/signup' />
+				<link rel='canonical' href='https://xlookpro.com/signup' />
 				{chosenLanguage === "Arabic" && (
 					<html lang='ar' dir='rtl' xmlns='http://www.w3.org/1999/xhtml' />
 				)}

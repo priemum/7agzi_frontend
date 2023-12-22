@@ -476,7 +476,7 @@ const Icon50EGP = () => {
 
 				<link
 					rel='canonical'
-					href='https://www.xlookpro.com/schedule/50-EGP-Offer'
+					href='https://xlookpro.com/schedule/50-EGP-Offer'
 				/>
 			</Helmet>
 			<SideFilter

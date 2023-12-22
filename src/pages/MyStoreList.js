@@ -524,7 +524,7 @@ const MyStoreList = ({ language }) => {
 					}
 				/>
 
-				<link rel='canonical' href='https://www.xlookpro.com/schedule' />
+				<link rel='canonical' href='https://xlookpro.com/schedule' />
 			</Helmet>
 			<SideFilter
 				filtersClicked={filtersClicked}

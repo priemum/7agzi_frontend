@@ -72,7 +72,7 @@ const About = ({ language, setLanguage }) => {
 							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
 					}
 				/>
-				<link rel='canonical' href='https://www.xlookpro.com/about' />
+				<link rel='canonical' href='https://xlookpro.com/about' />
 			</Helmet>
 
 			<div className='mb-5'>

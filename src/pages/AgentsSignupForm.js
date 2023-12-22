@@ -415,10 +415,7 @@ const AgentsSignupForm = ({ language }) => {
 							: "XLOOK, AGENTS, ACCOUNT MANAGERS, barbershops, women's beauty salons, beauty centers, beauty services"
 					}
 				/>
-				<link
-					rel='canonical'
-					href='https://www.xlookpro.com/agents-signup-form'
-				/>
+				<link rel='canonical' href='https://xlookpro.com/agents-signup-form' />
 			</Helmet>
 			<ToastContainer />
 			{signUpForm()}
