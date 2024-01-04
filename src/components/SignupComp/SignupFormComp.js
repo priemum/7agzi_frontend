@@ -32,10 +32,12 @@ const SignupFormComp = ({
 	allDistricts,
 	setAllDistricts,
 	states,
+	affiliateUser,
 }) => {
 	// eslint-disable-next-line
 	const [animationDirection, setAnimationDirection] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
+	const [checkboxState, setCheckboxState] = useState("xlookAgent");
 
 	// eslint-disable-next-line
 	const handleModalOpen = () => {
@@ -54,6 +56,12 @@ const SignupFormComp = ({
 
 		// eslint-disable-next-line
 	}, []);
+
+	const handleCheckboxChange = (newState) => {
+		setCheckboxState((prevState) =>
+			prevState === newState ? "none" : newState
+		);
+	};
 
 	return (
 		<SignupFormCompWrapper>
@@ -553,11 +561,33 @@ const SignupFormComp = ({
 												: "slide-in-right"
 										}`}
 									>
-										<div
-											className='form-group col-md-8 mx-auto'
-											style={{ marginTop: "25px" }}
-										>
-											{/* {language === "Arabic" ? (
+										<div>
+											<label className='mr-3'>
+												<input
+													type='checkbox'
+													className='mx-1'
+													checked={checkboxState === "referral"}
+													onChange={() => handleCheckboxChange("referral")}
+												/>
+												Referral
+											</label>
+											<label className='mr-3'>
+												<input
+													type='checkbox'
+													className='mx-1'
+													checked={checkboxState === "xlookAgent"}
+													onChange={() => handleCheckboxChange("xlookAgent")}
+												/>
+												XLOOK Agent
+											</label>
+										</div>
+
+										{checkboxState === "xlookAgent" ? (
+											<div
+												className='form-group col-md-8 mx-auto'
+												style={{ marginTop: "25px" }}
+											>
+												{/* {language === "Arabic" ? (
 												<div
 													dir='rtl'
 													className='my-2'
@@ -582,71 +612,73 @@ const SignupFormComp = ({
 												</div>
 											)} */}
 
-											<label style={{ fontWeight: "bold" }}>
-												{language === "Arabic" ? "وكيلك" : "Your Agent"}
-											</label>
-											<Select
-												className='form-control'
-												placeholder='Please choose an agent...'
-												style={{
-													textAlign: "left",
-													textTransform: "capitalize",
-												}}
-												onChange={(value) => {
-													const chosenAgent =
-														value === "No Agent" || value === "Please Select"
-															? { name: "No Agent" }
-															: allAgents.find((agent) => agent._id === value);
-													setValues({
-														...values,
-														agent: chosenAgent,
-													});
+												<label style={{ fontWeight: "bold" }}>
+													{language === "Arabic" ? "وكيلك" : "Your Agent"}
+												</label>
+												<Select
+													className='form-control'
+													placeholder='Please choose an agent...'
+													style={{
+														textAlign: "left",
+														textTransform: "capitalize",
+													}}
+													onChange={(value) => {
+														const chosenAgent =
+															value === "No Agent" || value === "Please Select"
+																? { name: "No Agent" }
+																: allAgents.find(
+																		(agent) => agent._id === value
+																  );
+														setValues({
+															...values,
+															agent: chosenAgent,
+														});
 
-													ReactGA.event("Account_Chose_Agent", {
-														event_category: "Account_Chose_Agent",
-														event_label: "Account_Chose_Agent",
-														value: 1, // Optional extra parameters
-													});
+														ReactGA.event("Account_Chose_Agent", {
+															event_category: "Account_Chose_Agent",
+															event_label: "Account_Chose_Agent",
+															value: 1, // Optional extra parameters
+														});
 
-													ReactPixel.track("Account_Chose_Agent", {
-														content_name: "Account_Chose_Agent",
-														content_category: "Account_Chose_Agent",
-														value: "",
-														currency: "",
-													});
-
-													if (window.ttq) {
-														window.ttq.track("Account_Chose_Agent", {
+														ReactPixel.track("Account_Chose_Agent", {
 															content_name: "Account_Chose_Agent",
 															content_category: "Account_Chose_Agent",
-															value: 1,
-															currency: "USD", // Change the currency if needed
+															value: "",
+															currency: "",
 														});
+
+														if (window.ttq) {
+															window.ttq.track("Account_Chose_Agent", {
+																content_name: "Account_Chose_Agent",
+																content_category: "Account_Chose_Agent",
+																value: 1,
+																currency: "USD", // Change the currency if needed
+															});
+														}
+													}}
+													showSearch
+													optionFilterProp='children'
+													filterOption={(input, option) =>
+														option.children
+															.toLowerCase()
+															.indexOf(input.toLowerCase()) >= 0
 													}
-												}}
-												showSearch
-												optionFilterProp='children'
-												filterOption={(input, option) =>
-													option.children
-														.toLowerCase()
-														.indexOf(input.toLowerCase()) >= 0
-												}
-												value={values.agent.name}
-											>
-												<Option value='Please Select'>Please Select</Option>
-												<Option value='No Agent'>No Agent</Option>
-												{allAgents &&
-													allAgents.map((agent) => (
-														<Option key={agent._id} value={agent._id}>
-															{agent.name}
-														</Option>
-													))}
-											</Select>
-											<div
-												className='mt-3'
-												style={{ fontWeight: "bolder", fontSize: "1rem" }}
-											>
-												{/* {language === "Arabic" ? (
+													value={values.agent.name}
+												>
+													<Option value='Please Select'>Please Select</Option>
+													<Option value='No Agent'>No Agent</Option>
+													{allAgents &&
+														allAgents.map((agent) => (
+															<Option key={agent._id} value={agent._id}>
+																{agent.name}
+															</Option>
+														))}
+												</Select>
+												<div
+													className='mt-3'
+													style={{ fontWeight: "bolder", fontSize: "1rem" }}
+												>
+													{/* {language === "Arabic" ? (
 													<>
 														إذا كنت لا تملك وكيلاً،{" "}
 														<strong
@@ -677,8 +709,29 @@ const SignupFormComp = ({
 														and get the closest agent in your area
 													</>
 												)} */}
+												</div>
 											</div>
-										</div>
+										) : (
+											<div
+												className='form-group col-md-8 mx-auto'
+												style={{ marginTop: "25px" }}
+											>
+												<label style={{ fontWeight: "bold" }}>
+													{language === "Arabic"
+														? "Referral Code"
+														: "Referral Code"}
+												</label>
+												<input
+													type='text'
+													name='affiliateUser'
+													pattern='\d*'
+													maxLength='13'
+													value={affiliateUser}
+													onChange={handleChange("affiliateUser")}
+													placeholder='e.g. 01022459022 (Digits Only)'
+												/>
+											</div>
+										)}
 									</div>
 								) : null}
 
@@ -691,7 +744,7 @@ const SignupFormComp = ({
 								values.storeGovernorate &&
 								values.storeDistrict &&
 								values.storeAddress &&
-								values.agent.name ? (
+								(values.agent.name || values.affiliateUser) ? (
 									<div
 										className={`mb-3 mx-auto ${
 											animationDirection === "slide-left"
@@ -749,7 +802,7 @@ const SignupFormComp = ({
 								values.storeGovernorate &&
 								values.storeDistrict &&
 								values.storeAddress &&
-								values.agent.name ? (
+								(values.agent.name || values.affiliateUser) ? (
 									<Link
 										to='#'
 										className='btn btn-success w-75 btn-block mx-auto mt-5 mb-5'

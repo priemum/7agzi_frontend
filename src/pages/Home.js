@@ -261,9 +261,7 @@ const Home = ({ language, setLanguage }) => {
 				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | برنامج الحجز الرسمي</title>
 				) : (
-					<title>
-						XLOOK | Official Free Booking App For Barbershops and Salons
-					</title>
+					<title>XLOOK | Free Booking App For Barbershops and Salons</title>
 				)}
 				<meta
 					name='description'

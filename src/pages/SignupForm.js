@@ -44,6 +44,7 @@ const SignupForm = ({ language }) => {
 		success: false,
 		redirectToReferrer: "",
 		loading: false,
+		affiliateUser: "",
 	});
 
 	const {
@@ -64,6 +65,7 @@ const SignupForm = ({ language }) => {
 		redirectToReferrer,
 		roleDescription,
 		loading,
+		affiliateUser,
 	} = values;
 
 	const { user } = isAuthenticated();
@@ -132,7 +134,7 @@ const SignupForm = ({ language }) => {
 			return toast.info("District is Required");
 		}
 
-		if (!agent) {
+		if (!agent && !affiliateUser) {
 			return toast.info("Agent is Required");
 		}
 
@@ -201,6 +203,7 @@ const SignupForm = ({ language }) => {
 			storeDistrict,
 			agent,
 			role: 1000,
+			affiliateUser,
 			roleDescription: roleDescription,
 			activeUser: true,
 			subscribed: false,
@@ -284,6 +287,7 @@ const SignupForm = ({ language }) => {
 			setAllDistricts={setAllDistricts}
 			EgyptGovernorate={distinctGovernorates}
 			states={states}
+			affiliateUser={affiliateUser}
 		/>
 	);
 
@@ -294,7 +298,9 @@ const SignupForm = ({ language }) => {
 				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>إكس لوك | كن شريكنا | سجل صالونك</title>
 				) : (
-					<title>XLOOK | REGISTER YOUR SALON FOR FREE BOOKING APP</title>
+					<title>
+						XLOOK REGISTER | Free Booking App For Barbershops and Salons
+					</title>
 				)}
 				<meta
 					name='description'

@@ -48,7 +48,10 @@ const About = ({ language, setLanguage }) => {
 				{chosenLanguage === "Arabic" ? (
 					<title dir='rtl'>اكس لوك | من نحن ولماذا اكس لوك</title>
 				) : (
-					<title>XLOOK | WHO & WHY XLOOK</title>
+					<title>
+						XLOOK | WHO & WHY XLOOK | Free Booking App For Barbershops and
+						Salons
+					</title>
 				)}
 				<meta
 					name='description'
@@ -58,7 +61,7 @@ const About = ({ language, setLanguage }) => {
 				المنصة تقدم خدمات لجميع أفراد العائلة، بما في ذلك السيدات، الآنسات، الرجال، والأطفال، مع مجموعة متنوعة من الخدمات المقدمة.
 				منصة إكس لوك تُستخدم لاختيار وحجز موعد في صالون الحلاقة أو مركز التجميل الأقرب أو الأبعد حسب موقعك.
 				الزائرين يمكنهم حجز الخدمات التي تقدمها المنصة من خلال تطبيق خاص مصمم لتسجيل المستخدمين وحجز خدمات التجميل. Powered By https://infinite-apps.com`
-							: `Free Barbershops & hair salons booking systems. XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
+							: `Free Barbershops & hair salons booking app. XLOOK is a platform that includes barbershops, ladies' beauty salons, and beauty centers.
 				The platform offers services for all family members, including women, girls, men, and children, with a variety of services provided.
 				The XLOOK platform is used to choose and book a barbershop or beauty center appointment with the closest to the farthest offer according to your location.
 				Visitors can book the services offered by the platform through a special application designed for user registration and booking beauty services. Powered By https://infinite-apps.com`
