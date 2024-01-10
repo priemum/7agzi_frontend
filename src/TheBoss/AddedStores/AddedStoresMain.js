@@ -32,8 +32,8 @@ const AddedStoresMain = () => {
 				var dataModified = data.map((i) => {
 					return {
 						...i,
-						storeId: i.belongsTo._id,
-						storeCreatedAt: i.belongsTo.createdAt,
+						storeId: i.belongsTo && i.belongsTo._id,
+						storeCreatedAt: i.belongsTo && i.belongsTo.createdAt,
 					};
 				});
 
@@ -130,7 +130,9 @@ const AddedStoresMain = () => {
 													}}
 												>
 													<Link
-														to={`/boss/store/admin/dashboard/${p.belongsTo._id}`}
+														to={`/boss/store/admin/dashboard/${
+															p.belongsTo && p.belongsTo._id
+														}`}
 													></Link>
 													<CardForStoreBoss
 														store={p}

@@ -96,7 +96,8 @@ const BossDashboard = () => {
 
 	const filteredOwnerAccounts = ownerAccounts.filter(
 		(o) =>
-			o.agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			(o.agent.name &&
+				o.agent.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
 			o.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			o.storeGovernorate.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			o.phone.toLowerCase().includes(searchQuery)
