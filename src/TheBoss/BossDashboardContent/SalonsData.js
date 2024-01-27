@@ -202,7 +202,10 @@ const SalonsData = () => {
 		{
 			title: "Agent Name",
 			key: "agentName",
-			render: (storeOwner) => storeOwner.agent?.name || "N/A",
+			render: (storeOwner) =>
+				storeOwner.affiliateUser
+					? storeOwner.affiliateUser
+					: storeOwner.agent?.name,
 		},
 
 		{
@@ -514,6 +517,25 @@ const SalonsData = () => {
 								duration={2}
 								delay={1}
 								end={report.notActiveStores}
+								separator=','
+							/>
+						</div>
+					</div>
+				</div>
+				<div className='col-6 col-md-5 text-center mx-auto my-2'>
+					<div
+						className='card'
+						style={{ background: "#009ef7", textAlign: "center" }}
+					>
+						<div className='card-body'>
+							<h5 style={{ fontWeight: "bolder", color: "white" }}>
+								Referral Salons
+							</h5>
+							<CountUp
+								style={{ color: "white" }}
+								duration={2.5}
+								delay={1.5}
+								end={report.affiliatedAccounts}
 								separator=','
 							/>
 						</div>
