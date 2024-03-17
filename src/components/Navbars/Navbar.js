@@ -456,7 +456,7 @@ const Navbar = ({ history, language }) => {
 									window.scrollTo({ top: 90, behavior: "smooth" });
 								}}
 							>
-								Business Partner Dashboard
+								Salon Dashboard
 							</Link>
 						</li>
 					)}

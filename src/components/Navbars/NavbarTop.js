@@ -560,7 +560,7 @@ const Navbar1 = ({ history }) => {
 										{chosenLanguage === "Arabic" ? (
 											<span style={{ fontSize: "1.2rem" }}>كن شريكنا</span>
 										) : (
-											"Be Our Partner"
+											"Register Your Salon"
 										)}
 									</Link>
 								</li>
