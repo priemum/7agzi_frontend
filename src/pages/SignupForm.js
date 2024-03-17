@@ -315,7 +315,7 @@ const SignupForm = ({ language }) => {
 					content={
 						chosenLanguage === "Arabic"
 							? `كن شريكنا ، إكس لوك، خطوات التسجيل، حجز المواعيد، خدمات التجميل، التسجيل في موقع إكس لوك`
-							: `XLOOK, Registration, Be Our Partner, Appointment Booking, Beauty Services, Register on XLOOK Website`
+							: `XLOOK, Registration, Be Our Partner, Appointment Booking, Beauty Services, Register on XLOOK Website, free scheduling app for barbershops, free scheduling app for hair salons, free booking app`
 					}
 				/>
 				<link rel='canonical' href='https://xlookpro.com/signup' />

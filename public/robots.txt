@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
+Sitemap: https://xlookpro.com/sitemap.xml
 User-agent: *
-Disallow:
+Disallow: /admin/
+Crawl-Delay: 10

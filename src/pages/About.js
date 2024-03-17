@@ -72,7 +72,7 @@ const About = ({ language, setLanguage }) => {
 					content={
 						chosenLanguage === "Arabic"
 							? `إكس لوك، من نحن، لماذا إكس لوك، صالونات الحلاقة، صالونات تجميل النساء، مراكز التجميل، العائلة، حجز المواعيد، تسجيل المستخدمين`
-							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration`
+							: `XLOOK, WHO, WHY XLOOK, barbershops, ladies' beauty salons, beauty centers, family, appointment booking, user registration, free scheduling app for barbershops, free scheduling app for hair salons, free booking app`
 					}
 				/>
 				<link rel='canonical' href='https://xlookpro.com/about' />
