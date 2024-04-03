@@ -6,7 +6,7 @@ import {
 	// eslint-disable-next-line
 	allStoresSorted,
 	allStoresSorted2,
-	allStoresSortedGraded,
+	allStoresSortedGraded,       
 } from "../apiCore";
 import { useJsApiLoader } from "@react-google-maps/api";
 import FirstSection from "../components/HomePage/FirstSection";
